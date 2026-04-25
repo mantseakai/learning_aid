@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Blaster 🚀 | Spelling Arcade</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@700;900&family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080818;
+  --panel:    #0f1030;
+  --panel2:   #141435;
+  --neon:     #00f5ff;
+  --neon2:    #ff2d78;
+  --gold:     #ffd700;
+  --green:    #39ff14;
+  --purple:   #bf5fff;
+  --orange:   #ff8c00;
+  --text:     #e8e8ff;
+  --dim:      #5a5a8a;
+  --radius:   12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--neon);border-radius:3px;}
+
+body {
+  font-family:'Exo 2',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* Stars bg */
+body::before {
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 15%, rgba(0,245,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 80%, rgba(191,95,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(0,245,255,.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 50%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 10%, rgba(255,45,120,.5) 0%, transparent 100%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── SCANLINES ── */
+body::after {
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);
+  pointer-events:none;z-index:1;
+}
+
+.wrapper{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:0 14px 30px;}
+
+/* ── HEADER ── */
+header {
+  text-align:center;
+  padding:20px 0 10px;
+}
+.logo {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.6rem,6vw,2.6rem);
+  font-weight:900;
+  color:var(--neon);
+  text-shadow:0 0 20px rgba(0,245,255,.6),0 0 40px rgba(0,245,255,.3);
+  letter-spacing:2px;
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+.logo span{color:var(--neon2);text-shadow:0 0 20px rgba(255,45,120,.6);}
+@keyframes pulseGlow{0%,100%{opacity:1;}50%{opacity:.85;}}
+.tagline{font-size:.7rem;letter-spacing:3px;color:var(--dim);margin-top:4px;text-transform:uppercase;font-family:'Press Start 2P',monospace;font-size:.5rem;}
+
+/* ── HUD ── */
+.hud {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+.hud-box {
+  background:var(--panel);
+  border:1px solid rgba(0,245,255,.2);
+  border-radius:var(--radius);
+  padding:10px 8px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hud-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+}
+.hud-box.cyan::before{background:var(--neon);}
+.hud-box.pink::before{background:var(--neon2);}
+.hud-box.gold::before{background:var(--gold);}
+.hud-box.green::before{background:var(--green);}
+.hud-label{font-size:.5rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);font-weight:700;margin-bottom:4px;}
+.hud-val{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;}
+.hud-val.cyan{color:var(--neon);}
+.hud-val.pink{color:var(--neon2);}
+.hud-val.gold{color:var(--gold);}
+.hud-val.green{color:var(--green);}
+
+/* ── XP BAR ── */
+.xp-wrap{margin:0 0 10px;}
+.xp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.xp-level{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--purple);font-weight:700;}
+.xp-label{font-size:.65rem;color:var(--dim);font-weight:700;}
+.xp-track{height:10px;background:rgba(255,255,255,.06);border-radius:50px;overflow:hidden;border:1px solid rgba(191,95,255,.2);}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--neon));border-radius:50px;transition:width .8s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 10px rgba(191,95,255,.5);}
+
+/* ── MAIN CARD ── */
+.card {
+  background:var(--panel);
+  border:1px solid rgba(0,245,255,.15);
+  border-radius:18px;
+  padding:24px 20px 20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 0 40px rgba(0,245,255,.05), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.card-glow {
+  position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:200px;height:80px;
+  background:radial-gradient(ellipse,rgba(0,245,255,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* ── CATEGORY BADGE ── */
+.cat-badge{
+  display:inline-block;
+  background:rgba(191,95,255,.15);border:1px solid rgba(191,95,255,.4);
+  color:var(--purple);font-size:.6rem;font-weight:800;
+  padding:3px 12px;border-radius:50px;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:14px;
+}
+
+/* ── DIFFICULTY STARS ── */
+.diff-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.diff-stars{font-size:1rem;letter-spacing:3px;}
+.word-num{font-size:.6rem;color:var(--dim);font-weight:700;font-family:'Orbitron',sans-serif;}
+
+/* ── HINT CARD ── */
+.hint-card{
+  background:rgba(0,245,255,.04);
+  border:1px solid rgba(0,245,255,.12);
+  border-radius:10px;
+  padding:12px 16px;
+  margin-bottom:18px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.hint-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px;}
+.hint-text{font-size:.88rem;line-height:1.5;color:#b8c0e0;font-weight:600;}
+.hint-word-blank{color:var(--neon);font-weight:800;letter-spacing:2px;}
+
+/* ── TIMER ── */
+.timer-wrap{display:none;margin-bottom:16px;}
+.timer-bar-track{height:8px;background:rgba(255,255,255,.06);border-radius:50px;overflow:hidden;}
+.timer-bar-fill{height:100%;border-radius:50px;transition:width .25s linear,background .5s;background:var(--green);}
+.timer-num{font-family:'Orbitron',sans-serif;font-size:.8rem;text-align:right;margin-top:4px;color:var(--green);}
+
+/* ── ANSWER BLANKS ── */
+.blanks{
+  display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:20px;
+}
+.blank{
+  width:clamp(36px,9vw,50px);height:clamp(42px,10vw,54px);
+  border-radius:8px;
+  border:2px solid rgba(0,245,255,.25);
+  background:rgba(0,245,255,.04);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.1rem,4vw,1.5rem);
+  color:var(--neon);
+  cursor:pointer;user-select:none;
+  transition:all .2s;
+  position:relative;
+}
+.blank.filled{border-color:var(--neon);background:rgba(0,245,255,.10);animation:blankPop .2s cubic-bezier(.34,1.56,.64,1);}
+.blank.correct{border-color:var(--green);background:rgba(57,255,20,.12);color:var(--green);box-shadow:0 0 12px rgba(57,255,20,.3);}
+.blank.wrong{border-color:var(--neon2);background:rgba(255,45,120,.10);animation:blankShake .4s ease;}
+@keyframes blankPop{0%{transform:scale(.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes blankShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px);}40%{transform:translateX(5px);}60%{transform:translateX(-3px);}80%{transform:translateX(3px);}}
+
+/* ── TILES ── */
+.tiles-section-label{font-size:.55rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);text-align:center;margin-bottom:8px;font-weight:700;}
+.tiles{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;min-height:58px;}
+.tile{
+  width:clamp(40px,10vw,52px);height:clamp(46px,11vw,56px);
+  border-radius:8px;
+  background:var(--panel2);
+  border:2px solid rgba(0,245,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.1rem,4.5vw,1.4rem);
+  color:var(--text);
+  cursor:pointer;user-select:none;
+  box-shadow:0 4px 0 rgba(0,245,255,.2), 0 6px 16px rgba(0,0,0,.4);
+  transition:transform .1s,box-shadow .1s,opacity .15s;
+  animation:tileIn .3s cubic-bezier(.34,1.56,.64,1) both;
+}
+.tile:hover{transform:translateY(-3px) scale(1.07);border-color:var(--neon);box-shadow:0 7px 0 rgba(0,245,255,.2),0 0 20px rgba(0,245,255,.2);}
+.tile:active{transform:translateY(2px) scale(.96);box-shadow:0 1px 0 rgba(0,245,255,.2);}
+.tile.used{opacity:0;pointer-events:none;transform:scale(.4);}
+@keyframes tileIn{from{transform:scale(0) rotate(-20deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+
+/* ── TYPE INPUT ── */
+.type-area{display:none;text-align:center;margin-bottom:16px;}
+.type-input{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.2rem,4vw,1.6rem);
+  text-align:center;
+  background:rgba(0,245,255,.06);
+  border:2px solid rgba(0,245,255,.3);
+  border-radius:10px;
+  padding:12px 18px;
+  width:100%;max-width:320px;
+  outline:none;
+  letter-spacing:6px;
+  color:var(--neon);
+  caret-color:var(--neon);
+  transition:border-color .2s, box-shadow .2s;
+}
+.type-input:focus{border-color:var(--neon);box-shadow:0 0 20px rgba(0,245,255,.2);}
+
+/* ── HINT BUTTON ── */
+.actions{display:flex;justify-content:center;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.btn{
+  padding:10px 20px;border-radius:8px;border:none;
+  font-family:'Exo 2',sans-serif;font-size:.88rem;font-weight:800;
+  cursor:pointer;transition:transform .12s,box-shadow .12s;
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.5px;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn:active{transform:translateY(1px);}
+.btn-hear{background:rgba(0,245,255,.12);border:1.5px solid rgba(0,245,255,.4);color:var(--neon);}
+.btn-hear:hover{box-shadow:0 0 16px rgba(0,245,255,.2);}
+.btn-hint{background:rgba(255,215,0,.10);border:1.5px solid rgba(255,215,0,.4);color:var(--gold);}
+.btn-hint:hover{box-shadow:0 0 16px rgba(255,215,0,.2);}
+.btn-clear{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);color:var(--dim);}
+.btn-skip{background:rgba(255,45,120,.08);border:1.5px solid rgba(255,45,120,.3);color:var(--neon2);}
+.btn-timer{background:rgba(57,255,20,.10);border:1.5px solid rgba(57,255,20,.3);color:var(--green);}
+.btn-timer.on{background:rgba(57,255,20,.2);box-shadow:0 0 14px rgba(57,255,20,.2);}
+
+/* ── FEEDBACK ── */
+.feedback{text-align:center;font-size:.85rem;font-weight:700;min-height:22px;margin-top:10px;transition:opacity .3s;letter-spacing:.5px;}
+.feedback.bad{color:var(--neon2);}
+.feedback.good{color:var(--green);}
+
+/* ── STREAK ── */
+.streak-banner{
+  display:none;
+  text-align:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:.75rem;
+  color:var(--orange);
+  text-shadow:0 0 12px rgba(255,140,0,.5);
+  margin-bottom:10px;
+  letter-spacing:2px;
+  animation:streakPulse .4s ease;
+}
+@keyframes streakPulse{0%{transform:scale(0.7);}100%{transform:scale(1);}}
+
+/* ── SUCCESS OVERLAY ── */
+.success-overlay{
+  position:absolute;inset:0;
+  background:rgba(8,8,24,.94);
+  border-radius:18px;
+  display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  z-index:10;animation:overlayIn .25s ease;
+}
+.success-overlay.show{display:flex;}
+@keyframes overlayIn{from{opacity:0;}to{opacity:1;}}
+.success-emoji-big{font-size:4.5rem;animation:bigBounce .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes bigBounce{from{transform:scale(0)rotate(-10deg);}to{transform:scale(1)rotate(0);}}
+.success-headline{font-family:'Orbitron',sans-serif;font-size:1.4rem;color:var(--green);text-shadow:0 0 20px rgba(57,255,20,.5);}
+.success-spelled{font-family:'Orbitron',sans-serif;font-size:1.8rem;color:var(--neon);letter-spacing:6px;text-shadow:0 0 20px rgba(0,245,255,.5);}
+.success-xp{color:var(--gold);font-size:.9rem;font-weight:800;letter-spacing:1px;}
+.success-stars-row{font-size:1.6rem;letter-spacing:4px;}
+.btn-next-main{
+  margin-top:6px;padding:12px 28px;border-radius:8px;border:none;
+  background:linear-gradient(135deg,var(--neon),var(--purple));
+  color:#000;font-family:'Exo 2',sans-serif;font-size:1rem;font-weight:800;
+  cursor:pointer;box-shadow:0 0 24px rgba(0,245,255,.3);
+  transition:transform .15s,box-shadow .15s;letter-spacing:1px;
+}
+.btn-next-main:hover{transform:scale(1.05);box-shadow:0 0 36px rgba(0,245,255,.5);}
+
+/* ── MODE BAR ── */
+.mode-bar{display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.mode-chip{
+  padding:6px 16px;border-radius:50px;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);
+  font-size:.75rem;font-weight:800;color:var(--dim);cursor:pointer;transition:all .2s;
+  letter-spacing:.5px;
+}
+.mode-chip.active{background:rgba(0,245,255,.1);border-color:rgba(0,245,255,.5);color:var(--neon);box-shadow:0 0 14px rgba(0,245,255,.15);}
+
+/* ── ACHIEVEMENTS ── */
+.achievement-toast{
+  position:fixed;bottom:24px;right:16px;
+  background:var(--panel2);border:1.5px solid var(--gold);
+  border-radius:12px;padding:12px 18px;
+  font-size:.82rem;font-weight:800;color:var(--gold);
+  box-shadow:0 0 24px rgba(255,215,0,.3);
+  transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  z-index:100;max-width:220px;text-align:center;
+}
+.achievement-toast.show{transform:translateX(0);}
+
+/* ── CONFETTI ── */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:99;}
+.cp{position:absolute;width:10px;height:10px;top:-20px;animation:cpFall linear forwards;border-radius:2px;}
+@keyframes cpFall{0%{transform:translateY(0)rotate(0);opacity:1;}100%{transform:translateY(110vh)rotate(600deg);opacity:0;}}
+
+/* ── COMPLETED ── */
+#completedScreen{
+  display:none;
+  text-align:center;padding:40px 20px;
+}
+.trophy-big{font-size:5rem;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+#completedScreen h2{font-family:'Orbitron',sans-serif;font-size:2rem;color:var(--neon);margin:16px 0 8px;text-shadow:0 0 20px rgba(0,245,255,.4);}
+#completedScreen .final-stats{display:flex;justify-content:center;gap:16px;margin:16px 0;flex-wrap:wrap;}
+#completedScreen .stat-chip{
+  background:var(--panel);border:1px solid rgba(0,245,255,.2);
+  border-radius:10px;padding:10px 20px;
+  font-family:'Orbitron',sans-serif;font-size:.9rem;
+}
+#completedScreen p{color:var(--dim);font-size:.9rem;margin-bottom:20px;}
+.btn-restart{
+  padding:14px 36px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--neon2),var(--purple));
+  color:white;font-family:'Exo 2',sans-serif;font-size:1.05rem;font-weight:800;
+  cursor:pointer;box-shadow:0 0 24px rgba(255,45,120,.3);
+  transition:transform .15s;letter-spacing:1px;
+}
+.btn-restart:hover{transform:scale(1.05);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:400px){.hud{grid-template-columns:repeat(2,1fr);}.card{padding:18px 14px;}}
+</style>
+</head>
+<body>
+<div class="confetti-wrap" id="confettiWrap"></div>
+<div class="achievement-toast" id="achieveToast">🏅 Achievement!</div>
+
+<div class="wrapper">
+  <header>
+    <div class="logo">WORD <span>BLASTER</span> 🚀</div>
+    <div class="tagline">Spelling Arcade · Level Up Your Brain</div>
+  </header>
+
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-box cyan">
+      <div class="hud-label">Score</div>
+      <div class="hud-val cyan" id="hudScore">0</div>
+    </div>
+    <div class="hud-box pink">
+      <div class="hud-label">Streak</div>
+      <div class="hud-val pink" id="hudStreak">0🔥</div>
+    </div>
+    <div class="hud-box gold">
+      <div class="hud-label">Correct</div>
+      <div class="hud-val gold" id="hudCorrect">0</div>
+    </div>
+    <div class="hud-box green">
+      <div class="hud-label">Hints</div>
+      <div class="hud-val green" id="hudHints">3💡</div>
+    </div>
+  </div>
+
+  <!-- XP Bar -->
+  <div class="xp-wrap">
+    <div class="xp-row">
+      <div class="xp-level" id="xpLevel">⚡ LEVEL 1</div>
+      <div class="xp-label" id="xpLabel">0 / 100 XP</div>
+    </div>
+    <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+  </div>
+
+  <!-- Mode bar -->
+  <div class="mode-bar">
+    <div class="mode-chip active" id="chip-tiles" onclick="setMode('tiles')">🔠 Tiles</div>
+    <div class="mode-chip" id="chip-type" onclick="setMode('type')">⌨️ Type It</div>
+    <div class="mode-chip" id="chip-timer" onclick="toggleTimer()">⏱ Timer Off</div>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="card" id="mainCard">
+    <div class="card-glow"></div>
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-emoji-big" id="sucEmoji">🎉</div>
+      <div class="success-headline" id="sucHeadline">CORRECT!</div>
+      <div class="success-spelled" id="sucSpelled">WORD</div>
+      <div class="success-stars-row" id="sucStars">⭐⭐⭐</div>
+      <div class="success-xp" id="sucXP">+50 XP</div>
+      <button class="btn-next-main" onclick="nextWord()">NEXT WORD ▶</button>
+    </div>
+
+    <div id="gameArea">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div class="cat-badge" id="catBadge">Science</div>
+        <div class="word-num" id="wordNum">#1</div>
+      </div>
+
+      <div class="diff-row">
+        <div class="diff-stars" id="diffStars">⭐⭐⭐</div>
+        <div style="font-size:.62rem;color:var(--dim);font-weight:700;" id="wordLen">? letters</div>
+      </div>
+
+      <!-- Streak banner -->
+      <div class="streak-banner" id="streakBanner">🔥 3× STREAK! BONUS XP!</div>
+
+      <!-- Hint card -->
+      <div class="hint-card">
+        <div class="hint-icon" id="hintIcon">💬</div>
+        <div class="hint-text" id="hintText">Loading…</div>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer-wrap" id="timerWrap">
+        <div class="timer-bar-track"><div class="timer-bar-fill" id="timerFill" style="width:100%"></div></div>
+        <div class="timer-num" id="timerNum">20s</div>
+      </div>
+
+      <!-- Blanks -->
+      <div class="blanks" id="blanks"></div>
+
+      <!-- Type area -->
+      <div class="type-area" id="typeArea">
+        <input class="type-input" id="typeInput" type="text"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          placeholder="type & press Enter…"
+          oninput="onTypeInput()" onkeydown="onTypeKey(event)">
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <!-- Tiles -->
+      <div class="tiles-section-label" id="tilesLabel">— SELECT LETTERS —</div>
+      <div class="tiles" id="tiles"></div>
+
+      <!-- Buttons -->
+      <div class="actions">
+        <button class="btn btn-hear"  onclick="speakWord()">🔊 Hear</button>
+        <button class="btn btn-hint"  onclick="useHint()" id="btnHint">💡 Hint</button>
+        <button class="btn btn-clear" onclick="clearAnswer()">↩ Clear</button>
+        <button class="btn btn-skip"  onclick="skipWord()">⏭ Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETED -->
+  <div class="card" id="completedScreen">
+    <div class="trophy-big">🏆</div>
+    <h2>MISSION COMPLETE!</h2>
+    <p id="completedSub">You defeated all the words!</p>
+    <div class="final-stats" id="finalStats"></div>
+    <button class="btn-restart" onclick="restartGame()">🔄 PLAY AGAIN</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  WORD DATABASE  (Grade 2–4 level)
+// ══════════════════════════════════════════════
+const WORDS = [
+  // ── ★ Easy (1-star) ──────────────────────────
+  {word:"able",    def:"Having the power to do something",       sentence:"She was ___ to run very fast.",          cat:"Common",    diff:1, emoji:"💪"},
+  {word:"both",    def:"Two things together",                    sentence:"___ cats were sleeping.",                cat:"Common",    diff:1, emoji:"👯"},
+  {word:"city",    def:"A large town where many people live",    sentence:"We drove to the ___.",                   cat:"Places",    diff:1, emoji:"🏙️"},
+  {word:"copy",    def:"To make something the same as another",  sentence:"Please ___ the answers.",                cat:"Actions",   diff:1, emoji:"📄"},
+  {word:"dark",    def:"Without light",                          sentence:"It was ___ outside at night.",           cat:"Describing",diff:1, emoji:"🌑"},
+  {word:"draw",    def:"To make a picture with a pencil",        sentence:"I love to ___ animals.",                 cat:"Arts",      diff:1, emoji:"✏️"},
+  {word:"drop",    def:"To let something fall",                  sentence:"Don't ___ the glass!",                   cat:"Actions",   diff:1, emoji:"💧"},
+  {word:"drum",    def:"A musical instrument you hit",           sentence:"He played the ___ in the band.",         cat:"Music",     diff:1, emoji:"🥁"},
+  {word:"dust",    def:"Tiny dry particles in the air",          sentence:"There was ___ on the shelf.",            cat:"Nature",    diff:1, emoji:"🌫️"},
+  {word:"easy",    def:"Not hard or difficult",                  sentence:"The test was ___.",                      cat:"Describing",diff:1, emoji:"😌"},
+  {word:"else",    def:"Other or different",                     sentence:"Do you want anything ___?",              cat:"Common",    diff:1, emoji:"🔀"},
+  {word:"even",    def:"Flat and smooth, or also",               sentence:"___ numbers can be divided by two.",     cat:"Math",      diff:1, emoji:"⚖️"},
+  {word:"face",    def:"The front part of your head",            sentence:"She smiled on her ___.",                 cat:"Body",      diff:1, emoji:"😊"},
+  {word:"fact",    def:"Something that is true",                 sentence:"That is an interesting ___.",            cat:"Common",    diff:1, emoji:"📌"},
+  {word:"fair",    def:"Treating everyone equally",              sentence:"The teacher was ___ to all students.",   cat:"Describing",diff:1, emoji:"⚖️"},
+  {word:"fall",    def:"To drop down from a higher place",       sentence:"Leaves ___ in autumn.",                  cat:"Actions",   diff:1, emoji:"🍂"},
+  {word:"farm",    def:"Land used to grow food or keep animals", sentence:"We visited a ___ with horses.",          cat:"Places",    diff:1, emoji:"🚜"},
+  {word:"felt",    def:"Past tense of feel",                     sentence:"She ___ happy after winning.",           cat:"Common",    diff:1, emoji:"😄"},
+  {word:"fill",    def:"To put something into a container",      sentence:"Please ___ the cup with water.",         cat:"Actions",   diff:1, emoji:"🥛"},
+  {word:"fish",    def:"An animal that lives in water",          sentence:"We caught a ___ in the river.",          cat:"Animals",   diff:1, emoji:"🐟"},
+  {word:"flag",    def:"A piece of cloth representing a country",sentence:"The ___ blew in the wind.",             cat:"Social",    diff:1, emoji:"🚩"},
+  {word:"flat",    def:"Smooth and level, with no bumps",        sentence:"The road was completely ___.",           cat:"Describing",diff:1, emoji:"📏"},
+  {word:"flew",    def:"Past tense of fly",                      sentence:"The bird ___ away quickly.",             cat:"Actions",   diff:1, emoji:"🐦"},
+  {word:"flow",    def:"To move smoothly like water",            sentence:"The river ___ to the sea.",              cat:"Nature",    diff:1, emoji:"🌊"},
+  {word:"fold",    def:"To bend something over itself",          sentence:"Please ___ the paper in half.",          cat:"Actions",   diff:1, emoji:"📄"},
+  {word:"folk",    def:"People, or traditional culture",         sentence:"___ music has old traditional songs.",   cat:"Culture",   diff:1, emoji:"🎵"},
+  {word:"fond",    def:"Having a liking for something",          sentence:"She is ___ of chocolate.",               cat:"Feelings",  diff:1, emoji:"❤️"},
+  {word:"food",    def:"Things you eat to survive",              sentence:"I love to cook ___.",                    cat:"Food",      diff:1, emoji:"🍽️"},
+  {word:"foot",    def:"The part of your leg you stand on",      sentence:"My ___ hurts after walking.",            cat:"Body",      diff:1, emoji:"🦶"},
+  {word:"fort",    def:"A strong building used for protection",  sentence:"They built a ___ from pillows.",         cat:"History",   diff:1, emoji:"🏰"},
+  {word:"frog",    def:"A small green animal that can jump",     sentence:"A ___ jumped into the pond.",            cat:"Animals",   diff:1, emoji:"🐸"},
+  {word:"fuel",    def:"Something burned to make energy",        sentence:"The car needed ___.",                    cat:"Science",   diff:1, emoji:"⛽"},
+  {word:"gain",    def:"To get something new",                   sentence:"You will ___ more knowledge every day.", cat:"Common",    diff:1, emoji:"📈"},
+  {word:"gale",    def:"A very strong wind",                     sentence:"The ___ blew the trees sideways.",       cat:"Weather",   diff:1, emoji:"💨"},
+  {word:"gave",    def:"Past tense of give",                     sentence:"She ___ him a present.",                 cat:"Common",    diff:1, emoji:"🎁"},
+  {word:"glow",    def:"A soft steady light",                    sentence:"The fire had a warm ___.",               cat:"Nature",    diff:1, emoji:"✨"},
+  {word:"goal",    def:"Something you are trying to achieve",    sentence:"My ___ is to read 10 books.",            cat:"Common",    diff:1, emoji:"🎯"},
+  {word:"gold",    def:"A precious yellow metal",                sentence:"The ring was made of ___.",              cat:"Science",   diff:1, emoji:"🥇"},
+  {word:"grew",    def:"Past tense of grow",                     sentence:"The plant ___ tall in the sun.",         cat:"Nature",    diff:1, emoji:"🌱"},
+  {word:"grip",    def:"To hold something tightly",              sentence:"___ the handle firmly.",                 cat:"Actions",   diff:1, emoji:"✊"},
+  {word:"gust",    def:"A sudden strong rush of wind",           sentence:"A ___ of wind blew my hat off.",        cat:"Weather",   diff:1, emoji:"💨"},
+
+  // ── ★★ Medium (2-star) ──────────────────────
+  {word:"above",   def:"Higher than something else",             sentence:"The bird flew ___ the clouds.",          cat:"Direction", diff:2, emoji:"⬆️"},
+  {word:"adult",   def:"A fully grown person",                   sentence:"An ___ is someone over 18.",             cat:"People",    diff:2, emoji:"👨"},
+  {word:"agree",   def:"To have the same opinion as someone",    sentence:"I ___ with your decision.",              cat:"Common",    diff:2, emoji:"🤝"},
+  {word:"alarm",   def:"A device that makes a loud noise to wake you",sentence:"My ___ woke me up at 7am.",        cat:"Things",    diff:2, emoji:"⏰"},
+  {word:"album",   def:"A collection of songs or photos",        sentence:"She made an ___ of her photos.",         cat:"Arts",      diff:2, emoji:"📸"},
+  {word:"alive",   def:"Living and not dead",                    sentence:"The plant is still ___.",                cat:"Science",   diff:2, emoji:"🌱"},
+  {word:"allow",   def:"To let something happen",                sentence:"Please ___ me to help.",                 cat:"Common",    diff:2, emoji:"✅"},
+  {word:"alone",   def:"Without anyone else",                    sentence:"She sat ___ in the library.",            cat:"Common",    diff:2, emoji:"🧍"},
+  {word:"along",   def:"Moving forward on a path",               sentence:"We walked ___ the river.",               cat:"Direction", diff:2, emoji:"🛣️"},
+  {word:"angle",   def:"The space between two lines that meet",  sentence:"A right ___ is 90 degrees.",             cat:"Math",      diff:2, emoji:"📐"},
+  {word:"angry",   def:"Feeling strong displeasure",             sentence:"He was ___ when his toy broke.",         cat:"Feelings",  diff:2, emoji:"😠"},
+  {word:"apart",   def:"Separated from each other",              sentence:"The two schools are far ___.",           cat:"Common",    diff:2, emoji:"↔️"},
+  {word:"apple",   def:"A round red or green fruit",             sentence:"She ate an ___ every day.",              cat:"Food",      diff:2, emoji:"🍎"},
+  {word:"apply",   def:"To put something on, or to ask for",     sentence:"You must ___ sunscreen in the sun.",     cat:"Actions",   diff:2, emoji:"🖊️"},
+  {word:"argue",   def:"To disagree strongly with someone",      sentence:"Please don't ___ in class.",             cat:"Actions",   diff:2, emoji:"🗣️"},
+  {word:"aside",   def:"To one side, out of the way",            sentence:"She stepped ___ to let him pass.",       cat:"Direction", diff:2, emoji:"↔️"},
+  {word:"atlas",   def:"A book of maps",                         sentence:"Find Africa in the ___.",                cat:"Geography", diff:2, emoji:"🗺️"},
+  {word:"avoid",   def:"To stay away from something",            sentence:"___ crossing the road without looking.", cat:"Actions",   diff:2, emoji:"🚫"},
+  {word:"award",   def:"A prize given for achievement",          sentence:"She won an ___ for best spelling.",      cat:"School",    diff:2, emoji:"🏆"},
+  {word:"badly",   def:"In a poor or harmful way",               sentence:"He fell ___ off his bike.",              cat:"Common",    diff:2, emoji:"😬"},
+  {word:"basic",   def:"Simple and most important",              sentence:"Addition is a ___ math skill.",          cat:"Common",    diff:2, emoji:"📚"},
+  {word:"beach",   def:"Sandy land next to the sea",             sentence:"We built castles on the ___.",           cat:"Places",    diff:2, emoji:"🏖️"},
+  {word:"below",   def:"At a lower level than",                  sentence:"Fish swim ___ the water's surface.",     cat:"Direction", diff:2, emoji:"⬇️"},
+  {word:"bench",   def:"A long seat for several people",         sentence:"We sat on a park ___.",                  cat:"Things",    diff:2, emoji:"🪑"},
+  {word:"brave",   def:"Not afraid to face danger",              sentence:"The ___ firefighter saved the cat.",     cat:"Describing",diff:2, emoji:"🦁"},
+  {word:"break",   def:"To separate into pieces",                sentence:"Careful, don't ___ the glass.",          cat:"Actions",   diff:2, emoji:"💥"},
+  {word:"brick",   def:"A rectangular block used to build walls",sentence:"The house was made of red ___.",        cat:"Materials", diff:2, emoji:"🧱"},
+  {word:"brief",   def:"Short in time or length",                sentence:"She gave a ___ answer.",                 cat:"Describing",diff:2, emoji:"⏱️"},
+  {word:"bright",  def:"Giving out or reflecting a lot of light",sentence:"The sun is ___ today.",                 cat:"Describing",diff:2, emoji:"☀️"},
+  {word:"bring",   def:"To carry something with you",            sentence:"Please ___ your books to class.",        cat:"Actions",   diff:2, emoji:"🎒"},
+  {word:"broad",   def:"Wide or large",                          sentence:"They walked down the ___ street.",       cat:"Describing",diff:2, emoji:"↔️"},
+  {word:"brook",   def:"A small stream of water",                sentence:"A ___ flowed through the forest.",       cat:"Nature",    diff:2, emoji:"🏞️"},
+  {word:"brush",   def:"A tool with bristles used for cleaning or painting",sentence:"Use a ___ to clean your teeth.",cat:"Things", diff:2, emoji:"🪥"},
+  {word:"build",   def:"To make something by putting parts together",sentence:"They will ___ a new school here.",  cat:"Actions",   diff:2, emoji:"🏗️"},
+  {word:"burst",   def:"To suddenly break open",                 sentence:"The balloon will ___ if you poke it.",   cat:"Actions",   diff:2, emoji:"💥"},
+  {word:"cabin",   def:"A small simple house, often made of wood",sentence:"We stayed in a ___ in the forest.",    cat:"Places",    diff:2, emoji:"🏕️"},
+  {word:"camel",   def:"A large animal with humps on its back",  sentence:"A ___ can survive for weeks without water.",cat:"Animals",diff:2, emoji:"🐪"},
+  {word:"candy",   def:"A sweet sugary food",                    sentence:"She got ___ at the party.",              cat:"Food",      diff:2, emoji:"🍬"},
+  {word:"carry",   def:"To hold something and take it somewhere",sentence:"Can you ___ these books for me?",       cat:"Actions",   diff:2, emoji:"🏋️"},
+  {word:"catch",   def:"To grab something that is moving",       sentence:"Try to ___ the ball!",                  cat:"Actions",   diff:2, emoji:"⚾"},
+  {word:"cause",   def:"The reason something happens",           sentence:"What was the ___ of the flood?",         cat:"Science",   diff:2, emoji:"🔍"},
+  {word:"cease",   def:"To stop doing something",                sentence:"The rain did not ___ all day.",          cat:"Common",    diff:2, emoji:"✋"},
+  {word:"chase",   def:"To run after something",                 sentence:"The dog will ___ the cat.",              cat:"Actions",   diff:2, emoji:"🐕"},
+  {word:"cheap",   def:"Not costing much money",                 sentence:"The sale made everything very ___.",     cat:"Describing",diff:2, emoji:"💸"},
+  {word:"check",   def:"To look at something carefully",         sentence:"Please ___ your work before handing in.",cat:"Actions",  diff:2, emoji:"✅"},
+  {word:"cheek",   def:"The soft area on either side of your face",sentence:"She had a dimple on her ___.",        cat:"Body",      diff:2, emoji:"😊"},
+  {word:"cheer",   def:"To shout with happiness",                sentence:"Let's ___ for our team!",               cat:"Feelings",  diff:2, emoji:"📣"},
+  {word:"chess",   def:"A board game played with 32 pieces",     sentence:"She loves to play ___ after school.",    cat:"Games",     diff:2, emoji:"♟️"},
+  {word:"chief",   def:"The leader of a group",                  sentence:"The ___ of the tribe spoke wisely.",     cat:"People",    diff:2, emoji:"👑"},
+  {word:"child",   def:"A young person",                         sentence:"Every ___ deserves to go to school.",    cat:"People",    diff:2, emoji:"👦"},
+  {word:"chose",   def:"Past tense of choose",                   sentence:"She ___ the red dress.",                 cat:"Common",    diff:2, emoji:"👗"},
+  {word:"civil",   def:"Relating to citizens or being polite",   sentence:"Be ___ and respectful to everyone.",    cat:"Social",    diff:2, emoji:"🤝"},
+  {word:"claim",   def:"To say that something is true",          sentence:"He made a ___ that he was the winner.",  cat:"Common",    diff:2, emoji:"🗣️"},
+  {word:"class",   def:"A group of students taught together",    sentence:"Our ___ has 28 students.",              cat:"School",    diff:2, emoji:"🏫"},
+  {word:"clean",   def:"Free from dirt or mess",                 sentence:"Keep your room ___.",                    cat:"Describing",diff:2, emoji:"✨"},
+  {word:"clear",   def:"Easy to see through, or easy to understand",sentence:"The water in the pool was very ___.",cat:"Describing",diff:2, emoji:"💎"},
+  {word:"clerk",   def:"A person who works in a shop or office", sentence:"The ___ helped us find the right size.", cat:"Jobs",      diff:2, emoji:"👔"},
+  {word:"cliff",   def:"A high steep rock face",                 sentence:"They stood at the edge of the ___.",     cat:"Nature",    diff:2, emoji:"🏔️"},
+  {word:"climb",   def:"To go up using hands and feet",          sentence:"We had to ___ the tall tree.",           cat:"Actions",   diff:2, emoji:"🧗"},
+  {word:"close",   def:"Near, or to shut something",             sentence:"Please ___ the door quietly.",           cat:"Common",    diff:2, emoji:"🚪"},
+  {word:"cloth",   def:"Material used to make clothes",          sentence:"The table had a white ___ on it.",       cat:"Materials", diff:2, emoji:"🧵"},
+  {word:"cloud",   def:"White or grey masses of water vapour in the sky",sentence:"A big ___ covered the sun.",    cat:"Weather",   diff:2, emoji:"☁️"},
+  {word:"coach",   def:"A person who trains athletes",           sentence:"The soccer ___ was very encouraging.",   cat:"People",    diff:2, emoji:"🧑‍🏫"},
+  {word:"coast",   def:"The area where land meets the sea",      sentence:"We drove along the ___.",               cat:"Geography", diff:2, emoji:"🌊"},
+  {word:"coins",   def:"Small round metal pieces of money",      sentence:"She saved her ___ in a jar.",            cat:"Math",      diff:2, emoji:"🪙"},
+  {word:"color",   def:"The appearance of things like red, blue, or green",sentence:"What ___ is your backpack?",  cat:"Arts",      diff:2, emoji:"🎨"},
+
+  // ── ★★★ Hard (3-star) ────────────────────────
+  {word:"absence",   def:"Not being present somewhere",           sentence:"His ___ from school was noticed.",      cat:"Common",    diff:3, emoji:"❓"},
+  {word:"achieve",   def:"To successfully reach a goal",          sentence:"Practice helps you ___ great things.",  cat:"Common",    diff:3, emoji:"🏆"},
+  {word:"ancient",   def:"Very very old, from long ago",          sentence:"Egypt has ___ pyramids.",               cat:"History",   diff:3, emoji:"🏛️"},
+  {word:"balance",   def:"Keeping steady without falling",        sentence:"She walked the beam with perfect ___.", cat:"Science",   diff:3, emoji:"⚖️"},
+  {word:"because",   def:"For the reason that",                   sentence:"She studied ___ she wanted to learn.",  cat:"Common",    diff:3, emoji:"💡"},
+  {word:"believe",   def:"To think something is true",            sentence:"I ___ you can do anything you try.",    cat:"Feelings",  diff:3, emoji:"🙏"},
+  {word:"between",   def:"In the space separating two things",    sentence:"The book was ___ the two shelves.",     cat:"Direction", diff:3, emoji:"↔️"},
+  {word:"breathe",   def:"To take air into your lungs",           sentence:"Remember to ___ deeply when stressed.", cat:"Science",   diff:3, emoji:"🫁"},
+  {word:"calendar",  def:"A chart showing the days, weeks, and months",sentence:"Mark the date on the ___.",       cat:"School",    diff:3, emoji:"📅"},
+  {word:"capture",   def:"To catch and hold someone or something",sentence:"Scientists ___ data from experiments.", cat:"Actions",   diff:3, emoji:"🎯"},
+  {word:"certain",   def:"Completely sure about something",       sentence:"I am ___ that 2+2=4.",                  cat:"Common",    diff:3, emoji:"✅"},
+  {word:"chapter",   def:"One part of a book",                    sentence:"Read the next ___ for homework.",       cat:"Reading",   diff:3, emoji:"📖"},
+  {word:"charity",   def:"Giving help to people in need",         sentence:"They raised money for ___.",            cat:"Social",    diff:3, emoji:"❤️"},
+  {word:"command",   def:"An order telling someone what to do",   sentence:"Follow every ___ carefully.",           cat:"Common",    diff:3, emoji:"📢"},
+  {word:"compare",   def:"To look at differences and similarities",sentence:"___ the size of an ant to an elephant.",cat:"Science", diff:3, emoji:"⚖️"},
+  {word:"complete",  def:"Having all parts, nothing missing",     sentence:"Make sure your work is ___.",           cat:"Common",    diff:3, emoji:"✅"},
+  {word:"conclude",  def:"To decide after thinking carefully",    sentence:"Scientists ___ after analysing results.",cat:"Science", diff:3, emoji:"🔬"},
+  {word:"conduct",   def:"To carry out or manage something",      sentence:"The teacher will ___ the experiment.",   cat:"Science",   diff:3, emoji:"🧪"},
+  {word:"connect",   def:"To join two or more things together",   sentence:"___ the dots to make a picture.",       cat:"Actions",   diff:3, emoji:"🔗"},
+  {word:"contain",   def:"To have something inside",              sentence:"The box will ___ 20 books.",            cat:"Actions",   diff:3, emoji:"📦"},
+  {word:"control",   def:"To be in charge of something",          sentence:"You can ___ your emotions with practice.",cat:"Common",  diff:3, emoji:"🎮"},
+  {word:"correct",   def:"Free from errors; right",               sentence:"Give the ___ answer.",                  cat:"School",    diff:3, emoji:"✅"},
+  {word:"courage",   def:"Bravery when facing something scary",   sentence:"It takes ___ to try something new.",    cat:"Values",    diff:3, emoji:"🦁"},
+  {word:"curious",   def:"Eager to learn or know something",      sentence:"A ___ student asks lots of questions.", cat:"Describing",diff:3, emoji:"🔍"},
+  {word:"current",   def:"Happening now, or the flow of water",   sentence:"Stay up to date with ___ events.",      cat:"Common",    diff:3, emoji:"🌊"},
+  {word:"decided",   def:"Made up your mind about something",     sentence:"She ___ to study extra hard.",          cat:"Actions",   diff:3, emoji:"💡"},
+  {word:"describe",  def:"To say what something is like",         sentence:"Can you ___ your favourite animal?",    cat:"Reading",   diff:3, emoji:"📝"},
+  {word:"develop",   def:"To grow or become more advanced",       sentence:"Athletes ___ strength by training.",    cat:"Science",   diff:3, emoji:"📈"},
+  {word:"diagram",   def:"A simple drawing that explains something",sentence:"Draw a ___ of the water cycle.",      cat:"Science",   diff:3, emoji:"📊"},
+  {word:"diamond",   def:"A very hard precious stone that sparkles",sentence:"A ___ is the hardest natural material.",cat:"Science", diff:3, emoji:"💎"},
+  {word:"difficult", def:"Hard to do or understand",              sentence:"The puzzle was very ___.",               cat:"Common",    diff:3, emoji:"🤯"},
+  {word:"discover",  def:"To find something for the first time",  sentence:"Columbus helped ___ the Americas.",     cat:"History",   diff:3, emoji:"🔭"},
+  {word:"distance",  def:"The length of space between two places",sentence:"What is the ___ between the cities?",  cat:"Math",      diff:3, emoji:"📏"},
+  {word:"dolphin",   def:"A smart sea mammal that swims in groups",sentence:"A ___ is more intelligent than most animals.",cat:"Animals",diff:3, emoji:"🐬"},
+  {word:"element",   def:"A basic substance that cannot be broken down",sentence:"Oxygen is an ___ we breathe.",   cat:"Science",   diff:3, emoji:"⚗️"},
+  {word:"energy",    def:"The power used to do work or move things",sentence:"Solar panels use the sun's ___.",     cat:"Science",   diff:3, emoji:"⚡"},
+  {word:"enough",    def:"As much as needed",                     sentence:"Have you had ___ to eat?",              cat:"Common",    diff:3, emoji:"✅"},
+  {word:"environment",def:"All the surroundings where animals and plants live",sentence:"We must protect our ___.", cat:"Science",   diff:3, emoji:"🌍"},
+  {word:"example",   def:"One thing that shows what others are like",sentence:"A lion is an ___ of a mammal.",     cat:"Common",    diff:3, emoji:"📋"},
+  {word:"except",    def:"Not including something",               sentence:"Everyone came ___ James.",              cat:"Common",    diff:3, emoji:"❌"},
+  {word:"explain",   def:"To make something easy to understand",  sentence:"Can you ___ how rainbows form?",        cat:"Actions",   diff:3, emoji:"🗣️"},
+  {word:"explore",   def:"To travel and discover new places",     sentence:"Scientists ___ the deep ocean.",        cat:"Actions",   diff:3, emoji:"🔭"},
+  {word:"extinct",   def:"No longer existing anywhere",           sentence:"Dinosaurs are now ___.",                cat:"Science",   diff:3, emoji:"🦕"},
+  {word:"feather",   def:"One of the light parts that cover a bird",sentence:"She found a soft ___ on the ground.", cat:"Animals",   diff:3, emoji:"🪶"},
+  {word:"figure",    def:"A shape, or an important person",       sentence:"A triangle is a geometric ___.",        cat:"Math",      diff:3, emoji:"📐"},
+  {word:"finally",   def:"After a long time, at last",            sentence:"She ___ finished the big project.",     cat:"Common",    diff:3, emoji:"🎉"},
+  {word:"gravity",   def:"The force that pulls things towards Earth",sentence:"___ is why apples fall from trees.", cat:"Science",   diff:3, emoji:"🍎"},
+  {word:"habitat",   def:"The natural place where an animal lives",sentence:"The rainforest is a monkey's ___.",   cat:"Science",   diff:3, emoji:"🌿"},
+  {word:"imagine",   def:"To create pictures or ideas in your mind",sentence:"Can you ___ life on another planet?",cat:"Actions",  diff:3, emoji:"💭"},
+  {word:"improve",   def:"To make something better",              sentence:"Reading every day will ___ your skills.",cat:"Common",  diff:3, emoji:"📈"},
+  {word:"include",   def:"To have something as part of a group",  sentence:"The recipe will ___ flour and eggs.",   cat:"Common",    diff:3, emoji:"📦"},
+  {word:"increase",  def:"To become greater in size or number",   sentence:"Exercise will ___ your strength.",      cat:"Math",      diff:3, emoji:"📈"},
+  {word:"instead",   def:"In place of something else",            sentence:"Have water ___ of juice.",              cat:"Common",    diff:3, emoji:"🔄"},
+  {word:"journey",   def:"Travelling from one place to another",  sentence:"The ___ across the country took 3 days.",cat:"Common",  diff:3, emoji:"🗺️"},
+  {word:"knowledge", def:"Things you have learned and understand",sentence:"Reading builds your ___.",              cat:"School",    diff:3, emoji:"🧠"},
+  {word:"language",  def:"The system of words people use to communicate",sentence:"French is a beautiful ___.",    cat:"School",    diff:3, emoji:"🗣️"},
+  {word:"mammal",    def:"A warm-blooded animal that feeds milk to its young",sentence:"A whale is the largest ___.",cat:"Science", diff:3, emoji:"🐋"},
+  {word:"measure",   def:"To find the size or amount of something",sentence:"We need to ___ the length of the room.",cat:"Math",   diff:3, emoji:"📏"},
+  {word:"message",   def:"Information sent from one person to another",sentence:"She sent him a ___.",             cat:"Common",    diff:3, emoji:"💬"},
+  {word:"migrate",   def:"To move from one place to another seasonally",sentence:"Birds ___ south in winter.",     cat:"Science",   diff:3, emoji:"🐦"},
+  {word:"mixture",   def:"Different things combined together",    sentence:"Concrete is a ___ of sand and cement.", cat:"Science",   diff:3, emoji:"🧪"},
+  {word:"natural",   def:"Existing in or produced by nature",     sentence:"Honey is a ___ sweetener.",             cat:"Science",   diff:3, emoji:"🌿"},
+  {word:"nervous",   def:"Feeling worried or anxious",            sentence:"She felt ___ before the big test.",     cat:"Feelings",  diff:3, emoji:"😰"},
+  {word:"observe",   def:"To watch something carefully",          sentence:"Scientists ___ stars through telescopes.",cat:"Science", diff:3, emoji:"🔭"},
+  {word:"ocean",     def:"A very large area of salt water",       sentence:"The Pacific ___ is the biggest.",       cat:"Geography", diff:3, emoji:"🌊"},
+  {word:"opposite",  def:"Completely different from something",   sentence:"Hot is the ___ of cold.",              cat:"Common",    diff:3, emoji:"↔️"},
+  {word:"oxygen",    def:"The gas in air that humans breathe",    sentence:"Plants produce ___ during photosynthesis.",cat:"Science",diff:3, emoji:"💨"},
+  {word:"pattern",   def:"A repeated design or sequence",         sentence:"Stripes are a common ___.",             cat:"Math",      diff:3, emoji:"🔷"},
+  {word:"perhaps",   def:"Maybe; it might happen",                sentence:"___ it will rain tomorrow.",            cat:"Common",    diff:3, emoji:"🤔"},
+  {word:"physical",  def:"Related to the body or natural world",  sentence:"Exercise is good for your ___ health.", cat:"Science",   diff:3, emoji:"💪"},
+  {word:"planet",    def:"A large round object orbiting a star",  sentence:"Earth is a ___ in our solar system.",   cat:"Science",   diff:3, emoji:"🪐"},
+  {word:"pollute",   def:"To make water, air or land dirty and harmful",sentence:"Cars can ___ the air we breathe.",cat:"Science", diff:3, emoji:"🌫️"},
+  {word:"popular",   def:"Liked by many people",                  sentence:"Football is a very ___ sport.",         cat:"Describing",diff:3, emoji:"⭐"},
+  {word:"predict",   def:"To say what you think will happen",     sentence:"Scientists ___ the weather.",           cat:"Science",   diff:3, emoji:"🔮"},
+  {word:"prepare",   def:"To get ready for something",            sentence:"Always ___ for your exams.",            cat:"Actions",   diff:3, emoji:"📚"},
+  {word:"present",   def:"A gift, or being here now",             sentence:"She was ___ at every lesson.",          cat:"Common",    diff:3, emoji:"🎁"},
+  {word:"produce",   def:"To make or grow something",             sentence:"Ghana can ___ cocoa for chocolate.",     cat:"Science",   diff:3, emoji:"🌱"},
+  {word:"protect",   def:"To keep something safe from harm",      sentence:"Sunscreen will ___ your skin.",         cat:"Actions",   diff:3, emoji:"🛡️"},
+  {word:"provide",   def:"To give or supply something",           sentence:"Libraries ___ books for free.",         cat:"Actions",   diff:3, emoji:"📦"},
+  {word:"question",  def:"Something you ask to get information",  sentence:"Raise your hand to ask a ___.",         cat:"School",    diff:3, emoji:"❓"},
+  {word:"recycle",   def:"To process used materials to make new ones",sentence:"We should ___ plastic bottles.",    cat:"Science",   diff:3, emoji:"♻️"},
+  {word:"reflect",   def:"To show an image or think carefully about something",sentence:"Mirrors ___ light.",       cat:"Science",   diff:3, emoji:"🪞"},
+  {word:"research",  def:"Careful study to find new facts",       sentence:"Scientists do ___ in laboratories.",    cat:"Science",   diff:3, emoji:"🔬"},
+  {word:"respect",   def:"Treating someone with care and politeness",sentence:"Show ___ to your teachers.",        cat:"Values",    diff:3, emoji:"🙏"},
+  {word:"revolve",   def:"To move in a circle around something",  sentence:"Earth ___ around the sun once a year.", cat:"Science",   diff:3, emoji:"🪐"},
+  {word:"rhythm",    def:"A regular pattern of beats in music",   sentence:"The ___ of the drum was exciting.",     cat:"Music",     diff:3, emoji:"🥁"},
+  {word:"science",   def:"The study of nature and how things work",sentence:"___ helps us understand the world.",   cat:"School",    diff:3, emoji:"🔬"},
+  {word:"season",    def:"One of the four periods of the year",   sentence:"Summer is my favourite ___.",           cat:"Nature",    diff:3, emoji:"🍂"},
+  {word:"section",   def:"A part of something larger",            sentence:"Read the first ___ of the chapter.",    cat:"Common",    diff:3, emoji:"📑"},
+  {word:"separate",  def:"To keep things apart from each other",  sentence:"___ the light and dark clothes for washing.",cat:"Actions",diff:3, emoji:"↔️"},
+  {word:"serious",   def:"Needing careful attention; not funny",   sentence:"This is a ___ matter.",                cat:"Describing",diff:3, emoji:"😐"},
+  {word:"skeleton",  def:"All the bones in your body",            sentence:"Your ___ holds your body together.",    cat:"Science",   diff:3, emoji:"💀"},
+  {word:"society",   def:"People living together in a community", sentence:"Everyone has a role in ___.",           cat:"Social",    diff:3, emoji:"🌍"},
+  {word:"solution",  def:"The answer to a problem",               sentence:"She found a clever ___ to the puzzle.", cat:"Math",      diff:3, emoji:"💡"},
+  {word:"species",   def:"A group of animals or plants of the same kind",sentence:"The African elephant is an endangered ___.",cat:"Science",diff:3, emoji:"🐘"},
+  {word:"stomach",   def:"The organ in your body that digests food",sentence:"My ___ was growling because I was hungry.",cat:"Science",diff:3, emoji:"🫃"},
+  {word:"strength",  def:"How powerful or strong something is",   sentence:"Exercise builds ___.",                  cat:"Science",   diff:3, emoji:"💪"},
+  {word:"subject",   def:"A topic studied in school",             sentence:"Math is my favourite ___.",             cat:"School",    diff:3, emoji:"📚"},
+  {word:"suggest",   def:"To put forward an idea for others to think about",sentence:"Can you ___ a good book?",   cat:"Actions",   diff:3, emoji:"💡"},
+  {word:"surface",   def:"The outside or top layer of something", sentence:"The ___ of the moon is rocky.",         cat:"Science",   diff:3, emoji:"🌕"},
+  {word:"surprise",  def:"Something unexpected that happens",     sentence:"The party was a complete ___.",         cat:"Feelings",  diff:3, emoji:"🎉"},
+  {word:"symbol",    def:"A shape or sign that stands for something",sentence:"A heart is a ___ of love.",         cat:"Common",    diff:3, emoji:"❤️"},
+  {word:"temperature",def:"How hot or cold something is",         sentence:"The ___ today is 32 degrees.",          cat:"Science",   diff:3, emoji:"🌡️"},
+  {word:"thousand",  def:"The number 1,000",                      sentence:"There are a ___ metres in a kilometre.",cat:"Math",      diff:3, emoji:"🔢"},
+  {word:"through",   def:"Moving from one side to the other",     sentence:"The train went ___ the tunnel.",        cat:"Direction", diff:3, emoji:"🚇"},
+  {word:"together",  def:"With each other; at the same time",     sentence:"Let's work ___ as a team.",             cat:"Common",    diff:3, emoji:"🤝"},
+  {word:"tomorrow",  def:"The day after today",                   sentence:"The test is ___.",                      cat:"Time",      diff:3, emoji:"📅"},
+  {word:"travel",    def:"To go from one place to another",       sentence:"I want to ___ to every continent.",     cat:"Geography", diff:3, emoji:"✈️"},
+  {word:"triangle",  def:"A shape with three sides and three angles",sentence:"A ___ has three corners.",           cat:"Math",      diff:3, emoji:"🔺"},
+  {word:"trophy",    def:"A prize given to the winner",           sentence:"She won a golden ___.",                 cat:"Common",    diff:3, emoji:"🏆"},
+  {word:"trouble",   def:"A problem or difficulty",               sentence:"Don't get into ___.",                   cat:"Common",    diff:3, emoji:"⚠️"},
+  {word:"usually",   def:"In most cases; most of the time",       sentence:"She ___ wakes up at 7am.",              cat:"Common",    diff:3, emoji:"🕰️"},
+  {word:"variety",   def:"A number of different types",           sentence:"The market had a ___ of fruits.",       cat:"Common",    diff:3, emoji:"🎨"},
+  {word:"vegetable", def:"A plant or part of a plant we eat",     sentence:"Carrots are a healthy ___.",            cat:"Food",      diff:3, emoji:"🥕"},
+  {word:"volcano",   def:"A mountain that can erupt with hot lava",sentence:"A ___ erupted on the island.",        cat:"Science",   diff:3, emoji:"🌋"},
+  {word:"whether",   def:"Used to show a choice between two things",sentence:"I don't know ___ to stay or go.",    cat:"Common",    diff:3, emoji:"🤔"},
+  {word:"without",   def:"Not having something",                  sentence:"She left ___ saying goodbye.",          cat:"Common",    diff:3, emoji:"❌"},
+  {word:"wonder",    def:"To think about something with curiosity",sentence:"I ___ why the sky is blue.",           cat:"Science",   diff:3, emoji:"🤔"},
+  {word:"written",   def:"Put down in writing",                   sentence:"The rules are ___ on the board.",       cat:"School",    diff:3, emoji:"✏️"},
+];
+
+// Deduplicate
+const seen = new Set();
+const WORD_LIST = WORDS.filter(w => { if(seen.has(w.word)) return false; seen.add(w.word); return true; });
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+let queue=[], current=null, answer=[], tileOrder=[], tileUsed=[];
+let score=0, streak=0, correct=0, totalTried=0;
+let xp=0, level=1;
+let hints=3, wrongCount=0;
+let mode='tiles', timerOn=false, timerVal=0, timerMax=20, timerID=null;
+let achievements=new Set();
+
+const XP_PER_LEVEL=100;
+const PRAISES=['EXCELLENT!','BRILLIANT!','PERFECT!','AWESOME!','OUTSTANDING!','CORRECT!','STELLAR!','SUPERB!'];
+
+// ══════════════════════════════════════════════
+//  START
+// ══════════════════════════════════════════════
+function restartGame(){
+  // sort by difficulty, then shuffle within each group
+  const easy=shuffle(WORD_LIST.filter(w=>w.diff===1));
+  const med =shuffle(WORD_LIST.filter(w=>w.diff===2));
+  const hard=shuffle(WORD_LIST.filter(w=>w.diff===3));
+  queue=[...easy,...med,...hard];
+  score=0;streak=0;correct=0;totalTried=0;xp=0;level=1;hints=3;wrongCount=0;
+  achievements=new Set();
+  document.getElementById('completedScreen').style.display='none';
+  document.getElementById('mainCard').style.display='block';
+  updateHUD(); updateXP();
+  nextWord();
+}
+
+function setMode(m){
+  mode=m;
+  document.getElementById('chip-tiles').classList.toggle('active',m==='tiles');
+  document.getElementById('chip-type').classList.toggle('active',m==='type');
+  if(current) renderWord();
+}
+
+function toggleTimer(){
+  timerOn=!timerOn;
+  const chip=document.getElementById('chip-timer');
+  chip.textContent=timerOn?'⏱ Timer On':'⏱ Timer Off';
+  chip.classList.toggle('active',timerOn);
+  document.getElementById('timerWrap').style.display=timerOn?'block':'none';
+  if(timerOn && current) startTimer();
+  else stopTimer();
+}
+
+// ══════════════════════════════════════════════
+//  WORD
+// ══════════════════════════════════════════════
+function nextWord(){
+  document.getElementById('successOverlay').classList.remove('show');
+  document.getElementById('feedback').textContent='';
+  document.getElementById('streakBanner').style.display='none';
+  wrongCount=0; stopTimer();
+
+  if(queue.length===0){ showCompleted(); return; }
+  current=queue.shift();
+  answer=Array(current.word.length).fill(null);
+  renderWord();
+  setTimeout(()=>speakWord(),350);
+  if(timerOn) setTimeout(startTimer,400);
+}
+
+function renderWord(){
+  const w=current.word;
+  document.getElementById('catBadge').textContent=current.cat;
+  document.getElementById('wordNum').textContent='#'+(totalTried+1);
+  document.getElementById('diffStars').textContent=
+    '⭐'.repeat(current.diff)+'☆'.repeat(3-current.diff);
+  document.getElementById('wordLen').textContent=w.length+' letters';
+  document.getElementById('hintIcon').textContent=current.emoji;
+  // Show sentence with blank
+  const blanked=current.sentence.replace('___','<span class="hint-word-blank">'+('_').repeat(w.length)+'</span>');
+  document.getElementById('hintText').innerHTML=`<em>${current.def}</em><br><span style="color:#7080a0;font-size:.8rem;">${blanked}</span>`;
+
+  // Blanks
+  const blanksEl=document.getElementById('blanks');
+  blanksEl.innerHTML='';
+  for(let i=0;i<w.length;i++){
+    const b=document.createElement('div');
+    b.className='blank';b.id='blank_'+i;
+    b.setAttribute('data-index',i);
+    b.addEventListener('click',()=>removeLetterAt(i));
+    blanksEl.appendChild(b);
+  }
+
+  const tilesEl=document.getElementById('tiles');
+  const tilesLabel=document.getElementById('tilesLabel');
+  const typeArea=document.getElementById('typeArea');
+
+  if(mode==='tiles'){
+    typeArea.style.display='none';
+    tilesEl.style.display='flex';
+    tilesLabel.style.display='block';
+    tileOrder=shuffle([...w].map((c,i)=>({ch:c,idx:i})));
+    tileUsed=Array(w.length).fill(false);
+    tilesEl.innerHTML='';
+    tileOrder.forEach((t,ti)=>{
+      const el=document.createElement('div');
+      el.className='tile';el.id='tile_'+ti;
+      el.textContent=t.ch.toUpperCase();
+      el.style.animationDelay=(ti*55)+'ms';
+      el.addEventListener('click',()=>placeLetter(ti));
+      tilesEl.appendChild(el);
+    });
+  } else {
+    tilesEl.style.display='none';
+    tilesLabel.style.display='none';
+    typeArea.style.display='block';
+    const inp=document.getElementById('typeInput');
+    inp.value='';
+    setTimeout(()=>inp.focus(),100);
+    answer=Array(w.length).fill(null);
+  }
+  updateBlanks();
+}
+
+// ══════════════════════════════════════════════
+//  TILE MODE
+// ══════════════════════════════════════════════
+function placeLetter(ti){
+  if(tileUsed[ti]) return;
+  const slot=answer.indexOf(null);
+  if(slot===-1) return;
+  answer[slot]={ch:tileOrder[ti].ch,tileIdx:ti};
+  tileUsed[ti]=true;
+  document.getElementById('tile_'+ti).classList.add('used');
+  updateBlanks();
+  if(!answer.includes(null)) checkAnswer();
+}
+
+function removeLetterAt(idx){
+  if(mode!=='tiles'||answer[idx]===null) return;
+  const {tileIdx}=answer[idx];
+  answer[idx]=null; tileUsed[tileIdx]=false;
+  document.getElementById('tile_'+tileIdx).classList.remove('used');
+  updateBlanks();
+}
+
+function clearAnswer(){
+  if(mode==='tiles'){
+    answer=Array(current.word.length).fill(null);
+    tileUsed.fill(false);
+    for(let i=0;i<tileOrder.length;i++){
+      const t=document.getElementById('tile_'+i);
+      if(t) t.classList.remove('used');
+    }
+  } else {
+    document.getElementById('typeInput').value='';
+    answer=Array(current.word.length).fill(null);
+  }
+  updateBlanks();
+  document.getElementById('feedback').textContent='';
+}
+
+function updateBlanks(){
+  for(let i=0;i<current.word.length;i++){
+    const b=document.getElementById('blank_'+i); if(!b) continue;
+    const val=mode==='tiles'?(answer[i]?answer[i].ch:null):answer[i];
+    if(val){ b.textContent=val.toUpperCase(); b.classList.add('filled'); b.classList.remove('wrong','correct'); }
+    else { b.textContent=''; b.classList.remove('filled','wrong','correct'); }
+  }
+}
+
+// ══════════════════════════════════════════════
+//  TYPE MODE
+// ══════════════════════════════════════════════
+function onTypeInput(){
+  const v=document.getElementById('typeInput').value.toLowerCase().replace(/[^a-z]/g,'');
+  document.getElementById('typeInput').value=v;
+  answer=v.split('');
+  while(answer.length<current.word.length) answer.push(null);
+  for(let i=0;i<current.word.length;i++){
+    const b=document.getElementById('blank_'+i); if(!b) continue;
+    if(answer[i]){ b.textContent=answer[i].toUpperCase(); b.classList.add('filled'); b.classList.remove('wrong','correct'); }
+    else { b.textContent=''; b.classList.remove('filled','wrong','correct'); }
+  }
+}
+
+function onTypeKey(e){
+  if(e.key==='Enter'){
+    const v=document.getElementById('typeInput').value.toLowerCase();
+    if(v.length===current.word.length) checkAnswer();
+    else setFeedback('❌ Not enough letters! The word has '+current.word.length+' letters.','bad');
+  }
+}
+
+// ══════════════════════════════════════════════
+//  CHECK
+// ══════════════════════════════════════════════
+function checkAnswer(){
+  const spelled=mode==='tiles'
+    ? answer.map(a=>a?a.ch:'').join('')
+    : document.getElementById('typeInput').value.toLowerCase();
+  if(spelled===current.word) onCorrect();
+  else onWrong();
+}
+
+function onCorrect(){
+  stopTimer();
+  for(let i=0;i<current.word.length;i++){
+    const b=document.getElementById('blank_'+i);
+    if(b){ b.classList.remove('filled','wrong'); b.classList.add('correct'); }
+  }
+  correct++; totalTried++;
+  streak++;
+
+  // Scoring
+  const diffBonus=[0,10,20,35][current.diff];
+  const streakBonus=streak>=5?30:streak>=3?15:0;
+  const hintPenalty=wrongCount*5;
+  const timerBonus=timerOn?Math.round(timerVal/timerMax*20):0;
+  const pts=Math.max(10, diffBonus+streakBonus+timerBonus-hintPenalty);
+  score+=pts;
+
+  const xpGain=Math.max(5, Math.round(pts*0.6));
+  addXP(xpGain);
+  hints=Math.min(hints+( streak%5===0?1:0 ),9);
+
+  updateHUD();
+
+  // Stars
+  const stars=wrongCount===0?3:wrongCount<=2?2:1;
+
+  // Streak banner
+  if(streak>=3){
+    const sb=document.getElementById('streakBanner');
+    sb.textContent='🔥 '+streak+'× STREAK! BONUS XP!';
+    sb.style.display='block';
+  }
+
+  // Success overlay
+  document.getElementById('sucEmoji').textContent=current.emoji;
+  document.getElementById('sucHeadline').textContent=PRAISES[Math.floor(Math.random()*PRAISES.length)];
+  document.getElementById('sucSpelled').textContent=current.word.toUpperCase();
+  document.getElementById('sucStars').textContent='⭐'.repeat(stars);
+  document.getElementById('sucXP').textContent='+'+xpGain+' XP  |  +'+pts+' pts';
+  document.getElementById('successOverlay').classList.add('show');
+  triggerConfetti();
+  speakPraise();
+  checkAchievements();
+}
+
+function onWrong(){
+  wrongCount++; streak=0; updateHUD();
+  for(let i=0;i<current.word.length;i++){
+    const b=document.getElementById('blank_'+i);
+    if(b){ b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),450); }
+  }
+  const msgs=[
+    '❌ Not quite! Listen carefully and try again.',
+    '❌ Oops! Remember to check each letter.',
+    '❌ Almost! Use the hint card to help you.',
+    '❌ Keep going! You can use a 💡 hint.',
+  ];
+  setFeedback(msgs[Math.min(wrongCount-1,msgs.length-1)],'bad');
+  speakWord();
+  if(mode==='tiles'){
+    setTimeout(()=>{
+      answer=Array(current.word.length).fill(null);
+      tileUsed.fill(false);
+      for(let i=0;i<tileOrder.length;i++){
+        const t=document.getElementById('tile_'+i);
+        if(t) t.classList.remove('used');
+      }
+      updateBlanks();
+    },500);
+  } else {
+    document.getElementById('typeInput').value='';
+    answer=Array(current.word.length).fill(null);
+    setTimeout(()=>updateBlanks(),500);
+  }
+}
+
+function skipWord(){
+  stopTimer(); streak=0; totalTried++;
+  setFeedback('⏭ Skipped — the answer was: '+current.word.toUpperCase(),'bad');
+  updateHUD();
+  setTimeout(nextWord, 1800);
+}
+
+function useHint(){
+  if(hints<=0){ setFeedback('No hints left! Earn them by spelling correctly.','bad'); return; }
+  // Reveal one random unrevealed letter in blanks
+  const unrevealed=[];
+  if(mode==='tiles'){
+    for(let i=0;i<current.word.length;i++) if(answer[i]===null) unrevealed.push(i);
+  } else {
+    const val=document.getElementById('typeInput').value;
+    for(let i=val.length;i<current.word.length;i++) unrevealed.push(i);
+  }
+  if(unrevealed.length===0){ setFeedback('Already filled!','bad'); return; }
+  const slot=unrevealed[Math.floor(Math.random()*unrevealed.length)];
+  const ch=current.word[slot];
+  // Flash that blank gold
+  const b=document.getElementById('blank_'+slot);
+  if(b){ b.style.borderColor='var(--gold)'; b.style.background='rgba(255,215,0,.15)'; setTimeout(()=>{ b.style.borderColor=''; b.style.background=''; },800); }
+  setFeedback('💡 The letter at position '+(slot+1)+' is: '+ch.toUpperCase(),'good');
+  hints--; updateHUD();
+}
+
+function setFeedback(msg,type){
+  const el=document.getElementById('feedback');
+  el.textContent=msg; el.className='feedback '+type;
+  el.style.opacity=1;
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.style.opacity=0, 4000);
+}
+
+// ══════════════════════════════════════════════
+//  TIMER
+// ══════════════════════════════════════════════
+function startTimer(){
+  stopTimer();
+  timerVal=timerMax;
+  updateTimerUI();
+  timerID=setInterval(()=>{
+    timerVal--;
+    updateTimerUI();
+    if(timerVal<=0){
+      stopTimer();
+      setFeedback('⏱ Time\'s up! The word was: '+current.word.toUpperCase(),'bad');
+      streak=0; totalTried++; updateHUD();
+      setTimeout(nextWord,2000);
+    }
+  },1000);
+}
+function stopTimer(){ clearInterval(timerID); timerID=null; }
+function updateTimerUI(){
+  const pct=timerVal/timerMax*100;
+  const fill=document.getElementById('timerFill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>50?'var(--green)':pct>25?'var(--orange)':'var(--neon2)';
+  document.getElementById('timerNum').textContent=timerVal+'s';
+  document.getElementById('timerNum').style.color=pct>50?'var(--green)':pct>25?'var(--orange)':'var(--neon2)';
+}
+
+// ══════════════════════════════════════════════
+//  XP & LEVELS
+// ══════════════════════════════════════════════
+function addXP(amount){
+  xp+=amount;
+  while(xp>=XP_PER_LEVEL){ xp-=XP_PER_LEVEL; level++; showAchievement('🚀 LEVEL UP! You are now Level '+level+'!'); }
+  updateXP();
+}
+function updateXP(){
+  document.getElementById('xpLevel').textContent='⚡ LEVEL '+level;
+  document.getElementById('xpLabel').textContent=xp+' / '+XP_PER_LEVEL+' XP';
+  document.getElementById('xpFill').style.width=(xp/XP_PER_LEVEL*100)+'%';
+}
+
+// ══════════════════════════════════════════════
+//  HUD
+// ══════════════════════════════════════════════
+function updateHUD(){
+  document.getElementById('hudScore').textContent=score;
+  document.getElementById('hudStreak').textContent=streak+(streak>=5?'🔥🔥':streak>=3?'🔥':'');
+  document.getElementById('hudCorrect').textContent=correct;
+  document.getElementById('hudHints').textContent=hints+'💡';
+}
+
+// ══════════════════════════════════════════════
+//  ACHIEVEMENTS
+// ══════════════════════════════════════════════
+function checkAchievements(){
+  const toCheck=[
+    [correct===1,'🌟 First Word Conquered!'],
+    [correct===10,'🔥 10 Words Mastered!'],
+    [correct===25,'💥 25 Words - You\'re On Fire!'],
+    [streak===3,'🎯 3 in a Row!'],
+    [streak===5,'⚡ 5× Streak Activated!'],
+    [streak===10,'👑 10× Streak Legend!'],
+    [score>=500,'💰 500 Points!'],
+    [score>=1000,'🏆 1000 Points Unlocked!'],
+    [hints===0,'🧠 No Hints Needed!'],
+  ];
+  toCheck.forEach(([cond,msg])=>{
+    if(cond && !achievements.has(msg)){ achievements.add(msg); showAchievement(msg); }
+  });
+}
+
+function showAchievement(msg){
+  const toast=document.getElementById('achieveToast');
+  toast.textContent='🏅 '+msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t=setTimeout(()=>toast.classList.remove('show'),3200);
+  if(window.speechSynthesis){
+    const u=new SpeechSynthesisUtterance(msg);
+    u.rate=1;u.pitch=1.2;u.volume=0.8;
+    setTimeout(()=>window.speechSynthesis.speak(u),3400);
+  }
+}
+
+// ══════════════════════════════════════════════
+//  SPEECH
+// ══════════════════════════════════════════════
+function speakWord(){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(current.word);
+  u.rate=0.85; u.pitch=1.0; u.volume=1;
+  window.speechSynthesis.speak(u);
+  // Also read definition
+  setTimeout(()=>{
+    const u2=new SpeechSynthesisUtterance(current.def);
+    u2.rate=0.9; u2.pitch=1.0; u2.volume=0.9;
+    window.speechSynthesis.speak(u2);
+  },700);
+}
+function speakPraise(){
+  if(!window.speechSynthesis) return;
+  const p=['Well done!','Correct! Great job!','Fantastic spelling!','You nailed it!','Impressive!'];
+  const u=new SpeechSynthesisUtterance(p[Math.floor(Math.random()*p.length)]);
+  u.rate=1; u.pitch=1.1; u.volume=1;
+  setTimeout(()=>window.speechSynthesis.speak(u),300);
+}
+
+// ══════════════════════════════════════════════
+//  CONFETTI
+// ══════════════════════════════════════════════
+const CC=['#00f5ff','#ff2d78','#ffd700','#39ff14','#bf5fff','#ff8c00'];
+function triggerConfetti(){
+  const wrap=document.getElementById('confettiWrap');
+  for(let i=0;i<55;i++){
+    const p=document.createElement('div');
+    p.className='cp';
+    p.style.left=Math.random()*100+'vw';
+    p.style.background=CC[Math.floor(Math.random()*CC.length)];
+    p.style.width=(8+Math.random()*9)+'px';p.style.height=(8+Math.random()*9)+'px';
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    p.style.animationDuration=(1.4+Math.random()*1.4)+'s';
+    p.style.animationDelay=(Math.random()*.5)+'s';
+    wrap.appendChild(p);
+    setTimeout(()=>p.remove(),3200);
+  }
+}
+
+// ══════════════════════════════════════════════
+//  COMPLETED
+// ══════════════════════════════════════════════
+function showCompleted(){
+  document.getElementById('mainCard').style.display='none';
+  const cs=document.getElementById('completedScreen');
+  cs.style.display='block';
+  document.getElementById('completedSub').textContent=
+    'You spelled all '+WORD_LIST.length+' words!';
+  const acc=totalTried>0?Math.round(correct/totalTried*100):0;
+  document.getElementById('finalStats').innerHTML=`
+    <div class="stat-chip" style="color:var(--neon)">🎯 ${score} pts</div>
+    <div class="stat-chip" style="color:var(--gold)">⭐ ${correct} correct</div>
+    <div class="stat-chip" style="color:var(--green)">📈 ${acc}% accuracy</div>
+    <div class="stat-chip" style="color:var(--purple)">⚡ Level ${level}</div>
+  `;
+  triggerConfetti(); speakPraise();
+}
+
+// ══════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+// ── BOOT ──
+restartGame();
+</script>
+</body>
+</html>
