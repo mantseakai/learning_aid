@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Amazing Bodies</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff9e6; text-align: center; color: #444; padding: 20px; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 30px; border: 6px solid #ffcc00; box-shadow: 0 10px #e6b800; }
+        h1 { color: #ff6600; font-size: 2.5em; margin-bottom: 10px; }
+        .lesson-text { font-size: 1.2em; color: #555; margin-bottom: 20px; border-left: 5px solid #ffcc00; padding-left: 15px; text-align: left; }
+        
+        .game-area { display: flex; justify-content: space-around; margin: 30px 0; }
+        .basket { width: 45%; min-height: 150px; border: 4px dashed #ccc; border-radius: 20px; padding: 10px; background: #fafafa; }
+        .basket h2 { font-size: 1.5em; margin-top: 0; }
+        .basket.pairs { border-color: #4CAF50; background: #e8f5e9; }
+        .basket.single { border-color: #2196F3; background: #e3f2fd; }
+        
+        .parts-bin { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; border-top: 2px solid #eee; }
+        .part-btn { padding: 12px 20px; font-size: 18px; border: none; border-radius: 15px; cursor: pointer; background: #fff; border: 2px solid #ddd; box-shadow: 0 4px #ccc; transition: 0.2s; }
+        .part-btn:hover { transform: scale(1.05); }
+        .part-btn:active { transform: translateY(4px); box-shadow: 0 0; }
+
+        #message { height: 40px; font-weight: bold; font-size: 1.4em; color: #4CAF50; margin-top: 10px; }
+        .celebration { font-size: 50px; display: block; margin: 10px; transition: 0.3s; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Humans: Our Bodies</h1>
+        <div class="lesson-text">
+            "Some body parts come in <strong>pairs</strong>. Others do <strong>not</strong>."
+        </div>
+
+        <div id="celebration-icon" class="celebration">🧍‍♀️</div>
+        <div id="message">Click a part to sort it!</div>
+
+        <div class="game-area">
+            <div id="pairs-basket" class="basket pairs">
+                <h2>Pairs (2)</h2>
+                <div id="pairs-list"></div>
+            </div>
+            <div id="single-basket" class="basket single">
+                <h2>Single (1)</h2>
+                <div id="single-list"></div>
+            </div>
+        </div>
+
+        <div class="parts-bin" id="button-container">
+            </div>
+
+        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px; cursor: pointer; border-radius: 10px; border: 1px solid #999;">Start Over</button>
+    </div>
+
+    <script>
+        const parts = [
+            { name: "Eyes 👀", type: "pair" },
+            { name: "Mouth 👄", type: "single" },
+            { name: "Hands 👐", type: "pair" },
+            { name: "Nose 👃", type: "single" },
+            { name: "Feet 👣", type: "pair" },
+            { name: "Neck 🧣", type: "single" },
+            { name: "Ears 👂", type: "pair" },
+            { name: "Head 👱‍♀️", type: "single" },
+            { name: "Knees 🦵", type: "pair" }
+        ];
+
+        const container = document.getElementById('button-container');
+        const message = document.getElementById('message');
+        const icon = document.getElementById('celebration-icon');
+
+        parts.sort(() => Math.random() - 0.5).forEach(part => {
+            const btn = document.createElement('button');
+            btn.className = 'part-btn';
+            btn.innerText = part.name;
+            btn.onclick = () => sortPart(part, btn);
+            container.appendChild(btn);
+        });
+
+        function sortPart(part, btn) {
+            const targetId = part.type === 'pair' ? 'pairs-list' : 'single-list';
+            document.getElementById(targetId).innerHTML += `<p>${part.name}</p>`;
+            btn.style.display = 'none';
+            
+            message.innerText = "That's right!";
+            icon.style.transform = "scale(1.3) rotate(10deg)";
+            
+            setTimeout(() => {
+                icon.style.transform = "scale(1) rotate(0deg)";
+                if(container.querySelectorAll('.part-btn[style*="display: none"]').length === parts.length) {
+                    message.innerText = "You finished! Great job! 🎉";
+                    icon.innerText = "🥳";
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>

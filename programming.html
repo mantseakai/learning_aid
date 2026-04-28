@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Programming Lesson</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0f9ff; text-align: center; color: #333; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 20px; border: 4px solid #4C97FF; }
+        h1 { color: #4C97FF; margin-bottom: 5px; }
+        .notebook-style { font-style: italic; color: #666; border-bottom: 2px solid #ddd; display: inline-block; margin-bottom: 20px; }
+        
+        #stage { width: 100%; height: 200px; background: #e2f0d9; border: 3px solid #76b041; border-radius: 10px; position: relative; overflow: hidden; margin-bottom: 20px; }
+        #character { width: 50px; height: 50px; font-size: 40px; position: absolute; bottom: 10px; left: 10px; transition: all 0.5s; }
+        
+        .block-area { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .block { padding: 10px 15px; background: #4C97FF; color: white; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; box-shadow: 0 4px #3373cc; }
+        .block:active { box-shadow: 0 0; transform: translateY(4px); }
+        .block.orange { background: #FFAB19; box-shadow: 0 4px #cf8b15; }
+
+        #program-stack { min-height: 50px; border: 2px dashed #ccc; padding: 10px; border-radius: 10px; background: #fafafa; margin-bottom: 10px; }
+        .stack-item { background: #4C97FF; color: white; padding: 5px; margin: 5px; border-radius: 5px; display: inline-block; }
+        
+        .controls { margin-top: 20px; }
+        button.run { background: #4CAF50; color: white; padding: 10px 30px; font-size: 18px; border-radius: 50px; border: none; cursor: pointer; }
+        button.clear { background: #ff4b4b; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Programming for Kids!</h1>
+        <p class="notebook-style">"Programming is giving instructions..."</p>
+
+        <div id="stage">
+            <div id="character">🐱</div>
+        </div>
+
+        <p><strong>Step 1: Pick your Blocks (Instructions)</strong></p>
+        <div class="block-area">
+            <button class="block" onclick="addInstruction('Move Right', 'right')">Move Right ➡️</button>
+            <button class="block" onclick="addInstruction('Jump', 'jump')">Jump ⬆️</button>
+            <button class="block orange" onclick="addInstruction('Spin', 'spin')">Spin 🔄</button>
+        </div>
+
+        <p><strong>Step 2: Your Program (Joined Blocks)</strong></p>
+        <div id="program-stack"></div>
+        <button class="clear" onclick="clearProgram()">Clear Program</button>
+
+        <div class="controls">
+            <button class="run" onclick="runProgram()">▶ Run Program</button>
+        </div>
+    </div>
+
+    <script>
+        let program = [];
+        let posX = 10;
+        const character = document.getElementById('character');
+
+        function addInstruction(name, action) {
+            program.push(action);
+            const stack = document.getElementById('program-stack');
+            const item = document.createElement('span');
+            item.className = 'stack-item';
+            item.innerText = name;
+            stack.appendChild(item);
+        }
+
+        function clearProgram() {
+            program = [];
+            document.getElementById('program-stack').innerHTML = '';
+            posX = 10;
+            character.style.left = '10px';
+            character.style.transform = 'rotate(0deg) translateY(0)';
+        }
+
+        async function runProgram() {
+            for (let action of program) {
+                await executeAction(action);
+            }
+        }
+
+        function executeAction(action) {
+            return new Promise(resolve => {
+                if (action === 'right') {
+                    posX += 50;
+                    character.style.left = posX + 'px';
+                } else if (action === 'jump') {
+                    character.style.transform = 'translateY(-50px)';
+                    setTimeout(() => {
+                        character.style.transform = 'translateY(0)';
+                    }, 250);
+                } else if (action === 'spin') {
+                    character.style.transform = 'rotate(360deg)';
+                    setTimeout(() => {
+                        character.style.transform = 'rotate(0deg)';
+                    }, 500);
+                }
+                setTimeout(resolve, 600);
+            });
+        }
+    </script>
+</body>
+</html>

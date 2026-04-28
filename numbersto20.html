@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numbers 1 to 20 Lab</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fef9f3; color: #333; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 20px; border: 4px solid #9c27b0; box-shadow: 0 8px #7b1fa2; }
+        h1 { color: #9c27b0; margin-bottom: 5px; }
+        .sub-head { color: #666; font-style: italic; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        /* Section 1: Teen Numbers */
+        .section { margin-bottom: 40px; padding: 15px; background: #fdf4ff; border-radius: 15px; }
+        .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .num-card { padding: 15px; background: white; border: 2px solid #ba68c8; border-radius: 10px; cursor: pointer; font-size: 24px; font-weight: bold; transition: 0.2s; }
+        .num-card:hover { background: #ba68c8; color: white; transform: scale(1.1); }
+        #explain-box { margin-top: 15px; min-height: 50px; font-size: 1.2em; color: #7b1fa2; font-weight: bold; }
+
+        /* Section 2: Comparison */
+        .comparison-zone { display: flex; justify-content: space-around; align-items: center; margin-top: 20px; }
+        .group { border: 3px solid #ff9800; border-radius: 15px; padding: 15px; width: 40%; min-height: 120px; background: white; }
+        .emoji-item { font-size: 30px; display: inline-block; cursor: pointer; margin: 2px; }
+        .count-display { font-size: 20px; font-weight: bold; color: #e65100; margin-top: 10px; }
+        
+        .ans-btn { padding: 10px 20px; font-size: 18px; background: #4caf50; color: white; border: none; border-radius: 50px; cursor: pointer; margin: 10px; }
+        .ans-btn:disabled { background: #ccc; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Math Lab: Numbers to 20</h1>
+    <p class="sub-head">"20 is the name for two tens"</p>
+
+    <div class="section">
+        <h3>1. The "Teen" Numbers</h3>
+        <p>Click a number to see its Ten and Ones!</p>
+        <div class="number-grid" id="grid"></div>
+        <div id="explain-box">Click a number above!</div>
+    </div>
+
+    <div class="section">
+        <h3>2. Comparing Numbers</h3>
+        <p>Count the items. Which group is <strong>Greater</strong>?</p>
+        <div class="comparison-zone">
+            <div class="group" id="groupA">
+                <strong>Cups</strong><br>
+                <div id="itemsA"></div>
+                <div class="count-display" id="countA">Count: 0</div>
+            </div>
+            <div class="group" id="groupB">
+                <strong>Bags</strong><br>
+                <div id="itemsB"></div>
+                <div class="count-display" id="countB">Count: 0</div>
+            </div>
+        </div>
+        <div id="comparison-result" style="margin-top: 15px; font-size: 1.3em;"></div>
+        <button class="ans-btn" onclick="checkGreater()">Is 10 greater than 6?</button>
+        <button class="ans-btn" style="background:#2196f3" onclick="resetGame()">New Challenge</button>
+    </div>
+</div>
+
+<script>
+    // Build Number Grid
+    const grid = document.getElementById('grid');
+    for (let i = 11; i <= 20; i++) {
+        let card = document.createElement('div');
+        card.className = 'num-card';
+        card.innerText = i;
+        card.onclick = () => {
+            let tens = i === 20 ? 2 : 1;
+            let ones = i === 20 ? 0 : i - 10;
+            document.getElementById('explain-box').innerText = 
+                `${i} is made of ${tens} Ten and ${ones} Ones!`;
+        };
+        grid.appendChild(card);
+    }
+
+    // Comparison Game
+    let cups = 10;
+    let bags = 6;
+
+    function resetGame() {
+        cups = Math.floor(Math.random() * 10) + 5;
+        bags = Math.floor(Math.random() * 10) + 5;
+        renderItems();
+        document.getElementById('comparison-result').innerText = "";
+    }
+
+    function renderItems() {
+        const divA = document.getElementById('itemsA');
+        const divB = document.getElementById('itemsB');
+        divA.innerHTML = "🥤".repeat(cups);
+        divB.innerHTML = "🛍️".repeat(bags);
+        document.getElementById('countA').innerText = "Count: " + cups;
+        document.getElementById('countB').innerText = "Count: " + bags;
+    }
+
+    function checkGreater() {
+        const msg = document.getElementById('comparison-result');
+        if (cups > bags) {
+            msg.innerHTML = `✅ Yes! <strong>${cups}</strong> is greater than <strong>${bags}</strong>!`;
+            msg.style.color = "green";
+        } else if (bags > cups) {
+            msg.innerHTML = `❌ Actually, <strong>${bags}</strong> is greater than <strong>${cups}</strong>!`;
+            msg.style.color = "red";
+        } else {
+            msg.innerHTML = "They are equal!";
+            msg.style.color = "blue";
+        }
+    }
+
+    renderItems();
+</script>
+
+</body>
+</html>

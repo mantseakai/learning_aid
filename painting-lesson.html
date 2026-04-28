@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎨 Let's Learn About Painting!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF6B9D;
+    --yellow: #FFD93D;
+    --blue: #6BCFFF;
+    --green: #6BCB77;
+    --orange: #FF9F43;
+    --purple: #C77DFF;
+    --red: #FF4757;
+    --bg: #FFF9F0;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E🖌️%3C/text%3E%3C/svg%3E") 4 28, auto;
+  }
+
+  /* Paint splatter background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,107,157,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(107,207,255,0.15) 0%, transparent 35%),
+      radial-gradient(circle at 80% 80%, rgba(107,203,119,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 20% 85%, rgba(255,217,61,0.15) 0%, transparent 35%),
+      radial-gradient(circle at 55% 50%, rgba(199,125,255,0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Floating paint drops */
+  .drop {
+    position: fixed;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity: 0.18;
+    animation: drip linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes drip {
+    0% { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.18; }
+    90% { opacity: 0.18; }
+    100% { transform: translateY(110vh) rotate(20deg); opacity: 0; }
+  }
+
+  .app {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px 16px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 24px 0 8px;
+    position: relative;
+  }
+  .header::before {
+    content: '🎨';
+    font-size: 3.5rem;
+    display: block;
+    animation: wobble 2s ease-in-out infinite;
+  }
+  @keyframes wobble {
+    0%,100% { transform: rotate(-8deg); }
+    50% { transform: rotate(8deg); }
+  }
+  .header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.4rem;
+    color: var(--pink);
+    text-shadow: 4px 4px 0 rgba(255,107,157,0.2);
+    margin: 8px 0 4px;
+    letter-spacing: 1px;
+  }
+  .header p {
+    font-size: 1.05rem;
+    color: #888;
+    font-weight: 700;
+  }
+
+  /* Stars */
+  .stars-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 14px 0 20px;
+  }
+  .star { font-size: 1.8rem; filter: grayscale(1) opacity(0.3); transition: all 0.3s; }
+  .star.lit { filter: none; animation: starPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+  @keyframes starPop { 0%{transform:scale(0)} 60%{transform:scale(1.4) rotate(-15deg)} 100%{transform:scale(1)} }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .tab {
+    padding: 11px 20px;
+    border-radius: 50px;
+    border: 3px solid transparent;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: white;
+    color: #aaa;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+    letter-spacing: 0.5px;
+  }
+  .tab:hover { transform: translateY(-2px); color: #666; }
+  .tab.active { color: white; transform: translateY(-3px); }
+  .tab:nth-child(1).active { background: var(--pink); border-color: #e0558a; box-shadow: 0 4px 0 #c0437a; }
+  .tab:nth-child(2).active { background: var(--orange); border-color: #e08830; box-shadow: 0 4px 0 #c07020; }
+  .tab:nth-child(3).active { background: var(--green); border-color: #4aab56; box-shadow: 0 4px 0 #3a9b46; }
+  .tab:nth-child(4).active { background: var(--blue); border-color: #4aafdf; box-shadow: 0 4px 0 #3a9fcf; }
+
+  /* Panel */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Card */
+  .card {
+    background: white;
+    border-radius: 28px;
+    padding: 24px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.07), 0 16px 32px rgba(0,0,0,0.06);
+  }
+
+  .sec-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---- LEARN: Tool cards ---- */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .tool-card {
+    background: linear-gradient(135deg, #fff5fb, #fff0f8);
+    border-radius: 20px;
+    padding: 18px 14px;
+    text-align: center;
+    border: 2px solid rgba(255,107,157,0.15);
+    transition: transform 0.2s;
+    cursor: default;
+  }
+  .tool-card:hover { transform: translateY(-4px) rotate(-1deg); }
+  .tool-emoji { font-size: 2.8rem; margin-bottom: 8px; display: block; }
+  .tool-name { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--pink); margin-bottom: 4px; }
+  .tool-desc { font-size: 0.88rem; color: #777; font-weight: 700; line-height: 1.5; }
+
+  /* Colours section */
+  .colour-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .colour-blob {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 0 rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .colour-blob:hover { transform: scale(1.15) rotate(-5deg); }
+
+  /* Safety cards */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; }
+  .safety-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #f0fff4, #e8fef0);
+    border-radius: 18px;
+    padding: 16px 18px;
+    border: 2px solid rgba(107,203,119,0.25);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2d6a4f;
+  }
+  .safety-num {
+    width: 36px; height: 36px; min-width: 36px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: white;
+    box-shadow: 0 3px 0 #3a9b46;
+  }
+
+  /* ---- QUIZ: Tool match ---- */
+  .quiz-question {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .quiz-question .big-emoji { font-size: 5rem; display: block; margin-bottom: 10px; animation: bounce 1s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .quiz-question p { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #555; }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .quiz-opt {
+    padding: 16px 12px;
+    border-radius: 18px;
+    border: 3px solid #f0f0f0;
+    background: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.07);
+    text-align: center;
+  }
+  .quiz-opt:hover { transform: translateY(-3px); border-color: var(--yellow); }
+  .quiz-opt.correct { background: #d4edda; color: #155724; border-color: var(--green); box-shadow: 0 4px 0 #3a9b46; animation: correct-pop 0.4s ease; }
+  .quiz-opt.wrong { background: #f8d7da; color: #721c24; border-color: var(--red); animation: shake 0.4s ease; }
+  @keyframes correct-pop { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+  .quiz-feedback {
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.25rem;
+    padding: 14px;
+    border-radius: 16px;
+    margin-top: 14px;
+    display: none;
+  }
+  .quiz-feedback.show-correct { display: block; background: #d4edda; color: #155724; }
+  .quiz-feedback.show-wrong { display: block; background: #f8d7da; color: #721c24; }
+
+  .progress-bar-wrap {
+    background: #f0f0f0;
+    border-radius: 50px;
+    height: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--pink), var(--orange));
+    transition: width 0.5s ease;
+  }
+  .progress-label { font-size: 0.85rem; color: #aaa; font-weight: 700; text-align: right; margin-top: 4px; }
+
+  /* ---- SAFETY QUIZ ---- */
+  .safety-q {
+    background: linear-gradient(135deg, #fffbe6, #fff3cc);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+    border: 3px dashed var(--yellow);
+  }
+  .safety-q .q-emoji { font-size: 4rem; margin-bottom: 8px; display: block; }
+  .safety-q p { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: #7d5a0a; }
+
+  .true-false { display: flex; gap: 14px; justify-content: center; }
+  .tf-btn {
+    padding: 16px 36px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+    color: white;
+  }
+  .tf-btn.true-btn { background: var(--green); box-shadow: 0 5px 0 #3a9b46; }
+  .tf-btn.false-btn { background: var(--red); box-shadow: 0 5px 0 #c0303f; }
+  .tf-btn:hover { transform: translateY(-3px); }
+  .tf-btn:active { transform: translateY(2px); }
+  .tf-btn.correct { outline: 4px solid var(--yellow); }
+  .tf-btn.wrong { opacity: 0.5; }
+
+  /* ---- PAINT CANVAS ---- */
+  .canvas-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 4px solid #f0f0f0;
+    margin-bottom: 14px;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  canvas { display: block; width: 100%; touch-action: none; background: white; }
+  .colour-palette {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 0;
+  }
+  .pal-colour {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.18s;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+  }
+  .pal-colour:hover { transform: scale(1.2); }
+  .pal-colour.selected { border-color: #333; transform: scale(1.15); }
+  .brush-sizes { display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 8px; }
+  .brush-btn {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.07);
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #888;
+  }
+  .brush-btn.selected { background: var(--pink); color: white; border-color: var(--pink); }
+  .brush-btn:hover { transform: translateY(-2px); }
+  .canvas-btns { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .can-btn {
+    padding: 10px 22px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    color: white;
+    transition: all 0.18s;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+  }
+  .can-btn:hover { transform: translateY(-2px); }
+  .eraser-btn { background: #adb5bd; box-shadow: 0 4px 0 #868e96; }
+  .clear-btn { background: var(--red); box-shadow: 0 4px 0 #c0303f; }
+
+  /* Next / buttons */
+  .next-btn {
+    display: block;
+    margin: 16px auto 0;
+    padding: 14px 36px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    background: var(--orange);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #c07020;
+    transition: all 0.18s;
+  }
+  .next-btn:hover { transform: translateY(-3px); }
+  .next-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #c07020; }
+
+  /* Celebration */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlay.show { display: flex; }
+  .cel-box {
+    background: white;
+    border-radius: 32px;
+    padding: 40px 32px;
+    text-align: center;
+    max-width: 300px;
+    animation: zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  @keyframes zoomIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
+  .cel-box .ce { font-size: 3.5rem; display: block; margin-bottom: 8px; }
+  .cel-box h2 { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--pink); margin-bottom: 8px; }
+  .cel-box p { font-size: 1rem; color: #777; margin-bottom: 20px; }
+
+  @media(max-width:460px) {
+    .tool-grid { grid-template-columns: 1fr; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.9rem; }
+    .true-false { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating drops -->
+<script>
+const colours = ['#FF6B9D','#FFD93D','#6BCFFF','#6BCB77','#FF9F43','#C77DFF'];
+for(let i=0;i<14;i++){
+  const d=document.createElement('div');
+  d.className='drop';
+  const s=12+Math.random()*30;
+  d.style.cssText=`width:${s}px;height:${s*1.4}px;background:${colours[Math.floor(Math.random()*colours.length)]};left:${Math.random()*100}%;animation-duration:${6+Math.random()*10}s;animation-delay:${-Math.random()*12}s`;
+  document.body.appendChild(d);
+}
+</script>
+
+<div class="app">
+  <div class="header">
+    <h1>Let's Paint! 🖌️</h1>
+    <p>28th April, 2026 — Term 3</p>
+  </div>
+
+  <div class="stars-row" id="starsRow">
+    <span class="star" id="st1">⭐</span>
+    <span class="star" id="st2">⭐</span>
+    <span class="star" id="st3">⭐</span>
+    <span class="star" id="st4">⭐</span>
+    <span class="star" id="st5">⭐</span>
+    <span class="star" id="st6">⭐</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('learn',this)">📖 Learn</button>
+    <button class="tab" onclick="showTab('toolquiz',this)">🔍 Tools Quiz</button>
+    <button class="tab" onclick="showTab('safetyquiz',this)">🛡️ Safety Quiz</button>
+    <button class="tab" onclick="showTab('paint',this)">🎨 Paint!</button>
+  </div>
+
+  <!-- ===== LEARN ===== -->
+  <div class="panel active" id="tab-learn">
+    <div class="card">
+      <div class="sec-title" style="color:var(--pink)">🎨 What is Painting?</div>
+      <div style="background:linear-gradient(135deg,#fff5fb,#ffe8f4);border-radius:18px;padding:18px;border:2px dashed rgba(255,107,157,0.3)">
+        <p style="font-size:1.05rem;color:#555;line-height:1.8;font-weight:700;">Painting is using <strong style="color:var(--pink)">colours</strong> and a <strong style="color:var(--pink)">brush</strong> to make beautiful pictures! 🖼️</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title" style="color:var(--orange)">🪣 Types of Paint Colours</div>
+      <div class="colour-row">
+        <div class="colour-blob" style="background:#e84393" onclick="this.style.transform='scale(1.3) rotate(10deg)'">Poster<br>colours</div>
+        <div class="colour-blob" style="background:#FF6B9D" onclick="this.style.transform='scale(1.3) rotate(-10deg)'">Acrylic<br>paint</div>
+        <div class="colour-blob" style="background:#6BCFFF;color:#1a6fa8" onclick="this.style.transform='scale(1.3) rotate(10deg)'">Water<br>colours</div>
+      </div>
+      <p style="text-align:center;margin-top:12px;font-size:0.9rem;color:#aaa;font-weight:700;">👆 Tap to squish!</p>
+    </div>
+
+    <div class="card">
+      <div class="sec-title" style="color:var(--purple)">🧰 Tools for Painting</div>
+      <div class="tool-grid">
+        <div class="tool-card">
+          <span class="tool-emoji">🖌️</span>
+          <div class="tool-name">Paintbrush</div>
+          <div class="tool-desc">Used to apply paint onto paper or canvas</div>
+        </div>
+        <div class="tool-card" style="background:linear-gradient(135deg,#f5f0ff,#ede8ff);border-color:rgba(199,125,255,0.15)">
+          <span class="tool-emoji">🎨</span>
+          <div class="tool-name" style="color:var(--purple)">Palette</div>
+          <div class="tool-desc">For mixing colours together</div>
+        </div>
+        <div class="tool-card" style="background:linear-gradient(135deg,#f0fff8,#e0fff0);border-color:rgba(107,203,119,0.2)">
+          <span class="tool-emoji">🥼</span>
+          <div class="tool-name" style="color:var(--green)">Apron</div>
+          <div class="tool-desc">To protect your clothes from paint</div>
+        </div>
+        <div class="tool-card" style="background:linear-gradient(135deg,#fffaf0,#fff3e0);border-color:rgba(255,159,67,0.2)">
+          <span class="tool-emoji">🖼️</span>
+          <div class="tool-name" style="color:var(--orange)">Easel</div>
+          <div class="tool-desc">Holds paper or canvas upright while painting</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title" style="color:var(--green)">🛡️ Care & Safety Rules</div>
+      <div class="safety-list">
+        <div class="safety-item"><div class="safety-num">1</div><span>🧼 Wash brushes after use</span></div>
+        <div class="safety-item"><div class="safety-num">2</div><span>🚫 Do NOT put paint in your mouth</span></div>
+        <div class="safety-item"><div class="safety-num">3</div><span>📦 Keep tools in a safe place</span></div>
+        <div class="safety-item"><div class="safety-num">4</div><span>🥼 Wear an apron to keep clothes clean</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOOL QUIZ ===== -->
+  <div class="panel" id="tab-toolquiz">
+    <div class="card">
+      <div class="sec-title" style="color:var(--orange)">🔍 What Tool Is This?</div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="tqBar" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="tqLabel">Question 1 of 8</div>
+
+      <div class="quiz-question">
+        <span class="big-emoji" id="tqEmoji">🖌️</span>
+        <p id="tqQuestion">I am used to apply paint. What am I?</p>
+      </div>
+
+      <div class="quiz-options" id="tqOptions"></div>
+      <div class="quiz-feedback" id="tqFeedback"></div>
+      <button class="next-btn" id="tqNext" style="display:none" onclick="nextToolQ()">Next ➡️</button>
+    </div>
+  </div>
+
+  <!-- ===== SAFETY QUIZ ===== -->
+  <div class="panel" id="tab-safetyquiz">
+    <div class="card">
+      <div class="sec-title" style="color:var(--green)">🛡️ Is This SAFE or NOT SAFE?</div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="sqBar" style="width:0%;background:linear-gradient(90deg,var(--green),var(--blue))"></div>
+      </div>
+      <div class="progress-label" id="sqLabel">Question 1 of 6</div>
+
+      <div class="safety-q">
+        <span class="q-emoji" id="sqEmoji">🥼</span>
+        <p id="sqQuestion">Wearing an apron while painting.</p>
+      </div>
+
+      <div class="true-false">
+        <button class="tf-btn true-btn" id="tfTrue" onclick="answerSafety(true)">✅ SAFE!</button>
+        <button class="tf-btn false-btn" id="tfFalse" onclick="answerSafety(false)">❌ NOT SAFE!</button>
+      </div>
+      <div class="quiz-feedback" id="sqFeedback"></div>
+      <button class="next-btn" id="sqNext" style="display:none;background:var(--green);box-shadow:0 6px 0 #3a9b46" onclick="nextSafetyQ()">Next ➡️</button>
+    </div>
+  </div>
+
+  <!-- ===== PAINT CANVAS ===== -->
+  <div class="panel" id="tab-paint">
+    <div class="card">
+      <div class="sec-title" style="color:var(--pink)">🎨 Paint Your Picture!</div>
+      <div class="canvas-wrap">
+        <canvas id="myCanvas" height="320"></canvas>
+      </div>
+      <div class="colour-palette" id="palRow"></div>
+      <div class="brush-sizes" id="brushRow"></div>
+      <div class="canvas-btns">
+        <button class="can-btn eraser-btn" onclick="setEraser()">🧹 Eraser</button>
+        <button class="can-btn clear-btn" onclick="clearCanvas()">🗑️ Clear All</button>
+      </div>
+      <p style="text-align:center;margin-top:12px;color:#aaa;font-size:0.9rem;font-weight:700;">👆 Draw with your finger or mouse!</p>
+    </div>
+  </div>
+</div>
+
+<!-- Celebration -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="ce" id="celEmoji">🎉</span>
+    <h2 id="celTitle">Amazing!</h2>
+    <p id="celMsg">You got it right!</p>
+    <button class="next-btn" style="margin:0;width:100%" onclick="closeOverlay()">Keep Going! 🚀</button>
+  </div>
+</div>
+
+<script>
+// ---- Stars ----
+let starCount = 0;
+function addStar() {
+  if (starCount < 6) {
+    starCount++;
+    const s = document.getElementById('st' + starCount);
+    s.classList.add('lit');
+  }
+}
+function celebrate(emoji, title, msg) {
+  document.getElementById('celEmoji').textContent = emoji;
+  document.getElementById('celTitle').textContent = title;
+  document.getElementById('celMsg').textContent = msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function closeOverlay() { document.getElementById('overlay').classList.remove('show'); }
+
+// ---- Tabs ----
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'toolquiz') initToolQuiz();
+  if (id === 'safetyquiz') initSafetyQuiz();
+  if (id === 'paint') initCanvas();
+}
+
+// ====== TOOL QUIZ ======
+const toolQs = [
+  { emoji:'🖌️', q:'I am used to apply paint onto paper. What am I?', answer:'Paintbrush', opts:['Paintbrush','Apron','Easel','Palette'] },
+  { emoji:'🎨', q:'I am used to MIX colours together. What am I?', answer:'Palette', opts:['Paintbrush','Palette','Easel','Apron'] },
+  { emoji:'🥼', q:'I protect your clothes from paint. What am I?', answer:'Apron', opts:['Easel','Paintbrush','Apron','Palette'] },
+  { emoji:'🖼️', q:'I hold your paper upright while you paint. What am I?', answer:'Easel', opts:['Palette','Easel','Apron','Paintbrush'] },
+  { emoji:'💧', q:'Which type of paint uses water?', answer:'Watercolours', opts:['Acrylic paint','Poster colours','Watercolours','Chalk'] },
+  { emoji:'🧼', q:'What should you do with brushes after painting?', answer:'Wash them', opts:['Throw them','Wash them','Leave them dry','Paint more'] },
+  { emoji:'🖌️', q:'After mixing colours, where do you put them?', answer:'On the palette', opts:['On the apron','On the floor','On the easel','On the palette'] },
+  { emoji:'🎨', q:'Painting is using colours and a brush to make...?', answer:'Pictures', opts:['Food','Pictures','Music','Numbers'] },
+];
+
+let tqIdx = 0, tqAnswered = false;
+
+function initToolQuiz() { tqIdx = 0; loadToolQ(); }
+function loadToolQ() {
+  tqAnswered = false;
+  const q = toolQs[tqIdx];
+  document.getElementById('tqEmoji').textContent = q.emoji;
+  document.getElementById('tqQuestion').textContent = q.q;
+  document.getElementById('tqBar').style.width = (tqIdx / toolQs.length * 100) + '%';
+  document.getElementById('tqLabel').textContent = `Question ${tqIdx+1} of ${toolQs.length}`;
+  document.getElementById('tqFeedback').className = 'quiz-feedback';
+  document.getElementById('tqNext').style.display = 'none';
+
+  const opts = [...q.opts].sort(() => Math.random() - 0.5);
+  const el = document.getElementById('tqOptions');
+  el.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt';
+    b.textContent = o;
+    b.onclick = () => answerToolQ(b, o, q.answer);
+    el.appendChild(b);
+  });
+}
+
+function answerToolQ(btn, chosen, correct) {
+  if (tqAnswered) return;
+  tqAnswered = true;
+  const fb = document.getElementById('tqFeedback');
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.textContent = '🌟 Yes! ' + correct + ' — Well done!';
+    fb.className = 'quiz-feedback show-correct';
+    addStar();
+    if (tqIdx === toolQs.length - 1) {
+      setTimeout(() => celebrate('🏆','Quiz Complete!','You know all your painting tools! Amazing!'), 600);
+    }
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    fb.textContent = '🤔 Not quite! The answer is: ' + correct;
+    fb.className = 'quiz-feedback show-wrong';
+  }
+  document.getElementById('tqNext').style.display = 'block';
+}
+
+function nextToolQ() {
+  tqIdx = (tqIdx + 1) % toolQs.length;
+  loadToolQ();
+}
+
+// ====== SAFETY QUIZ ======
+const safetyQs = [
+  { emoji:'🥼', q:'Wearing an apron while painting.', answer: true },
+  { emoji:'🤢', q:'Putting paint in your mouth.', answer: false },
+  { emoji:'🧼', q:'Washing your brushes after you finish painting.', answer: true },
+  { emoji:'🛋️', q:'Leaving tools lying around anywhere.', answer: false },
+  { emoji:'📦', q:'Keeping tools in a safe place.', answer: true },
+  { emoji:'🚰', q:'Mixing water into watercolours when painting.', answer: true },
+];
+
+let sqIdx = 0, sqAnswered = false;
+
+function initSafetyQuiz() { sqIdx = 0; loadSafetyQ(); }
+function loadSafetyQ() {
+  sqAnswered = false;
+  const q = safetyQs[sqIdx];
+  document.getElementById('sqEmoji').textContent = q.emoji;
+  document.getElementById('sqQuestion').textContent = q.q;
+  document.getElementById('sqBar').style.width = (sqIdx / safetyQs.length * 100) + '%';
+  document.getElementById('sqLabel').textContent = `Question ${sqIdx+1} of ${safetyQs.length}`;
+  document.getElementById('sqFeedback').className = 'quiz-feedback';
+  document.getElementById('sqNext').style.display = 'none';
+  document.getElementById('tfTrue').className = 'tf-btn true-btn';
+  document.getElementById('tfFalse').className = 'tf-btn false-btn';
+}
+
+function answerSafety(chosen) {
+  if (sqAnswered) return;
+  sqAnswered = true;
+  const q = safetyQs[sqIdx];
+  const correct = q.answer;
+  const fb = document.getElementById('sqFeedback');
+  const trueBtn = document.getElementById('tfTrue');
+  const falseBtn = document.getElementById('tfFalse');
+
+  if (chosen === correct) {
+    (chosen ? trueBtn : falseBtn).classList.add('correct');
+    fb.textContent = correct ? '✅ Yes! That is SAFE! Great job!' : '✅ Correct! That is NOT safe!';
+    fb.className = 'quiz-feedback show-correct';
+    addStar();
+    if (sqIdx === safetyQs.length - 1) {
+      setTimeout(() => celebrate('🛡️','Safety Star!','You know all the safety rules! Stay safe while painting!'), 600);
+    }
+  } else {
+    (chosen ? trueBtn : falseBtn).classList.add('wrong');
+    (correct ? trueBtn : falseBtn).classList.add('correct');
+    fb.textContent = correct ? '🤔 Actually, that IS safe to do!' : '🤔 Actually, that is NOT safe!';
+    fb.className = 'quiz-feedback show-wrong';
+  }
+  document.getElementById('sqNext').style.display = 'block';
+}
+
+function nextSafetyQ() {
+  sqIdx = (sqIdx + 1) % safetyQs.length;
+  loadSafetyQ();
+}
+
+// ====== PAINT CANVAS ======
+const palColors = ['#FF4757','#FF6B9D','#FF9F43','#FFD93D','#6BCB77','#1dd1a1','#6BCFFF','#54a0ff','#5f27cd','#C77DFF','#ffffff','#2d3436'];
+const brushSizes = [{ label:'Small', size:5 },{ label:'Medium', size:12 },{ label:'Big', size:22 },{ label:'Huge', size:40 }];
+
+let painting = false, ctx, currentColor = '#FF4757', currentSize = 12, isEraser = false, canvasInited = false;
+
+function initCanvas() {
+  if (canvasInited) return;
+  canvasInited = true;
+  const canvas = document.getElementById('myCanvas');
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth || 660;
+  ctx = canvas.getContext('2d');
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // Palette
+  const palRow = document.getElementById('palRow');
+  palRow.innerHTML = '';
+  palColors.forEach((c,i) => {
+    const d = document.createElement('div');
+    d.className = 'pal-colour' + (i===0?' selected':'');
+    d.style.background = c;
+    if (c === '#ffffff') d.style.border = '3px solid #ddd';
+    d.onclick = () => { currentColor = c; isEraser = false; document.querySelectorAll('.pal-colour').forEach(x=>x.classList.remove('selected')); d.classList.add('selected'); };
+    palRow.appendChild(d);
+  });
+
+  // Brush sizes
+  const brushRow = document.getElementById('brushRow');
+  brushRow.innerHTML = '';
+  brushSizes.forEach((b,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'brush-btn' + (i===1?' selected':'');
+    btn.textContent = b.label;
+    btn.onclick = () => {
+      currentSize = b.size; isEraser = false;
+      document.querySelectorAll('.brush-btn').forEach(x=>x.classList.remove('selected'));
+      btn.classList.add('selected');
+    };
+    brushRow.appendChild(btn);
+  });
+
+  // Events
+  canvas.addEventListener('mousedown', e => { painting=true; draw(e); });
+  canvas.addEventListener('mousemove', e => { if(painting) draw(e); });
+  canvas.addEventListener('mouseup', () => painting=false);
+  canvas.addEventListener('mouseleave', () => painting=false);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); painting=true; drawTouch(e); }, {passive:false});
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if(painting) drawTouch(e); }, {passive:false});
+  canvas.addEventListener('touchend', () => painting=false);
+}
+
+function getPos(canvas, e) {
+  const r = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / r.width;
+  const scaleY = canvas.height / r.height;
+  return { x:(e.clientX-r.left)*scaleX, y:(e.clientY-r.top)*scaleY };
+}
+function draw(e) {
+  const canvas = document.getElementById('myCanvas');
+  const pos = getPos(canvas, e);
+  ctx.beginPath();
+  ctx.arc(pos.x, pos.y, (isEraser?currentSize*2:currentSize)/2, 0, Math.PI*2);
+  ctx.fillStyle = isEraser ? 'white' : currentColor;
+  ctx.fill();
+}
+function drawTouch(e) {
+  const canvas = document.getElementById('myCanvas');
+  const touch = e.touches[0];
+  draw({ clientX: touch.clientX, clientY: touch.clientY });
+}
+function setEraser() { isEraser = true; document.querySelectorAll('.pal-colour').forEach(x=>x.classList.remove('selected')); }
+function clearCanvas() {
+  const canvas = document.getElementById('myCanvas');
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+</script>
+</body>
+</html>
