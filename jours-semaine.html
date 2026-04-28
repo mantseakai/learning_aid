@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇫🇷 Les Jours de la Semaine!</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:   #2D6BE4;
+    --red:    #E63946;
+    --white:  #FFFFFF;
+    --yellow: #FFD166;
+    --mint:   #06D6A0;
+    --navy:   #1B2A6B;
+    --sky:    #C8E6FF;
+    --soft:   #F7F9FF;
+    --day1:#FF6B6B; --day2:#FF9F43; --day3:#FFD166;
+    --day4:#06D6A0; --day5:#4ECDC4; --day6:#A855F7; --day7:#EC4899;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Quicksand',sans-serif;
+    background: linear-gradient(160deg,#1B2A6B 0%,#2D6BE4 50%,#1B2A6B 100%);
+    min-height:100vh; overflow-x:hidden;
+  }
+
+  /* Stars bg */
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 10% 15%,rgba(255,255,255,0.7) 0%,transparent 100%),
+      radial-gradient(1.5px 1.5px at 30% 40%,rgba(255,255,255,0.5) 0%,transparent 100%),
+      radial-gradient(1px 1px at 55% 20%,rgba(255,255,255,0.8) 0%,transparent 100%),
+      radial-gradient(1px 1px at 75% 60%,rgba(255,255,255,0.6) 0%,transparent 100%),
+      radial-gradient(2px 2px at 88% 10%,rgba(255,255,255,0.9) 0%,transparent 100%),
+      radial-gradient(1px 1px at 20% 75%,rgba(255,255,255,0.5) 0%,transparent 100%),
+      radial-gradient(1.5px 1.5px at 65% 85%,rgba(255,255,255,0.7) 0%,transparent 100%),
+      radial-gradient(1px 1px at 45% 55%,rgba(255,255,255,0.4) 0%,transparent 100%);
+    pointer-events:none;z-index:0;
+  }
+
+  /* French flag stripe top */
+  .flag-bar{height:8px;background:linear-gradient(90deg,#2D6BE4 33%,#fff 33%,#fff 66%,#E63946 66%);position:sticky;top:0;z-index:100;}
+
+  .app{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:16px 16px 80px;}
+
+  /* Header */
+  .header{text-align:center;padding:20px 0 12px;}
+  .flag-emoji{font-size:3rem;display:block;animation:wave 2s ease-in-out infinite;}
+  @keyframes wave{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+  .header h1{
+    font-family:'Baloo Bhai 2',cursive;font-size:2.2rem;font-weight:800;
+    color:#FFD166;text-shadow:3px 3px 0 rgba(0,0,0,0.3);margin:8px 0 4px;
+  }
+  .header .subtitle{color:rgba(255,255,255,0.75);font-size:1rem;font-weight:700;}
+  .key-phrase{
+    background:rgba(255,255,255,0.12);border-radius:16px;padding:14px 18px;
+    margin:14px 0 0;color:#FFD166;font-weight:700;font-size:1rem;
+    border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(4px);
+  }
+
+  /* Stars */
+  .stars-row{display:flex;justify-content:center;gap:8px;margin:14px 0 18px;}
+  .star{font-size:1.7rem;filter:grayscale(1) opacity(0.3);transition:all 0.3s;}
+  .star.lit{filter:none;animation:sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+  @keyframes sPop{0%{transform:scale(0)}60%{transform:scale(1.5)rotate(-15deg)}100%{transform:scale(1)}}
+
+  /* Tabs */
+  .tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
+  .tab{
+    padding:10px 18px;border-radius:50px;border:2px solid rgba(255,255,255,0.2);
+    font-family:'Baloo Bhai 2',cursive;font-size:0.95rem;font-weight:600;
+    cursor:pointer;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);
+    backdrop-filter:blur(4px);transition:all 0.2s;
+  }
+  .tab:hover{background:rgba(255,255,255,0.2);color:#fff;transform:translateY(-2px);}
+  .tab.active{background:#FFD166;color:#1B2A6B;border-color:#FFD166;transform:translateY(-3px);box-shadow:0 6px 20px rgba(255,209,102,0.4);}
+
+  /* Panel */
+  .panel{display:none;}.panel.active{display:block;}
+
+  /* Card */
+  .card{background:rgba(255,255,255,0.97);border-radius:24px;padding:22px 20px;margin-bottom:16px;box-shadow:0 10px 40px rgba(0,0,0,0.2);}
+  .sec-title{font-family:'Baloo Bhai 2',cursive;font-size:1.35rem;font-weight:800;margin-bottom:16px;color:var(--navy);}
+
+  /* ---- DAY CARDS ---- */
+  .days-list{display:flex;flex-direction:column;gap:10px;}
+  .day-row{
+    display:flex;align-items:center;gap:14px;border-radius:18px;
+    padding:14px 16px;cursor:pointer;transition:transform 0.2s;
+    border:2px solid transparent;
+  }
+  .day-row:hover{transform:translateX(6px);}
+  .day-num{
+    width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:800;color:#fff;flex-shrink:0;
+  }
+  .day-french{font-family:'Baloo Bhai 2',cursive;font-size:1.2rem;font-weight:800;flex:1;}
+  .day-arrow{color:#ddd;font-size:1.2rem;}
+  .day-english{font-size:1rem;font-weight:700;color:#888;}
+  .day-emoji{font-size:1.5rem;}
+
+  /* ---- MATCH GAME ---- */
+  .match-intro{font-size:0.95rem;color:#777;font-weight:700;margin-bottom:14px;}
+  .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .match-col-label{font-family:'Baloo Bhai 2',cursive;font-size:0.9rem;font-weight:800;color:#aaa;text-align:center;margin-bottom:6px;}
+  .match-item{
+    padding:13px 10px;border-radius:14px;text-align:center;
+    font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:700;
+    cursor:pointer;transition:all 0.18s;border:2.5px solid transparent;
+    user-select:none;box-shadow:0 4px 0 rgba(0,0,0,0.08);
+  }
+  .match-french{background:#EEF2FF;color:#3730a3;}
+  .match-english{background:#F0FFF4;color:#065f46;}
+  .match-item:hover{transform:translateY(-3px);}
+  .match-item.selected{box-shadow:0 0 0 3px #FFD166,0 4px 0 rgba(0,0,0,0.08);transform:scale(1.05);}
+  .match-item.correct{background:#D1FAE5;color:#065f46;border-color:#06D6A0;animation:cPop 0.4s ease;}
+  .match-item.wrong{animation:cShake 0.4s ease;background:#FEE2E2;border-color:#E63946;}
+  @keyframes cPop{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+  @keyframes cShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  .match-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
+  .dot{width:11px;height:11px;border-radius:50%;background:#ddd;transition:background 0.3s;}
+  .dot.done{background:var(--mint);}
+  .dot.cur{background:#FFD166;}
+
+  /* ---- ORDER GAME ---- */
+  .order-intro{font-size:0.95rem;color:#777;font-weight:700;margin-bottom:14px;}
+  .order-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;}
+  .order-chip{
+    padding:10px 16px;border-radius:50px;font-family:'Baloo Bhai 2',cursive;
+    font-size:1rem;font-weight:700;cursor:pointer;color:white;
+    transition:all 0.18s;box-shadow:0 4px 0 rgba(0,0,0,0.15);user-select:none;
+  }
+  .order-chip:hover{transform:translateY(-3px);}
+  .order-chip.used{opacity:0.3;pointer-events:none;transform:scale(0.9);}
+  .order-slots{
+    min-height:54px;background:#F8FAFF;border-radius:16px;padding:10px 12px;
+    border:3px dashed #C8E6FF;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+    justify-content:center;margin-bottom:12px;
+  }
+  .slot-pill{
+    padding:10px 16px;border-radius:50px;font-family:'Baloo Bhai 2',cursive;
+    font-size:1rem;font-weight:700;color:white;cursor:pointer;
+    animation:chipIn 0.2s ease;box-shadow:0 4px 0 rgba(0,0,0,0.15);
+  }
+  @keyframes chipIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+  .slot-hint{color:#C8E6FF;font-weight:700;font-size:0.95rem;}
+
+  /* Progress */
+  .prog-bar-wrap{background:#f0f0f0;border-radius:50px;height:10px;margin-bottom:14px;overflow:hidden;}
+  .prog-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#FFD166,#FF9F43);transition:width 0.5s;}
+  .prog-label{font-size:0.8rem;color:#aaa;font-weight:700;text-align:right;margin-top:2px;}
+
+  /* Quiz */
+  .quiz-scene{
+    background:linear-gradient(135deg,#F7F9FF,#EEF2FF);border-radius:20px;
+    padding:20px;text-align:center;margin-bottom:16px;border:2px solid #E0E7FF;
+  }
+  .quiz-scene .big{font-size:4rem;display:block;margin-bottom:8px;animation:bounce 1.2s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .quiz-scene p{font-family:'Baloo Bhai 2',cursive;font-size:1.2rem;color:var(--navy);font-weight:800;}
+  .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .quiz-opt{
+    padding:15px 10px;border-radius:16px;border:2.5px solid #E5E7EB;
+    background:#fff;font-family:'Baloo Bhai 2',cursive;font-size:1.05rem;
+    font-weight:700;color:#555;cursor:pointer;transition:all 0.18s;
+    box-shadow:0 4px 0 rgba(0,0,0,0.07);text-align:center;
+  }
+  .quiz-opt:hover{transform:translateY(-3px);border-color:#FFD166;}
+  .quiz-opt.correct{background:#D1FAE5;color:#065f46;border-color:var(--mint);box-shadow:0 4px 0 #059669;}
+  .quiz-opt.wrong{background:#FEE2E2;color:#991b1b;border-color:var(--red);animation:cShake 0.4s ease;}
+  .feedback{
+    text-align:center;font-family:'Baloo Bhai 2',cursive;font-size:1.2rem;
+    font-weight:800;padding:12px;border-radius:14px;display:none;margin-top:12px;
+  }
+  .feedback.ok{display:block;background:#D1FAE5;color:#065f46;}
+  .feedback.no{display:block;background:#FEE2E2;color:#991b1b;}
+
+  /* Buttons */
+  .next-btn,.check-btn,.reset-btn{
+    padding:13px 30px;border-radius:50px;border:none;
+    font-family:'Baloo Bhai 2',cursive;font-size:1.1rem;font-weight:800;
+    cursor:pointer;color:white;transition:all 0.15s;
+  }
+  .next-btn{background:#FFD166;color:#1B2A6B;box-shadow:0 5px 0 #c9a600;}
+  .check-btn{background:var(--mint);box-shadow:0 5px 0 #048a6e;}
+  .reset-btn{background:#adb5bd;box-shadow:0 5px 0 #868e96;font-size:0.95rem;padding:10px 20px;}
+  .next-btn:hover,.check-btn:hover,.reset-btn:hover{transform:translateY(-2px);}
+  .next-btn:active,.check-btn:active,.reset-btn:active{transform:translateY(2px);}
+  .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+
+  /* Celebration */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;justify-content:center;align-items:center;}
+  .overlay.show{display:flex;}
+  .cel-box{
+    background:#fff;border-radius:32px;padding:38px 30px;text-align:center;
+    max-width:300px;animation:zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  }
+  @keyframes zoomIn{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+  .cel-box .big-cel{font-size:3.5rem;display:block;margin-bottom:8px;}
+  .cel-box h2{font-family:'Baloo Bhai 2',cursive;font-size:2rem;color:var(--navy);margin-bottom:8px;}
+  .cel-box p{color:#777;font-size:1rem;margin-bottom:18px;}
+
+  @media(max-width:460px){
+    .header h1{font-size:1.7rem;}
+    .quiz-opts{grid-template-columns:1fr;}
+    .match-cols{grid-template-columns:1fr 1fr;}
+    .day-english{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="flag-bar"></div>
+
+<div class="app">
+  <div class="header">
+    <span class="flag-emoji">🇫🇷</span>
+    <h1>Les Jours de la Semaine!</h1>
+    <div class="subtitle">The Days of the Week · mardi 28 avril 2026</div>
+    <div class="key-phrase">📖 <em>Il y a sept jours dans la semaine.</em><br><span style="font-size:0.9rem;opacity:0.8">There are seven days in a week!</span></div>
+  </div>
+
+  <div class="stars-row" id="starsRow">
+    <span class="star" id="st1">⭐</span>
+    <span class="star" id="st2">⭐</span>
+    <span class="star" id="st3">⭐</span>
+    <span class="star" id="st4">⭐</span>
+    <span class="star" id="st5">⭐</span>
+    <span class="star" id="st6">⭐</span>
+    <span class="star" id="st7">⭐</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('learn',this)">📖 Learn</button>
+    <button class="tab" onclick="showTab('match',this)">🔗 Match</button>
+    <button class="tab" onclick="showTab('order',this)">🔢 Order</button>
+    <button class="tab" onclick="showTab('quiz',this)">🧠 Quiz</button>
+  </div>
+
+  <!-- ===== LEARN ===== -->
+  <div class="panel active" id="tab-learn">
+    <div class="card">
+      <div class="sec-title">🗓️ Les 7 Jours — Tap each day!</div>
+      <div class="days-list" id="daysList"></div>
+    </div>
+  </div>
+
+  <!-- ===== MATCH ===== -->
+  <div class="panel" id="tab-match">
+    <div class="card">
+      <div class="sec-title">🔗 Match French to English!</div>
+      <p class="match-intro">Tap a French word, then tap its English match!</p>
+      <div class="match-cols">
+        <div>
+          <div class="match-col-label">🇫🇷 French</div>
+          <div id="matchFrench" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+        <div>
+          <div class="match-col-label">🇬🇧 English</div>
+          <div id="matchEnglish" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+      <div class="match-dots" id="matchDots"></div>
+      <div class="feedback" id="matchFeedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== ORDER ===== -->
+  <div class="panel" id="tab-order">
+    <div class="card">
+      <div class="sec-title">🔢 Put the Days in Order!</div>
+      <p class="order-intro">Tap the French days in the correct order — Monday first!</p>
+      <div class="order-bank" id="orderBank"></div>
+      <div class="order-slots" id="orderSlots"><span class="slot-hint">Tap days above 👆</span></div>
+      <div class="feedback" id="orderFeedback"></div>
+      <div class="btn-row">
+        <button class="reset-btn" onclick="resetOrder()">🔄 Clear</button>
+        <button class="check-btn" onclick="checkOrder()">✅ Check!</button>
+        <button class="next-btn" id="orderNext" style="display:none" onclick="resetOrder()">🔄 Try Again!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="panel" id="tab-quiz">
+    <div class="card">
+      <div class="sec-title">🧠 French Days Quiz!</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="qBar" style="width:0%"></div></div>
+      <div class="prog-label" id="qLabel">Question 1 of 14</div>
+      <div class="quiz-scene">
+        <span class="big" id="qEmoji">📅</span>
+        <p id="qText">What is "lundi" in English?</p>
+      </div>
+      <div class="quiz-opts" id="qOpts"></div>
+      <div class="feedback" id="qFeedback"></div>
+      <button class="next-btn" id="qNext" style="display:none;margin:14px auto 0;display:none" onclick="nextQ()">Next ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- Celebration -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="big-cel" id="celEmoji">🎉</span>
+    <h2 id="celTitle">Super!</h2>
+    <p id="celMsg">Très bien!</p>
+    <button class="next-btn" style="width:100%;display:block" onclick="document.getElementById('overlay').classList.remove('show')">Continuez! 🚀</button>
+  </div>
+</div>
+
+<script>
+const days=[
+  {fr:'lundi',en:'Monday',   emoji:'🌙',num:1,col:'--day1'},
+  {fr:'mardi',en:'Tuesday',  emoji:'🔥',num:2,col:'--day2'},
+  {fr:'mercredi',en:'Wednesday',emoji:'💧',num:3,col:'--day3'},
+  {fr:'jeudi',en:'Thursday', emoji:'⚡',num:4,col:'--day4'},
+  {fr:'vendredi',en:'Friday',emoji:'🎉',num:5,col:'--day5'},
+  {fr:'samedi',en:'Saturday',emoji:'☀️',num:6,col:'--day6'},
+  {fr:'dimanche',en:'Sunday',emoji:'🕊️',num:7,col:'--day7'},
+];
+
+// Stars
+let starCount=0;
+function addStar(){if(starCount<7){starCount++;document.getElementById('st'+starCount).classList.add('lit');}}
+function celebrate(emoji,title,msg){
+  document.getElementById('celEmoji').textContent=emoji;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+
+// Tabs
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='match')initMatch();
+  if(id==='order')initOrder();
+  if(id==='quiz')initQuiz();
+}
+
+// ===== LEARN =====
+(function buildLearn(){
+  const el=document.getElementById('daysList');
+  days.forEach(d=>{
+    const row=document.createElement('div');
+    row.className='day-row';
+    row.style.cssText=`background:${d.col.includes('day')?'var('+d.col+')':'#f0f0f0'}22;border-color:var(${d.col})33`;
+    row.innerHTML=`
+      <div class="day-num" style="background:var(${d.col})">${d.num}</div>
+      <div class="day-french" style="color:var(${d.col})">${d.fr}</div>
+      <span class="day-arrow">→</span>
+      <div class="day-english">${d.en}</div>
+      <div class="day-emoji">${d.emoji}</div>`;
+    row.onclick=()=>{
+      row.style.transform='translateX(12px) scale(1.02)';
+      setTimeout(()=>row.style.transform='',300);
+      // Say day name with speech if available
+      if('speechSynthesis' in window){
+        const u=new SpeechSynthesisUtterance(d.fr);
+        u.lang='fr-FR';u.rate=0.85;speechSynthesis.speak(u);
+      }
+    };
+    el.appendChild(row);
+  });
+})();
+
+// ===== MATCH =====
+let matchState={sel:null,matched:new Set()};
+function initMatch(){
+  matchState={sel:null,matched:new Set()};
+  const subset=[...days].sort(()=>Math.random()-0.5).slice(0,5);
+  const frEl=document.getElementById('matchFrench');
+  const enEl=document.getElementById('matchEnglish');
+  frEl.innerHTML='';enEl.innerHTML='';
+
+  const engShuffle=[...subset].sort(()=>Math.random()-0.5);
+  subset.forEach((d,i)=>{
+    const fb=makeMatchItem(d.fr,'match-item match-french',i,'fr',d);
+    frEl.appendChild(fb);
+  });
+  engShuffle.forEach(d=>{
+    const origIdx=subset.indexOf(d);
+    const eb=makeMatchItem(d.en,'match-item match-english',origIdx,'en',d);
+    enEl.appendChild(eb);
+  });
+
+  const dots=document.getElementById('matchDots');
+  dots.innerHTML='';
+  for(let i=0;i<5;i++){
+    const dot=document.createElement('div');
+    dot.className='dot'+(i===0?' cur':'');
+    dot.id='md'+i;
+    dots.appendChild(dot);
+  }
+  document.getElementById('matchFeedback').className='feedback';
+}
+
+function makeMatchItem(text,cls,idx,side,d){
+  const el=document.createElement('div');
+  el.className=cls;
+  el.textContent=text+(side==='fr'?' '+d.emoji:'');
+  el.dataset.idx=idx;el.dataset.side=side;
+  el.onclick=()=>onMatch(el,idx,side);
+  return el;
+}
+
+function onMatch(el,idx,side){
+  if(matchState.matched.has(idx))return;
+  const s=matchState.sel;
+  if(!s){matchState.sel={el,idx,side};el.classList.add('selected');return;}
+  if(s.side===side){s.el.classList.remove('selected');matchState.sel={el,idx,side};el.classList.add('selected');return;}
+  s.el.classList.remove('selected');
+  if(s.idx===idx){
+    s.el.classList.add('correct');el.classList.add('correct');
+    matchState.matched.add(idx);matchState.sel=null;
+    const n=matchState.matched.size-1;
+    document.getElementById('md'+n).className='dot done';
+    if(matchState.matched.size<5){const nx=document.getElementById('md'+matchState.matched.size);if(nx)nx.className='dot cur';}
+    if(matchState.matched.size===5){addStar();setTimeout(()=>celebrate('🎊','Parfait!','You matched all the days! Très bien!'),600);setTimeout(initMatch,3500);}
+  } else {
+    s.el.classList.add('wrong');el.classList.add('wrong');matchState.sel=null;
+    const fb=document.getElementById('matchFeedback');
+    fb.textContent='🤔 Essaie encore! Try again!';fb.className='feedback no';
+    setTimeout(()=>{s.el.classList.remove('wrong');el.classList.remove('wrong');fb.className='feedback';},900);
+  }
+}
+
+// ===== ORDER =====
+let orderSlots=[];let orderUsed=new Set();
+function initOrder(){orderSlots=[];orderUsed=new Set();buildOrderBank();}
+function buildOrderBank(){
+  const bank=document.getElementById('orderBank');
+  bank.innerHTML='';
+  const shuffled=[...days].sort(()=>Math.random()-0.5);
+  shuffled.forEach((d,i)=>{
+    const chip=document.createElement('div');
+    chip.className='order-chip';
+    chip.style.background=`var(${d.col})`;
+    chip.style.boxShadow=`0 4px 0 color-mix(in srgb, var(${d.col}) 70%, black)`;
+    chip.textContent=d.fr+' '+d.emoji;
+    chip.dataset.day=d.fr;
+    chip.onclick=()=>addToOrder(chip,d);
+    bank.appendChild(chip);
+  });
+  renderOrderSlots();
+  document.getElementById('orderFeedback').className='feedback';
+  document.getElementById('orderNext').style.display='none';
+}
+function addToOrder(chip,d){
+  if(orderUsed.has(d.fr))return;
+  orderUsed.add(d.fr);chip.classList.add('used');
+  orderSlots.push(d);renderOrderSlots();
+  document.getElementById('orderFeedback').className='feedback';
+}
+function removeFromOrder(i){
+  const removed=orderSlots.splice(i,1)[0];
+  orderUsed.delete(removed.fr);
+  document.querySelectorAll('.order-chip').forEach(c=>{if(c.dataset.day===removed.fr)c.classList.remove('used');});
+  renderOrderSlots();
+}
+function renderOrderSlots(){
+  const el=document.getElementById('orderSlots');
+  el.innerHTML='';
+  if(orderSlots.length===0){el.innerHTML='<span class="slot-hint">Tap days above 👆</span>';return;}
+  orderSlots.forEach((d,i)=>{
+    const pill=document.createElement('div');
+    pill.className='slot-pill';
+    pill.style.background=`var(${d.col})`;
+    pill.textContent=d.fr+' '+d.emoji;
+    pill.title='Tap to remove';
+    pill.onclick=()=>removeFromOrder(i);
+    el.appendChild(pill);
+  });
+}
+function checkOrder(){
+  const fb=document.getElementById('orderFeedback');
+  if(orderSlots.length<7){fb.textContent='Add all 7 days first! 🗓️';fb.className='feedback no';return;}
+  const correct=orderSlots.every((d,i)=>d.num===i+1);
+  if(correct){
+    fb.textContent='🌟 Parfait! That\'s the right order!';fb.className='feedback ok';
+    addStar();
+    document.getElementById('orderNext').style.display='inline-block';
+    setTimeout(()=>celebrate('🏆','Génial!','You put all 7 days in order! Incredible!'),600);
+  } else {
+    fb.textContent='🤔 Not quite! Lundi (Monday) goes first. Try again!';fb.className='feedback no';
+  }
+}
+function resetOrder(){orderSlots=[];orderUsed=new Set();buildOrderBank();}
+
+// ===== QUIZ =====
+const quizQs=[
+  ...days.map(d=>({emoji:d.emoji,q:`What is "${d.fr}" in English?`,answer:d.en,opts:getOpts(d,'en')})),
+  ...days.map(d=>({emoji:d.emoji,q:`How do you say "${d.en}" in French?`,answer:d.fr,opts:getOpts(d,'fr')})),
+].sort(()=>Math.random()-0.5).slice(0,14);
+
+function getOpts(d,field){
+  const others=[...days].filter(x=>x.fr!==d.fr).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x[field]);
+  return [d[field],...others].sort(()=>Math.random()-0.5);
+}
+
+let qIdx=0,qAnswered=false;
+function initQuiz(){qIdx=0;loadQ();}
+function loadQ(){
+  qAnswered=false;
+  const q=quizQs[qIdx];
+  document.getElementById('qEmoji').textContent=q.emoji;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qBar').style.width=(qIdx/quizQs.length*100)+'%';
+  document.getElementById('qLabel').textContent=`Question ${qIdx+1} of ${quizQs.length}`;
+  document.getElementById('qFeedback').className='feedback';
+  document.getElementById('qNext').style.display='none';
+  const opts=document.getElementById('qOpts');
+  opts.innerHTML='';
+  q.opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt';b.textContent=o;
+    b.onclick=()=>answerQ(b,o,q.answer);
+    opts.appendChild(b);
+  });
+}
+function answerQ(btn,chosen,correct){
+  if(qAnswered)return;qAnswered=true;
+  const fb=document.getElementById('qFeedback');
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fb.textContent='🌟 Oui! Correct! Well done!';fb.className='feedback ok';
+    addStar();
+    if(qIdx===quizQs.length-1)setTimeout(()=>celebrate('🎓','Quiz Complete!','You know all the days in French! Formidable!'),600);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    fb.textContent='🤔 Non! The answer is: '+correct;fb.className='feedback no';
+  }
+  document.getElementById('qNext').style.display='block';
+}
+function nextQ(){qIdx=(qIdx+1)%quizQs.length;loadQ();}
+
+// Init
+initMatch();initOrder();initQuiz();
+</script>
+</body>
+</html>
