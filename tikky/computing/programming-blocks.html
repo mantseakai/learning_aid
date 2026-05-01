@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 Let's Learn Programming!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --scratch-orange: #FF8C00;
+  --scratch-yellow: #FFAB19;
+  --scratch-blue: #4C97FF;
+  --scratch-purple: #9966FF;
+  --scratch-green: #59C059;
+  --scratch-teal: #5CB1D6;
+  --scratch-red: #FF6680;
+  --bg: #1E1E2E;
+  --surface: #2A2A3E;
+  --surface2: #32324A;
+  --text: #FFFFFF;
+  --subtext: #A0A0C0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--text);
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(76,151,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,151,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
+
+/* Floating binary bits */
+.bits { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.bit {
+  position: absolute;
+  font-size: 0.8rem;
+  color: rgba(76,151,255,0.12);
+  font-family: 'Fredoka One', cursive;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  from { transform: translateY(-40px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  to { transform: translateY(110vh); opacity: 0; }
+}
+
+.app { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 16px 16px 80px; }
+
+/* Header */
+.header { text-align: center; padding: 20px 0 14px; }
+.cat-wrap { font-size: 4rem; display: block; animation: catBounce 1.5s ease-in-out infinite; }
+@keyframes catBounce { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-12px) rotate(5deg)} }
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.3rem;
+  background: linear-gradient(90deg, var(--scratch-yellow), var(--scratch-orange));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  text-shadow: none;
+  margin: 8px 0 4px;
+}
+.header p { color: var(--subtext); font-size: 1rem; font-weight: 700; }
+
+/* Stars */
+.stars-row { display: flex; justify-content: center; gap: 8px; margin: 14px 0 18px; }
+.star { font-size: 1.8rem; filter: grayscale(1) opacity(0.25); transition: all 0.3s; }
+.star.lit { filter: none; animation: sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+@keyframes sPop { 0%{transform:scale(0)} 60%{transform:scale(1.5)rotate(-15deg)} 100%{transform:scale(1)} }
+
+/* Tabs */
+.tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.tab {
+  padding: 10px 18px; border-radius: 50px;
+  border: 2px solid rgba(255,255,255,0.1);
+  font-family: 'Fredoka One', cursive; font-size: 0.95rem;
+  cursor: pointer; background: var(--surface); color: var(--subtext);
+  transition: all 0.2s;
+}
+.tab:hover { color: #fff; border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+.tab.active { background: var(--scratch-yellow); color: #1a1a2e; border-color: var(--scratch-yellow); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,171,25,0.35); }
+
+/* Panel */
+.panel { display: none; } .panel.active { display: block; }
+
+/* Card */
+.card {
+  background: var(--surface); border-radius: 24px; padding: 22px 20px;
+  margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.sec-title { font-family: 'Fredoka One', cursive; font-size: 1.35rem; margin-bottom: 16px; color: var(--scratch-yellow); }
+
+/* ---- LEARN ---- */
+.def-box {
+  background: var(--surface2); border-radius: 18px; padding: 18px;
+  margin-bottom: 16px; border-left: 4px solid var(--scratch-blue);
+}
+.def-box p { color: #ddd; line-height: 1.8; font-size: 1.05rem; font-weight: 700; }
+.def-box strong { color: var(--scratch-yellow); }
+
+.scratch-block {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 8px; margin: 5px;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  color: white; cursor: pointer; transition: transform 0.2s;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+  border-top: 2px solid rgba(255,255,255,0.2);
+  user-select: none;
+}
+.scratch-block::before, .scratch-block::after {
+  content: ''; display: block;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(0,0,0,0.2); flex-shrink: 0;
+}
+.scratch-block:hover { transform: scale(1.06) rotate(-1deg); }
+.block-motion  { background: var(--scratch-blue); box-shadow: 0 4px 0 #2a6acc; }
+.block-looks   { background: var(--scratch-purple); box-shadow: 0 4px 0 #6644cc; }
+.block-sound   { background: var(--scratch-teal); box-shadow: 0 4px 0 #3a8fb5; }
+.block-control { background: var(--scratch-yellow); color: #1a1a2e; box-shadow: 0 4px 0 #c87800; }
+.block-event   { background: var(--scratch-orange); box-shadow: 0 4px 0 #c05800; }
+
+.blocks-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+.steps-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.step-item {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface2); border-radius: 16px; padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: var(--scratch-blue); display: flex; align-items: center;
+  justify-content: center; font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  box-shadow: 0 3px 0 #2a6acc;
+}
+.step-text { color: #ccc; font-weight: 700; font-size: 1rem; line-height: 1.5; }
+.step-text strong { color: var(--scratch-yellow); }
+
+/* ---- DRAG GAME ---- */
+.drag-area {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;
+}
+.drag-bank {
+  background: var(--surface2); border-radius: 18px; padding: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.drag-bank-title { font-family:'Fredoka One',cursive; font-size:0.95rem; color:var(--subtext); margin-bottom:10px; }
+.drop-zone {
+  background: rgba(76,151,255,0.07); border-radius: 18px; padding: 14px;
+  border: 2px dashed rgba(76,151,255,0.3); min-height: 180px;
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  justify-content: flex-start; transition: border-color 0.2s;
+}
+.drop-zone.drag-over { border-color: var(--scratch-blue); background: rgba(76,151,255,0.12); }
+.drop-zone-title { font-family:'Fredoka One',cursive; font-size:0.95rem; color:var(--scratch-blue); margin-bottom:6px; }
+.draggable-block {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px; border-radius: 8px;
+  font-family: 'Fredoka One', cursive; font-size: 0.9rem;
+  color: white; cursor: grab; transition: all 0.18s;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.3); width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  user-select: none;
+}
+.draggable-block:active { cursor: grabbing; transform: scale(1.04) rotate(2deg); }
+.draggable-block.in-zone { cursor: pointer; }
+
+.drag-feedback { text-align:center; font-family:'Fredoka One',cursive; font-size:1.1rem; padding:12px; border-radius:14px; display:none; margin-top:10px; }
+.drag-feedback.ok { display:block; background:rgba(89,192,89,0.2); color:var(--scratch-green); border:1px solid var(--scratch-green); }
+.drag-feedback.no { display:block; background:rgba(255,102,128,0.2); color:var(--scratch-red); border:1px solid var(--scratch-red); }
+
+/* ---- QUIZ ---- */
+.quiz-q-box {
+  background: var(--surface2); border-radius: 18px; padding: 20px;
+  text-align: center; margin-bottom: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.quiz-q-box .q-emoji { font-size: 3.5rem; display: block; margin-bottom: 8px; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.quiz-q-box p { font-family:'Fredoka One',cursive; font-size:1.2rem; color:#ddd; }
+
+.quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quiz-opt {
+  padding: 15px 10px; border-radius: 14px;
+  border: 2px solid rgba(255,255,255,0.08);
+  background: var(--surface2); font-family:'Fredoka One',cursive;
+  font-size: 1rem; color: #ccc; cursor: pointer;
+  transition: all 0.18s; text-align: center;
+}
+.quiz-opt:hover { border-color: var(--scratch-yellow); color: #fff; transform: translateY(-3px); }
+.quiz-opt.correct { background: rgba(89,192,89,0.2); color: var(--scratch-green); border-color: var(--scratch-green); animation: cPop 0.4s ease; }
+.quiz-opt.wrong { background: rgba(255,102,128,0.2); color: var(--scratch-red); border-color: var(--scratch-red); animation: cShake 0.4s ease; }
+@keyframes cPop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+@keyframes cShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+.feedback { text-align:center; font-family:'Fredoka One',cursive; font-size:1.15rem; padding:12px; border-radius:14px; display:none; margin-top:12px; }
+.feedback.ok { display:block; background:rgba(89,192,89,0.2); color:var(--scratch-green); border:1px solid var(--scratch-green); }
+.feedback.no { display:block; background:rgba(255,102,128,0.2); color:var(--scratch-red); border:1px solid var(--scratch-red); }
+
+/* Progress */
+.prog-wrap { background: rgba(255,255,255,0.08); border-radius:50px; height:8px; margin-bottom:12px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:50px; background:linear-gradient(90deg,var(--scratch-blue),var(--scratch-purple)); transition:width 0.5s; }
+.prog-label { font-size:0.8rem; color:var(--subtext); font-weight:700; text-align:right; margin-top:3px; }
+
+/* ---- BUILD GAME ---- */
+.sprite-stage {
+  background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 65%, #90EE90 65%, #228B22 100%);
+  border-radius: 18px; height: 200px; position: relative; overflow: hidden;
+  margin-bottom: 14px; border: 2px solid rgba(255,255,255,0.1);
+}
+.sprite {
+  position: absolute; font-size: 2.8rem; bottom: 30%;
+  transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  cursor: default; user-select: none;
+}
+.sprite-speech {
+  position: absolute; background: white; border-radius: 14px; padding: 6px 12px;
+  font-weight: 900; font-size: 0.85rem; color: #333; white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2); display: none;
+}
+.sprite-speech::after {
+  content: ''; position: absolute; bottom: -8px; left: 16px;
+  width: 0; height: 0; border: 8px solid transparent;
+  border-top-color: white; border-bottom: none;
+}
+
+.build-blocks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.build-block {
+  padding: 10px 16px; border-radius: 8px;
+  font-family: 'Fredoka One', cursive; font-size: 0.95rem;
+  color: white; cursor: pointer; transition: all 0.18s;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+  border-top: 2px solid rgba(255,255,255,0.2);
+  user-select: none; display: flex; align-items: center; gap: 6px;
+}
+.build-block:hover { transform: translateY(-3px) scale(1.04); }
+.build-block:active { transform: translateY(1px); }
+.build-block.used { opacity:0.3; pointer-events:none; }
+
+.program-slots {
+  background: rgba(76,151,255,0.08); border-radius: 14px;
+  padding: 12px; min-height: 60px; border: 2px dashed rgba(76,151,255,0.25);
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px;
+}
+.slot-block {
+  padding: 8px 14px; border-radius: 8px;
+  font-family: 'Fredoka One', cursive; font-size: 0.9rem;
+  color: white; cursor: pointer; animation: chipIn 0.2s ease;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.3);
+}
+@keyframes chipIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+.slots-hint { color: rgba(76,151,255,0.5); font-weight: 700; font-size: 0.9rem; }
+
+/* Buttons */
+.btn { padding:12px 28px; border-radius:50px; border:none; font-family:'Fredoka One',cursive; font-size:1.1rem; cursor:pointer; color:white; transition:all 0.15s; }
+.btn-yellow { background:var(--scratch-yellow); color:#1a1a2e; box-shadow:0 5px 0 #c87800; }
+.btn-green { background:var(--scratch-green); box-shadow:0 5px 0 #3a8a3a; }
+.btn-gray { background:#4a4a6a; box-shadow:0 5px 0 #2a2a4a; font-size:0.95rem; padding:10px 20px; }
+.btn-run { background:linear-gradient(135deg,var(--scratch-green),var(--scratch-teal)); box-shadow:0 5px 0 #2a7a5a; }
+.btn:hover { transform:translateY(-2px); }
+.btn:active { transform:translateY(2px); box-shadow:none; }
+.btn-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+
+/* Overlay */
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:500; justify-content:center; align-items:center; }
+.overlay.show { display:flex; }
+.cel-box {
+  background: var(--surface); border-radius:28px; padding:36px 30px; text-align:center;
+  max-width:300px; animation:zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1);
+}
+@keyframes zoomIn{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+.cel-box .ce { font-size:3.5rem; display:block; margin-bottom:8px; }
+.cel-box h2 { font-family:'Fredoka One',cursive; font-size:1.9rem; color:var(--scratch-yellow); margin-bottom:8px; }
+.cel-box p { color:var(--subtext); font-size:1rem; margin-bottom:18px; }
+
+@media(max-width:460px){
+  .header h1{font-size:1.8rem;}
+  .drag-area{grid-template-columns:1fr;}
+  .quiz-opts{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="bits" id="bits"></div>
+
+<div class="app">
+  <div class="header">
+    <span class="cat-wrap">🐱</span>
+    <h1>Let's Programme!</h1>
+    <p>Term 3 · 28th April 2026 · Programming with Scratch</p>
+  </div>
+
+  <div class="stars-row" id="starsRow">
+    <span class="star" id="st1">⭐</span><span class="star" id="st2">⭐</span>
+    <span class="star" id="st3">⭐</span><span class="star" id="st4">⭐</span>
+    <span class="star" id="st5">⭐</span><span class="star" id="st6">⭐</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('learn',this)">📖 Learn</button>
+    <button class="tab" onclick="showTab('sort',this)">🧩 Sort Blocks</button>
+    <button class="tab" onclick="showTab('build',this)">🏗️ Build Program</button>
+    <button class="tab" onclick="showTab('quiz',this)">🧠 Quiz</button>
+  </div>
+
+  <!-- ===== LEARN ===== -->
+  <div class="panel active" id="tab-learn">
+    <div class="card">
+      <div class="sec-title">💡 What is Programming?</div>
+      <div class="def-box">
+        <p>Programming is <strong>giving instructions</strong> to a computer to make it do something!</p>
+      </div>
+      <div class="def-box" style="border-color:var(--scratch-purple)">
+        <p>In <strong>Scratch</strong>, we use <strong>blocks</strong> to give instructions to a character called a <strong>sprite</strong> 🐱</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title">🧱 What is a Block?</div>
+      <div class="def-box" style="border-color:var(--scratch-green)">
+        <p>A block is a <strong>small instruction</strong> used in a program.<br>Blocks are <strong>joined together</strong> to make a program!</p>
+      </div>
+      <p style="color:var(--subtext);font-size:0.95rem;font-weight:700;margin-bottom:10px;">👆 Tap the blocks below to see what they do!</p>
+      <div class="blocks-grid" id="learnBlocks"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title">🖱️ How do we use Scratch?</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-text">Use the <strong>mouse</strong> to drag and move blocks</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Join blocks together</strong> like puzzle pieces</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text">Click the <strong>green flag 🚩</strong> to run your program</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-text">Watch your <strong>sprite follow</strong> every instruction!</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SORT BLOCKS ===== -->
+  <div class="panel" id="tab-sort">
+    <div class="card">
+      <div class="sec-title">🧩 Sort the Blocks!</div>
+      <p style="color:var(--subtext);font-size:0.95rem;font-weight:700;margin-bottom:14px;">Drag each block into the correct category — or tap to move!</p>
+      <div class="drag-area">
+        <div>
+          <div class="drag-bank-title">🗃️ Available Blocks</div>
+          <div class="drag-bank" id="dragBank"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div>
+            <div class="drag-bank-title" style="color:var(--scratch-blue)">🏃 Motion blocks</div>
+            <div class="drop-zone" id="zone-motion" data-cat="motion"></div>
+          </div>
+          <div>
+            <div class="drag-bank-title" style="color:var(--scratch-purple)">👁️ Looks blocks</div>
+            <div class="drop-zone" id="zone-looks" data-cat="looks"></div>
+          </div>
+          <div>
+            <div class="drag-bank-title" style="color:var(--scratch-yellow)">⚡ Event blocks</div>
+            <div class="drop-zone" id="zone-event" data-cat="event"></div>
+          </div>
+        </div>
+      </div>
+      <div class="drag-feedback" id="dragFeedback"></div>
+      <div class="btn-row">
+        <button class="btn btn-gray" onclick="initSort()">🔄 Reset</button>
+        <button class="btn btn-green" onclick="checkSort()">✅ Check!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BUILD PROGRAM ===== -->
+  <div class="panel" id="tab-build">
+    <div class="card">
+      <div class="sec-title">🏗️ Build a Program for the Cat!</div>
+      <div class="sprite-stage" id="stage">
+        <div class="sprite" id="sprite" style="left:80px">🐱</div>
+        <div class="sprite-speech" id="speech"></div>
+      </div>
+      <p style="color:var(--subtext);font-size:0.95rem;font-weight:700;margin-bottom:10px;">👇 Tap blocks to add them to your program. Then press RUN!</p>
+      <div class="build-blocks" id="buildBlocks"></div>
+      <div class="program-slots" id="programSlots"><span class="slots-hint">Your program appears here...</span></div>
+      <div class="btn-row">
+        <button class="btn btn-gray" onclick="clearProgram()">🗑️ Clear</button>
+        <button class="btn btn-run" onclick="runProgram()">🚩 Run!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="panel" id="tab-quiz">
+    <div class="card">
+      <div class="sec-title">🧠 Programming Quiz!</div>
+      <div class="prog-wrap"><div class="prog-fill" id="qBar" style="width:0%"></div></div>
+      <div class="prog-label" id="qLabel">Question 1 of 10</div>
+      <div class="quiz-q-box">
+        <span class="q-emoji" id="qEmoji">💻</span>
+        <p id="qText">Loading...</p>
+      </div>
+      <div class="quiz-opts" id="qOpts"></div>
+      <div class="feedback" id="qFeedback"></div>
+      <button class="btn btn-yellow" id="qNext" style="display:none;margin:14px auto 0" onclick="nextQ()">Next ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- Celebration -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="ce" id="celEmoji">🎉</span>
+    <h2 id="celTitle">Amazing!</h2>
+    <p id="celMsg">Great job programmer!</p>
+    <button class="btn btn-yellow" style="width:100%" onclick="document.getElementById('overlay').classList.remove('show')">Keep Going! 🚀</button>
+  </div>
+</div>
+
+<script>
+// Floating bits
+(function(){
+  const b=document.getElementById('bits');
+  const chars=['0','1','</>','{ }','if','run','go','🐱'];
+  for(let i=0;i<20;i++){
+    const el=document.createElement('div');el.className='bit';
+    el.textContent=chars[Math.floor(Math.random()*chars.length)];
+    el.style.left=Math.random()*100+'%';
+    el.style.animationDuration=(8+Math.random()*14)+'s';
+    el.style.animationDelay=(-Math.random()*20)+'s';
+    b.appendChild(el);
+  }
+})();
+
+// Stars
+let starCount=0;
+function addStar(){if(starCount<6){starCount++;document.getElementById('st'+(starCount)).classList.add('lit');}}
+function celebrate(emoji,title,msg){
+  document.getElementById('celEmoji').textContent=emoji;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='sort')initSort();
+  if(id==='build')initBuild();
+  if(id==='quiz')initQuiz();
+}
+
+// ===== LEARN BLOCKS =====
+const allBlocks=[
+  {label:'move 10 steps',cls:'block-motion',cat:'motion',emoji:'🏃',desc:'Makes the sprite walk forward!'},
+  {label:'turn 15 degrees',cls:'block-motion',cat:'motion',emoji:'🔄',desc:'Makes the sprite spin around!'},
+  {label:'say Hello!',cls:'block-looks',cat:'looks',emoji:'💬',desc:'Makes the sprite talk!'},
+  {label:'change size',cls:'block-looks',cat:'looks',emoji:'📏',desc:'Makes the sprite bigger or smaller!'},
+  {label:'play sound',cls:'block-sound',cat:'sound',emoji:'🔊',desc:'Makes a sound play!'},
+  {label:'when 🚩 clicked',cls:'block-event',cat:'event',emoji:'🚩',desc:'Starts the program when flag is clicked!'},
+  {label:'wait 1 second',cls:'block-control',cat:'control',emoji:'⏱️',desc:'Makes the sprite wait!'},
+  {label:'repeat 10',cls:'block-control',cat:'control',emoji:'🔁',desc:'Does something again and again!'},
+];
+(function buildLearn(){
+  const el=document.getElementById('learnBlocks');
+  allBlocks.forEach(b=>{
+    const div=document.createElement('div');
+    div.className='scratch-block '+b.cls;
+    div.innerHTML=b.emoji+' '+b.label;
+    div.title=b.desc;
+    div.onclick=()=>{
+      div.style.transform='scale(1.12) rotate(-3deg)';
+      setTimeout(()=>div.style.transform='',300);
+      const tip=document.createElement('div');
+      tip.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#FFD166;padding:12px 22px;border-radius:50px;font-family:Fredoka One,cursive;font-size:1rem;z-index:999;box-shadow:0 6px 20px rgba(0,0,0,0.4);border:1px solid rgba(255,209,102,0.3)';
+      tip.textContent=b.emoji+' '+b.desc;
+      document.body.appendChild(tip);
+      setTimeout(()=>tip.remove(),2000);
+    };
+    el.appendChild(div);
+  });
+})();
+
+// ===== SORT BLOCKS =====
+const sortBlocks=[
+  {label:'move 10 steps',cls:'block-motion',cat:'motion',emoji:'🏃'},
+  {label:'turn 90 degrees',cls:'block-motion',cat:'motion',emoji:'🔄'},
+  {label:'say Hello!',cls:'block-looks',cat:'looks',emoji:'💬'},
+  {label:'change color',cls:'block-looks',cat:'looks',emoji:'🎨'},
+  {label:'when 🚩 clicked',cls:'block-event',cat:'event',emoji:'🚩'},
+  {label:'when key pressed',cls:'block-event',cat:'event',emoji:'⌨️'},
+];
+let sortPlacement={};
+function initSort(){
+  sortPlacement={};
+  const bank=document.getElementById('dragBank');
+  bank.innerHTML='';
+  ['motion','looks','event'].forEach(z=>{ document.getElementById('zone-'+z).innerHTML=''; });
+  document.getElementById('dragFeedback').className='drag-feedback';
+
+  [...sortBlocks].sort(()=>Math.random()-0.5).forEach((b,i)=>{
+    const el=makesDraggableBlock(b,i,'bank');
+    bank.appendChild(el);
+  });
+}
+function makesDraggableBlock(b,i,loc){
+  const el=document.createElement('div');
+  el.className='draggable-block '+b.cls+(loc!=='bank'?' in-zone':'');
+  el.innerHTML=`<span>${b.emoji}</span> ${b.label}`;
+  el.dataset.idx=i;el.dataset.cat=b.cat;
+  el.onclick=()=>onSortTap(el,i,b);
+  el.draggable=true;
+  el.ondragstart=e=>{ e.dataTransfer.setData('idx',i); e.dataTransfer.setData('cat',b.cat); };
+  return el;
+}
+let sortSelected=null;
+function onSortTap(el,idx,b){
+  if(!sortSelected){
+    // Select
+    document.querySelectorAll('.draggable-block').forEach(e=>e.style.outline='');
+    el.style.outline='2px solid #FFD166';
+    sortSelected={el,idx,b};
+  } else {
+    // Find which zone was tapped — check if click on zone area
+    sortSelected.el.style.outline='';
+    sortSelected=null;
+  }
+}
+
+// Allow zones to receive taps
+['motion','looks','event'].forEach(cat=>{
+  const zone=document.getElementById('zone-'+cat);
+  zone.onclick=()=>{
+    if(sortSelected){
+      const {el,idx,b}=sortSelected;
+      el.style.outline='';
+      // Remove from wherever it was
+      el.parentNode.removeChild(el);
+      const newEl=makesDraggableBlock(b,idx,'zone');
+      zone.appendChild(newEl);
+      sortPlacement[idx]=cat;
+      sortSelected=null;
+    }
+  };
+  zone.ondragover=e=>{ e.preventDefault(); zone.classList.add('drag-over'); };
+  zone.ondragleave=()=>zone.classList.remove('drag-over');
+  zone.ondrop=e=>{
+    e.preventDefault(); zone.classList.remove('drag-over');
+    const idx=parseInt(e.dataTransfer.getData('idx'));
+    const b=sortBlocks[idx];
+    // Remove original
+    document.querySelectorAll('.draggable-block').forEach(el=>{ if(parseInt(el.dataset.idx)===idx)el.remove(); });
+    const newEl=makesDraggableBlock(b,idx,'zone');
+    zone.appendChild(newEl);
+    sortPlacement[idx]=cat;
+  };
+});
+
+function checkSort(){
+  const fb=document.getElementById('dragFeedback');
+  if(Object.keys(sortPlacement).length<sortBlocks.length){
+    fb.textContent='Sort all blocks first! Drag each one into a category 🧩';
+    fb.className='drag-feedback no';return;
+  }
+  const allCorrect=sortBlocks.every((b,i)=>sortPlacement[i]===b.cat);
+  if(allCorrect){
+    fb.textContent='🌟 Perfect! You sorted all the blocks correctly!';
+    fb.className='drag-feedback ok';
+    addStar();
+    setTimeout(()=>celebrate('🌟','Block Expert!','You sorted every block into the right category!'),600);
+  } else {
+    const wrong=sortBlocks.filter((b,i)=>sortPlacement[i]&&sortPlacement[i]!==b.cat);
+    fb.textContent=`🤔 Almost! Check the ${wrong.map(b=>'"'+b.label+'"').join(' and ')} block${wrong.length>1?'s':''}!`;
+    fb.className='drag-feedback no';
+  }
+}
+
+// ===== BUILD PROGRAM =====
+const buildBlockDefs=[
+  {label:'when 🚩 clicked',cls:'block-event',color:'#FF8C00',action:'start',emoji:'🚩'},
+  {label:'move right',cls:'block-motion',color:'#4C97FF',action:'move',emoji:'🏃'},
+  {label:'move left',cls:'block-motion',color:'#4C97FF',action:'back',emoji:'⬅️'},
+  {label:'say Hello!',cls:'block-looks',color:'#9966FF',action:'say',emoji:'💬'},
+  {label:'jump!',cls:'block-motion',color:'#4C97FF',action:'jump',emoji:'⬆️'},
+  {label:'spin around',cls:'block-motion',color:'#4C97FF',action:'spin',emoji:'🔄'},
+  {label:'say Bye!',cls:'block-looks',color:'#9966FF',action:'bye',emoji:'👋'},
+];
+let programActions=[];let programUsed=new Set();
+function initBuild(){
+  programActions=[];programUsed=new Set();
+  const sprite=document.getElementById('sprite');
+  sprite.style.left='80px';sprite.style.bottom='30%';sprite.style.transform='';
+  document.getElementById('speech').style.display='none';
+  const el=document.getElementById('buildBlocks');
+  el.innerHTML='';
+  buildBlockDefs.forEach((b,i)=>{
+    const chip=document.createElement('div');
+    chip.className='build-block';
+    chip.style.background=b.color;
+    chip.style.boxShadow=`0 4px 0 ${b.color}aa`;
+    chip.innerHTML=`<span>${b.emoji}</span>${b.label}`;
+    chip.dataset.idx=i;
+    chip.onclick=()=>addBlock(chip,b,i);
+    el.appendChild(chip);
+  });
+  renderProgramSlots();
+}
+function addBlock(chip,b,i){
+  if(programActions.length>=6)return;
+  programActions.push({...b,chipIdx:i});
+  renderProgramSlots();
+}
+function removeBlock(j){
+  programActions.splice(j,1);
+  renderProgramSlots();
+}
+function renderProgramSlots(){
+  const el=document.getElementById('programSlots');
+  el.innerHTML='';
+  if(programActions.length===0){el.innerHTML='<span class="slots-hint">Your program appears here...</span>';return;}
+  programActions.forEach((b,j)=>{
+    const pill=document.createElement('div');
+    pill.className='slot-block';
+    pill.style.background=b.color;
+    pill.innerHTML=b.emoji+' '+b.label;
+    pill.title='Tap to remove';
+    pill.onclick=()=>removeBlock(j);
+    el.appendChild(pill);
+  });
+}
+function clearProgram(){
+  programActions=[];programUsed=new Set();
+  document.querySelectorAll('.build-block').forEach(c=>c.classList.remove('used'));
+  renderProgramSlots();
+  const sprite=document.getElementById('sprite');
+  sprite.style.left='80px';sprite.style.transform='';
+  document.getElementById('speech').style.display='none';
+}
+async function runProgram(){
+  if(programActions.length===0){
+    const fb=document.createElement('div');
+    fb.style.cssText='text-align:center;color:var(--scratch-red);font-weight:800;margin-top:8px;';
+    fb.textContent='Add some blocks first! 🧩';
+    return;
+  }
+  const sprite=document.getElementById('sprite');
+  const speech=document.getElementById('speech');
+  let posX=80;
+  for(const b of programActions){
+    await new Promise(r=>setTimeout(r,400));
+    if(b.action==='move'){posX=Math.min(posX+80,550);sprite.style.left=posX+'px';}
+    if(b.action==='back'){posX=Math.max(posX-80,10);sprite.style.left=posX+'px';}
+    if(b.action==='jump'){sprite.style.bottom='52%';await new Promise(r=>setTimeout(r,300));sprite.style.bottom='30%';}
+    if(b.action==='spin'){sprite.style.transform='rotate(360deg)';await new Promise(r=>setTimeout(r,400));sprite.style.transform='';}
+    if(b.action==='say'){
+      speech.textContent='Hello! 👋';speech.style.display='block';
+      speech.style.left=Math.min(posX,400)+'px';speech.style.bottom='55%';
+      await new Promise(r=>setTimeout(r,800));speech.style.display='none';
+    }
+    if(b.action==='bye'){
+      speech.textContent='Bye! 😊';speech.style.display='block';
+      speech.style.left=Math.min(posX,400)+'px';speech.style.bottom='55%';
+      await new Promise(r=>setTimeout(r,800));speech.style.display='none';
+    }
+  }
+  addStar();
+  if(programActions.length>=4) setTimeout(()=>celebrate('🐱','Programme Run!','Your cat followed all the instructions! You\'re a real programmer!'),300);
+}
+
+// ===== QUIZ =====
+const quizQs=[
+  {emoji:'💻',q:'What is programming?',answer:'Giving instructions to a computer',opts:['Drawing pictures','Giving instructions to a computer','Playing games','Reading books']},
+  {emoji:'🧱',q:'What is a block in Scratch?',answer:'A small instruction',opts:['A toy brick','A square shape','A small instruction','A type of colour']},
+  {emoji:'🐱',q:'What do we call the character in Scratch?',answer:'A sprite',opts:['A block','A sprite','A program','A mouse']},
+  {emoji:'🖱️',q:'How do we move blocks in Scratch?',answer:'Drag with the mouse',opts:['Type on keyboard','Drag with the mouse','Say the name','Click once']},
+  {emoji:'🧩',q:'What do we do with blocks to make a program?',answer:'Join them together',opts:['Colour them in','Throw them away','Join them together','Make them smaller']},
+  {emoji:'🚩',q:'What do you click to START your program?',answer:'The green flag',opts:['The red button','The blue arrow','The green flag','The yellow star']},
+  {emoji:'🏃',q:'Which type of block makes the sprite MOVE?',answer:'Motion block',opts:['Looks block','Sound block','Motion block','Event block']},
+  {emoji:'💬',q:'Which type of block makes the sprite SAY something?',answer:'Looks block',opts:['Motion block','Looks block','Control block','Event block']},
+  {emoji:'🔁',q:'What does a REPEAT block do?',answer:'Does something again and again',opts:['Stops the program','Changes the colour','Does something again and again','Makes a sound']},
+  {emoji:'🎯',q:'Programming is like giving instructions — just like a...',answer:'Recipe',opts:['Painting','Recipe','Game','Song']},
+];
+let qIdx=0,qAnswered=false;
+function initQuiz(){qIdx=0;loadQ();}
+function loadQ(){
+  qAnswered=false;
+  const q=quizQs[qIdx];
+  document.getElementById('qEmoji').textContent=q.emoji;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qBar').style.width=(qIdx/quizQs.length*100)+'%';
+  document.getElementById('qLabel').textContent=`Question ${qIdx+1} of ${quizQs.length}`;
+  document.getElementById('qFeedback').className='feedback';
+  document.getElementById('qNext').style.display='none';
+  const opts=document.getElementById('qOpts');
+  opts.innerHTML='';
+  [...q.opts].sort(()=>Math.random()-0.5).forEach(o=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt';b.textContent=o;
+    b.onclick=()=>answerQ(b,o,q.answer);
+    opts.appendChild(b);
+  });
+}
+function answerQ(btn,chosen,correct){
+  if(qAnswered)return;qAnswered=true;
+  const fb=document.getElementById('qFeedback');
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fb.textContent='🌟 Correct! Great job programmer!';fb.className='feedback ok';
+    addStar();
+    if(qIdx===quizQs.length-1)setTimeout(()=>celebrate('🎓','Quiz Complete!','You answered every question! You\'re a Scratch star!'),600);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    fb.textContent='🤔 Not quite! The answer is: '+correct;fb.className='feedback no';
+  }
+  document.getElementById('qNext').style.display='block';
+}
+function nextQ(){qIdx=(qIdx+1)%quizQs.length;loadQ();}
+
+// Init
+initSort();initBuild();initQuiz();
+</script>
+</body>
+</html>

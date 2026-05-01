@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measurement Adventure! 📏</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #1a73e8;
+  --blue-light: #e8f0fe;
+  --red: #e53935;
+  --red-light: #ffebee;
+  --green: #2e7d32;
+  --green-light: #e8f5e9;
+  --orange: #f57c00;
+  --orange-light: #fff3e0;
+  --yellow: #fdd835;
+  --purple: #6a1b9a;
+  --purple-light: #f3e5f5;
+  --bg: #f0f4ff;
+  --white: #ffffff;
+  --dark: #1a1a2e;
+  --gray: #546e7a;
+  --ruler-stripe: repeating-linear-gradient(90deg, #fdd835 0px, #fdd835 30px, #1a73e8 30px, #1a73e8 60px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === RULER HEADER === */
+header {
+  background: var(--dark);
+  position: relative;
+  padding: 0 0 0 0;
+  overflow: hidden;
+}
+.ruler-stripe {
+  height: 18px;
+  background: var(--ruler-stripe);
+}
+.header-inner {
+  padding: 28px 20px 36px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+header h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  font-weight: 800;
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 rgba(253,216,53,0.25);
+  letter-spacing: 1px;
+  animation: pop-in 0.6s cubic-bezier(.175,.885,.32,1.275);
+}
+header p { color: #90caf9; font-size: 1rem; margin-top: 6px; }
+.ruler-stripe-bottom { height: 18px; background: var(--ruler-stripe); transform: scaleX(-1); }
+
+/* floating tick marks */
+.tick-marks {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-top: 10px;
+}
+.tick {
+  width: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #90caf9;
+  font-size: 0.55rem;
+  font-weight: 700;
+}
+.tick::before {
+  content: '';
+  display: block;
+  width: 1.5px;
+  height: 10px;
+  background: #90caf9;
+  margin-bottom: 2px;
+}
+.tick.big::before { height: 18px; background: var(--yellow); }
+.tick.big { color: var(--yellow); font-size: 0.65rem; }
+
+/* === TABS === */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 22px 12px 0;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  color: var(--dark);
+  border-color: #dde4f0;
+  box-shadow: 0 3px 0 #dde4f0;
+}
+.tab-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 #dde4f0; }
+.tab-btn.active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+  box-shadow: 0 3px 0 #0d47a1;
+  transform: translateY(0);
+}
+
+/* === SECTIONS === */
+.section { display: none; padding: 28px 16px 70px; max-width: 820px; margin: 0 auto; }
+.section.active { display: block; animation: slide-up 0.4s ease; }
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop-in {
+  0%   { transform: scale(0.6); opacity: 0; }
+  80%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.sec-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--dark);
+  text-align: center;
+  margin-bottom: 6px;
+}
+.sec-sub { text-align: center; color: var(--gray); font-size: 0.9rem; margin-bottom: 24px; }
+
+/* === UNIT CARDS === */
+.units-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+}
+.unit-card {
+  border-radius: 22px;
+  padding: 22px 16px;
+  border: 3px solid transparent;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.unit-card::after {
+  content: 'Tap me!';
+  position: absolute;
+  bottom: 10px; right: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.unit-card.open::after { opacity: 0; }
+.unit-card:hover { transform: translateY(-5px); }
+.unit-card.cm { background: var(--blue-light); border-color: var(--blue); }
+.unit-card.m  { background: var(--green-light); border-color: var(--green); }
+.unit-card.mm { background: var(--orange-light); border-color: var(--orange); }
+.unit-card.km { background: var(--purple-light); border-color: var(--purple); }
+
+.unit-emoji { font-size: 2.8rem; margin-bottom: 6px; }
+.unit-name {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+.cm .unit-name  { color: var(--blue); }
+.m  .unit-name  { color: var(--green); }
+.mm .unit-name  { color: var(--orange); }
+.km .unit-name  { color: var(--purple); }
+
+.unit-abbr {
+  display: inline-block;
+  padding: 3px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 6px 0;
+  color: white;
+}
+.cm .unit-abbr  { background: var(--blue); }
+.m  .unit-abbr  { background: var(--green); }
+.mm .unit-abbr  { background: var(--orange); }
+.km .unit-abbr  { background: var(--purple); }
+
+.unit-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.6; margin-top: 6px; }
+.unit-detail {
+  margin-top: 12px;
+  border-top: 2px dashed rgba(0,0,0,0.1);
+  padding-top: 10px;
+  font-size: 0.82rem;
+  color: #444;
+  display: none;
+  line-height: 1.7;
+}
+.unit-card.open .unit-detail { display: block; animation: slide-up 0.3s ease; }
+.unit-detail strong { display: block; margin-bottom: 4px; font-weight: 700; }
+
+/* === VISUAL RULER === */
+.visual-section { margin-top: 10px; }
+.scale-bar-wrap {
+  background: white;
+  border-radius: 20px;
+  padding: 24px 20px;
+  border: 3px solid #e3eaff;
+  box-shadow: 0 4px 0 #e3eaff;
+  margin-bottom: 18px;
+}
+.scale-bar-wrap h3 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.1rem;
+  color: var(--dark);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.scale-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.scale-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  width: 40px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.scale-bar {
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  transition: width 1s ease;
+  min-width: 28px;
+}
+.scale-desc { font-size: 0.8rem; color: var(--gray); flex-shrink: 0; }
+
+/* === CONVERTER === */
+.converter-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px 22px;
+  border: 3px solid #e3eaff;
+  box-shadow: 0 5px 0 #e3eaff;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.converter-card h3 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem;
+  color: var(--dark);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.conv-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 2px solid #e3eaff;
+  transition: border-color 0.2s;
+}
+.conv-row:focus-within { border-color: var(--blue); }
+.conv-row label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--gray);
+  width: 50px;
+  flex-shrink: 0;
+}
+.conv-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+  outline: none;
+  width: 80px;
+}
+.conv-unit {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 4px 12px;
+  border-radius: 50px;
+  color: white;
+}
+.conv-divider {
+  text-align: center;
+  color: var(--gray);
+  font-size: 1.3rem;
+  margin: 6px 0;
+}
+.conv-fact {
+  background: var(--yellow);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dark);
+  text-align: center;
+  margin-top: 14px;
+  min-height: 36px;
+}
+
+/* === MATCH GAME === */
+.match-intro { text-align: center; margin-bottom: 20px; color: var(--gray); font-size: 0.9rem; }
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+.match-col-title {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--dark);
+}
+.match-col { display: flex; flex-direction: column; gap: 10px; }
+.match-item {
+  background: white;
+  border: 3px solid #dde4f0;
+  border-radius: 16px;
+  padding: 13px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  user-select: none;
+}
+.match-item:hover { border-color: var(--blue); transform: scale(1.02); }
+.match-item.selected { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.match-item.correct  { border-color: var(--green); background: var(--green-light); color: var(--green); cursor: default; }
+.match-item.wrong    { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.match-btn {
+  display: block;
+  margin: 0 auto 10px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 13px 36px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #0d47a1;
+  transition: all 0.2s;
+}
+.match-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #0d47a1; }
+
+/* === QUIZ === */
+.quiz-wrap { max-width: 580px; margin: 0 auto; }
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: 2px solid #e3eaff;
+  font-weight: 700;
+  color: var(--dark);
+}
+.q-score {
+  background: var(--yellow);
+  border-radius: 50px;
+  padding: 4px 16px;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--dark);
+}
+.q-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px 22px;
+  border: 3px solid #e3eaff;
+  box-shadow: 0 5px 0 #e3eaff;
+}
+.q-num { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+.q-text { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin: 12px 0 20px; line-height: 1.6; }
+.q-opts { display: flex; flex-direction: column; gap: 10px; }
+.q-opt {
+  background: var(--bg);
+  border: 2.5px solid #dde4f0;
+  border-radius: 14px;
+  padding: 13px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.q-opt:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); transform: translateX(4px); }
+.q-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.q-opt.wrong   { background: var(--red-light);   border-color: var(--red);   color: var(--red); }
+.q-opt:disabled { cursor: default; }
+.q-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #dde4f0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.correct .q-letter { background: #a5d6a7; }
+.wrong   .q-letter { background: #ef9a9a; }
+
+.q-feedback {
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 14px;
+  display: none;
+}
+.q-feedback.show { display: block; animation: pop-in 0.3s ease; }
+.q-feedback.correct-fb { background: var(--green-light); color: var(--green); }
+.q-feedback.wrong-fb   { background: var(--red-light);   color: var(--red); }
+
+.q-next {
+  display: none;
+  margin: 16px auto 0;
+  background: var(--dark);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 13px 36px;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #000;
+  transition: all 0.2s;
+}
+.q-next:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #000; }
+.q-next.show { display: block; }
+
+.q-dots { display: flex; justify-content: center; gap: 7px; margin-bottom: 18px; }
+.q-dot { width: 11px; height: 11px; border-radius: 50%; background: #dde4f0; border: 2px solid #c0c8e0; transition: all 0.3s; }
+.q-dot.done    { background: var(--green); border-color: var(--green); }
+.q-dot.current { background: var(--blue); border-color: var(--blue); transform: scale(1.4); }
+
+.final-panel { text-align: center; padding: 40px 20px; }
+.final-panel.show { display: block; animation: slide-up 0.5s ease; }
+.final-panel .big { font-size: 4.5rem; }
+.final-panel h2 { font-family: 'Baloo 2', cursive; font-size: 2rem; color: var(--dark); margin: 10px 0 6px; }
+.final-panel p  { color: var(--gray); font-size: 1rem; margin-bottom: 24px; }
+.retry-btn {
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 13px 36px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #1b5e20;
+  transition: all 0.2s;
+}
+.retry-btn:hover { transform: translateY(-3px); }
+
+@media(max-width: 420px) {
+  .match-item { font-size: 0.8rem; padding: 10px 8px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ruler-stripe"></div>
+  <div class="header-inner">
+    <h1>📏 Measurement Adventure!</h1>
+    <p>Area & Perimeter • Length Units • 27th April 2026</p>
+    <div class="tick-marks" id="tickMarks"></div>
+  </div>
+  <div class="ruler-stripe-bottom"></div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('units', this)">📐 Units</button>
+  <button class="tab-btn" onclick="showTab('visual', this)">📊 Compare</button>
+  <button class="tab-btn" onclick="showTab('convert', this)">🔄 Convert</button>
+  <button class="tab-btn" onclick="showTab('match', this)">🎯 Match</button>
+  <button class="tab-btn" onclick="showTab('quiz', this)">🧠 Quiz</button>
+</div>
+
+<!-- ===== UNITS ===== -->
+<div class="section active" id="units">
+  <div class="sec-title">📐 The 4 Length Units</div>
+  <div class="sec-sub">Tap each card to find out more! 👇</div>
+  <div class="units-grid">
+
+    <div class="unit-card cm" onclick="this.classList.toggle('open')">
+      <div class="unit-emoji">✏️</div>
+      <div class="unit-name">Centimetre</div>
+      <div class="unit-abbr">cm</div>
+      <div class="unit-desc">Used to measure <strong>shorter lengths</strong></div>
+      <div class="unit-detail">
+        <strong>📌 Examples:</strong>
+        The length of a pencil ✏️<br>
+        The width of your hand ✋<br>
+        The length of a book 📚<br><br>
+        <strong>🔢 Conversion:</strong><br>
+        1 cm = 10 mm
+      </div>
+    </div>
+
+    <div class="unit-card m" onclick="this.classList.toggle('open')">
+      <div class="unit-emoji">🚪</div>
+      <div class="unit-name">Metre</div>
+      <div class="unit-abbr">m</div>
+      <div class="unit-desc">Used to measure <strong>longer lengths</strong></div>
+      <div class="unit-detail">
+        <strong>📌 Examples:</strong>
+        Height of a door 🚪<br>
+        Length of a car 🚗<br>
+        Width of a classroom 🏫<br><br>
+        <strong>🔢 Conversion:</strong><br>
+        1 m = 100 cm
+      </div>
+    </div>
+
+    <div class="unit-card mm" onclick="this.classList.toggle('open')">
+      <div class="unit-emoji">🪙</div>
+      <div class="unit-name">Millimetre</div>
+      <div class="unit-abbr">mm</div>
+      <div class="unit-desc">Used to measure <strong>very small lengths</strong></div>
+      <div class="unit-detail">
+        <strong>📌 Examples:</strong>
+        Thickness of a coin 🪙<br>
+        Thickness of a fingernail 💅<br>
+        Thickness of a phone 📱<br><br>
+        <strong>🔢 Conversion:</strong><br>
+        10 mm = 1 cm
+      </div>
+    </div>
+
+    <div class="unit-card km" onclick="this.classList.toggle('open')">
+      <div class="unit-emoji">🏙️</div>
+      <div class="unit-name">Kilometre</div>
+      <div class="unit-abbr">km</div>
+      <div class="unit-desc">Used to measure <strong>very long distances</strong></div>
+      <div class="unit-detail">
+        <strong>📌 Examples:</strong>
+        Distance between two cities 🏙️<br>
+        Distance between towns 🗺️<br>
+        Length of a road trip 🛣️<br><br>
+        <strong>🔢 Conversion:</strong><br>
+        1 km = 1000 m
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== VISUAL COMPARE ===== -->
+<div class="section" id="visual">
+  <div class="sec-title">📊 How Big Are They?</div>
+  <div class="sec-sub">See how the units compare to each other!</div>
+
+  <div class="scale-bar-wrap visual-section">
+    <h3>📏 Size Comparison</h3>
+    <div class="scale-row">
+      <div class="scale-label" style="color:var(--orange)">mm</div>
+      <div class="scale-bar" style="width:8%; background:var(--orange);">1 mm</div>
+      <div class="scale-desc">← coin thickness</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label" style="color:var(--blue)">cm</div>
+      <div class="scale-bar" style="width:28%; background:var(--blue);">1 cm = 10 mm</div>
+      <div class="scale-desc">← fingertip</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label" style="color:var(--green)">m</div>
+      <div class="scale-bar" style="width:65%; background:var(--green);">1 m = 100 cm</div>
+      <div class="scale-desc">← door</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-label" style="color:var(--purple)">km</div>
+      <div class="scale-bar" style="width:100%; background:var(--purple); font-size:0.7rem;">1 km = 1000 m</div>
+      <div class="scale-desc">← cities</div>
+    </div>
+  </div>
+
+  <div class="scale-bar-wrap">
+    <h3>🔢 The Conversion Chain</h3>
+    <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:700;padding:10px 0;">
+      <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:12px;padding:10px 16px;color:var(--orange);text-align:center;">
+        <div style="font-size:1.4rem">mm</div>
+        <div style="font-size:0.7rem;color:var(--gray)">millimetre</div>
+      </div>
+      <div style="color:var(--gray);text-align:center;">
+        <div style="font-size:0.7rem">×10</div>
+        <div style="font-size:1.3rem">→</div>
+      </div>
+      <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:12px;padding:10px 16px;color:var(--blue);text-align:center;">
+        <div style="font-size:1.4rem">cm</div>
+        <div style="font-size:0.7rem;color:var(--gray)">centimetre</div>
+      </div>
+      <div style="color:var(--gray);text-align:center;">
+        <div style="font-size:0.7rem">×100</div>
+        <div style="font-size:1.3rem">→</div>
+      </div>
+      <div style="background:var(--green-light);border:2px solid var(--green);border-radius:12px;padding:10px 16px;color:var(--green);text-align:center;">
+        <div style="font-size:1.4rem">m</div>
+        <div style="font-size:0.7rem;color:var(--gray)">metre</div>
+      </div>
+      <div style="color:var(--gray);text-align:center;">
+        <div style="font-size:0.7rem">×1000</div>
+        <div style="font-size:1.3rem">→</div>
+      </div>
+      <div style="background:var(--purple-light);border:2px solid var(--purple);border-radius:12px;padding:10px 16px;color:var(--purple);text-align:center;">
+        <div style="font-size:1.4rem">km</div>
+        <div style="font-size:0.7rem;color:var(--gray)">kilometre</div>
+      </div>
+    </div>
+    <div style="background:var(--yellow);border-radius:12px;padding:12px;text-align:center;font-weight:700;font-size:0.9rem;margin-top:14px;">
+      💡 Remember: 1 cm = 10 mm &nbsp;|&nbsp; 1 m = 100 cm &nbsp;|&nbsp; 1 km = 1000 m
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONVERTER ===== -->
+<div class="section" id="convert">
+  <div class="sec-title">🔄 Unit Converter</div>
+  <div class="sec-sub">Type a number and watch the magic! ✨</div>
+
+  <div class="converter-card">
+    <h3>Choose what to convert:</h3>
+
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+      <button class="conv-mode-btn active" onclick="setConvMode('cm_mm', this)" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:8px 16px;font-family:'Baloo 2',cursive;font-weight:700;cursor:pointer;font-size:0.85rem;">cm ↔ mm</button>
+      <button class="conv-mode-btn" onclick="setConvMode('m_cm', this)" style="background:#eee;color:var(--dark);border:none;border-radius:50px;padding:8px 16px;font-family:'Baloo 2',cursive;font-weight:700;cursor:pointer;font-size:0.85rem;">m ↔ cm</button>
+      <button class="conv-mode-btn" onclick="setConvMode('km_m', this)" style="background:#eee;color:var(--dark);border:none;border-radius:50px;padding:8px 16px;font-family:'Baloo 2',cursive;font-weight:700;cursor:pointer;font-size:0.85rem;">km ↔ m</button>
+    </div>
+
+    <div class="conv-row">
+      <label id="convLabel1">cm</label>
+      <input class="conv-input" type="number" id="convInput1" placeholder="0" oninput="convert(1)" min="0">
+      <span class="conv-unit" id="convUnit1" style="background:var(--blue)">cm</span>
+    </div>
+
+    <div class="conv-divider">⇅</div>
+
+    <div class="conv-row">
+      <label id="convLabel2">mm</label>
+      <input class="conv-input" type="number" id="convInput2" placeholder="0" oninput="convert(2)" min="0">
+      <span class="conv-unit" id="convUnit2" style="background:var(--orange)">mm</span>
+    </div>
+
+    <div class="conv-fact" id="convFact">
+      Try typing 1 in the top box! 👆
+    </div>
+  </div>
+</div>
+
+<!-- ===== MATCH ===== -->
+<div class="section" id="match">
+  <div class="sec-title">🎯 Match It!</div>
+  <div class="sec-sub">Match each object to the correct unit! Tap one from each side then press Check.</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:580px;margin:0 auto 16px;">
+    <div class="match-col-title">🗂️ Objects</div>
+    <div class="match-col-title">📏 Units</div>
+    <div class="match-col" id="objCol"></div>
+    <div class="match-col" id="unitCol"></div>
+  </div>
+  <button class="match-btn" onclick="checkMatch()">Check Matches ✅</button>
+  <div id="matchFeedback" style="text-align:center;font-family:'Baloo 2',cursive;font-weight:700;font-size:1.1rem;min-height:30px;margin-top:8px;"></div>
+  <button class="match-btn" onclick="setupMatch()" style="background:var(--gray);box-shadow:0 4px 0 #333;display:none;margin-top:10px;" id="resetMatchBtn">Try Again 🔄</button>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="quiz">
+  <div class="sec-title">🧠 Quiz Time!</div>
+  <div class="quiz-wrap">
+    <div class="quiz-top">
+      <span>⭐ Score</span>
+      <span class="q-score" id="qScore">0 / 0</span>
+    </div>
+    <div class="q-dots" id="qDots"></div>
+    <div id="quizArea"></div>
+  </div>
+</div>
+
+<script>
+/* ===== TABS ===== */
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id === 'quiz')  initQuiz();
+  if(id === 'match') setupMatch();
+}
+
+/* ===== TICKER ===== */
+const tickEl = document.getElementById('tickMarks');
+for(let i=0;i<=20;i++){
+  const t = document.createElement('div');
+  t.className = 'tick' + (i%5===0?' big':'');
+  t.textContent = i%5===0 ? i : '';
+  tickEl.appendChild(t);
+}
+
+/* ===== CONVERTER ===== */
+let convMode = 'cm_mm';
+const modeConfig = {
+  cm_mm: { l1:'cm', l2:'mm', u1:'cm', u2:'mm', c1:var1=>var1*10, c2:var2=>var2/10, col1:'var(--blue)', col2:'var(--orange)', fact: n=>`${n} cm = ${n*10} mm &nbsp;(×10)` },
+  m_cm:  { l1:'m',  l2:'cm', u1:'m',  u2:'cm', c1:v=>v*100, c2:v=>v/100, col1:'var(--green)', col2:'var(--blue)', fact: n=>`${n} m = ${n*100} cm &nbsp;(×100)` },
+  km_m:  { l1:'km', l2:'m',  u1:'km', u2:'m',  c1:v=>v*1000,c2:v=>v/1000,col1:'var(--purple)',col2:'var(--green)',fact: n=>`${n} km = ${n*1000} m &nbsp;(×1000)` }
+};
+function setConvMode(mode, btn) {
+  convMode = mode;
+  document.querySelectorAll('.conv-mode-btn').forEach(b => { b.style.background='#eee'; b.style.color='var(--dark)'; });
+  btn.style.background='var(--blue)'; btn.style.color='white';
+  const cfg = modeConfig[mode];
+  document.getElementById('convLabel1').textContent = cfg.l1;
+  document.getElementById('convLabel2').textContent = cfg.l2;
+  document.getElementById('convUnit1').textContent  = cfg.u1;
+  document.getElementById('convUnit2').textContent  = cfg.u2;
+  document.getElementById('convUnit1').style.background = cfg.col1;
+  document.getElementById('convUnit2').style.background = cfg.col2;
+  document.getElementById('convInput1').value = '';
+  document.getElementById('convInput2').value = '';
+  document.getElementById('convFact').innerHTML = `Try typing a number above! 👆`;
+}
+function convert(from) {
+  const cfg = modeConfig[convMode];
+  const v = parseFloat(from===1 ? document.getElementById('convInput1').value : document.getElementById('convInput2').value);
+  if(isNaN(v)||v<0){ document.getElementById('convFact').innerHTML='Enter a number above!'; return; }
+  if(from===1) {
+    const res = cfg.c1(v);
+    document.getElementById('convInput2').value = +res.toFixed(4);
+    document.getElementById('convFact').innerHTML = '🟡 ' + cfg.fact(v);
+  } else {
+    const res = cfg.c2(v);
+    document.getElementById('convInput1').value = +res.toFixed(4);
+    document.getElementById('convFact').innerHTML = '🟡 ' + cfg.fact(res);
+  }
+}
+
+/* ===== MATCH ===== */
+const matchData = [
+  { obj:'✏️ Pencil length',       unit:'cm' },
+  { obj:'🪙 Coin thickness',      unit:'mm' },
+  { obj:'🚪 Height of a door',    unit:'m'  },
+  { obj:'🏙️ Distance between cities', unit:'km' },
+];
+let selObj = null, selUnit = null;
+let matchPairs = {};
+
+function setupMatch() {
+  selObj = null; selUnit = null; matchPairs = {};
+  document.getElementById('matchFeedback').textContent = '';
+  document.getElementById('resetMatchBtn').style.display = 'none';
+
+  const objs  = [...matchData].sort(()=>Math.random()-0.5);
+  const units = [...matchData.map(d=>d.unit)].sort(()=>Math.random()-0.5);
+
+  const oCol = document.getElementById('objCol');
+  const uCol = document.getElementById('unitCol');
+  oCol.innerHTML=''; uCol.innerHTML='';
+
+  objs.forEach(d => {
+    const el = document.createElement('div');
+    el.className='match-item'; el.textContent=d.obj; el.dataset.val=d.obj;
+    el.onclick = ()=>selectObj(el);
+    oCol.appendChild(el);
+  });
+  units.forEach(u => {
+    const el = document.createElement('div');
+    el.className='match-item'; el.textContent=u; el.dataset.val=u;
+    el.onclick = ()=>selectUnit(el);
+    uCol.appendChild(el);
+  });
+}
+
+function selectObj(el) {
+  document.querySelectorAll('#objCol .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected'); selObj = el;
+  tryPair();
+}
+function selectUnit(el) {
+  document.querySelectorAll('#unitCol .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected'); selUnit = el;
+  tryPair();
+}
+function tryPair() {
+  if(!selObj || !selUnit) return;
+  matchPairs[selObj.dataset.val] = selUnit.dataset.val;
+  selObj.classList.remove('selected');
+  selUnit.classList.remove('selected');
+  selObj = null; selUnit = null;
+}
+
+function checkMatch() {
+  let correct = 0;
+  document.querySelectorAll('#objCol .match-item').forEach(el => {
+    const objVal = el.dataset.val;
+    const expected = matchData.find(d=>d.obj===objVal)?.unit;
+    const given = matchPairs[objVal];
+    if(given && given === expected) {
+      el.classList.add('correct'); correct++;
+      document.querySelectorAll('#unitCol .match-item').forEach(u=>{
+        if(u.dataset.val===expected) u.classList.add('correct');
+      });
+    } else if(given) {
+      el.classList.add('wrong');
+    }
+  });
+  const fb = document.getElementById('matchFeedback');
+  if(correct===4) fb.innerHTML='🎉 Perfect! All matched correctly!';
+  else fb.innerHTML=`You got ${correct}/4 correct. Try again!`;
+  document.getElementById('resetMatchBtn').style.display='block';
+}
+
+/* ===== QUIZ ===== */
+const qData = [
+  { q:'Which unit do we use to measure the length of a pencil?', opts:['km','m','cm','mm'], ans:2, exp:'✅ Centimetres (cm) measure shorter lengths like a pencil!' },
+  { q:'The short form (abbreviation) of millimetre is:', opts:['m','km','cm','mm'], ans:3, exp:'✅ mm is the short form for millimetre!' },
+  { q:'Which unit is used to measure the distance between two cities?', opts:['mm','cm','m','km'], ans:3, exp:'✅ Kilometres (km) measure very long distances like between cities!' },
+  { q:'1 metre equals how many centimetres?', opts:['10','100','1000','10000'], ans:1, exp:'✅ 1 m = 100 cm. One hundred centimetres make a metre!' },
+  { q:'Which is the SMALLEST unit of length?', opts:['km','m','cm','mm'], ans:3, exp:'✅ Millimetres (mm) are the smallest — used for tiny lengths like a coin thickness!' },
+  { q:'1 cm equals how many millimetres?', opts:['100','1000','10','1'], ans:2, exp:'✅ 1 cm = 10 mm. Ten millimetres make one centimetre!' },
+  { q:'What is the best unit to measure the height of a door?', opts:['mm','cm','m','km'], ans:2, exp:'✅ Metres (m) are perfect for measuring the height of a door or length of a car!' },
+  { q:'1 kilometre equals how many metres?', opts:['10','100','1000','10000'], ans:2, exp:'✅ 1 km = 1000 m. One thousand metres make a kilometre!' },
+  { q:'The thickness of a fingernail is best measured in:', opts:['km','m','cm','mm'], ans:3, exp:'✅ Millimetres (mm) measure very small things like fingernail thickness!' },
+  { q:'Which unit would you use to measure the length of a car?', opts:['mm','cm','m','km'], ans:2, exp:'✅ Metres (m) are used for longer lengths like a car or door!' },
+];
+
+let qCur=0, qScore=0, qAnswered=false;
+
+function initQuiz() {
+  qCur=0; qScore=0; qAnswered=false;
+  renderQ(); updateQScore(); renderQDots();
+}
+
+function renderQ() {
+  const q = qData[qCur];
+  const L=['A','B','C','D'];
+  document.getElementById('quizArea').innerHTML = `
+    <div class="q-card">
+      <div class="q-num">Question ${qCur+1} of ${qData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-opts">
+        ${q.opts.map((o,i)=>`
+          <button class="q-opt" onclick="pickQ(${i},this)" id="qopt${i}">
+            <span class="q-letter">${L[i]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="q-feedback" id="qfb"></div>
+    </div>
+    <button class="q-next" id="qnext" onclick="nextQ()">
+      ${qCur<qData.length-1?'Next →':'See My Score! 🎉'}
+    </button>`;
+  qAnswered=false;
+}
+
+function pickQ(idx, btn) {
+  if(qAnswered) return;
+  qAnswered=true;
+  const q=qData[qCur];
+  document.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('qfb');
+  if(idx===q.ans) {
+    btn.classList.add('correct');
+    fb.textContent=q.exp; fb.className='q-feedback show correct-fb'; qScore++;
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('qopt'+q.ans).classList.add('correct');
+    fb.textContent='❌ Not quite! '+q.exp; fb.className='q-feedback show wrong-fb';
+  }
+  document.getElementById('qnext').classList.add('show');
+  updateQScore();
+}
+
+function nextQ() {
+  qCur++;
+  if(qCur>=qData.length) { showFinalQ(); return; }
+  renderQDots(); renderQ();
+}
+
+function updateQScore() {
+  document.getElementById('qScore').textContent = `${qScore} / ${qData.length}`;
+}
+
+function renderQDots() {
+  document.getElementById('qDots').innerHTML = qData.map((_,i)=>
+    `<div class="q-dot ${i<qCur?'done':i===qCur?'current':''}"></div>`).join('');
+}
+
+function showFinalQ() {
+  const pct=Math.round(qScore/qData.length*100);
+  let em, msg;
+  if(pct===100){em='🏆';msg='PERFECT! You are a Measurement Master!';}
+  else if(pct>=70){em='⭐';msg='Brilliant! You know your units really well!';}
+  else if(pct>=50){em='😊';msg='Good try! Review the units and try again!';}
+  else {em='💪';msg='Keep practising! Look at the Units tab and try again!';}
+  document.getElementById('qDots').innerHTML=qData.map(()=>`<div class="q-dot done"></div>`).join('');
+  document.getElementById('quizArea').innerHTML=`
+    <div class="final-panel show">
+      <div class="big">${em}</div>
+      <h2>${qScore} out of ${qData.length}!</h2>
+      <p>${msg}</p>
+      <button class="retry-btn" onclick="initQuiz()">Try Again! 🔄</button>
+    </div>`;
+}
+
+/* init match on load */
+setupMatch();
+</script>
+</body>
+</html>
