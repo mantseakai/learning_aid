@@ -1,102 +1,773 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Amazing Bodies</title>
-    <style>
-        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff9e6; text-align: center; color: #444; padding: 20px; }
-        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 30px; border: 6px solid #ffcc00; box-shadow: 0 10px #e6b800; }
-        h1 { color: #ff6600; font-size: 2.5em; margin-bottom: 10px; }
-        .lesson-text { font-size: 1.2em; color: #555; margin-bottom: 20px; border-left: 5px solid #ffcc00; padding-left: 15px; text-align: left; }
-        
-        .game-area { display: flex; justify-content: space-around; margin: 30px 0; }
-        .basket { width: 45%; min-height: 150px; border: 4px dashed #ccc; border-radius: 20px; padding: 10px; background: #fafafa; }
-        .basket h2 { font-size: 1.5em; margin-top: 0; }
-        .basket.pairs { border-color: #4CAF50; background: #e8f5e9; }
-        .basket.single { border-color: #2196F3; background: #e3f2fd; }
-        
-        .parts-bin { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; border-top: 2px solid #eee; }
-        .part-btn { padding: 12px 20px; font-size: 18px; border: none; border-radius: 15px; cursor: pointer; background: #fff; border: 2px solid #ddd; box-shadow: 0 4px #ccc; transition: 0.2s; }
-        .part-btn:hover { transform: scale(1.05); }
-        .part-btn:active { transform: translateY(4px); box-shadow: 0 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Amazing Bodies 🧍</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:   #ff6eb4;
+      --blue:   #4a90d9;
+      --green:  #4caf50;
+      --orange: #ff8c42;
+      --purple: #9c5fe6;
+      --yellow: #ffd600;
+      --red:    #e53935;
+      --bg:     #fff8f0;
+    }
 
-        #message { height: 40px; font-weight: bold; font-size: 1.4em; color: #4CAF50; margin-top: 10px; }
-        .celebration { font-size: 50px; display: block; margin: 10px; transition: 0.3s; }
-    </style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 90%, rgba(255,110,180,0.07) 0%, transparent 45%),
+        radial-gradient(circle at 90% 10%, rgba(74,144,217,0.07) 0%, transparent 45%);
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92);
+      border: 2px solid rgba(0,0,0,0.14);
+      color: #333; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── Header ── */
+    .page-header {
+      background: linear-gradient(135deg, #ff6eb4 0%, #ff8c42 50%, #ffd600 100%);
+      text-align: center;
+      padding: 60px 20px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-header .icon { font-size: 72px; display: block; position: relative; animation: bob 2s infinite ease-in-out; }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      color: white;
+      text-shadow: 3px 4px 0 rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .page-header p {
+      font-size: 1.1rem; font-weight: 700;
+      color: rgba(255,255,255,0.92);
+      margin-top: 8px; position: relative;
+    }
+
+    /* ── Main wrap ── */
+    .main { max-width: 860px; margin: 0 auto; padding: 36px 18px 70px; }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+      color: #333;
+    }
+
+    /* ────────────────────────────────
+       SECTION 1 – LEARN THE PARTS
+    ──────────────────────────────── */
+    .learn-intro {
+      background: white;
+      border-radius: 22px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+      border-left: 7px solid var(--pink);
+      box-shadow: 0 4px 18px rgba(255,110,180,0.12);
+    }
+    .learn-intro p {
+      font-size: 1.15rem; font-weight: 700; line-height: 1.75;
+      color: #444;
+    }
+    .learn-intro p + p { margin-top: 10px; }
+    .hl { font-weight: 900; color: var(--pink); }
+
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+      margin-bottom: 38px;
+    }
+    .part-card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px 10px 14px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+      border: 3px solid transparent;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      position: relative;
+      overflow: hidden;
+    }
+    .part-card:hover { transform: translateY(-5px); box-shadow: 0 10px 22px rgba(0,0,0,0.13); border-color: var(--card-color, #ddd); }
+    .part-card.flipped { border-color: var(--card-color, #ddd); background: var(--card-bg, #f9f9f9); }
+
+    .part-card .emoji { font-size: 44px; display: block; margin-bottom: 8px; }
+    .part-card .name  { font-family: 'Fredoka One', cursive; font-size: 1.15rem; color: #333; }
+    .part-card .job   {
+      font-size: 0.82rem; font-weight: 800; line-height: 1.4;
+      color: var(--card-color, #555);
+      margin-top: 8px;
+      display: none;
+    }
+    .part-card.flipped .job  { display: block; }
+    .part-card .tap-hint {
+      font-size: 0.72rem; font-weight: 700; color: #bbb;
+      margin-top: 6px;
+    }
+    .part-card.flipped .tap-hint { display: none; }
+
+    /* ────────────────────────────────
+       ACTIVITY WRAPPER
+    ──────────────────────────────── */
+    .activity-box {
+      background: white;
+      border-radius: 24px;
+      padding: 28px 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    }
+    .activity-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .activity-box .hint {
+      font-size: 0.92rem; font-weight: 700; color: #888;
+      margin-bottom: 20px;
+    }
+
+    /* ────────────────────────────────
+       ACTIVITY 1 – PAIRS OR SINGLES
+    ──────────────────────────────── */
+    .sort-zone {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sort-basket {
+      border-radius: 18px;
+      padding: 16px 12px;
+      min-height: 110px;
+      border: 3px dashed;
+    }
+    .sort-basket.pairs  { border-color: var(--blue);   background: #e8f4ff; }
+    .sort-basket.single { border-color: var(--purple); background: #f3eaff; }
+    .sort-basket h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .sort-basket.pairs  h3 { color: var(--blue); }
+    .sort-basket.single h3 { color: var(--purple); }
+    .sorted-item {
+      display: inline-block;
+      background: white;
+      border-radius: 50px;
+      padding: 5px 14px;
+      margin: 4px 3px;
+      font-size: 0.92rem; font-weight: 800;
+      animation: popIn 0.25s ease;
+    }
+    @keyframes popIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+
+    .sort-buttons {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center;
+      padding: 16px 0 8px;
+    }
+    .sort-btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 1rem;
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 3px solid #e0e0e0;
+      background: white;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 3px 0 #ddd;
+    }
+    .sort-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 #ccc; }
+    .sort-btn:active { transform: translateY(2px); box-shadow: none; }
+
+    .sort-message {
+      text-align: center; font-size: 1.1rem; font-weight: 900;
+      min-height: 32px; color: var(--green);
+      margin-top: 8px;
+    }
+
+    /* ────────────────────────────────
+       ACTIVITY 2 – WHAT DOES IT DO?
+    ──────────────────────────────── */
+    .match-grid {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .match-row {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .match-part {
+      background: var(--orange);
+      color: white; font-family: 'Fredoka One', cursive;
+      font-size: 1rem; padding: 8px 20px; border-radius: 50px;
+      min-width: 130px; text-align: center;
+    }
+    .match-arrow { color: #bbb; font-size: 1.3rem; font-weight: 900; }
+    .match-row select {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.95rem;
+      padding: 8px 14px; border-radius: 50px;
+      border: 3px solid #ddd; background: white;
+      cursor: pointer; flex: 1; min-width: 180px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .match-row select.ok  { border-color: var(--green); background-color: #e8f5e9; }
+    .match-row select.bad { border-color: var(--red);   background-color: #ffebee; }
+
+    /* ────────────────────────────────
+       ACTIVITY 3 – TRUE OR FALSE
+    ──────────────────────────────── */
+    .tf-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .tf-item {
+      background: #f9f9f9;
+      border-radius: 18px;
+      padding: 16px 20px;
+    }
+    .tf-item p { font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; }
+    .tf-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tf-btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 0.95rem;
+      padding: 8px 22px; border-radius: 50px;
+      border: 3px solid #ddd; background: white;
+      cursor: pointer; transition: 0.15s;
+    }
+    .tf-btn:hover { background: #f5f5f5; }
+    .tf-btn.correct { background: #e8f5e9; border-color: var(--green); color: var(--green); }
+    .tf-btn.wrong   { background: #ffebee; border-color: var(--red);   color: var(--red);   }
+    .tf-feedback { font-size: 0.9rem; font-weight: 800; margin-top: 10px; min-height: 20px; }
+
+    /* ────────────────────────────────
+       BUTTONS + SCORE
+    ──────────────────────────────── */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .action-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem; padding: 12px 26px;
+      border-radius: 50px; border: none; cursor: pointer; transition: 0.2s;
+    }
+    .action-btn.green { background: var(--green); color: white; box-shadow: 0 4px 0 #388e3c; }
+    .action-btn.green:hover { background: #43a047; transform: translateY(-2px); }
+    .action-btn.reset { background: #eee; color: #666; box-shadow: 0 4px 0 #ccc; }
+    .action-btn.reset:hover { background: #e0e0e0; }
+
+    .score-line {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem; color: var(--green);
+      margin-top: 14px; min-height: 32px;
+    }
+
+    /* ────────────────────────────────
+       FINAL CHEER
+    ──────────────────────────────── */
+    .cheer-box {
+      background: linear-gradient(135deg, #ffe082, #ffab40);
+      border-radius: 24px;
+      text-align: center;
+      padding: 32px 20px;
+      margin-bottom: 32px;
+      display: none;
+    }
+    .cheer-box.show { display: block; animation: popIn 0.4s ease; }
+    .cheer-box .trophy { font-size: 64px; display: block; margin-bottom: 10px; }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem; color: white;
+      text-shadow: 2px 3px rgba(0,0,0,0.15);
+    }
+    .cheer-box p { font-size: 1.05rem; font-weight: 800; color: rgba(255,255,255,0.92); margin-top: 8px; }
+
+    footer { text-align: center; color: #bbb; font-size: 0.85rem; font-weight: 600; padding: 20px; }
+  </style>
 </head>
 <body>
 
 <a href="../index.html" class="back-home-btn">← Back</a>
-<style>.back-home-btn{position:fixed;top:14px;left:14px;z-index:9999;background:rgba(255,255,255,0.92);border:2px solid rgba(0,0,0,0.14);color:#333;font-family:sans-serif;font-weight:800;font-size:0.88rem;padding:7px 16px;border-radius:50px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.15);backdrop-filter:blur(4px);transition:all 0.2s;}.back-home-btn:hover{background:white;transform:translateX(-2px);}</style>
 
-    <div class="container">
-        <h1>Humans: Our Bodies</h1>
-        <div class="lesson-text">
-            "Some body parts come in <strong>pairs</strong>. Others do <strong>not</strong>."
-        </div>
+<!-- ── Header ── -->
+<div class="page-header">
+  <span class="icon">🧍‍♀️</span>
+  <h1>Our Amazing Bodies!</h1>
+  <p>Learn about the parts of your body 💪</p>
+</div>
 
-        <div id="celebration-icon" class="celebration">🧍‍♀️</div>
-        <div id="message">Click a part to sort it!</div>
+<div class="main">
 
-        <div class="game-area">
-            <div id="pairs-basket" class="basket pairs">
-                <h2>Pairs (2)</h2>
-                <div id="pairs-list"></div>
-            </div>
-            <div id="single-basket" class="basket single">
-                <h2>Single (1)</h2>
-                <div id="single-list"></div>
-            </div>
-        </div>
+  <!-- ── Introduction ── -->
+  <div class="learn-intro">
+    <p>Your body is <span class="hl">amazing</span>! It has many different parts, and each part has a very important job.</p>
+    <p>Some parts come in <span class="hl">pairs</span> — that means you have <strong>two</strong> of them! Some parts are <span class="hl">single</span> — that means you have <strong>one</strong> of them.</p>
+    <p>Let's explore your body together! 🌟</p>
+  </div>
 
-        <div class="parts-bin" id="button-container">
-            </div>
+  <!-- ── Section 1: Meet Your Body Parts ── -->
+  <div class="section-label">👀 Meet Your Body Parts</div>
+  <p style="font-size:1rem;font-weight:700;color:#888;margin-bottom:18px;">Tap a card to find out what each part does!</p>
 
-        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px; cursor: pointer; border-radius: 10px; border: 1px solid #999;">Start Over</button>
+  <div class="parts-grid" id="partsGrid">
+
+    <div class="part-card" style="--card-color:#4a90d9;--card-bg:#e8f4ff" onclick="flipCard(this)">
+      <span class="emoji">👀</span>
+      <div class="name">Eyes</div>
+      <div class="job">We use our eyes to <strong>SEE</strong> everything around us!</div>
+      <div class="tap-hint">Tap to find out!</div>
     </div>
 
-    <script>
-        const parts = [
-            { name: "Eyes 👀", type: "pair" },
-            { name: "Mouth 👄", type: "single" },
-            { name: "Hands 👐", type: "pair" },
-            { name: "Nose 👃", type: "single" },
-            { name: "Feet 👣", type: "pair" },
-            { name: "Neck 🧣", type: "single" },
-            { name: "Ears 👂", type: "pair" },
-            { name: "Head 👱‍♀️", type: "single" },
-            { name: "Knees 🦵", type: "pair" }
-        ];
+    <div class="part-card" style="--card-color:#ff6eb4;--card-bg:#fff0f8" onclick="flipCard(this)">
+      <span class="emoji">👂</span>
+      <div class="name">Ears</div>
+      <div class="job">We use our ears to <strong>HEAR</strong> sounds and music!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
 
-        const container = document.getElementById('button-container');
-        const message = document.getElementById('message');
-        const icon = document.getElementById('celebration-icon');
+    <div class="part-card" style="--card-color:#ff8c42;--card-bg:#fff5ee" onclick="flipCard(this)">
+      <span class="emoji">👃</span>
+      <div class="name">Nose</div>
+      <div class="job">We use our nose to <strong>SMELL</strong> flowers, food, and more!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
 
-        parts.sort(() => Math.random() - 0.5).forEach(part => {
-            const btn = document.createElement('button');
-            btn.className = 'part-btn';
-            btn.innerText = part.name;
-            btn.onclick = () => sortPart(part, btn);
-            container.appendChild(btn);
-        });
+    <div class="part-card" style="--card-color:#e53935;--card-bg:#fff0f0" onclick="flipCard(this)">
+      <span class="emoji">👄</span>
+      <div class="name">Mouth</div>
+      <div class="job">We use our mouth to <strong>EAT</strong>, <strong>DRINK</strong>, and <strong>TALK</strong>!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
 
-        function sortPart(part, btn) {
-            const targetId = part.type === 'pair' ? 'pairs-list' : 'single-list';
-            document.getElementById(targetId).innerHTML += `<p>${part.name}</p>`;
-            btn.style.display = 'none';
-            
-            message.innerText = "That's right!";
-            icon.style.transform = "scale(1.3) rotate(10deg)";
-            
-            setTimeout(() => {
-                icon.style.transform = "scale(1) rotate(0deg)";
-                if(container.querySelectorAll('.part-btn[style*="display: none"]').length === parts.length) {
-                    message.innerText = "You finished! Great job! 🎉";
-                    icon.innerText = "🥳";
-                }
-            }, 500);
-        }
-    </script>
+    <div class="part-card" style="--card-color:#9c5fe6;--card-bg:#f3eaff" onclick="flipCard(this)">
+      <span class="emoji">🖐️</span>
+      <div class="name">Hands</div>
+      <div class="job">We use our hands to <strong>HOLD</strong>, <strong>TOUCH</strong>, and <strong>WRITE</strong>!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#4caf50;--card-bg:#eafaea" onclick="flipCard(this)">
+      <span class="emoji">🦶</span>
+      <div class="name">Feet</div>
+      <div class="job">We use our feet to <strong>WALK</strong>, <strong>RUN</strong>, and <strong>JUMP</strong>!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#ffd600;--card-bg:#fffde7" onclick="flipCard(this)">
+      <span class="emoji">🫀</span>
+      <div class="name">Heart</div>
+      <div class="job">Our heart <strong>PUMPS BLOOD</strong> all around our body. It goes <em>thump thump!</em></div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#00bcd4;--card-bg:#e0f7fa" onclick="flipCard(this)">
+      <span class="emoji">🧠</span>
+      <div class="name">Brain</div>
+      <div class="job">Our brain helps us <strong>THINK</strong>, <strong>LEARN</strong>, and <strong>FEEL</strong>. It controls our whole body!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#ff8c42;--card-bg:#fff5ee" onclick="flipCard(this)">
+      <span class="emoji">🦷</span>
+      <div class="name">Teeth</div>
+      <div class="job">Our teeth help us <strong>BITE</strong> and <strong>CHEW</strong> our food!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#4a90d9;--card-bg:#e8f4ff" onclick="flipCard(this)">
+      <span class="emoji">🦵</span>
+      <div class="name">Knees</div>
+      <div class="job">Our knees help our legs <strong>BEND</strong> so we can sit, walk, and run!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#9c5fe6;--card-bg:#f3eaff" onclick="flipCard(this)">
+      <span class="emoji">💪</span>
+      <div class="name">Arms</div>
+      <div class="job">Our arms help us <strong>REACH</strong>, <strong>CARRY</strong>, and <strong>HUG</strong>!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+    <div class="part-card" style="--card-color:#4caf50;--card-bg:#eafaea" onclick="flipCard(this)">
+      <span class="emoji">🫁</span>
+      <div class="name">Lungs</div>
+      <div class="job">Our lungs help us <strong>BREATHE</strong> in air. We have two of them!</div>
+      <div class="tap-hint">Tap to find out!</div>
+    </div>
+
+  </div>
+
+  <!-- ── Activity 1: Pairs or Singles ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--blue)">🎮 Activity 1 — Pairs or Singles?</h2>
+    <p class="hint">Some body parts come in <strong>PAIRS</strong> (you have 2). Some are <strong>SINGLE</strong> (you have 1). Tap each part and put it in the right basket!</p>
+
+    <div class="sort-zone">
+      <div class="sort-basket pairs">
+        <h3>✌️ Pairs (2)</h3>
+        <div id="pairsBasket"></div>
+      </div>
+      <div class="sort-basket single">
+        <h3>☝️ Singles (1)</h3>
+        <div id="singleBasket"></div>
+      </div>
+    </div>
+
+    <div class="sort-buttons" id="sortButtons"></div>
+    <div class="sort-message" id="sortMessage">Pick a body part to sort it! 👆</div>
+  </div>
+
+  <!-- ── Activity 2: What does it do? ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--orange)">🔗 Activity 2 — What Does It Do?</h2>
+    <p class="hint">Match each body part to its job! Choose the right answer from the list.</p>
+
+    <div class="match-grid" id="matchGrid">
+
+      <div class="match-row">
+        <span class="match-part">Eyes 👀</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="See things">
+          <option value="">Pick an answer…</option>
+          <option>Hear sounds</option>
+          <option>See things</option>
+          <option>Smell flowers</option>
+          <option>Eat food</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-part">Ears 👂</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="Hear sounds">
+          <option value="">Pick an answer…</option>
+          <option>See things</option>
+          <option>Hear sounds</option>
+          <option>Pump blood</option>
+          <option>Walk and run</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-part">Nose 👃</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="Smell things">
+          <option value="">Pick an answer…</option>
+          <option>Hear sounds</option>
+          <option>Think and learn</option>
+          <option>Smell things</option>
+          <option>Hold objects</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-part">Heart 🫀</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="Pump blood">
+          <option value="">Pick an answer…</option>
+          <option>Smell things</option>
+          <option>Pump blood</option>
+          <option>Breathe air</option>
+          <option>See things</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-part">Lungs 🫁</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="Breathe air">
+          <option value="">Pick an answer…</option>
+          <option>Pump blood</option>
+          <option>Walk and run</option>
+          <option>Breathe air</option>
+          <option>Eat food</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-part">Brain 🧠</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="Think and learn">
+          <option value="">Pick an answer…</option>
+          <option>Breathe air</option>
+          <option>See things</option>
+          <option>Walk and run</option>
+          <option>Think and learn</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-part">Feet 🦶</span>
+        <span class="match-arrow">→</span>
+        <select data-answer="Walk and run">
+          <option value="">Pick an answer…</option>
+          <option>Hold objects</option>
+          <option>Walk and run</option>
+          <option>Pump blood</option>
+          <option>Smell things</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="btn-row">
+      <button class="action-btn green" onclick="checkMatch()">Check! ✅</button>
+      <button class="action-btn reset" onclick="resetMatch()">Try Again 🔄</button>
+    </div>
+    <div class="score-line" id="matchScore"></div>
+  </div>
+
+  <!-- ── Activity 3: True or False ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--purple)">🧠 Activity 3 — True or False?</h2>
+    <p class="hint">Read each sentence. Is it true or false? Tap your answer!</p>
+
+    <ul class="tf-list">
+
+      <li class="tf-item" data-correct="true">
+        <p>We use our eyes to see. 👀</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>We have THREE eyes. 😲</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Hands come in a pair — we have two hands. 🙌</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Our nose pumps blood around the body. 👃</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Our brain helps us think and learn. 🧠</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>We have one ear and one eye. 😅</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Our mouth helps us eat and talk. 👄</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+    </ul>
+    <div class="score-line" id="tfScore"></div>
+  </div>
+
+  <!-- ── Final Cheer ── -->
+  <div class="cheer-box" id="cheerBox">
+    <span class="trophy">🏆</span>
+    <h2>You did it, Tikky!</h2>
+    <p>You are a Body Expert now! Keep being amazing! ⭐🌈</p>
+  </div>
+
+</div><!-- /main -->
+
+<footer>Science · Our Amazing Bodies · Tikky's Learning Space 🌈</footer>
+
+<script>
+/* ── Flip cards ── */
+function flipCard(card) {
+  card.classList.toggle('flipped');
+}
+
+/* ── Sort: Pairs or Singles ── */
+const sortParts = [
+  { name: "Eyes 👀",   type: "pair"   },
+  { name: "Mouth 👄",  type: "single" },
+  { name: "Hands 🖐️",  type: "pair"   },
+  { name: "Nose 👃",   type: "single" },
+  { name: "Feet 🦶",   type: "pair"   },
+  { name: "Head 👤",   type: "single" },
+  { name: "Ears 👂",   type: "pair"   },
+  { name: "Heart 🫀",  type: "single" },
+  { name: "Arms 💪",   type: "pair"   },
+  { name: "Lungs 🫁",  type: "pair"   },
+  { name: "Brain 🧠",  type: "single" },
+  { name: "Knees 🦵",  type: "pair"   },
+];
+
+let sortDone = 0;
+const sortMsg = document.getElementById('sortMessage');
+
+function buildSort() {
+  const container = document.getElementById('sortButtons');
+  container.innerHTML = '';
+  sortDone = 0;
+  document.getElementById('pairsBasket').innerHTML  = '';
+  document.getElementById('singleBasket').innerHTML = '';
+  sortMsg.style.color = '#888';
+  sortMsg.textContent = 'Pick a body part to sort it! 👆';
+
+  sortParts.sort(() => Math.random() - 0.5).forEach(part => {
+    const btn = document.createElement('button');
+    btn.className = 'sort-btn';
+    btn.textContent = part.name;
+    btn.onclick = () => doSort(part, btn);
+    container.appendChild(btn);
+  });
+}
+
+function doSort(part, btn) {
+  const basketId = part.type === 'pair' ? 'pairsBasket' : 'singleBasket';
+  const basket   = document.getElementById(basketId);
+  const chip = document.createElement('span');
+  chip.className = 'sorted-item';
+  chip.style.background = part.type === 'pair' ? '#bbdefb' : '#e1bee7';
+  chip.textContent = part.name;
+  basket.appendChild(chip);
+  btn.remove();
+  sortDone++;
+
+  const msgs = ["Great job! 🎉","Super! ⭐","Amazing! 🌟","You got it! 💪","Brilliant! 🥳","Well done! 🌈"];
+  sortMsg.style.color = 'var(--green)';
+  sortMsg.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+
+  if (sortDone === sortParts.length) {
+    sortMsg.textContent = "🎉 You sorted them ALL! Fantastic work, Tikky!";
+    tryShowCheer();
+  }
+}
+
+buildSort();
+
+/* ── Match ── */
+function checkMatch() {
+  const selects = document.querySelectorAll('#matchGrid select');
+  let score = 0;
+  selects.forEach(sel => {
+    sel.classList.remove('ok','bad');
+    if (!sel.value) { sel.classList.add('bad'); return; }
+    if (sel.value === sel.dataset.answer) { sel.classList.add('ok'); score++; }
+    else { sel.classList.add('bad'); }
+  });
+  const total = selects.length;
+  document.getElementById('matchScore').textContent =
+    score === total
+      ? `🌟 Perfect! All ${total} correct!`
+      : `🎯 ${score} out of ${total} — try the red ones again!`;
+  if (score === total) tryShowCheer();
+}
+
+function resetMatch() {
+  document.querySelectorAll('#matchGrid select').forEach(s => {
+    s.value = ''; s.className = '';
+  });
+  document.getElementById('matchScore').textContent = '';
+}
+
+/* ── True / False ── */
+let tfAnswered = 0;
+const tfItems  = document.querySelectorAll('.tf-item');
+
+function checkTF(btn, answer) {
+  const item    = btn.closest('.tf-item');
+  const correct = item.dataset.correct;
+  if (item.querySelector('.tf-btn.correct, .tf-btn.wrong')) return;
+
+  item.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+  const fb = item.querySelector('.tf-feedback');
+
+  if (answer === correct) {
+    btn.classList.add('correct');
+    fb.style.color   = 'var(--green)';
+    fb.textContent   = '✅ Yes! That is correct!';
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color   = 'var(--red)';
+    fb.textContent   = `❌ Not quite! The answer is ${correct === 'true' ? 'TRUE ✅' : 'FALSE ❌'}.`;
+  }
+  tfAnswered++;
+  updateTFScore();
+}
+
+function updateTFScore() {
+  const correct = document.querySelectorAll('.tf-btn.correct').length;
+  if (tfAnswered === tfItems.length) {
+    const el = document.getElementById('tfScore');
+    el.textContent = correct === tfItems.length
+      ? `🌟 WOW! All ${tfItems.length} correct! You are a superstar!`
+      : `🎯 ${correct} out of ${tfItems.length}! Good try!`;
+    tryShowCheer();
+  }
+}
+
+/* ── Show cheer when at least 2 activities are complete ── */
+let cheersCount = 0;
+function tryShowCheer() {
+  cheersCount++;
+  if (cheersCount >= 2) {
+    document.getElementById('cheerBox').classList.add('show');
+    document.getElementById('cheerBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+</script>
 </body>
 </html>
