@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghanaian Entrepreneurs 🇬🇭</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:   #fcd116;
+      --green:  #006b3f;
+      --red:    #ce1126;
+      --dark:   #1a1a2e;
+      --light:  #fffdf0;
+      --card-bg:#ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--light);
+      background-image: radial-gradient(circle at 15% 85%, rgba(0,107,63,0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 85% 15%, rgba(252,209,22,0.1) 0%, transparent 50%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92);
+      border: 2px solid rgba(0,0,0,0.14);
+      color: #333; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── Header ── */
+    .page-header {
+      background: linear-gradient(135deg, var(--green) 0%, #009354 60%, #00b265 100%);
+      color: white;
+      padding: 60px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ghana-stripe {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--red) 33.3%, var(--gold) 33.3%, var(--gold) 66.6%, var(--green) 66.6%);
+    }
+    .page-header .flag { font-size: 52px; margin-bottom: 10px; display: block; }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-shadow: 2px 3px rgba(0,0,0,0.2);
+    }
+    .page-header p { font-size: 1.05rem; margin-top: 8px; opacity: 0.9; font-weight: 600; }
+    .strand-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50px;
+      padding: 4px 16px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Main content ── */
+    .main { max-width: 900px; margin: 0 auto; padding: 36px 20px 60px; }
+
+    /* ── Keywords box ── */
+    .keywords-box {
+      background: white;
+      border: 3px solid var(--gold);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 16px rgba(252,209,22,0.2);
+    }
+    .keywords-box h3 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--red);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .kw-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .kw {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 6px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.2s;
+      position: relative;
+    }
+    .kw:hover { transform: scale(1.05); background: #f5c800; }
+    .kw[data-def]:hover::after {
+      content: attr(data-def);
+      position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+      background: #1a1a2e; color: white;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 8px 12px; border-radius: 10px;
+      white-space: nowrap; max-width: 240px; white-space: normal;
+      z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      pointer-events: none;
+    }
+
+    /* ── Intro block ── */
+    .intro-block {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 36px;
+      border-left: 6px solid var(--green);
+      box-shadow: 0 4px 16px rgba(0,107,63,0.08);
+    }
+    .intro-block h2 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--green);
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .intro-block p { font-size: 1.05rem; line-height: 1.7; margin-bottom: 10px; }
+    .intro-block p:last-child { margin-bottom: 0; }
+    .hl-blue  { color: #1565c0; font-weight: 800; }
+    .hl-green { color: var(--green); font-weight: 800; }
+    .hl-red   { color: var(--red); font-weight: 800; }
+
+    /* ── Section title ── */
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── Entrepreneur cards ── */
+    .entrepreneur-cards { display: flex; flex-direction: column; gap: 32px; margin-bottom: 44px; }
+
+    .ent-card {
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .ent-card:hover { transform: translateY(-4px); }
+
+    .ent-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: white;
+    }
+    .ent-card:nth-child(1) .ent-header { background: linear-gradient(90deg,#5c3a1e,#8b5e3c); }
+    .ent-card:nth-child(2) .ent-header { background: linear-gradient(90deg,var(--green),#009354); }
+    .ent-card:nth-child(3) .ent-header { background: linear-gradient(90deg,#7b1fa2,#ab47bc); }
+
+    .ent-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      border: 3px solid rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+    .ent-header-text h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      line-height: 1.1;
+    }
+    .ent-header-text .tagline {
+      font-size: 0.9rem;
+      opacity: 0.88;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .ent-header-text .dates {
+      font-size: 0.8rem;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+
+    .ent-body { padding: 24px; }
+
+    .fact-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .fact-chip {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-left: 4px solid var(--color, #ccc);
+    }
+    .fact-chip span { display: block; font-size: 0.75rem; font-weight: 600; color: #888; margin-bottom: 2px; }
+
+    .ent-body p { font-size: 1rem; line-height: 1.7; margin-bottom: 10px; }
+    .ent-body p:last-child { margin-bottom: 0; }
+
+    .did-you-know {
+      background: #fffde7;
+      border: 2px solid var(--gold);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 0.93rem;
+      font-weight: 700;
+    }
+    .did-you-know::before { content: "⭐ Did You Know? "; color: var(--red); }
+
+    /* ── Activity section ── */
+    .activity-section {
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      padding: 28px;
+      margin-bottom: 36px;
+    }
+    .activity-section h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--red);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── Match quiz ── */
+    .match-quiz { margin-bottom: 24px; }
+    .match-quiz h3 { font-size: 1rem; font-weight: 800; margin-bottom: 14px; color: var(--dark); }
+    .match-pairs { display: flex; flex-direction: column; gap: 10px; }
+    .match-row {
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+    }
+    .match-label {
+      background: var(--green);
+      color: white;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 8px 18px;
+      border-radius: 50px;
+      min-width: 180px;
+    }
+    .match-row span { color: #666; font-weight: 600; }
+    .match-row select {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: 50px;
+      border: 2px solid #ddd;
+      background: white;
+      cursor: pointer;
+      min-width: 200px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23333' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    /* ── True/False quiz ── */
+    .tf-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .tf-item {
+      background: #f8f9fa;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .tf-item p { margin-bottom: 10px; }
+    .tf-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tf-btn {
+      padding: 6px 20px;
+      border-radius: 50px;
+      border: 2px solid #ddd;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.15s;
+      background: white;
+    }
+    .tf-btn:hover { background: #f0f0f0; }
+    .tf-btn.correct  { background: #e8f5e9; border-color: var(--green); color: var(--green); }
+    .tf-btn.wrong    { background: #ffebee; border-color: var(--red);   color: var(--red); }
+    .tf-feedback { font-size: 0.85rem; margin-top: 8px; min-height: 20px; font-weight: 700; }
+
+    /* ── Fill-in blanks ── */
+    .fill-blanks { display: flex; flex-direction: column; gap: 14px; }
+    .fill-item { font-size: 1rem; font-weight: 700; line-height: 2; }
+    .fill-item input {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 2px dashed #aaa;
+      width: 160px; text-align: center;
+      outline: none;
+      transition: 0.2s;
+    }
+    .fill-item input:focus { border-color: var(--green); }
+    .fill-item input.ok   { border-color: var(--green); background: #e8f5e9; color: var(--green); }
+    .fill-item input.bad  { border-color: var(--red);   background: #ffebee; color: var(--red); }
+
+    /* ── Check + Reset buttons ── */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .check-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .check-btn.green { background: var(--green); color: white; }
+    .check-btn.green:hover { background: #005030; }
+    .check-btn.reset { background: #eee; color: #555; }
+    .check-btn.reset:hover { background: #ddd; }
+
+    .score-display {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      padding: 10px 0;
+      color: var(--green);
+      min-height: 36px;
+    }
+
+    /* ── Reflection box ── */
+    .reflect-box {
+      background: linear-gradient(135deg, #e8f5e9, #f3e5f5);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 36px;
+    }
+    .reflect-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .reflect-q { display: flex; flex-direction: column; gap: 14px; }
+    .reflect-q label { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; display: block; }
+    .reflect-q textarea {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      width: 100%; padding: 12px 16px;
+      border-radius: 14px; border: 2px solid #c8e6c9;
+      resize: vertical; min-height: 70px;
+      outline: none; transition: 0.2s;
+    }
+    .reflect-q textarea:focus { border-color: var(--green); }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- ── Page Header ── -->
+<div class="page-header">
+  <div class="ghana-stripe"></div>
+  <span class="flag">🇬🇭</span>
+  <h1>Ghanaian Entrepreneurs</h1>
+  <p>Learn about amazing people who helped build Ghana</p>
+  <span class="strand-badge">Strand 2: My Country Ghana</span>
+</div>
+
+<div class="main">
+
+  <!-- ── Keywords ── -->
+  <div class="keywords-box">
+    <h3>Keywords — hover to see the meaning!</h3>
+    <div class="kw-grid">
+      <span class="kw" data-def="The process of creating, launching and running a new business.">Entrepreneurship</span>
+      <span class="kw" data-def="To start or introduce something new, like a business.">Launch</span>
+      <span class="kw" data-def="People who create and run their own businesses.">Entrepreneurs</span>
+      <span class="kw" data-def="A big difference or change that something or someone makes.">Impact</span>
+      <span class="kw" data-def="Taking a chance on something that might not work out.">Risk</span>
+      <span class="kw" data-def="Selling and sending goods to another country.">Export</span>
+      <span class="kw" data-def="Making food safe and ready to sell (e.g. turning fruit into jam).">Processing</span>
+      <span class="kw" data-def="Very small loans given to people to help them start a small business.">Micro-lending</span>
+      <span class="kw" data-def="Small amounts of money borrowed to help grow a business.">Loans</span>
+      <span class="kw" data-def="Helping people — especially women — to stand on their own feet financially.">Economic empowerment</span>
+    </div>
+  </div>
+
+  <!-- ── Introduction ── -->
+  <div class="intro-block">
+    <h2>What is Entrepreneurship?</h2>
+    <p><span class="hl-blue">Entrepreneurship</span> is the process of creating, <span class="hl-blue">launching</span> and running a new business. It often starts as a small business. The people who create these businesses are called <span class="hl-green">entrepreneurs</span>.</p>
+    <p>An entrepreneur is a person who sets up and runs a business. Sometimes that person takes a big <span class="hl-red">risk</span> — and hopes that it will pay off!</p>
+    <p>In this lesson, you will learn about three entrepreneurs who made a big <span class="hl-green">impact</span> on Ghana and its people. 🌍</p>
+  </div>
+
+  <!-- ── Entrepreneur Cards ── -->
+  <div class="section-title">🧑‍💼 Meet the Entrepreneurs</div>
+
+  <div class="entrepreneur-cards">
+
+    <!-- George Grant -->
+    <div class="ent-card">
+      <div class="ent-header">
+        <div class="ent-avatar">🪵</div>
+        <div class="ent-header-text">
+          <h3>George Grant</h3>
+          <div class="tagline">Timber Merchant &amp; Founding Father</div>
+          <div class="dates">Born: 15 August 1878 · Beyin, Western Region</div>
+        </div>
+      </div>
+      <div class="ent-body">
+        <div class="fact-row">
+          <div class="fact-chip" style="--color:#8b5e3c"><span>Also known as</span>Paa Grant</div>
+          <div class="fact-chip" style="--color:#8b5e3c"><span>Business</span>Timber trade</div>
+          <div class="fact-chip" style="--color:#8b5e3c"><span>Company founded</span>1896</div>
+          <div class="fact-chip" style="--color:#8b5e3c"><span>Company name</span>George Grant &amp; Company</div>
+        </div>
+        <p>George Alfred Grant was known as <strong>Paa Grant</strong>. He worked in the timber trade at a time when most timber companies in Ghana were owned by Europeans.</p>
+        <p>In 1896, he set up his own company — <strong>George Grant and Company</strong>. He became a successful timber merchant with an <span class="hl-green">export</span> business, sending timber to other countries.</p>
+        <p>Paa Grant did not just think about business. He also worked hard to <strong>develop his community</strong>. He helped bring <strong>street lighting</strong> and <strong>pipe-borne water</strong> to Sekondi and Axim — something that changed everyday life for the people there.</p>
+        <div class="did-you-know">George Grant's grandson, <strong>Kim Tyrone Grant</strong>, was a national player for the Ghana Black Stars. In 2009, he formed the <strong>Paa Grant Soccer Academy</strong> to honour his grandfather.</div>
+      </div>
+    </div>
+
+    <!-- Winfred Tete-Ansa -->
+    <div class="ent-card">
+      <div class="ent-header">
+        <div class="ent-avatar">🍫</div>
+        <div class="ent-header-text">
+          <h3>Winfred Tete-Ansa</h3>
+          <div class="tagline">Cocoa Trader &amp; Banker</div>
+          <div class="dates">Successful cocoa merchant — Gold Coast era</div>
+        </div>
+      </div>
+      <div class="ent-body">
+        <div class="fact-row">
+          <div class="fact-chip" style="--color:var(--green)"><span>Industry</span>Cocoa trade</div>
+          <div class="fact-chip" style="--color:var(--green)"><span>Also did</span>Banking</div>
+          <div class="fact-chip" style="--color:var(--green)"><span>Experience</span>Europe &amp; America</div>
+          <div class="fact-chip" style="--color:var(--green)"><span>Mission</span>Support African businesses</div>
+        </div>
+        <p>Ghana is one of the main producers of cocoa in the world — today, Ghana is the <strong>second largest cocoa exporter</strong> in the world. Entrepreneurs like <strong>Winfred Tete-Ansa</strong> helped make that possible.</p>
+        <p>He tried to get Congress to promote the cocoa-growing regions of Nigeria and the Gold Coast. He worked with <strong>45 farmers' unions</strong>, but many farmers did not have enough money to get a higher price for their cocoa.</p>
+        <p>Tete-Ansa had lots of experience in banking and business in Europe and America. He opened a <strong>bank to support businesses that belonged to Africans</strong>, because European banks did not want to help them. Some of these businesses included those that traded in <strong>mahogany, palm oil, and other local items</strong>.</p>
+        <div class="did-you-know">He understood that Africans needed their own bank to be truly independent. His idea helped many local business owners get the money they needed.</div>
+      </div>
+    </div>
+
+    <!-- Dr. Esther Ocloo -->
+    <div class="ent-card">
+      <div class="ent-header">
+        <div class="ent-avatar">🍯</div>
+        <div class="ent-header-text">
+          <h3>Dr. Esther Ocloo</h3>
+          <div class="tagline">Food Processing Pioneer &amp; Women's Champion</div>
+          <div class="dates">Born: 18 April 1919 · One of Ghana's most well-known female entrepreneurs</div>
+        </div>
+      </div>
+      <div class="ent-body">
+        <div class="fact-row">
+          <div class="fact-chip" style="--color:#7b1fa2"><span>Company</span>Nkulenu Industries Ltd</div>
+          <div class="fact-chip" style="--color:#7b1fa2"><span>Industry</span>Food processing</div>
+          <div class="fact-chip" style="--color:#7b1fa2"><span>Also did</span>Micro-lending</div>
+          <div class="fact-chip" style="--color:#7b1fa2"><span>Award (1990)</span>African Prize for Leadership</div>
+        </div>
+        <p>Dr. Esther Afua Ocloo started <strong>Nkulenu Industries Limited</strong>. It is a well-known food <span class="hl-red">processing</span> company in Ghana. She left college because there were no jobs available due to World War II — but that did not stop her!</p>
+        <p>Her business soon grew into a very successful one. She then started a <strong>micro-lending</strong> business so that people could get small <span class="hl-red">loans</span> and grow their own businesses.</p>
+        <p>In 1976, Dr. Esther Ocloo, together with <strong>Michaela Walsh and Ela Bhatt</strong>, became founders of the <strong>Women's World Banking</strong> — an organisation that helped women around the world.</p>
+        <p>In 1990, she received the <strong>African Prize for Leadership</strong> and many other awards for her work in the <span class="hl-red">economic empowerment</span> of women and families.</p>
+        <div class="did-you-know">Dr. Esther Ocloo showed that even during difficult times — like a World War — you can still find a way to start a business and help others. 💪</div>
+      </div>
+    </div>
+
+  </div><!-- /entrepreneur-cards -->
+
+  <!-- ── Activity 1: True or False ── -->
+  <div class="activity-section">
+    <h2>🧠 Activity 1 — True or False?</h2>
+    <ul class="tf-list" id="tfList">
+
+      <li class="tf-item" data-correct="true">
+        <p>George Grant set up his own company in 1896.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Winfred Tete-Ansa was a cocoa trader who worked only in Ghana.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Dr. Esther Ocloo started a food processing company called Nkulenu Industries.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>George Grant's grandson played cricket for Ghana.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Winfred Tete-Ansa opened a bank to support African-owned businesses.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Dr. Esther Ocloo left college because she wanted to travel the world.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+    </ul>
+    <div class="score-display" id="tfScore"></div>
+  </div>
+
+  <!-- ── Activity 2: Match the clue ── -->
+  <div class="activity-section">
+    <h2>🔗 Activity 2 — Match the Clue!</h2>
+    <p style="font-size:0.95rem;font-weight:700;margin-bottom:18px;color:#555;">Choose the correct entrepreneur for each clue.</p>
+    <div class="match-pairs" id="matchForm">
+
+      <div class="match-row">
+        <span class="match-label">Helped bring water to Sekondi</span>
+        <span>→</span>
+        <select data-answer="George Grant">
+          <option value="">Choose…</option>
+          <option>George Grant</option>
+          <option>Winfred Tete-Ansa</option>
+          <option>Dr. Esther Ocloo</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-label">Worked with 45 farmers' unions</span>
+        <span>→</span>
+        <select data-answer="Winfred Tete-Ansa">
+          <option value="">Choose…</option>
+          <option>George Grant</option>
+          <option>Winfred Tete-Ansa</option>
+          <option>Dr. Esther Ocloo</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-label">Received African Prize for Leadership in 1990</span>
+        <span>→</span>
+        <select data-answer="Dr. Esther Ocloo">
+          <option value="">Choose…</option>
+          <option>George Grant</option>
+          <option>Winfred Tete-Ansa</option>
+          <option>Dr. Esther Ocloo</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-label">Co-founded Women's World Banking in 1976</span>
+        <span>→</span>
+        <select data-answer="Dr. Esther Ocloo">
+          <option value="">Choose…</option>
+          <option>George Grant</option>
+          <option>Winfred Tete-Ansa</option>
+          <option>Dr. Esther Ocloo</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-label">Was one of Ghana's Founding Fathers</span>
+        <span>→</span>
+        <select data-answer="George Grant">
+          <option value="">Choose…</option>
+          <option>George Grant</option>
+          <option>Winfred Tete-Ansa</option>
+          <option>Dr. Esther Ocloo</option>
+        </select>
+      </div>
+
+      <div class="match-row">
+        <span class="match-label">Opened a bank for African businesses</span>
+        <span>→</span>
+        <select data-answer="Winfred Tete-Ansa">
+          <option value="">Choose…</option>
+          <option>George Grant</option>
+          <option>Winfred Tete-Ansa</option>
+          <option>Dr. Esther Ocloo</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="btn-row">
+      <button class="check-btn green" onclick="checkMatch()">Check Answers ✅</button>
+      <button class="check-btn reset" onclick="resetMatch()">Try Again 🔄</button>
+    </div>
+    <div class="score-display" id="matchScore"></div>
+  </div>
+
+  <!-- ── Activity 3: Fill in the blanks ── -->
+  <div class="activity-section">
+    <h2>✏️ Activity 3 — Fill in the Blanks</h2>
+    <p style="font-size:0.9rem;font-weight:700;color:#777;margin-bottom:18px;">Word bank: <strong>export · micro-lending · risk · Nkulenu · 1896 · Paa Grant · cocoa</strong></p>
+    <div class="fill-blanks" id="fillBlanks">
+
+      <div class="fill-item">
+        George Grant was also known as <input type="text" data-answer="Paa Grant" placeholder="? ? ?"> and he set up his company in <input type="text" data-answer="1896" placeholder="year">.
+      </div>
+      <div class="fill-item">
+        Ghana is one of the main producers of <input type="text" data-answer="cocoa" placeholder="word"> in the world.
+      </div>
+      <div class="fill-item">
+        Tete-Ansa had an <input type="text" data-answer="export" placeholder="word"> business that traded with other countries.
+      </div>
+      <div class="fill-item">
+        Dr. Esther Ocloo started a <input type="text" data-answer="micro-lending" placeholder="two words"> business to give small loans to people.
+      </div>
+      <div class="fill-item">
+        She started a food processing company called <input type="text" data-answer="Nkulenu" placeholder="name"> Industries Limited.
+      </div>
+      <div class="fill-item">
+        An entrepreneur sometimes takes a big <input type="text" data-answer="risk" placeholder="word"> and hopes it will pay off.
+      </div>
+
+    </div>
+    <div class="btn-row">
+      <button class="check-btn green" onclick="checkFill()">Check Answers ✅</button>
+      <button class="check-btn reset" onclick="resetFill()">Try Again 🔄</button>
+    </div>
+    <div class="score-display" id="fillScore"></div>
+  </div>
+
+  <!-- ── Reflection ── -->
+  <div class="reflect-box">
+    <h2>💭 Think About It</h2>
+    <div class="reflect-q">
+      <div>
+        <label>In your own words, what is an entrepreneur?</label>
+        <textarea placeholder="Write your answer here…"></textarea>
+      </div>
+      <div>
+        <label>Which entrepreneur do you find most inspiring and why?</label>
+        <textarea placeholder="Write your answer here…"></textarea>
+      </div>
+      <div>
+        <label>If YOU started a business in Ghana, what would it be?</label>
+        <textarea placeholder="Dream big! Write your ideas here…"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer>Strand 2: My Country Ghana · Emunah's Learning Space 🌸</footer>
+
+<script>
+/* ── True/False ── */
+function checkTF(btn, answer) {
+  const item  = btn.closest('.tf-item');
+  const correct = item.dataset.correct;
+  const fb    = item.querySelector('.tf-feedback');
+  item.querySelectorAll('.tf-btn').forEach(b => { b.classList.remove('correct','wrong'); b.disabled = true; });
+  if (answer === correct) {
+    btn.classList.add('correct');
+    fb.style.color = '#2e7d32';
+    fb.textContent = '✅ Well done! That is correct!';
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color = '#c62828';
+    fb.textContent = '❌ Not quite — the answer is ' + (correct === 'true' ? 'TRUE' : 'FALSE') + '.';
+  }
+  updateTFScore();
+}
+
+function updateTFScore() {
+  const items    = document.querySelectorAll('.tf-item');
+  const answered = [...items].filter(i => i.querySelector('.tf-btn.correct, .tf-btn.wrong'));
+  const correct  = [...items].filter(i => i.querySelector('.tf-btn.correct'));
+  if (answered.length === items.length) {
+    document.getElementById('tfScore').textContent =
+      `🎯 You got ${correct.length} out of ${items.length}! ${correct.length === items.length ? '🌟 Amazing!' : 'Keep going!'}`;
+  }
+}
+
+/* ── Match ── */
+function checkMatch() {
+  const selects = document.querySelectorAll('#matchForm select');
+  let score = 0;
+  selects.forEach(sel => {
+    if (sel.value === sel.dataset.answer) {
+      sel.style.borderColor = '#2e7d32'; sel.style.background = '#e8f5e9';
+      score++;
+    } else {
+      sel.style.borderColor = '#c62828'; sel.style.background = '#ffebee';
+      if (!sel.value) sel.style.borderColor = '#f57c00';
+    }
+  });
+  document.getElementById('matchScore').textContent =
+    `🎯 ${score} out of ${selects.length} correct! ${score === selects.length ? '🌟 Perfect!' : 'Try the red ones again!'}`;
+}
+
+function resetMatch() {
+  document.querySelectorAll('#matchForm select').forEach(sel => {
+    sel.value = ''; sel.style.borderColor = '#ddd'; sel.style.background = 'white';
+  });
+  document.getElementById('matchScore').textContent = '';
+}
+
+/* ── Fill in the blanks ── */
+function checkFill() {
+  const inputs = document.querySelectorAll('#fillBlanks input');
+  let score = 0;
+  inputs.forEach(inp => {
+    const userAns = inp.value.trim().toLowerCase();
+    const correct = inp.dataset.answer.toLowerCase();
+    inp.classList.remove('ok','bad');
+    if (userAns === correct) { inp.classList.add('ok'); score++; }
+    else                      { inp.classList.add('bad'); }
+  });
+  document.getElementById('fillScore').textContent =
+    `🎯 ${score} out of ${inputs.length} correct! ${score === inputs.length ? '🌟 Brilliant!' : 'Check the red boxes!'}`;
+}
+
+function resetFill() {
+  document.querySelectorAll('#fillBlanks input').forEach(inp => {
+    inp.value = ''; inp.classList.remove('ok','bad');
+  });
+  document.getElementById('fillScore').textContent = '';
+}
+</script>
+</body>
+</html>
