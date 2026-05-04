@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multimedia: Storyland 🎬</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #7c4dff;
+      --teal:   #00bcd4;
+      --orange: #ff6d00;
+      --pink:   #f50057;
+      --green:  #00c853;
+      --yellow: #ffd600;
+      --dark:   #1a1535;
+      --light:  #f4f0ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--light);
+      background-image:
+        radial-gradient(circle at 5%  90%, rgba(124,77,255,.07) 0%, transparent 40%),
+        radial-gradient(circle at 95% 10%, rgba(0,188,212,.07)  0%, transparent 40%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,.92); border: 2px solid rgba(0,0,0,.13);
+      color: #333; font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(0,0,0,.13);
+      backdrop-filter: blur(4px); transition: all .2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── HEADER ── */
+    .page-header {
+      background: linear-gradient(135deg, #4a148c 0%, #7c4dff 45%, #00bcd4 100%);
+      padding: 64px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content:'';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, rgba(255,255,255,.03) 0px,
+        rgba(255,255,255,.03) 2px, transparent 2px, transparent 20px);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+      color: white; font-weight: 800; font-size: .8rem;
+      padding: 4px 16px; border-radius: 50px; margin-bottom: 14px;
+      letter-spacing: .5px; position: relative;
+    }
+    .header-icons { font-size: 48px; display: block; position: relative; margin-bottom: 10px; }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      color: white; text-shadow: 3px 4px rgba(0,0,0,.2);
+      position: relative; line-height: 1.1;
+    }
+    .page-header p {
+      color: rgba(255,255,255,.88); font-size: 1.05rem; font-weight: 700;
+      margin-top: 8px; position: relative;
+    }
+
+    /* ── MAIN ── */
+    .main { max-width: 900px; margin: 0 auto; padding: 38px 18px 70px; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.75rem; color: var(--dark);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* ── INTRO BOX ── */
+    .intro-box {
+      background: white; border-radius: 22px;
+      padding: 26px 28px; margin-bottom: 32px;
+      border-left: 7px solid var(--purple);
+      box-shadow: 0 4px 18px rgba(124,77,255,.1);
+    }
+    .intro-box p { font-size: 1.1rem; font-weight: 700; line-height: 1.8; color: #444; }
+    .intro-box p + p { margin-top: 10px; }
+    .hl-p { color: var(--purple); font-weight: 900; }
+    .hl-t { color: var(--teal);   font-weight: 900; }
+    .hl-o { color: var(--orange); font-weight: 900; }
+
+    /* ── MULTIMEDIA TYPE CARDS ── */
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 16px; margin-bottom: 40px;
+    }
+    .type-card {
+      background: white; border-radius: 20px;
+      padding: 22px 12px 18px; text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.07);
+      border: 3px solid transparent;
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+      position: relative;
+    }
+    .type-card:hover   { transform: translateY(-5px); box-shadow: 0 10px 24px rgba(0,0,0,.13); }
+    .type-card.active  { border-color: var(--c); background: var(--cbg); }
+    .type-card .t-icon { font-size: 46px; display: block; margin-bottom: 8px; }
+    .type-card .t-name {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--c);
+    }
+    .type-card .t-def  {
+      font-size: .82rem; font-weight: 700; color: #555;
+      margin-top: 8px; line-height: 1.45; display: none;
+    }
+    .type-card.active .t-def { display: block; }
+    .type-card .t-hint { font-size: .7rem; font-weight: 700; color: #ccc; margin-top: 6px; }
+    .type-card.active .t-hint { display: none; }
+
+    /* ── ACTIVITY WRAPPER ── */
+    .activity-box {
+      background: white; border-radius: 24px;
+      padding: 28px 24px; margin-bottom: 32px;
+      box-shadow: 0 5px 22px rgba(0,0,0,.07);
+    }
+    .activity-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .activity-box .hint {
+      font-size: .92rem; font-weight: 700; color: #888; margin-bottom: 22px;
+    }
+
+    /* ── ACTIVITY 1 – SPOTTER ── */
+    .spotter-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px; margin-bottom: 10px;
+    }
+    .spotter-card {
+      border: 3px solid #e8e8f0; border-radius: 18px;
+      padding: 16px 14px; transition: border-color .2s;
+    }
+    .spotter-card.correct { border-color: var(--green); background: #f0fff5; }
+    .spotter-card.wrong   { border-color: var(--pink);  background: #fff0f4; }
+    .spotter-scenario {
+      font-size: 1rem; font-weight: 800; margin-bottom: 12px; line-height: 1.4;
+    }
+    .spotter-choices {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .spotter-choice {
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .8rem;
+      padding: 5px 12px; border-radius: 50px;
+      border: 2px solid #ddd; background: white; cursor: pointer;
+      transition: .15s;
+    }
+    .spotter-choice:hover { background: #f0f0f0; }
+    .spotter-choice.chosen-correct { background: var(--green); color: white; border-color: var(--green); }
+    .spotter-choice.chosen-wrong   { background: var(--pink);  color: white; border-color: var(--pink); }
+    .spotter-choice.reveal-correct { background: #c8f7de; border-color: var(--green); color: #004d20; }
+    .spotter-fb { font-size: .82rem; font-weight: 800; margin-top: 8px; min-height: 18px; }
+
+    /* ── ACTIVITY 2 – SLIDESHOW DEMO ── */
+    .slideshow-wrap {
+      background: #1a1535; border-radius: 20px;
+      padding: 8px; margin-bottom: 20px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.2);
+    }
+    .slideshow-screen {
+      background: white; border-radius: 14px;
+      min-height: 210px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 28px 24px; text-align: center;
+      position: relative; overflow: hidden;
+      transition: background .3s;
+    }
+    .slide-num-badge {
+      position: absolute; top: 12px; right: 12px;
+      font-size: .75rem; font-weight: 900;
+      background: rgba(0,0,0,.08); border-radius: 50px;
+      padding: 3px 10px; color: #666;
+    }
+    .slide-icon  { font-size: 52px; margin-bottom: 12px; display: block; }
+    .slide-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; margin-bottom: 8px; }
+    .slide-body  { font-size: .95rem; font-weight: 700; color: #555; line-height: 1.6; max-width: 440px; }
+
+    .slideshow-controls {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 8px 4px; gap: 10px;
+    }
+    .slide-btn {
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      padding: 9px 22px; border-radius: 50px; border: none;
+      cursor: pointer; transition: .2s;
+    }
+    .slide-btn.prev { background: rgba(255,255,255,.12); color: white; }
+    .slide-btn.prev:hover { background: rgba(255,255,255,.22); }
+    .slide-btn.next { background: var(--teal); color: white; }
+    .slide-btn.next:hover { background: #00acc1; }
+    .slide-btn:disabled { opacity: .35; cursor: default; }
+    .slide-dots { display: flex; gap: 8px; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,.25); cursor: pointer; transition: .2s;
+    }
+    .dot.active { background: var(--teal); transform: scale(1.3); }
+
+    .slideshow-facts {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;
+    }
+    .fact-chip {
+      background: #f4f0ff; border-radius: 14px;
+      padding: 14px 16px; font-size: .9rem; font-weight: 700;
+      border-left: 4px solid var(--purple); line-height: 1.5;
+    }
+
+    /* ── ACTIVITY 3 – SORT / DRAG ── */
+    .sort-zone {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px; margin-bottom: 18px;
+    }
+    .sort-bucket {
+      border-radius: 16px; padding: 14px 10px;
+      min-height: 90px; border: 3px dashed;
+      text-align: center;
+    }
+    .sort-bucket h4 {
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    .sort-chip {
+      display: inline-block; background: white; border-radius: 50px;
+      padding: 4px 12px; margin: 3px 2px; font-size: .8rem; font-weight: 800;
+      animation: popIn .25s ease;
+    }
+    @keyframes popIn { from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1} }
+
+    .sort-items {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; padding: 14px 0 6px;
+    }
+    .sort-item-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: .95rem;
+      padding: 10px 18px; border-radius: 50px; border: 2px solid #ddd;
+      background: white; cursor: pointer; transition: .15s;
+      box-shadow: 0 3px 0 #e0e0e0;
+    }
+    .sort-item-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 #ccc; }
+
+    /* ── ACTIVITY 4 – TRUE / FALSE ── */
+    .tf-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .tf-item { background: #f8f8ff; border-radius: 18px; padding: 16px 20px; }
+    .tf-item p { font-size: 1rem; font-weight: 800; margin-bottom: 12px; line-height: 1.5; }
+    .tf-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tf-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: .92rem;
+      padding: 8px 22px; border-radius: 50px; border: 2px solid #ddd;
+      background: white; cursor: pointer; transition: .15s;
+    }
+    .tf-btn:hover { background: #f0f0f0; }
+    .tf-btn.correct { background: #e8fff0; border-color: var(--green); color: #006621; }
+    .tf-btn.wrong   { background: #fff0f4; border-color: var(--pink);  color: var(--pink); }
+    .tf-feedback { font-size: .88rem; font-weight: 800; margin-top: 8px; min-height: 20px; }
+
+    /* ── ACTIVITY 5 – FILL BLANKS ── */
+    .fill-list { display: flex; flex-direction: column; gap: 16px; }
+    .fill-item { font-size: 1rem; font-weight: 700; line-height: 2.2; }
+    .fill-item input {
+      font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800;
+      padding: 4px 12px; border-radius: 8px; border: 2px dashed #bbb;
+      width: 155px; text-align: center; outline: none; transition: .2s;
+    }
+    .fill-item input:focus { border-color: var(--purple); }
+    .fill-item input.ok  { border-color: var(--green); background: #efffef; color: #006621; border-style: solid; }
+    .fill-item input.bad { border-color: var(--pink);  background: #fff0f4; color: var(--pink); border-style: solid; }
+
+    /* ── SHARED BUTTONS + SCORE ── */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+    .action-btn {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      padding: 12px 26px; border-radius: 50px; border: none; cursor: pointer; transition: .2s;
+    }
+    .action-btn.main  { background: var(--purple); color: white; box-shadow: 0 4px 0 #5e35b1; }
+    .action-btn.main:hover { background: #6a1b9a; transform: translateY(-2px); }
+    .action-btn.reset { background: #eee; color: #666; box-shadow: 0 4px 0 #ccc; }
+    .action-btn.reset:hover { background: #e0e0e0; }
+    .score-line {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      color: var(--purple); margin-top: 14px; min-height: 32px;
+    }
+
+    /* ── WORD BANK ── */
+    .word-bank {
+      background: #f4f0ff; border-radius: 14px;
+      padding: 12px 18px; margin-bottom: 20px;
+      font-size: .9rem; font-weight: 800; color: #555;
+    }
+    .word-bank span { color: var(--purple); font-weight: 900; }
+
+    /* ── CHEER ── */
+    .cheer-box {
+      background: linear-gradient(135deg, #7c4dff, #00bcd4);
+      border-radius: 24px; text-align: center;
+      padding: 36px 20px; margin-bottom: 32px; display: none;
+    }
+    .cheer-box.show { display: block; animation: popIn .4s ease; }
+    .cheer-box .trophy { font-size: 64px; display: block; margin-bottom: 12px; }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: white;
+      text-shadow: 2px 3px rgba(0,0,0,.15);
+    }
+    .cheer-box p { font-size: 1.05rem; font-weight: 800; color: rgba(255,255,255,.9); margin-top: 8px; }
+
+    footer { text-align: center; color: #bbb; font-size: .85rem; font-weight: 600; padding: 20px; }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- ── HEADER ── -->
+<div class="page-header">
+  <span class="header-badge">Term 3 · 4th May 2026 · Computing</span>
+  <span class="header-icons">📝 🖼️ 🎵 🎬 ✨</span>
+  <h1>Multimedia: Storyland</h1>
+  <p>Discover all the amazing ways to share information!</p>
+</div>
+
+<div class="main">
+
+  <!-- ── INTRO ── -->
+  <div class="intro-box">
+    <p><span class="hl-p">Multimedia</span> means using <strong>more than one way</strong> to present information. Think of it like a toolbox — instead of one tool, you use many!</p>
+    <p>There are <span class="hl-t">5 types</span> of multimedia. A <span class="hl-o">slideshow</span> is one great way to use them together.</p>
+  </div>
+
+  <!-- ── SECTION 1: THE 5 TYPES ── -->
+  <div class="section-label">🎨 The 5 Types of Multimedia</div>
+  <p style="font-size:.95rem;font-weight:700;color:#888;margin-bottom:18px;">Tap each card to reveal its meaning!</p>
+
+  <div class="type-grid">
+    <div class="type-card" style="--c:#7c4dff;--cbg:#f4f0ff" onclick="this.classList.toggle('active')">
+      <span class="t-icon">📝</span>
+      <div class="t-name">Text</div>
+      <div class="t-def">Words or <strong>writing</strong> used to share information. Like this sentence!</div>
+      <div class="t-hint">Tap to learn more!</div>
+    </div>
+    <div class="type-card" style="--c:#ff6d00;--cbg:#fff5ee" onclick="this.classList.toggle('active')">
+      <span class="t-icon">🖼️</span>
+      <div class="t-name">Pictures</div>
+      <div class="t-def"><strong>Drawings</strong> or <strong>photos</strong> that help us see what something looks like.</div>
+      <div class="t-hint">Tap to learn more!</div>
+    </div>
+    <div class="type-card" style="--c:#00bcd4;--cbg:#e0f7fa" onclick="this.classList.toggle('active')">
+      <span class="t-icon">🎵</span>
+      <div class="t-name">Sound</div>
+      <div class="t-def"><strong>Music</strong> or <strong>voice</strong> — anything you can hear!</div>
+      <div class="t-hint">Tap to learn more!</div>
+    </div>
+    <div class="type-card" style="--c:#e53935;--cbg:#fff0f0" onclick="this.classList.toggle('active')">
+      <span class="t-icon">🎬</span>
+      <div class="t-name">Video</div>
+      <div class="t-def"><strong>Moving pictures</strong> — like a clip recorded on a phone or camera.</div>
+      <div class="t-hint">Tap to learn more!</div>
+    </div>
+    <div class="type-card" style="--c:#00c853;--cbg:#f0fff5" onclick="this.classList.toggle('active')">
+      <span class="t-icon">✨</span>
+      <div class="t-name">Animation</div>
+      <div class="t-def"><strong>Moving drawings</strong> or cartoons — like a superhero cartoon!</div>
+      <div class="t-hint">Tap to learn more!</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 1: SPOTTER ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--orange)">🔍 Activity 1 — Multimedia Spotter!</h2>
+    <p class="hint">Read each example and tap the correct type of multimedia. Choose from the buttons below each one!</p>
+
+    <div class="spotter-grid" id="spotterGrid">
+
+      <div class="spotter-card" data-answer="Pictures">
+        <div class="spotter-scenario">📷 A photo of your family on holiday</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Text')">Text</button>
+          <button class="spotter-choice" onclick="spot(this,'Pictures')">Pictures</button>
+          <button class="spotter-choice" onclick="spot(this,'Sound')">Sound</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Sound">
+        <div class="spotter-scenario">🎤 A teacher speaking into a microphone</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Video')">Video</button>
+          <button class="spotter-choice" onclick="spot(this,'Text')">Text</button>
+          <button class="spotter-choice" onclick="spot(this,'Sound')">Sound</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Text">
+        <div class="spotter-scenario">📖 A poem written in a school book</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Text')">Text</button>
+          <button class="spotter-choice" onclick="spot(this,'Animation')">Animation</button>
+          <button class="spotter-choice" onclick="spot(this,'Video')">Video</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Animation">
+        <div class="spotter-scenario">🦸 A cartoon superhero flying across the screen</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Video')">Video</button>
+          <button class="spotter-choice" onclick="spot(this,'Animation')">Animation</button>
+          <button class="spotter-choice" onclick="spot(this,'Pictures')">Pictures</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Video">
+        <div class="spotter-scenario">🍳 A cooking tutorial clip on YouTube</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Sound')">Sound</button>
+          <button class="spotter-choice" onclick="spot(this,'Animation')">Animation</button>
+          <button class="spotter-choice" onclick="spot(this,'Video')">Video</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Sound">
+        <div class="spotter-scenario">🎵 Your favourite song playing on the radio</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Pictures')">Pictures</button>
+          <button class="spotter-choice" onclick="spot(this,'Sound')">Sound</button>
+          <button class="spotter-choice" onclick="spot(this,'Text')">Text</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Pictures">
+        <div class="spotter-scenario">🎨 A drawing of a lion in your science book</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Text')">Text</button>
+          <button class="spotter-choice" onclick="spot(this,'Video')">Video</button>
+          <button class="spotter-choice" onclick="spot(this,'Pictures')">Pictures</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+      <div class="spotter-card" data-answer="Text">
+        <div class="spotter-scenario">🔤 The title and words on a poster</div>
+        <div class="spotter-choices">
+          <button class="spotter-choice" onclick="spot(this,'Sound')">Sound</button>
+          <button class="spotter-choice" onclick="spot(this,'Text')">Text</button>
+          <button class="spotter-choice" onclick="spot(this,'Animation')">Animation</button>
+        </div>
+        <div class="spotter-fb"></div>
+      </div>
+
+    </div>
+    <div class="score-line" id="spotterScore"></div>
+  </div>
+
+  <!-- ── ACTIVITY 2: SLIDESHOW DEMO ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--purple)">🖥️ Activity 2 — Explore a Slideshow!</h2>
+    <p class="hint">A <strong>slideshow</strong> is a group of slides. A <strong>slide</strong> is one page in the slideshow. Use the buttons to move through the slides!</p>
+
+    <div class="slideshow-wrap">
+      <div class="slideshow-screen" id="slideScreen">
+        <span class="slide-num-badge" id="slideNum">Slide 1 of 5</span>
+        <span class="slide-icon" id="slideIcon">🎬</span>
+        <div class="slide-title" id="slideTitle">Welcome to Multimedia!</div>
+        <div class="slide-body"  id="slideBody">A slideshow shares ideas using slides. Each slide is like a page. Tap "Next" to explore!</div>
+      </div>
+      <div class="slideshow-controls">
+        <button class="slide-btn prev" id="prevBtn" onclick="moveSlide(-1)" disabled>← Previous</button>
+        <div class="slide-dots" id="dots"></div>
+        <button class="slide-btn next" id="nextBtn" onclick="moveSlide(1)">Next →</button>
+      </div>
+    </div>
+
+    <div class="slideshow-facts">
+      <div class="fact-chip">📌 A <strong>slide</strong> is one page in a slideshow.</div>
+      <div class="fact-chip">📌 A <strong>slideshow</strong> is a group of slides that shares ideas, text and images.</div>
+      <div class="fact-chip">📌 Slideshows can include <strong>text, pictures, and sound</strong>.</div>
+      <div class="fact-chip">📌 You can present a slideshow to your <strong>class or friends</strong>.</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 3: SORT INTO TYPES ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--teal)">🗂️ Activity 3 — Sort It!</h2>
+    <p class="hint">Tap each example and it will go into the right multimedia bucket. See if you can clear the board!</p>
+
+    <div class="sort-zone" id="sortZone">
+      <div class="sort-bucket" style="border-color:#7c4dff;background:#f9f5ff">
+        <h4 style="color:#7c4dff">📝 Text</h4>
+        <div id="bucket-Text"></div>
+      </div>
+      <div class="sort-bucket" style="border-color:#ff6d00;background:#fff6f0">
+        <h4 style="color:#ff6d00">🖼️ Pictures</h4>
+        <div id="bucket-Pictures"></div>
+      </div>
+      <div class="sort-bucket" style="border-color:#00bcd4;background:#e8fcff">
+        <h4 style="color:#00bcd4">🎵 Sound</h4>
+        <div id="bucket-Sound"></div>
+      </div>
+      <div class="sort-bucket" style="border-color:#e53935;background:#fff0f0">
+        <h4 style="color:#e53935">🎬 Video</h4>
+        <div id="bucket-Video"></div>
+      </div>
+      <div class="sort-bucket" style="border-color:#00c853;background:#f0fff5">
+        <h4 style="color:#00c853">✨ Animation</h4>
+        <div id="bucket-Animation"></div>
+      </div>
+    </div>
+
+    <div class="sort-items" id="sortItems"></div>
+    <div class="score-line" id="sortMsg">Tap an item to sort it! 👆</div>
+  </div>
+
+  <!-- ── ACTIVITY 4: TRUE / FALSE ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--pink)">🧠 Activity 4 — True or False?</h2>
+    <p class="hint">Read each sentence and tap True or False!</p>
+    <ul class="tf-list">
+
+      <li class="tf-item" data-correct="true">
+        <p>Multimedia means using more than one way to present information.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>A video is a moving drawing or cartoon.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Sound includes music and voice.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>A slideshow is a group of slides that shares ideas and images with other people.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Text means moving pictures recorded on a camera.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>A slide is a page in a slideshow.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Animation and video are exactly the same thing.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+    </ul>
+    <div class="score-line" id="tfScore"></div>
+  </div>
+
+  <!-- ── ACTIVITY 5: FILL IN THE BLANKS ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--green)">✏️ Activity 5 — Fill in the Blanks!</h2>
+    <p class="hint">Use the word bank to complete each sentence.</p>
+
+    <div class="word-bank">
+      📚 Word bank: <span>Multimedia</span> · <span>Text</span> · <span>Animation</span> ·
+      <span>Sound</span> · <span>slideshow</span> · <span>slide</span> · <span>Pictures</span> · <span>Video</span>
+    </div>
+
+    <div class="fill-list" id="fillList">
+
+      <div class="fill-item">
+        <input type="text" data-answer="Multimedia" placeholder="?"> means using more than one way to present information.
+      </div>
+
+      <div class="fill-item">
+        <input type="text" data-answer="Text" placeholder="?"> is words or writing used to share information.
+      </div>
+
+      <div class="fill-item">
+        <input type="text" data-answer="Pictures" placeholder="?"> are drawings or photos.
+      </div>
+
+      <div class="fill-item">
+        <input type="text" data-answer="Sound" placeholder="?"> includes music and voice.
+      </div>
+
+      <div class="fill-item">
+        <input type="text" data-answer="Video" placeholder="?"> is moving pictures recorded on a camera.
+      </div>
+
+      <div class="fill-item">
+        <input type="text" data-answer="Animation" placeholder="?"> is moving drawings or cartoons.
+      </div>
+
+      <div class="fill-item">
+        A <input type="text" data-answer="slideshow" placeholder="?"> is a group of slides that shares ideas with other people.
+      </div>
+
+      <div class="fill-item">
+        A <input type="text" data-answer="slide" placeholder="?"> is one page in a slideshow.
+      </div>
+
+    </div>
+
+    <div class="btn-row">
+      <button class="action-btn main"  onclick="checkFill()">Check Answers ✅</button>
+      <button class="action-btn reset" onclick="resetFill()">Try Again 🔄</button>
+    </div>
+    <div class="score-line" id="fillScore"></div>
+  </div>
+
+  <!-- ── CHEER ── -->
+  <div class="cheer-box" id="cheerBox">
+    <span class="trophy">🏆</span>
+    <h2>Amazing work, Emunah!</h2>
+    <p>You are a Multimedia Expert! Keep shining! ⭐🎬🖼️🎵</p>
+  </div>
+
+</div><!-- /main -->
+
+<footer>Term 3 · Computing · Multimedia: Storyland · Emunah's Learning Space 🌸</footer>
+
+<script>
+/* ────────────────────────────────
+   SLIDESHOW DEMO
+──────────────────────────────── */
+const slides = [
+  { icon:'🎬', title:'Welcome to Multimedia!',
+    body:'A slideshow is a group of slides. Each slide is one page. Tap "Next" to explore each type of multimedia!' },
+  { icon:'📝', title:'1. Text',
+    body:'Text is words or writing. The title on this slide is TEXT. So are these sentences! Text helps people read information.' },
+  { icon:'🖼️', title:'2. Pictures',
+    body:'Pictures are drawings or photos. They help us see what something looks like. A photo of your school is a picture!' },
+  { icon:'🎵', title:'3. Sound',
+    body:'Sound is music or voice. When your teacher reads aloud, that is sound! Songs on the radio are sound too.' },
+  { icon:'🎬', title:'4. Video',
+    body:'Video is moving pictures — like a clip on YouTube or a birthday video on your mum\'s phone.' },
+  { icon:'✨', title:'5. Animation',
+    body:'Animation is moving drawings or cartoons. Your favourite animated show on TV is animation!' },
+];
+
+let currentSlide = 0;
+
+function buildDots() {
+  const dc = document.getElementById('dots');
+  dc.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goSlide(i);
+    dc.appendChild(d);
+  });
+}
+
+function goSlide(n) {
+  currentSlide = n;
+  const s = slides[n];
+  document.getElementById('slideIcon').textContent  = s.icon;
+  document.getElementById('slideTitle').textContent = s.title;
+  document.getElementById('slideBody').textContent  = s.body;
+  document.getElementById('slideNum').textContent   = `Slide ${n+1} of ${slides.length}`;
+  document.getElementById('prevBtn').disabled = n === 0;
+  document.getElementById('nextBtn').disabled = n === slides.length - 1;
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i===n));
+  // colour the screen per slide
+  const colours = ['#f4f0ff','#f4f0ff','#fff5ee','#e0f7fa','#fff0f0','#f0fff5'];
+  document.getElementById('slideScreen').style.background = colours[n] || 'white';
+}
+
+function moveSlide(dir) { goSlide(currentSlide + dir); }
+
+buildDots();
+goSlide(0);
+
+
+/* ────────────────────────────────
+   ACTIVITY 1 – SPOTTER
+──────────────────────────────── */
+let spotDone = 0, spotCorrect = 0;
+const spotCards = document.querySelectorAll('.spotter-card');
+
+function spot(btn, choice) {
+  const card = btn.closest('.spotter-card');
+  if (card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  const correct = card.dataset.answer;
+  const fb = card.querySelector('.spotter-fb');
+  card.querySelectorAll('.spotter-choice').forEach(b => b.disabled = true);
+
+  if (choice === correct) {
+    btn.classList.add('chosen-correct');
+    card.classList.add('correct');
+    fb.style.color = 'var(--green)';
+    fb.textContent = '✅ Correct!';
+    spotCorrect++;
+  } else {
+    btn.classList.add('chosen-wrong');
+    card.classList.add('wrong');
+    card.querySelectorAll('.spotter-choice').forEach(b => {
+      if (b.textContent.trim() === correct) b.classList.add('reveal-correct');
+    });
+    fb.style.color = 'var(--pink)';
+    fb.textContent = `❌ Not quite — it was ${correct}.`;
+  }
+  spotDone++;
+  if (spotDone === spotCards.length) {
+    document.getElementById('spotterScore').textContent =
+      `🎯 ${spotCorrect} out of ${spotCards.length}! ${spotCorrect === spotCards.length ? '🌟 Perfect!' : 'Well tried!'}`;
+    tryCheer();
+  }
+}
+
+
+/* ────────────────────────────────
+   ACTIVITY 3 – SORT
+──────────────────────────────── */
+const sortItems = [
+  { label:'A news headline 📰',   type:'Text'      },
+  { label:'A school photo 📷',    type:'Pictures'  },
+  { label:'A pop song 🎶',        type:'Sound'     },
+  { label:'A cartoon clip 🐱',    type:'Animation' },
+  { label:'A sports video 🏆',    type:'Video'     },
+  { label:'A story paragraph 📖', type:'Text'      },
+  { label:'A hand-drawn map 🗺️',  type:'Pictures'  },
+  { label:'A voice message 📣',   type:'Sound'     },
+  { label:'A superhero cartoon ✨',type:'Animation' },
+  { label:'A dance video 💃',     type:'Video'     },
+];
+let sortDone = 0;
+
+function buildSort() {
+  const container = document.getElementById('sortItems');
+  container.innerHTML = '';
+  sortDone = 0;
+  ['Text','Pictures','Sound','Video','Animation'].forEach(t => {
+    document.getElementById('bucket-'+t).innerHTML = '';
+  });
+  document.getElementById('sortMsg').textContent = 'Tap an item to sort it! 👆';
+  document.getElementById('sortMsg').style.color = '#888';
+
+  sortItems.sort(() => Math.random()-.5).forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'sort-item-btn';
+    btn.textContent = item.label;
+    btn.onclick = () => doSort(item, btn);
+    container.appendChild(btn);
+  });
+}
+
+const bucketColours = { Text:'#ede7ff', Pictures:'#ffe8d6', Sound:'#d9f6fc', Video:'#ffe0e0', Animation:'#d9ffe8' };
+
+function doSort(item, btn) {
+  const bucket = document.getElementById('bucket-' + item.type);
+  const chip = document.createElement('span');
+  chip.className = 'sort-chip';
+  chip.style.background = bucketColours[item.type] || '#eee';
+  chip.textContent = item.label;
+  bucket.appendChild(chip);
+  btn.remove();
+  sortDone++;
+  const msgs = ['Great!','Well done!','Correct!','Superstar!','Brilliant!'];
+  document.getElementById('sortMsg').style.color = 'var(--green)';
+  document.getElementById('sortMsg').textContent = msgs[Math.floor(Math.random()*msgs.length)] + ' ⭐';
+  if (sortDone === sortItems.length) {
+    document.getElementById('sortMsg').textContent = '🎉 You sorted them all! Amazing, Emunah!';
+    tryCheer();
+  }
+}
+buildSort();
+
+
+/* ────────────────────────────────
+   ACTIVITY 4 – TRUE / FALSE
+──────────────────────────────── */
+let tfDone = 0, tfCorrect = 0;
+const tfItems = document.querySelectorAll('.tf-item');
+
+function checkTF(btn, answer) {
+  const item = btn.closest('.tf-item');
+  if (item.querySelector('.tf-btn.correct, .tf-btn.wrong')) return;
+  const correct = item.dataset.correct;
+  item.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+  const fb = item.querySelector('.tf-feedback');
+  if (answer === correct) {
+    btn.classList.add('correct');
+    fb.style.color = 'var(--green)'; fb.textContent = '✅ That is correct!';
+    tfCorrect++;
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color = 'var(--pink)';
+    fb.textContent = '❌ Not quite! The answer is ' + (correct==='true' ? 'TRUE ✅' : 'FALSE ❌') + '.';
+  }
+  tfDone++;
+  if (tfDone === tfItems.length) {
+    document.getElementById('tfScore').textContent =
+      `🎯 ${tfCorrect} out of ${tfItems.length}! ${tfCorrect===tfItems.length ? '🌟 Full marks!' : 'Good effort!'}`;
+    tryCheer();
+  }
+}
+
+
+/* ────────────────────────────────
+   ACTIVITY 5 – FILL BLANKS
+──────────────────────────────── */
+function checkFill() {
+  const inputs = document.querySelectorAll('#fillList input');
+  let score = 0;
+  inputs.forEach(inp => {
+    inp.classList.remove('ok','bad');
+    if (inp.value.trim().toLowerCase() === inp.dataset.answer.toLowerCase()) {
+      inp.classList.add('ok'); score++;
+    } else {
+      inp.classList.add('bad');
+    }
+  });
+  document.getElementById('fillScore').textContent =
+    `🎯 ${score} out of ${inputs.length}! ${score===inputs.length ? '🌟 Perfect score!' : 'Check the red boxes!'}`;
+  if (score === inputs.length) tryCheer();
+}
+
+function resetFill() {
+  document.querySelectorAll('#fillList input').forEach(i => { i.value=''; i.classList.remove('ok','bad'); });
+  document.getElementById('fillScore').textContent = '';
+}
+
+
+/* ────────────────────────────────
+   CHEER (after 2 activities done)
+──────────────────────────────── */
+let cheerCount = 0;
+function tryCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const box = document.getElementById('cheerBox');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+}
+</script>
+</body>
+</html>

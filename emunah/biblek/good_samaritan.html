@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Good Samaritan ✝️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand:   #f5e6c8;
+      --brown:  #7d4f2a;
+      --olive:  #6b7c3a;
+      --gold:   #c8930a;
+      --warm:   #e8714a;
+      --sky:    #4a8fc0;
+      --cream:  #fffbf2;
+      --dark:   #2c1a0e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      background-image:
+        radial-gradient(circle at 8% 92%, rgba(200,147,10,.08) 0%, transparent 45%),
+        radial-gradient(circle at 92% 8%, rgba(107,124,58,.08) 0%, transparent 45%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,.93); border: 2px solid rgba(0,0,0,.13);
+      color: #333; font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(0,0,0,.13);
+      backdrop-filter: blur(4px); transition: all .2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── HEADER ── */
+    .page-header {
+      background: linear-gradient(135deg, #4a2800 0%, #7d4f2a 40%, #c8930a 100%);
+      padding: 64px 24px 50px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        60deg, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) 1px,
+        transparent 1px, transparent 18px);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      color: rgba(255,255,255,.9); font-weight: 800; font-size: .8rem;
+      padding: 4px 16px; border-radius: 50px; margin-bottom: 14px;
+      letter-spacing: .5px; position: relative;
+    }
+    .header-icon { font-size: 64px; display: block; position: relative; margin-bottom: 10px; }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      color: #fff5d6; text-shadow: 3px 4px rgba(0,0,0,.25);
+      position: relative; line-height: 1.1;
+    }
+    .page-header .ref {
+      color: rgba(255,255,255,.75); font-size: 1rem; font-weight: 700;
+      margin-top: 6px; position: relative; font-style: italic;
+    }
+    .page-header p {
+      color: rgba(255,255,255,.85); font-size: 1rem; font-weight: 700;
+      margin-top: 6px; position: relative;
+    }
+
+    /* ── MAIN ── */
+    .main { max-width: 900px; margin: 0 auto; padding: 38px 18px 70px; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem; color: var(--brown);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* ── STORY JOURNEY (visual timeline) ── */
+    .story-road {
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 40px;
+    }
+    .story-road::before {
+      content: '';
+      position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 4px;
+      background: repeating-linear-gradient(
+        to bottom, var(--gold) 0, var(--gold) 12px,
+        transparent 12px, transparent 20px);
+      border-radius: 4px;
+    }
+    .story-beat {
+      background: white; border-radius: 18px;
+      padding: 18px 20px; margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.07);
+      border-left: 5px solid var(--col, var(--gold));
+      position: relative; cursor: pointer;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .story-beat:hover { transform: translateX(4px); box-shadow: 0 6px 22px rgba(0,0,0,.1); }
+    .story-beat::before {
+      content: var(--num,'•');
+      position: absolute; left: -30px; top: 50%; transform: translateY(-50%);
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--col, var(--gold));
+      color: white; font-weight: 900; font-size: .75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Nunito', sans-serif;
+    }
+    .beat-icon { font-size: 26px; float: right; margin-left: 12px; margin-top: -2px; }
+    .beat-text { font-size: 1rem; font-weight: 700; line-height: 1.65; color: #444; }
+    .beat-text strong { color: var(--col, var(--dark)); }
+
+    /* ── CHARACTER CARDS ── */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 14px; margin-bottom: 40px;
+    }
+    .char-card {
+      background: white; border-radius: 20px;
+      padding: 20px 12px 16px; text-align: center;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.07);
+      border: 3px solid transparent;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .char-card:hover { transform: translateY(-4px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
+    .char-card.open { border-color: var(--cc); background: var(--ccbg); }
+    .char-icon { font-size: 42px; display: block; margin-bottom: 8px; }
+    .char-name { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--cc, var(--brown)); }
+    .char-detail { font-size: .8rem; font-weight: 700; color: #555; margin-top: 8px; line-height: 1.45; display: none; }
+    .char-card.open .char-detail { display: block; }
+    .char-hint { font-size: .7rem; font-weight: 700; color: #ccc; margin-top: 6px; }
+    .char-card.open .char-hint { display: none; }
+
+    /* ── ACTIVITY WRAPPER ── */
+    .activity-box {
+      background: white; border-radius: 24px;
+      padding: 28px 24px; margin-bottom: 32px;
+      box-shadow: 0 5px 22px rgba(0,0,0,.07);
+    }
+    .activity-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .activity-box .hint {
+      font-size: .92rem; font-weight: 700; color: #888; margin-bottom: 22px;
+    }
+
+    /* ── ACTIVITY 1: SEQUENCE ── */
+    .seq-events {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .seq-event {
+      display: flex; align-items: center; gap: 12px;
+      background: #fdf5e6; border-radius: 14px;
+      padding: 12px 16px; cursor: pointer;
+      border: 2px solid #e8d9b8; transition: .18s;
+      font-size: .97rem; font-weight: 800;
+    }
+    .seq-event:hover { background: #f5e9cc; border-color: var(--gold); }
+    .seq-event.selected { background: var(--gold); color: white; border-color: var(--gold); }
+    .seq-event.correct  { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; cursor: default; }
+    .seq-event.wrong    { background: #fff0f0; border-color: #e53935; color: #b71c1c; }
+    .seq-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(0,0,0,.1); display: flex;
+      align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      flex-shrink: 0; color: inherit;
+    }
+    .seq-event.correct .seq-num { background: #4caf50; color: white; }
+    .seq-progress {
+      font-family: 'Fredoka One', cursive; font-size: .95rem;
+      color: var(--brown); margin-bottom: 8px;
+    }
+
+    /* ── ACTIVITY 2: WHO DID WHAT ── */
+    .who-list { display: flex; flex-direction: column; gap: 12px; }
+    .who-row  { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .who-char {
+      background: var(--brown); color: white;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      padding: 8px 20px; border-radius: 50px; min-width: 120px; text-align: center;
+    }
+    .who-arrow { color: #ccc; font-weight: 900; font-size: 1.2rem; }
+    .who-row select {
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .92rem;
+      padding: 8px 14px; border-radius: 50px; border: 2px solid #ddd;
+      background: white; cursor: pointer; flex: 1; min-width: 210px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px;
+      outline: none; transition: border-color .2s;
+    }
+    .who-row select.ok  { border-color: #4caf50; background-color: #e8f5e9; }
+    .who-row select.bad { border-color: #e53935; background-color: #ffebee; }
+
+    /* ── ACTIVITY 3: DICTATION PRACTICE ── */
+    .dict-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px; margin-bottom: 8px;
+    }
+    .dict-card {
+      border: 3px solid #e8d9b8; border-radius: 18px; padding: 18px 16px;
+      text-align: center; background: #fdf8ee;
+    }
+    .dict-card .word-cover {
+      font-family: 'Fredoka One', cursive; font-size: 1.6rem;
+      color: var(--brown); letter-spacing: 2px;
+      min-height: 44px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px; cursor: pointer;
+      background: var(--sand); border-radius: 10px; padding: 6px 12px;
+      transition: .2s; user-select: none;
+    }
+    .dict-card .word-cover.hidden { filter: blur(7px); color: transparent; background: #ddd; }
+    .dict-card .word-cover.hidden:hover { filter: blur(4px); }
+    .dict-card label { font-size: .8rem; font-weight: 800; color: #888; margin-bottom: 6px; display: block; }
+    .dict-card input {
+      font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800;
+      width: 100%; padding: 8px 14px; border-radius: 10px;
+      border: 2px dashed #bbb; text-align: center; outline: none; transition: .2s;
+    }
+    .dict-card input:focus { border-color: var(--gold); border-style: solid; }
+    .dict-card input.ok  { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; border-style: solid; }
+    .dict-card input.bad { border-color: #e53935; background: #ffebee; color: #b71c1c; border-style: solid; }
+    .dict-card .peek-btn {
+      font-family: 'Nunito', sans-serif; font-size: .75rem; font-weight: 800;
+      color: #bbb; background: none; border: none; cursor: pointer; margin-bottom: 8px;
+      text-decoration: underline; transition: color .2s;
+    }
+    .dict-card .peek-btn:hover { color: var(--brown); }
+
+    /* ── ACTIVITY 4: TRUE / FALSE ── */
+    .tf-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .tf-item { background: #fdf5e6; border-radius: 18px; padding: 16px 20px; }
+    .tf-item p { font-size: 1rem; font-weight: 800; margin-bottom: 12px; line-height: 1.55; }
+    .tf-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tf-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: .92rem;
+      padding: 8px 22px; border-radius: 50px; border: 2px solid #ddd;
+      background: white; cursor: pointer; transition: .15s;
+    }
+    .tf-btn:hover { background: #f5f0e8; }
+    .tf-btn.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .tf-btn.wrong   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+    .tf-feedback { font-size: .88rem; font-weight: 800; margin-top: 8px; min-height: 20px; }
+
+    /* ── ACTIVITY 5: FILL BLANKS ── */
+    .word-bank {
+      background: var(--sand); border-radius: 14px;
+      padding: 12px 18px; margin-bottom: 20px;
+      font-size: .9rem; font-weight: 800; color: #666;
+    }
+    .word-bank span { color: var(--brown); font-weight: 900; }
+    .fill-list { display: flex; flex-direction: column; gap: 16px; }
+    .fill-item { font-size: 1rem; font-weight: 700; line-height: 2.2; }
+    .fill-item input {
+      font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800;
+      padding: 4px 12px; border-radius: 8px; border: 2px dashed #bbb;
+      width: 155px; text-align: center; outline: none; transition: .2s;
+    }
+    .fill-item input:focus { border-color: var(--gold); border-style: solid; }
+    .fill-item input.ok  { border-color: #4caf50; background: #efffef; color: #2e7d32; border-style: solid; }
+    .fill-item input.bad { border-color: #e53935; background: #fff0f0; color: #b71c1c; border-style: solid; }
+
+    /* ── MORAL BOX ── */
+    .moral-box {
+      background: linear-gradient(135deg, #7d4f2a 0%, #c8930a 100%);
+      border-radius: 24px; padding: 28px; margin-bottom: 32px;
+      color: white;
+    }
+    .moral-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    }
+    .moral-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .moral-list li {
+      background: rgba(255,255,255,.15); border-radius: 12px;
+      padding: 12px 18px; font-size: .97rem; font-weight: 700;
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
+    }
+    .moral-list li::before { content: '✦'; flex-shrink: 0; color: var(--gold); }
+    .moral-reflect {
+      margin-top: 20px;
+    }
+    .moral-reflect label { font-weight: 800; font-size: .95rem; display: block; margin-bottom: 8px; }
+    .moral-reflect textarea {
+      font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 700;
+      width: 100%; padding: 12px 16px; border-radius: 14px;
+      border: 2px solid rgba(255,255,255,.3); background: rgba(255,255,255,.12);
+      color: white; resize: vertical; min-height: 70px; outline: none;
+      transition: border-color .2s;
+    }
+    .moral-reflect textarea::placeholder { color: rgba(255,255,255,.5); }
+    .moral-reflect textarea:focus { border-color: rgba(255,255,255,.6); }
+
+    /* ── SHARED BUTTONS + SCORE ── */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+    .action-btn {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      padding: 12px 26px; border-radius: 50px; border: none; cursor: pointer; transition: .2s;
+    }
+    .action-btn.warm  { background: var(--warm); color: white; box-shadow: 0 4px 0 #b85030; }
+    .action-btn.warm:hover { background: #d05030; transform: translateY(-2px); }
+    .action-btn.olive { background: var(--olive); color: white; box-shadow: 0 4px 0 #4a5a28; }
+    .action-btn.olive:hover { background: #5a6a28; transform: translateY(-2px); }
+    .action-btn.reset { background: #eee; color: #666; box-shadow: 0 4px 0 #ccc; }
+    .action-btn.reset:hover { background: #e0e0e0; }
+    .score-line {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      color: var(--brown); margin-top: 14px; min-height: 32px;
+    }
+
+    /* ── CHEER ── */
+    .cheer-box {
+      background: linear-gradient(135deg, #7d4f2a, #c8930a);
+      border-radius: 24px; text-align: center;
+      padding: 36px 20px; margin-bottom: 32px; display: none;
+    }
+    .cheer-box.show { display: block; animation: popIn .4s ease; }
+    @keyframes popIn { from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1} }
+    .cheer-box .trophy { font-size: 64px; display: block; margin-bottom: 12px; }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: #fff5d6;
+      text-shadow: 2px 3px rgba(0,0,0,.2);
+    }
+    .cheer-box p { font-size: 1rem; font-weight: 800; color: rgba(255,255,255,.9); margin-top: 8px; }
+
+    footer { text-align: center; color: #bbb; font-size: .85rem; font-weight: 600; padding: 20px; }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- ── HEADER ── -->
+<div class="page-header">
+  <span class="header-badge">Term 3 · 4th May 2026 · Bible</span>
+  <span class="header-icon">🕊️</span>
+  <h1>The Good Samaritan</h1>
+  <p class="ref">Luke 10 : 30 – 37</p>
+  <p>A story about compassion, kindness and being a true neighbour</p>
+</div>
+
+<div class="main">
+
+  <!-- ── THE STORY (Road Timeline) ── -->
+  <div class="section-label">📖 The Story</div>
+  <p style="font-size:.95rem;font-weight:700;color:#888;margin-bottom:18px;">Read through the story. Tap any part to highlight it!</p>
+
+  <div class="story-road">
+
+    <div class="story-beat" style="--col:#7d4f2a;--num:'1'" onclick="this.style.background=this.style.background?'':'#fef3e2'">
+      <span class="beat-icon">🏙️</span>
+      <div class="beat-text">
+        A <strong>Jewish man</strong> was travelling from <strong>Jerusalem</strong> to <strong>Jericho</strong>
+        when he was attacked, beaten and robbed by <strong>thieves</strong>.
+      </div>
+    </div>
+
+    <div class="story-beat" style="--col:#8b1a1a;--num:'2'" onclick="this.style.background=this.style.background?'':'#fff0f0'">
+      <span class="beat-icon">🤕</span>
+      <div class="beat-text">
+        Unable to move, the injured man <strong>lay by the side of the road</strong>, helpless and alone.
+      </div>
+    </div>
+
+    <div class="story-beat" style="--col:#888;--num:'3'" onclick="this.style.background=this.style.background?'':'#f5f5f5'">
+      <span class="beat-icon">🚶</span>
+      <div class="beat-text">
+        A <strong>priest</strong> came by, saw the injured man, but <strong>chose to pass by without helping</strong>.
+      </div>
+    </div>
+
+    <div class="story-beat" style="--col:#888;--num:'4'" onclick="this.style.background=this.style.background?'':'#f5f5f5'">
+      <span class="beat-icon">🚶</span>
+      <div class="beat-text">
+        A <strong>Levite</strong> also came by, saw the man, and also <strong>passed by without helping</strong>.
+      </div>
+    </div>
+
+    <div class="story-beat" style="--col:#6b7c3a;--num:'5'" onclick="this.style.background=this.style.background?'':'#f5faec'">
+      <span class="beat-icon">🧡</span>
+      <div class="beat-text">
+        A <strong>Samaritan</strong> came along and <strong>took pity</strong> on the injured man.
+        He covered him with his <strong>cloak</strong> and put him on his <strong>donkey</strong>.
+      </div>
+    </div>
+
+    <div class="story-beat" style="--col:#c8930a;--num:'6'" onclick="this.style.background=this.style.background?'':'#fefae0'">
+      <span class="beat-icon">🏨</span>
+      <div class="beat-text">
+        The Samaritan took him to an <strong>inn</strong>. He bought <strong>medicine, wine, oil and bandages</strong>
+        and gave <strong>money to the innkeeper</strong> to look after him.
+      </div>
+    </div>
+
+    <div class="story-beat" style="--col:#4a8fc0;--num:'7'" onclick="this.style.background=this.style.background?'':'#eef6fc'">
+      <span class="beat-icon">💛</span>
+      <div class="beat-text">
+        The Good Samaritan's act of <strong>kindness</strong> made him a <strong>true neighbour</strong>
+        to the injured man.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CHARACTER CARDS ── -->
+  <div class="section-label">🎭 Meet the Characters</div>
+  <p style="font-size:.95rem;font-weight:700;color:#888;margin-bottom:18px;">Tap a character to find out about their role in the story!</p>
+
+  <div class="char-grid">
+    <div class="char-card" style="--cc:#7d4f2a;--ccbg:#fdf3e3" onclick="this.classList.toggle('open')">
+      <span class="char-icon">👳</span>
+      <div class="char-name">The Jewish Man</div>
+      <div class="char-detail">Was travelling from Jerusalem to Jericho. Was attacked, beaten and robbed by thieves. Lay helpless by the road.</div>
+      <div class="char-hint">Tap to find out!</div>
+    </div>
+    <div class="char-card" style="--cc:#8b1a1a;--ccbg:#fff0f0" onclick="this.classList.toggle('open')">
+      <span class="char-icon">🦹</span>
+      <div class="char-name">The Thieves</div>
+      <div class="char-detail">Attacked, beat and robbed the Jewish man, leaving him injured on the road.</div>
+      <div class="char-hint">Tap to find out!</div>
+    </div>
+    <div class="char-card" style="--cc:#555;--ccbg:#f5f5f5" onclick="this.classList.toggle('open')">
+      <span class="char-icon">🧔</span>
+      <div class="char-name">The Priest</div>
+      <div class="char-detail">Saw the injured man lying on the road but chose to walk past without helping him.</div>
+      <div class="char-hint">Tap to find out!</div>
+    </div>
+    <div class="char-card" style="--cc:#555;--ccbg:#f5f5f5" onclick="this.classList.toggle('open')">
+      <span class="char-icon">🧕</span>
+      <div class="char-name">The Levite</div>
+      <div class="char-detail">Also saw the injured man but, like the priest, passed by without helping.</div>
+      <div class="char-hint">Tap to find out!</div>
+    </div>
+    <div class="char-card" style="--cc:#6b7c3a;--ccbg:#f5faec" onclick="this.classList.toggle('open')">
+      <span class="char-icon">🏇</span>
+      <div class="char-name">The Samaritan</div>
+      <div class="char-detail">Took pity on the injured man. Covered him with his cloak, put him on his donkey and took him to an inn. Bought medicine, wine, oil and bandages. Gave money to the innkeeper. A TRUE NEIGHBOUR! 🧡</div>
+      <div class="char-hint">Tap to find out!</div>
+    </div>
+    <div class="char-card" style="--cc:#c8930a;--ccbg:#fefae0" onclick="this.classList.toggle('open')">
+      <span class="char-icon">🏨</span>
+      <div class="char-name">The Innkeeper</div>
+      <div class="char-detail">Received the injured man at the inn. Was given money by the Samaritan to take care of him.</div>
+      <div class="char-hint">Tap to find out!</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 1: STORY SEQUENCE ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--brown)">🔢 Activity 1 — Put the Story in Order!</h2>
+    <p class="hint">The story has been mixed up! Tap the events <strong>in the correct order</strong> (1st thing that happened → last thing). Each tap numbers the event!</p>
+
+    <div class="seq-progress" id="seqProgress">Tap the 1st event 👆</div>
+    <div class="seq-events" id="seqEvents"></div>
+    <div class="btn-row">
+      <button class="action-btn olive" onclick="checkSeq()">Check Order ✅</button>
+      <button class="action-btn reset" onclick="buildSeq()">Shuffle Again 🔀</button>
+    </div>
+    <div class="score-line" id="seqScore"></div>
+  </div>
+
+  <!-- ── ACTIVITY 2: WHO DID WHAT ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--olive)">🎭 Activity 2 — Who Did What?</h2>
+    <p class="hint">Match each character to what they did in the story. Choose from the dropdown!</p>
+
+    <div class="who-list" id="whoList">
+
+      <div class="who-row">
+        <span class="who-char">The Priest</span>
+        <span class="who-arrow">→</span>
+        <select data-answer="Saw the injured man but walked past without helping">
+          <option value="">Choose what they did…</option>
+          <option>Attacked and robbed the man</option>
+          <option>Saw the injured man but walked past without helping</option>
+          <option>Put the man on a donkey and took him to an inn</option>
+          <option>Received money to look after the man</option>
+        </select>
+      </div>
+
+      <div class="who-row">
+        <span class="who-char">The Samaritan</span>
+        <span class="who-arrow">→</span>
+        <select data-answer="Took pity, cared for the man and took him to an inn">
+          <option value="">Choose what they did…</option>
+          <option>Saw the man and walked past</option>
+          <option>Attacked and robbed the man</option>
+          <option>Took pity, cared for the man and took him to an inn</option>
+          <option>Received money to look after the man</option>
+        </select>
+      </div>
+
+      <div class="who-row">
+        <span class="who-char">The Thieves</span>
+        <span class="who-arrow">→</span>
+        <select data-answer="Attacked, beat and robbed the Jewish man">
+          <option value="">Choose what they did…</option>
+          <option>Helped the injured man</option>
+          <option>Attacked, beat and robbed the Jewish man</option>
+          <option>Walked past without helping</option>
+          <option>Gave money to the innkeeper</option>
+        </select>
+      </div>
+
+      <div class="who-row">
+        <span class="who-char">The Innkeeper</span>
+        <span class="who-arrow">→</span>
+        <select data-answer="Received money and looked after the injured man">
+          <option value="">Choose what they did…</option>
+          <option>Attacked the man on the road</option>
+          <option>Passed by the injured man</option>
+          <option>Received money and looked after the injured man</option>
+          <option>Put the man on a donkey</option>
+        </select>
+      </div>
+
+      <div class="who-row">
+        <span class="who-char">The Levite</span>
+        <span class="who-arrow">→</span>
+        <select data-answer="Also saw the man but passed by without helping">
+          <option value="">Choose what they did…</option>
+          <option>Also saw the man but passed by without helping</option>
+          <option>Helped the injured man</option>
+          <option>Gave money to the innkeeper</option>
+          <option>Attacked and robbed the man</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="btn-row">
+      <button class="action-btn warm"  onclick="checkWho()">Check Answers ✅</button>
+      <button class="action-btn reset" onclick="resetWho()">Try Again 🔄</button>
+    </div>
+    <div class="score-line" id="whoScore"></div>
+  </div>
+
+  <!-- ── ACTIVITY 3: DICTATION PRACTICE ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--gold)">📝 Activity 3 — Dictation Practice!</h2>
+    <p class="hint">These are your dictation words. Tap <strong>"Peek"</strong> to see the word for 2 seconds, then try to spell it! Type it in and check your answer.</p>
+
+    <div class="dict-grid" id="dictGrid">
+
+      <div class="dict-card">
+        <div class="word-cover hidden" id="wc-compassion">Compassion</div>
+        <button class="peek-btn" onclick="peekWord('compassion')">👁 Peek at the word</button>
+        <label>Type the word:</label>
+        <input type="text" id="di-compassion" data-answer="compassion" placeholder="Type here…" oninput="checkDict(this)">
+      </div>
+
+      <div class="dict-card">
+        <div class="word-cover hidden" id="wc-jericho">Jericho</div>
+        <button class="peek-btn" onclick="peekWord('jericho')">👁 Peek at the word</button>
+        <label>Type the word:</label>
+        <input type="text" id="di-jericho" data-answer="jericho" placeholder="Type here…" oninput="checkDict(this)">
+      </div>
+
+      <div class="dict-card">
+        <div class="word-cover hidden" id="wc-priest">Priest</div>
+        <button class="peek-btn" onclick="peekWord('priest')">👁 Peek at the word</button>
+        <label>Type the word:</label>
+        <input type="text" id="di-priest" data-answer="priest" placeholder="Type here…" oninput="checkDict(this)">
+      </div>
+
+      <div class="dict-card">
+        <div class="word-cover hidden" id="wc-injured">Injured</div>
+        <button class="peek-btn" onclick="peekWord('injured')">👁 Peek at the word</button>
+        <label>Type the word:</label>
+        <input type="text" id="di-injured" data-answer="injured" placeholder="Type here…" oninput="checkDict(this)">
+      </div>
+
+      <div class="dict-card">
+        <div class="word-cover hidden" id="wc-neighbour">Neighbour</div>
+        <button class="peek-btn" onclick="peekWord('neighbour')">👁 Peek at the word</button>
+        <label>Type the word:</label>
+        <input type="text" id="di-neighbour" data-answer="neighbour" placeholder="Type here…" oninput="checkDict(this)">
+      </div>
+
+      <div class="dict-card">
+        <div class="word-cover hidden" id="wc-cloak">Cloak</div>
+        <button class="peek-btn" onclick="peekWord('cloak')">👁 Peek at the word</button>
+        <label>Type the word:</label>
+        <input type="text" id="di-cloak" data-answer="cloak" placeholder="Type here…" oninput="checkDict(this)">
+      </div>
+
+    </div>
+    <div class="score-line" id="dictScore"></div>
+  </div>
+
+  <!-- ── ACTIVITY 4: TRUE / FALSE ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--warm)">🧠 Activity 4 — True or False?</h2>
+    <p class="hint">Read each sentence about the story and tap True or False!</p>
+    <ul class="tf-list">
+
+      <li class="tf-item" data-correct="true">
+        <p>The Jewish man was travelling from Jerusalem to Jericho when he was attacked.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>The priest stopped and helped the injured man.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>The Samaritan covered the man with his cloak and put him on his donkey.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>The Samaritan took the injured man to a temple.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>The Samaritan gave money to the innkeeper to care for the injured man.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Both the priest and the Levite helped the injured man.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>The Good Samaritan's kindness made him a true neighbour to the injured man.</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+    </ul>
+    <div class="score-line" id="tfScore"></div>
+  </div>
+
+  <!-- ── ACTIVITY 5: FILL IN THE BLANKS ── -->
+  <div class="activity-box">
+    <h2 style="color:var(--olive)">✏️ Activity 5 — Fill in the Blanks!</h2>
+    <p class="hint">Use the word bank to complete each sentence from the story.</p>
+
+    <div class="word-bank">
+      📖 Word bank: <span>Jericho</span> · <span>thieves</span> · <span>Levite</span> ·
+      <span>Samaritan</span> · <span>cloak</span> · <span>inn</span> · <span>neighbour</span> · <span>compassion</span>
+    </div>
+
+    <div class="fill-list" id="fillList">
+      <div class="fill-item">
+        The Jewish man was travelling from Jerusalem to <input type="text" data-answer="jericho" placeholder="place"> when he was attacked.
+      </div>
+      <div class="fill-item">
+        He was attacked and robbed by <input type="text" data-answer="thieves" placeholder="who?">.
+      </div>
+      <div class="fill-item">
+        A priest and a <input type="text" data-answer="levite" placeholder="person"> both passed by without helping.
+      </div>
+      <div class="fill-item">
+        A <input type="text" data-answer="samaritan" placeholder="who?"> took pity on the injured man and helped him.
+      </div>
+      <div class="fill-item">
+        The Samaritan covered the man with his <input type="text" data-answer="cloak" placeholder="clothing">.
+      </div>
+      <div class="fill-item">
+        He took the injured man to an <input type="text" data-answer="inn" placeholder="place"> and gave money to the innkeeper.
+      </div>
+      <div class="fill-item">
+        The Samaritan's kindness made him a true <input type="text" data-answer="neighbour" placeholder="word"> to the injured man.
+      </div>
+      <div class="fill-item">
+        Showing <input type="text" data-answer="compassion" placeholder="dictation word"> means caring about the feelings of others.
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="action-btn warm"  onclick="checkFill()">Check Answers ✅</button>
+      <button class="action-btn reset" onclick="resetFill()">Try Again 🔄</button>
+    </div>
+    <div class="score-line" id="fillScore"></div>
+  </div>
+
+  <!-- ── MORAL OF THE STORY ── -->
+  <div class="moral-box">
+    <h2>💛 The Moral of the Story</h2>
+    <ul class="moral-list">
+      <li>Show <strong>compassion</strong> — care about others even if you don't know them.</li>
+      <li>A true <strong>neighbour</strong> is anyone who shows kindness and helps someone in need.</li>
+      <li>Don't walk past someone who needs help — be like the <strong>Good Samaritan</strong>!</li>
+      <li>Small acts of <strong>kindness</strong> can make a big difference in someone's life.</li>
+    </ul>
+    <div class="moral-reflect">
+      <label>💭 If you saw someone who needed help, what would YOU do?</label>
+      <textarea placeholder="Write your thoughts here…"></textarea>
+    </div>
+  </div>
+
+  <!-- ── CHEER ── -->
+  <div class="cheer-box" id="cheerBox">
+    <span class="trophy">🏆</span>
+    <h2>Brilliant work, Emunah!</h2>
+    <p>You know the Parable of the Good Samaritan! Keep showing kindness! 🕊️💛</p>
+  </div>
+
+</div><!-- /main -->
+
+<footer>Term 3 · Bible · Luke 10:30–37 · Emunah's Learning Space 🌸</footer>
+
+<script>
+/* ────────────────────────────────
+   ACTIVITY 1 — SEQUENCE
+──────────────────────────────── */
+const seqData = [
+  { text:'A Jewish man was travelling from Jerusalem to Jericho.',         order:1 },
+  { text:'Thieves attacked, beat and robbed him, leaving him on the road.', order:2 },
+  { text:'A priest saw him but walked past without helping.',               order:3 },
+  { text:'A Levite also saw him but passed by without helping.',            order:4 },
+  { text:'A Samaritan took pity and covered him with his cloak.',          order:5 },
+  { text:'The Samaritan took him to an inn and paid the innkeeper.',       order:6 },
+];
+let seqClicks = [];
+
+function buildSeq() {
+  seqClicks = [];
+  document.getElementById('seqScore').textContent = '';
+  document.getElementById('seqProgress').textContent = 'Tap the 1st event 👆';
+  const container = document.getElementById('seqEvents');
+  container.innerHTML = '';
+  const shuffled = [...seqData].sort(() => Math.random() - .5);
+  shuffled.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'seq-event';
+    div.dataset.order = item.order;
+    div.innerHTML = `<div class="seq-num">?</div><span>${item.text}</span>`;
+    div.onclick = () => selectSeq(div);
+    container.appendChild(div);
+  });
+}
+
+function selectSeq(div) {
+  if (div.classList.contains('correct') || div.classList.contains('selected')) return;
+  div.classList.add('selected');
+  seqClicks.push(div);
+  div.querySelector('.seq-num').textContent = seqClicks.length;
+  const next = seqClicks.length + 1;
+  const total = seqData.length;
+  document.getElementById('seqProgress').textContent =
+    seqClicks.length < total ? `Tap the ${ordinal(next)} event 👆` : 'All done! Tap "Check Order" ✅';
+}
+
+function ordinal(n) {
+  const s = ['','1st','2nd','3rd','4th','5th','6th'];
+  return s[n] || n+'th';
+}
+
+function checkSeq() {
+  let correct = 0;
+  seqClicks.forEach((div, idx) => {
+    const expected = parseInt(div.dataset.order);
+    div.classList.remove('selected');
+    if (expected === idx + 1) { div.classList.add('correct'); correct++; }
+    else                       { div.classList.add('wrong'); }
+  });
+  document.getElementById('seqScore').textContent =
+    correct === seqData.length
+      ? `🌟 Perfect order! You know the story really well!`
+      : `🎯 ${correct} out of ${seqData.length} correct. Try again!`;
+  if (correct === seqData.length) tryCheer();
+}
+
+buildSeq();
+
+/* ────────────────────────────────
+   ACTIVITY 2 — WHO DID WHAT
+──────────────────────────────── */
+function checkWho() {
+  const selects = document.querySelectorAll('#whoList select');
+  let score = 0;
+  selects.forEach(sel => {
+    sel.classList.remove('ok','bad');
+    if (sel.value === sel.dataset.answer) { sel.classList.add('ok'); score++; }
+    else sel.classList.add('bad');
+  });
+  document.getElementById('whoScore').textContent =
+    score === selects.length
+      ? `🌟 All ${selects.length} correct! Well done!`
+      : `🎯 ${score} out of ${selects.length} — check the red ones!`;
+  if (score === selects.length) tryCheer();
+}
+function resetWho() {
+  document.querySelectorAll('#whoList select').forEach(s => { s.value=''; s.className=''; });
+  document.getElementById('whoScore').textContent = '';
+}
+
+/* ────────────────────────────────
+   ACTIVITY 3 — DICTATION
+──────────────────────────────── */
+function peekWord(id) {
+  const cover = document.getElementById('wc-' + id);
+  cover.classList.remove('hidden');
+  setTimeout(() => cover.classList.add('hidden'), 2000);
+}
+
+let dictCorrectCount = 0;
+const dictTotal = 6;
+
+function checkDict(input) {
+  const answer = input.dataset.answer.toLowerCase();
+  const typed  = input.value.trim().toLowerCase();
+  input.classList.remove('ok','bad');
+  if (typed === answer) {
+    input.classList.add('ok');
+    updateDictScore();
+  } else if (typed.length >= answer.length) {
+    input.classList.add('bad');
+  }
+}
+
+function updateDictScore() {
+  const correct = document.querySelectorAll('.dict-card input.ok').length;
+  document.getElementById('dictScore').textContent =
+    correct === dictTotal
+      ? `🌟 All ${dictTotal} words spelled correctly! Amazing!`
+      : `🎯 ${correct} out of ${dictTotal} words correct so far!`;
+  if (correct === dictTotal) tryCheer();
+}
+
+/* ────────────────────────────────
+   ACTIVITY 4 — TRUE / FALSE
+──────────────────────────────── */
+let tfDone = 0, tfCorrect = 0;
+const tfItems = document.querySelectorAll('.tf-item');
+
+function checkTF(btn, answer) {
+  const item = btn.closest('.tf-item');
+  if (item.querySelector('.tf-btn.correct, .tf-btn.wrong')) return;
+  const correct = item.dataset.correct;
+  item.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+  const fb = item.querySelector('.tf-feedback');
+  if (answer === correct) {
+    btn.classList.add('correct'); tfCorrect++;
+    fb.style.color = '#2e7d32'; fb.textContent = '✅ Correct!';
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color = '#b71c1c';
+    fb.textContent = '❌ Not quite! The answer is ' + (correct==='true' ? 'TRUE ✅' : 'FALSE ❌') + '.';
+  }
+  tfDone++;
+  if (tfDone === tfItems.length) {
+    document.getElementById('tfScore').textContent =
+      `🎯 ${tfCorrect} out of ${tfItems.length}! ${tfCorrect===tfItems.length ? '🌟 Full marks!' : 'Good try!'}`;
+    tryCheer();
+  }
+}
+
+/* ────────────────────────────────
+   ACTIVITY 5 — FILL BLANKS
+──────────────────────────────── */
+function checkFill() {
+  const inputs = document.querySelectorAll('#fillList input');
+  let score = 0;
+  inputs.forEach(inp => {
+    inp.classList.remove('ok','bad');
+    if (inp.value.trim().toLowerCase() === inp.dataset.answer.toLowerCase()) {
+      inp.classList.add('ok'); score++;
+    } else inp.classList.add('bad');
+  });
+  document.getElementById('fillScore').textContent =
+    `🎯 ${score} out of ${inputs.length}! ${score===inputs.length ? '🌟 Perfect!' : 'Check the red boxes!'}`;
+  if (score === inputs.length) tryCheer();
+}
+function resetFill() {
+  document.querySelectorAll('#fillList input').forEach(i => { i.value=''; i.classList.remove('ok','bad'); });
+  document.getElementById('fillScore').textContent = '';
+}
+
+/* ────────────────────────────────
+   CHEER
+──────────────────────────────── */
+let cheerCount = 0;
+function tryCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const box = document.getElementById('cheerBox');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+}
+</script>
+</body>
+</html>

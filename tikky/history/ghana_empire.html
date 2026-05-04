@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghana — Our Amazing Country! 🇬🇭</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #fff8e1 0%, #fff3cd 50%, #e8f5e9 100%);
+      padding: 20px 16px 80px;
+      min-height: 100vh;
+    }
+
+    /* Back button */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92); border: 2px solid rgba(0,0,0,0.14);
+      color: #333; font-family: sans-serif; font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15); backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* Hero flag header */
+    .hero {
+      max-width: 820px;
+      margin: 0 auto 32px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      position: relative;
+    }
+    .flag-stripe-red   { background: #ce1126; height: 44px; }
+    .flag-stripe-gold  { background: #fcd116; height: 44px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .flag-stripe-green { background: #006b3f; height: 44px; }
+    .black-star {
+      font-size: 36px; line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      animation: spinStar 6s linear infinite;
+    }
+    @keyframes spinStar { 0%,100%{transform:rotate(0deg) scale(1)} 50%{transform:rotate(180deg) scale(1.2)} }
+
+    .hero-body {
+      background: white;
+      padding: 28px 24px 24px;
+      text-align: center;
+    }
+    .hero-body h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      color: #006b3f;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.07);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hero-body p {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: #555;
+      font-weight: 700;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Section wrapper */
+    .section {
+      max-width: 820px;
+      margin: 0 auto 36px;
+    }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Story cards grid */
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    .story-card {
+      background: white;
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border-top: 6px solid var(--c, #fcd116);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .story-card:hover { transform: translateY(-4px); }
+    .story-card .big-emoji { font-size: 48px; margin-bottom: 10px; }
+    .story-card h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--c, #333);
+      margin-bottom: 8px;
+    }
+    .story-card p {
+      font-size: 0.95rem;
+      color: #444;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    /* Kingdom cards */
+    .kingdom-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .k-badge {
+      background: white;
+      border: 4px solid var(--kc, #7c4dff);
+      border-radius: 50px;
+      padding: 12px 22px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--kc, #7c4dff);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      cursor: default;
+    }
+    .k-badge:hover { transform: scale(1.1); }
+
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .t-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding-bottom: 24px;
+      position: relative;
+    }
+    .t-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 52px;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(#fcd116, #006b3f);
+      border-radius: 2px;
+    }
+    .t-dot {
+      width: 52px; height: 52px; flex-shrink: 0;
+      background: var(--tc, #fcd116);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      z-index: 1;
+    }
+    .t-body {
+      background: white;
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      flex: 1;
+    }
+    .t-body strong {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: #1a237e;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .t-body p { font-size: 0.95rem; color: #444; font-weight: 700; line-height: 1.5; }
+
+    /* Activity box */
+    .activity-box {
+      background: white;
+      border-radius: 22px;
+      padding: 26px 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-bottom: 36px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: #1a237e;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* Quiz rows */
+    .q-item { margin-bottom: 22px; }
+    .q-item .q-text {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #222;
+      margin-bottom: 10px;
+    }
+    .choice-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .choice-btn {
+      background: #f0f5ff;
+      border: 3px solid #c5cae9;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .choice-btn:hover { border-color: #7c4dff; background: #ede7f6; }
+    .choice-btn.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+    .choice-btn.wrong   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+
+    /* True / False */
+    .tf-item { margin-bottom: 18px; }
+    .tf-text { font-size: 1rem; font-weight: 800; color: #222; margin-bottom: 8px; }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      padding: 10px 28px;
+      border-radius: 50px;
+      border: 3px solid #c5cae9;
+      background: #f0f5ff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tf-btn:hover { border-color: #7c4dff; background: #ede7f6; }
+    .tf-btn.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+    .tf-btn.wrong   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+
+    /* Match game */
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media(max-width:480px){ .match-grid { grid-template-columns: 1fr; } }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-label { font-family:'Fredoka One',cursive; font-size:1rem; color:#555; margin-bottom:4px; }
+    .match-item {
+      background: #f5f5f5;
+      border: 3px solid #ddd;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      user-select: none;
+    }
+    .match-item.selected { background: #e8eaf6; border-color: #5c6bc0; }
+    .match-item.matched  { background: #e8f5e9; border-color: #43a047; color: #1b5e20; cursor: default; }
+    .match-item.shake    { animation: shake 0.4s; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+
+    /* Fill blanks */
+    .blank-q { margin-bottom: 18px; }
+    .blank-q .bq-text { font-size: 1rem; font-weight: 800; color: #222; margin-bottom: 8px; }
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;
+    }
+    .wb-word {
+      background: #fff9c4;
+      border: 3px solid #f9a825;
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .wb-word:hover { background: #fff176; }
+    .wb-word.used { opacity: 0.35; cursor: default; pointer-events: none; }
+    .blank-slot {
+      display: inline-block;
+      min-width: 110px;
+      border-bottom: 4px solid #7c4dff;
+      padding: 2px 8px;
+      font-weight: 900;
+      color: #4527a0;
+      font-size: 1rem;
+      vertical-align: middle;
+      cursor: pointer;
+      background: #f3e5f5;
+      border-radius: 6px 6px 0 0;
+      margin: 0 4px;
+    }
+
+    /* Feedback / result */
+    .feedback {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-top: 8px;
+      min-height: 24px;
+    }
+    .fb-good { color: #2e7d32; }
+    .fb-bad  { color: #c62828; }
+
+    /* Check/Reset buttons */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    .check-btn, .reset-btn {
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .check-btn { background: #5c6bc0; color: white; }
+    .check-btn:hover { background: #3949ab; transform: scale(1.04); }
+    .reset-btn { background: #e0e0e0; color: #555; }
+    .reset-btn:hover { background: #bdbdbd; }
+
+    /* Score badge */
+    .score-badge {
+      display: inline-block;
+      background: #fcd116;
+      color: #333;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-top: 12px;
+    }
+
+    /* Cheer */
+    .cheer-box {
+      display: none;
+      max-width: 820px;
+      margin: 0 auto 40px;
+      background: linear-gradient(135deg, #ce1126, #fcd116, #006b3f);
+      border-radius: 24px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cheer-box.show { display: block; }
+    @keyframes popIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      color: white;
+      text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+      margin-bottom: 8px;
+    }
+    .cheer-box p { font-size: 1.1rem; color: rgba(255,255,255,0.9); font-weight: 800; }
+    .cheer-stars { font-size: 2.5rem; margin-bottom: 8px; }
+
+    footer {
+      max-width: 820px;
+      margin: 40px auto 0;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- Hero -->
+<div style="height:70px"></div>
+<div class="hero" style="max-width:820px;margin-left:auto;margin-right:auto;margin-bottom:32px;">
+  <div class="flag-stripe-red"></div>
+  <div class="flag-stripe-gold"><span class="black-star">⭐</span></div>
+  <div class="flag-stripe-green"></div>
+  <div class="hero-body">
+    <h1>🇬🇭 Our Amazing Country: Ghana!</h1>
+    <p>Let's learn where Ghana came from and why it is so special! 🌟</p>
+  </div>
+</div>
+
+<!-- SECTION 1: The Ancient Ghana Empire -->
+<div class="section">
+  <div class="section-title" style="color:#ce1126;">📜 Part 1 — The Old Ghana Kingdom</div>
+  <div class="story-grid">
+    <div class="story-card" style="--c:#ce1126">
+      <div class="big-emoji">🏰</div>
+      <h3>A Very Old Kingdom</h3>
+      <p>Long, long ago — before our great-grandparents were born — there was a very powerful kingdom called the <strong>Ghana Empire</strong>.</p>
+    </div>
+    <div class="story-card" style="--c:#f9a825">
+      <div class="big-emoji">🌍</div>
+      <h3>Where Was It?</h3>
+      <p>It was in <strong>West Africa</strong>. The people there were called the <strong>Soninke</strong> people and they spoke <strong>Mande</strong>.</p>
+    </div>
+    <div class="story-card" style="--c:#fcd116">
+      <div class="big-emoji">⭐</div>
+      <h3>Lots of Gold!</h3>
+      <p>The Ghana Empire had so much <strong>gold</strong>! They also had <strong>ivory</strong> (that comes from elephants). This made them very rich and strong.</p>
+    </div>
+    <div class="story-card" style="--c:#006b3f">
+      <div class="big-emoji">👑</div>
+      <h3>A Great Empire</h3>
+      <p>The king of the Ghana Empire was very powerful. He ruled over many, many people and lots of land.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: The Akan Kingdoms -->
+<div class="section">
+  <div class="section-title" style="color:#7c4dff;">👑 Part 2 — The Akan Kingdoms</div>
+  <div style="background:white;border-radius:20px;padding:22px 20px;box-shadow:0 4px 16px rgba(0,0,0,0.08);margin-bottom:18px;">
+    <p style="font-size:1rem;font-weight:800;color:#333;margin-bottom:16px;line-height:1.6;">
+      A group of people called the <strong>Akan</strong> lived between two big rivers — the <strong>Komoè River</strong> and the <strong>Volta River</strong>.
+      They had <strong>five kingdoms</strong>. Each kingdom was special! 🎉
+    </p>
+    <div class="kingdom-row">
+      <div class="k-badge" style="--kc:#ce1126">🔴 Bono</div>
+      <div class="k-badge" style="--kc:#7c4dff">🟣 Denkyira</div>
+      <div class="k-badge" style="--kc:#0277bd">🔵 Akwamu</div>
+      <div class="k-badge" style="--kc:#006b3f">🟢 Fante</div>
+      <div class="k-badge" style="--kc:#f9a825">🟡 Asante</div>
+    </div>
+    <p style="font-size:0.95rem;font-weight:700;color:#555;margin-top:16px;">
+      The Akan people were also very good at finding gold! They put gold with their kings when they died — that shows how important gold was to them. 💛
+    </p>
+  </div>
+</div>
+
+<!-- SECTION 3: From Gold Coast to Ghana -->
+<div class="section">
+  <div class="section-title" style="color:#0277bd;">⛵ Part 3 — The Gold Coast</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot" style="--tc:#fcd116">⛵</div>
+      <div class="t-body">
+        <strong>Visitors from Far Away 🌊</strong>
+        <p>People from <strong>Portugal</strong> sailed to our land a very long time ago. They found so much gold that they called our home <strong>"Costa da Mina"</strong> — that means "Coast of Gold Mine" in their language!</p>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot" style="--tc:#ce1126">🏰</div>
+      <div class="t-body">
+        <strong>Elmina Castle 🏰</strong>
+        <p>The Portuguese built a big castle by the sea called <strong>Elmina Castle</strong>. This is why our country used to be called the <strong>Gold Coast</strong>.</p>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot" style="--tc:#5c6bc0">📖</div>
+      <div class="t-body">
+        <strong>Dr. Danquah Had a Big Idea 💡</strong>
+        <p>A very clever man named <strong>Dr. Joseph Danquah</strong> said: "We should call our country <strong>Ghana</strong> — just like the great old kingdom!" He said our Akan people came from the same family as the old Ghana Empire.</p>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot" style="--tc:#006b3f">✊</div>
+      <div class="t-body">
+        <strong>Dr. Nkrumah — Our Hero! 🦁</strong>
+        <p>Another great man, <strong>Dr. Kwame Nkrumah</strong>, worked very hard so that Ghana could be <strong>free</strong> and rule itself — no more being told what to do by others!</p>
+      </div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot" style="--tc:#fcd116">🎉</div>
+      <div class="t-body">
+        <strong>Independence Day! — 6th March 1957 🇬🇭</strong>
+        <p>On the <strong>6th of March, 1957</strong>, Ghana became FREE! We got a new name: <strong>Ghana</strong>. We got a new flag 🇬🇭, a new song (anthem), and Dr. Nkrumah became our very first <strong>President</strong>! 🎊</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY 1: 3-choice Quiz -->
+<div class="activity-box">
+  <div class="activity-title">🎯 Activity 1 — Pick the Right Answer!</div>
+  <p style="font-size:0.95rem;font-weight:700;color:#555;margin-bottom:20px;">Tap the correct answer for each question!</p>
+
+  <div id="quiz1">
+    <!-- Q1 -->
+    <div class="q-item" id="qq1">
+      <div class="q-text">1. 🏰 What was the name of the very old kingdom?</div>
+      <div class="choice-row">
+        <button class="choice-btn" onclick="pickQ1(this,'wrong')">🌊 Ocean Empire</button>
+        <button class="choice-btn" onclick="pickQ1(this,'correct')">⭐ Ghana Empire</button>
+        <button class="choice-btn" onclick="pickQ1(this,'wrong')">🌿 Forest Kingdom</button>
+      </div>
+    </div>
+    <!-- Q2 -->
+    <div class="q-item" id="qq2">
+      <div class="q-text">2. ✨ What treasure did the Ghana Empire have lots of?</div>
+      <div class="choice-row">
+        <button class="choice-btn" onclick="pickQ2(this,'wrong')">🍎 Apples</button>
+        <button class="choice-btn" onclick="pickQ2(this,'wrong')">💧 Water</button>
+        <button class="choice-btn" onclick="pickQ2(this,'correct')">⭐ Gold</button>
+      </div>
+    </div>
+    <!-- Q3 -->
+    <div class="q-item" id="qq3">
+      <div class="q-text">3. 👑 How many Akan kingdoms were there?</div>
+      <div class="choice-row">
+        <button class="choice-btn" onclick="pickQ3(this,'wrong')">3️⃣ Three</button>
+        <button class="choice-btn" onclick="pickQ3(this,'correct')">5️⃣ Five</button>
+        <button class="choice-btn" onclick="pickQ3(this,'wrong')">7️⃣ Seven</button>
+      </div>
+    </div>
+    <!-- Q4 -->
+    <div class="q-item" id="qq4">
+      <div class="q-text">4. ⛵ Which country's people called our home the "Gold Coast"?</div>
+      <div class="choice-row">
+        <button class="choice-btn" onclick="pickQ4(this,'wrong')">🇫🇷 France</button>
+        <button class="choice-btn" onclick="pickQ4(this,'correct')">🇵🇹 Portugal</button>
+        <button class="choice-btn" onclick="pickQ4(this,'wrong')">🇨🇳 China</button>
+      </div>
+    </div>
+    <!-- Q5 -->
+    <div class="q-item" id="qq5">
+      <div class="q-text">5. 🦁 Who was Ghana's first President?</div>
+      <div class="choice-row">
+        <button class="choice-btn" onclick="pickQ5(this,'wrong')">📖 Dr. Danquah</button>
+        <button class="choice-btn" onclick="pickQ5(this,'correct')">✊ Dr. Nkrumah</button>
+        <button class="choice-btn" onclick="pickQ5(this,'wrong')">👑 Elmina</button>
+      </div>
+    </div>
+    <!-- Q6 -->
+    <div class="q-item" id="qq6">
+      <div class="q-text">6. 📅 When did Ghana become free?</div>
+      <div class="choice-row">
+        <button class="choice-btn" onclick="pickQ6(this,'wrong')">🎉 1st Jan 1960</button>
+        <button class="choice-btn" onclick="pickQ6(this,'wrong')">🎉 25th Dec 1945</button>
+        <button class="choice-btn" onclick="pickQ6(this,'correct')">🎉 6th March 1957</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="q1Score" class="score-badge" style="display:none"></div>
+</div>
+
+<!-- ACTIVITY 2: Match game -->
+<div class="activity-box">
+  <div class="activity-title">🔗 Activity 2 — Match It!</div>
+  <p style="font-size:0.95rem;font-weight:700;color:#555;margin-bottom:16px;">Tap a word on the left, then tap its match on the right! 👆</p>
+
+  <div class="match-grid">
+    <div class="match-col">
+      <div class="match-label">🔵 Words</div>
+      <div class="match-item" id="ml1" data-id="1" onclick="selectMatch('left',1)">⭐ Ghana Empire</div>
+      <div class="match-item" id="ml2" data-id="2" onclick="selectMatch('left',2)">⛵ Elmina Castle</div>
+      <div class="match-item" id="ml3" data-id="3" onclick="selectMatch('left',3)">📖 Dr. Danquah</div>
+      <div class="match-item" id="ml4" data-id="4" onclick="selectMatch('left',4)">🦁 Dr. Nkrumah</div>
+      <div class="match-item" id="ml5" data-id="5" onclick="selectMatch('left',5)">🟡 Asante</div>
+    </div>
+    <div class="match-col">
+      <div class="match-label">🟡 Meanings</div>
+      <div class="match-item" id="mr3" data-id="3" onclick="selectMatch('right',3)">Said we should be called Ghana</div>
+      <div class="match-item" id="mr5" data-id="5" onclick="selectMatch('right',5)">One of the five Akan kingdoms</div>
+      <div class="match-item" id="mr1" data-id="1" onclick="selectMatch('right',1)">The very old kingdom with gold</div>
+      <div class="match-item" id="mr4" data-id="4" onclick="selectMatch('right',4)">Ghana's first President</div>
+      <div class="match-item" id="mr2" data-id="2" onclick="selectMatch('right',2)">Built by the Portuguese by the sea</div>
+    </div>
+  </div>
+  <div id="matchFeedback" class="feedback" style="margin-top:14px;"></div>
+  <div id="matchScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- ACTIVITY 3: True / False -->
+<div class="activity-box">
+  <div class="activity-title">✅ Activity 3 — True or False?</div>
+
+  <div class="tf-item">
+    <div class="tf-text">1. 🏰 The Ghana Empire was a very old and powerful kingdom.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t1')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t1')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf1fb"></div>
+  </div>
+
+  <div class="tf-item">
+    <div class="tf-text">2. 🍎 The Ghana Empire was famous for apples.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t2')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t2')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf2fb"></div>
+  </div>
+
+  <div class="tf-item">
+    <div class="tf-text">3. 🇵🇹 People from Portugal called our land "Gold Coast".</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t3')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t3')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf3fb"></div>
+  </div>
+
+  <div class="tf-item">
+    <div class="tf-text">4. 👑 The Akan people had six kingdoms.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t4')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t4')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf4fb"></div>
+  </div>
+
+  <div class="tf-item">
+    <div class="tf-text">5. ✊ Dr. Nkrumah was Ghana's first President.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t5')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t5')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf5fb"></div>
+  </div>
+
+  <div class="tf-item">
+    <div class="tf-text">6. 📅 Ghana became free on 6th March 1957.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t6')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t6')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf6fb"></div>
+  </div>
+
+  <div class="tf-item">
+    <div class="tf-text">7. 🌿 The Akan people lived between the Komoè and Volta Rivers.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t7')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t7')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf7fb"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="reset-btn" onclick="resetTF()">🔄 Try Again</button>
+  </div>
+  <div id="tfScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- ACTIVITY 4: Fill in the blank with word bank -->
+<div class="activity-box">
+  <div class="activity-title">✏️ Activity 4 — Fill in the Blank!</div>
+  <p style="font-size:0.95rem;font-weight:700;color:#555;margin-bottom:12px;">Tap a word from the 🌟 Word Bank, then tap the blank to fill it in!</p>
+
+  <div class="word-bank" id="wordBank4">
+    <div class="wb-word" id="wb_Gold" onclick="selectWord('Gold')">⭐ Gold</div>
+    <div class="wb-word" id="wb_Nkrumah" onclick="selectWord('Nkrumah')">✊ Nkrumah</div>
+    <div class="wb-word" id="wb_1957" onclick="selectWord('1957')">📅 1957</div>
+    <div class="wb-word" id="wb_Akan" onclick="selectWord('Akan')">👑 Akan</div>
+    <div class="wb-word" id="wb_Portugal" onclick="selectWord('Portugal')">⛵ Portugal</div>
+    <div class="wb-word" id="wb_Danquah" onclick="selectWord('Danquah')">📖 Danquah</div>
+    <div class="wb-word" id="wb_Asante" onclick="selectWord('Asante')">🟡 Asante</div>
+    <div class="wb-word" id="wb_five" onclick="selectWord('five')">5️⃣ five</div>
+  </div>
+
+  <div class="blank-q">
+    <div class="bq-text">1. The Ghana Empire had lots of <span class="blank-slot" id="b1" onclick="fillBlank('b1','Gold')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">2. The people from <span class="blank-slot" id="b2" onclick="fillBlank('b2','Portugal')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> called our land "Gold Coast".</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">3. Dr. <span class="blank-slot" id="b3" onclick="fillBlank('b3','Danquah')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> said our country should be called Ghana.</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">4. The <span class="blank-slot" id="b4" onclick="fillBlank('b4','Akan')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> people had five kingdoms.</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">5. Dr. <span class="blank-slot" id="b5" onclick="fillBlank('b5','Nkrumah')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> was Ghana's first President.</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">6. Ghana became free in <span class="blank-slot" id="b6" onclick="fillBlank('b6','1957')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">7. <span class="blank-slot" id="b7" onclick="fillBlank('b7','Asante')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> is one of the Akan kingdoms.</div>
+  </div>
+  <div class="blank-q">
+    <div class="bq-text">8. There were <span class="blank-slot" id="b8" onclick="fillBlank('b8','five')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Akan kingdoms.</div>
+  </div>
+
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkBlanks()">✅ Check!</button>
+    <button class="reset-btn" onclick="resetBlanks()">🔄 Try Again</button>
+  </div>
+  <div id="blankFeedback" class="feedback" style="margin-top:10px;"></div>
+  <div id="blankScore" class="score-badge" style="display:none;margin-top:8px;"></div>
+</div>
+
+<!-- Cheer box -->
+<div class="cheer-box" id="cheerBox">
+  <div class="cheer-stars">⭐🎉🇬🇭🎉⭐</div>
+  <h2>Amazing, Tikky! 🦁</h2>
+  <p>You know so much about Ghana now! You're a history superstar! 🌟🌟🌟</p>
+</div>
+
+<footer>Keep learning, Tikky! Ghana is proud of you! 🇬🇭⭐</footer>
+
+<script>
+  let cheerCount = 0;
+  let cheerDone = false;
+
+  function cheer() {
+    cheerCount++;
+    if (cheerCount >= 2 && !cheerDone) {
+      cheerDone = true;
+      document.getElementById('cheerBox').classList.add('show');
+      document.getElementById('cheerBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  /* ===================== ACTIVITY 1: Quiz ===================== */
+  const q1Answers = { 1: 'correct', 2: 'correct', 3: 'correct', 4: 'correct', 5: 'correct', 6: 'correct' };
+  let q1Done = {};
+
+  function markChoice(el, result, qNum) {
+    if (q1Done[qNum]) return;
+    const btns = el.closest('.q-item').querySelectorAll('.choice-btn');
+    btns.forEach(b => b.disabled = true);
+    el.classList.add(result);
+    q1Done[qNum] = result === 'correct';
+    checkQ1Complete();
+  }
+
+  function pickQ1(el, r) { markChoice(el, r, 1); }
+  function pickQ2(el, r) { markChoice(el, r, 2); }
+  function pickQ3(el, r) { markChoice(el, r, 3); }
+  function pickQ4(el, r) { markChoice(el, r, 4); }
+  function pickQ5(el, r) { markChoice(el, r, 5); }
+  function pickQ6(el, r) { markChoice(el, r, 6); }
+
+  function checkQ1Complete() {
+    if (Object.keys(q1Done).length === 6) {
+      const sc = Object.values(q1Done).filter(Boolean).length;
+      const sb = document.getElementById('q1Score');
+      sb.textContent = `🌟 You got ${sc} out of 6!`;
+      sb.style.display = 'inline-block';
+      if (sc >= 4) cheer();
+    }
+  }
+
+  /* ===================== ACTIVITY 2: Match ===================== */
+  let matchSel = { left: null, right: null };
+  let matchDone = 0;
+
+  function selectMatch(side, id) {
+    const elId = side === 'left' ? 'ml' + id : 'mr' + id;
+    const el = document.getElementById(elId);
+    if (el.classList.contains('matched')) return;
+
+    // deselect previous on same side
+    if (matchSel[side] !== null) {
+      const prev = document.getElementById((side === 'left' ? 'ml' : 'mr') + matchSel[side]);
+      if (prev) prev.classList.remove('selected');
+    }
+
+    el.classList.add('selected');
+    matchSel[side] = id;
+
+    if (matchSel.left !== null && matchSel.right !== null) {
+      const lEl = document.getElementById('ml' + matchSel.left);
+      const rEl = document.getElementById('mr' + matchSel.right);
+      if (matchSel.left === matchSel.right) {
+        lEl.classList.remove('selected'); lEl.classList.add('matched');
+        rEl.classList.remove('selected'); rEl.classList.add('matched');
+        matchDone++;
+        document.getElementById('matchFeedback').textContent = '✅ Correct match!';
+        document.getElementById('matchFeedback').className = 'feedback fb-good';
+        if (matchDone === 5) {
+          document.getElementById('matchScore').textContent = '🌟 All 5 matched! Amazing!';
+          document.getElementById('matchScore').style.display = 'inline-block';
+          cheer();
+        }
+      } else {
+        lEl.classList.add('shake'); rEl.classList.add('shake');
+        setTimeout(() => { lEl.classList.remove('shake', 'selected'); rEl.classList.remove('shake', 'selected'); }, 500);
+        document.getElementById('matchFeedback').textContent = '❌ Try again!';
+        document.getElementById('matchFeedback').className = 'feedback fb-bad';
+      }
+      matchSel = { left: null, right: null };
+    }
+  }
+
+  /* ===================== ACTIVITY 3: True/False ===================== */
+  const tfAnswers = { t1:'true', t2:'false', t3:'true', t4:'false', t5:'true', t6:'true', t7:'true' };
+  let tfDone = {};
+
+  function checkTF(el, picked, key) {
+    if (tfDone[key]) return;
+    tfDone[key] = true;
+    const correct = tfAnswers[key] === picked;
+    el.classList.add(correct ? 'correct' : 'wrong');
+    const siblings = el.closest('.tf-item').querySelectorAll('.tf-btn');
+    siblings.forEach(b => b.disabled = true);
+    const num = key.replace('t','');
+    document.getElementById('tf' + num + 'fb').textContent = correct ? '✅ Correct!' : '❌ Not quite — try again next time!';
+    document.getElementById('tf' + num + 'fb').className = 'feedback ' + (correct ? 'fb-good' : 'fb-bad');
+
+    if (Object.keys(tfDone).length === 7) {
+      const sc = Object.values(tfDone).filter(Boolean).length;
+      document.getElementById('tfScore').textContent = `🌟 You got ${sc} out of 7!`;
+      document.getElementById('tfScore').style.display = 'inline-block';
+      if (sc >= 5) cheer();
+    }
+  }
+
+  function resetTF() {
+    tfDone = {};
+    document.querySelectorAll('.tf-btn').forEach(b => { b.classList.remove('correct','wrong'); b.disabled = false; });
+    for (let i=1;i<=7;i++) {
+      const el = document.getElementById('tf'+i+'fb');
+      if(el) { el.textContent=''; el.className='feedback'; }
+    }
+    document.getElementById('tfScore').style.display='none';
+  }
+
+  /* ===================== ACTIVITY 4: Fill blanks ===================== */
+  const blankAnswers = { b1:'Gold', b2:'Portugal', b3:'Danquah', b4:'Akan', b5:'Nkrumah', b6:'1957', b7:'Asante', b8:'five' };
+  let blankState = {};
+  let selectedWord = null;
+
+  function selectWord(word) {
+    selectedWord = word;
+    document.querySelectorAll('.wb-word').forEach(w => w.style.outline = 'none');
+    const el = document.getElementById('wb_' + word);
+    if (el) el.style.outline = '3px solid #7c4dff';
+  }
+
+  function fillBlank(blankId, correctWord) {
+    if (!selectedWord) { alert('Tap a word from the Word Bank first! 👆'); return; }
+    const slot = document.getElementById(blankId);
+    if (slot.classList.contains('locked')) return;
+    slot.textContent = selectedWord;
+    blankState[blankId] = selectedWord;
+    slot.style.color = '#4527a0';
+    document.getElementById('wb_' + selectedWord).classList.add('used');
+    document.querySelectorAll('.wb-word').forEach(w => w.style.outline = 'none');
+    selectedWord = null;
+  }
+
+  function checkBlanks() {
+    let correct = 0;
+    const total = Object.keys(blankAnswers).length;
+    for (const [id, ans] of Object.entries(blankAnswers)) {
+      const slot = document.getElementById(id);
+      if (blankState[id] === ans) {
+        correct++;
+        slot.style.background = '#c8e6c9';
+        slot.style.color = '#1b5e20';
+        slot.classList.add('locked');
+      } else if (blankState[id]) {
+        slot.style.background = '#ffcdd2';
+        slot.style.color = '#b71c1c';
+      }
+    }
+    const fb = document.getElementById('blankFeedback');
+    fb.textContent = `You got ${correct} out of ${total} right!`;
+    fb.className = 'feedback ' + (correct >= 6 ? 'fb-good' : 'fb-bad');
+    document.getElementById('blankScore').textContent = `🌟 Score: ${correct}/${total}`;
+    document.getElementById('blankScore').style.display = 'inline-block';
+    if (correct >= 6) cheer();
+  }
+
+  function resetBlanks() {
+    blankState = {};
+    selectedWord = null;
+    for (const id of Object.keys(blankAnswers)) {
+      const slot = document.getElementById(id);
+      slot.textContent = '         ';
+      slot.style.background = '#f3e5f5';
+      slot.style.color = '#4527a0';
+      slot.classList.remove('locked');
+    }
+    document.querySelectorAll('.wb-word').forEach(w => { w.classList.remove('used'); w.style.outline='none'; });
+    document.getElementById('blankFeedback').textContent = '';
+    document.getElementById('blankScore').style.display = 'none';
+  }
+</script>
+</body>
+</html>

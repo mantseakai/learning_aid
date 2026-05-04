@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather & Seasons ⛅</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sun:    #ffd600;
+      --rain:   #2979ff;
+      --wind:   #00bcd4;
+      --cloud:  #90a4ae;
+      --green:  #00c853;
+      --orange: #ff6d00;
+      --pink:   #f50057;
+      --dark:   #1a2a3a;
+      --bg:     #e8f4fd;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,.92); border: 2px solid rgba(0,0,0,.13);
+      color: #333; font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(0,0,0,.13);
+      backdrop-filter: blur(4px); transition: all .2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ══════════════════════════════
+       ANIMATED SKY HEADER
+    ══════════════════════════════ */
+    .sky-header {
+      background: linear-gradient(180deg, #1565c0 0%, #42a5f5 60%, #90caf9 100%);
+      padding: 60px 20px 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+    }
+
+    /* floating clouds */
+    .hcloud {
+      position: absolute;
+      background: white;
+      border-radius: 50px;
+      opacity: .55;
+      animation: drift linear infinite;
+    }
+    .hcloud::before, .hcloud::after {
+      content:''; position:absolute;
+      background: white; border-radius:50%;
+    }
+    .hcloud.c1 { width:90px;height:30px; top:28%;left:-100px; animation-duration:18s; }
+    .hcloud.c1::before { width:50px;height:50px; top:-25px;left:10px; }
+    .hcloud.c1::after  { width:35px;height:35px; top:-18px;left:40px; }
+    .hcloud.c2 { width:120px;height:36px; top:55%;left:-140px; animation-duration:24s; animation-delay:-10s; opacity:.4; }
+    .hcloud.c2::before { width:60px;height:60px; top:-30px;left:15px; }
+    .hcloud.c2::after  { width:44px;height:44px; top:-22px;left:54px; }
+    .hcloud.c3 { width:70px;height:22px; top:18%;left:-90px; animation-duration:20s; animation-delay:-6s; opacity:.35; }
+    .hcloud.c3::before { width:40px;height:40px; top:-20px;left:8px; }
+    @keyframes drift { from{left:-150px} to{left:110%} }
+
+    /* animated sun in corner */
+    .hsun {
+      position: absolute; top: 18px; right: 30px;
+      width: 64px; height: 64px;
+      background: var(--sun);
+      border-radius: 50%;
+      box-shadow: 0 0 0 8px rgba(255,214,0,.3);
+      animation: pulse-sun 3s ease-in-out infinite;
+    }
+    @keyframes pulse-sun {
+      0%,100% { box-shadow: 0 0 0 8px rgba(255,214,0,.3); }
+      50%      { box-shadow: 0 0 0 18px rgba(255,214,0,.15); }
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.35);
+      color: white; font-weight: 800; font-size: .8rem;
+      padding: 4px 16px; border-radius: 50px; margin-bottom: 12px;
+      position: relative;
+    }
+    .sky-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      color: white; text-shadow: 2px 4px rgba(0,0,0,.2);
+      position: relative;
+    }
+    .sky-header p {
+      color: rgba(255,255,255,.88); font-size: 1.05rem; font-weight: 700;
+      margin-top: 8px; position: relative;
+    }
+
+    /* ══════════════════════════════
+       MAIN
+    ══════════════════════════════ */
+    .main { max-width: 900px; margin: 0 auto; padding: 36px 18px 70px; }
+
+    .section-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.75rem; color: var(--dark);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    /* ── INTRO BOX ── */
+    .intro-box {
+      background: white; border-radius: 22px;
+      padding: 24px 28px; margin-bottom: 32px;
+      border-left: 7px solid #42a5f5;
+      box-shadow: 0 4px 18px rgba(66,165,245,.12);
+    }
+    .intro-box p { font-size: 1.1rem; font-weight: 700; line-height: 1.8; color: #444; }
+    .intro-box p + p { margin-top: 8px; }
+    .hl { font-weight: 900; color: #1565c0; }
+
+    /* ══════════════════════════════
+       WEATHER ANIMATION CARDS
+    ══════════════════════════════ */
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .wx-card {
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 6px 22px rgba(0,0,0,.1);
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+    .wx-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,.15); }
+
+    /* card sky area */
+    .wx-sky {
+      height: 130px;
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ─── SUNNY ─── */
+    .wx-card.sunny .wx-sky { background: linear-gradient(180deg,#1565c0,#42a5f5 80%,#90caf9); }
+    .sun-anim {
+      width: 60px; height: 60px; background: var(--sun); border-radius: 50%;
+      box-shadow: 0 0 0 10px rgba(255,214,0,.25);
+      animation: sun-spin 8s linear infinite, sun-pulse 2s ease-in-out infinite;
+      position: relative; z-index: 2;
+    }
+    @keyframes sun-spin  { to { transform: rotate(360deg); } }
+    @keyframes sun-pulse { 0%,100%{box-shadow:0 0 0 10px rgba(255,214,0,.25)} 50%{box-shadow:0 0 0 22px rgba(255,214,0,.1)} }
+    .sun-ray {
+      position: absolute; width: 4px; height: 18px;
+      background: var(--sun); border-radius: 4px;
+      transform-origin: 50% 42px;
+      animation: sun-spin 8s linear infinite;
+    }
+
+    /* ─── RAINY ─── */
+    .wx-card.rainy .wx-sky { background: linear-gradient(180deg,#546e7a,#78909c 60%,#90a4ae); }
+    .rain-cloud {
+      width: 80px; height: 28px; background: #cfd8dc; border-radius: 40px;
+      position: absolute; top: 22px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    }
+    .rain-cloud::before {
+      content:''; position:absolute; width:44px;height:44px;
+      background:#cfd8dc; border-radius:50%; top:-22px; left:12px;
+    }
+    .rain-cloud::after {
+      content:''; position:absolute; width:30px;height:30px;
+      background:#cfd8dc; border-radius:50%; top:-16px; left:40px;
+    }
+    .raindrop {
+      position: absolute; bottom: 10px;
+      width: 3px; background: #64b5f6;
+      border-radius: 4px;
+      animation: fall linear infinite;
+    }
+    @keyframes fall { from{transform:translateY(-20px);opacity:1} to{transform:translateY(70px);opacity:0} }
+
+    /* ─── WINDY ─── */
+    .wx-card.windy .wx-sky { background: linear-gradient(180deg,#00838f,#00bcd4 60%,#80deea); }
+    .wind-line {
+      position: absolute; height: 3px;
+      background: rgba(255,255,255,.7); border-radius: 4px;
+      animation: blow ease-in-out infinite;
+    }
+    @keyframes blow {
+      0%   { transform: translateX(-60px) scaleX(.5); opacity: 0; }
+      40%  { opacity: 1; }
+      100% { transform: translateX(80px) scaleX(1.2); opacity: 0; }
+    }
+    .leaf {
+      position: absolute; font-size: 18px;
+      animation: leaffly ease-in-out infinite;
+    }
+    @keyframes leaffly {
+      0%   { transform: translate(-30px, 10px) rotate(0deg); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: translate(70px, -20px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── CLOUDY ─── */
+    .wx-card.cloudy .wx-sky { background: linear-gradient(180deg,#546e7a,#78909c 60%,#b0bec5); }
+    .cloud-anim {
+      position: absolute;
+      background: #eceff1; border-radius: 50px;
+      animation: float-cloud ease-in-out infinite;
+    }
+    .cloud-anim::before, .cloud-anim::after {
+      content:''; position:absolute; background:#eceff1; border-radius:50%;
+    }
+    @keyframes float-cloud {
+      0%,100% { transform: translateX(0); }
+      50%     { transform: translateX(10px); }
+    }
+
+    /* card bottom label */
+    .wx-label {
+      background: white; padding: 14px 12px; text-align: center;
+    }
+    .wx-name {
+      font-family: 'Fredoka One', cursive; font-size: 1.25rem;
+    }
+    .wx-desc {
+      font-size: .82rem; font-weight: 700; color: #777;
+      margin-top: 4px; line-height: 1.4;
+    }
+
+    /* ══════════════════════════════
+       GHANA SEASONS SECTION
+    ══════════════════════════════ */
+    .seasons-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin-bottom: 40px;
+    }
+    @media(max-width:500px) { .seasons-row { grid-template-columns: 1fr; } }
+    .season-card {
+      border-radius: 22px; padding: 24px 18px; text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,.09);
+      position: relative; overflow: hidden;
+    }
+    .season-card.wet  { background: linear-gradient(160deg,#1565c0,#42a5f5); color: white; }
+    .season-card.dry  { background: linear-gradient(160deg,#e65100,#ffd600); color: white; }
+    .season-icon { font-size: 54px; display: block; margin-bottom: 10px; }
+    .season-card h3 {
+      font-family: 'Fredoka One', cursive; font-size: 1.45rem;
+      margin-bottom: 6px;
+    }
+    .season-card p { font-size: .9rem; font-weight: 700; opacity: .9; line-height: 1.6; }
+
+    /* ══════════════════════════════
+       ACTIVITY WRAPPER
+    ══════════════════════════════ */
+    .activity-box {
+      background: white; border-radius: 24px;
+      padding: 28px 24px; margin-bottom: 32px;
+      box-shadow: 0 5px 22px rgba(0,0,0,.07);
+    }
+    .activity-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .activity-box .hint {
+      font-size: .96rem; font-weight: 700; color: #888; margin-bottom: 22px;
+    }
+
+    /* ══════════════════════════════
+       ACTIVITY 1 – WEATHER GUESSER
+    ══════════════════════════════ */
+    .guess-scene {
+      background: linear-gradient(135deg,#e3f2fd,#e8f5e9);
+      border-radius: 20px; padding: 24px 20px;
+      text-align: center; margin-bottom: 20px;
+    }
+    .guess-icon  { font-size: 60px; display: block; margin-bottom: 12px; }
+    .guess-clue  {
+      font-family: 'Fredoka One', cursive; font-size: 1.35rem; color: #333;
+      margin-bottom: 6px;
+    }
+    .guess-detail { font-size: .95rem; font-weight: 700; color: #666; margin-bottom: 18px; }
+    .guess-choices {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+    .guess-btn {
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      padding: 12px 22px; border-radius: 50px; border: 3px solid transparent;
+      cursor: pointer; background: white; color: var(--dark);
+      box-shadow: 0 4px 0 #ddd; transition: .18s; min-width: 105px;
+    }
+    .guess-btn:hover  { transform: translateY(-3px); box-shadow: 0 7px 0 #ccc; }
+    .guess-btn.correct{ background: #e8f5e9; border-color: var(--green); color: #1b5e20; box-shadow:0 4px 0 #4caf50; }
+    .guess-btn.wrong  { background: #ffebee; border-color: var(--pink);  color: #b71c1c; box-shadow:0 4px 0 #e53935; }
+    .guess-btn.reveal { background: #e8f5e9; border-color: var(--green); color: #1b5e20; }
+    .guess-feedback {
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      margin-top: 14px; min-height: 28px; text-align: center;
+    }
+    .guess-counter { font-size: .88rem; font-weight: 800; color: #aaa; margin-bottom: 12px; }
+
+    /* ══════════════════════════════
+       ACTIVITY 2 – SEASON SORT
+    ══════════════════════════════ */
+    .season-sort-zone {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+    }
+    .season-bucket {
+      border-radius: 18px; padding: 14px 12px; min-height: 100px; border: 3px dashed;
+    }
+    .season-bucket.wet  { border-color: var(--rain); background: #e3f2fd; }
+    .season-bucket.dry  { border-color: var(--orange); background: #fff8e1; }
+    .season-bucket h4 {
+      font-family: 'Fredoka One', cursive; font-size: 1rem; margin-bottom: 10px;
+    }
+    .season-bucket.wet h4  { color: var(--rain); }
+    .season-bucket.dry h4  { color: var(--orange); }
+    .season-chip {
+      display: inline-block; border-radius: 50px;
+      padding: 5px 12px; margin: 3px; font-size: .85rem; font-weight: 800;
+      animation: popIn .25s ease;
+    }
+    @keyframes popIn { from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1} }
+    .season-items-row {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 12px 0 4px;
+    }
+    .season-item-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: .95rem;
+      padding: 10px 16px; border-radius: 50px; border: 2px solid #ddd;
+      background: white; cursor: pointer; transition: .15s;
+      box-shadow: 0 3px 0 #e0e0e0;
+    }
+    .season-item-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 #ccc; }
+
+    /* ══════════════════════════════
+       ACTIVITY 3 – TRUE / FALSE
+    ══════════════════════════════ */
+    .tf-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .tf-item { background: #f0f8ff; border-radius: 18px; padding: 18px 20px; }
+    .tf-item p { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; line-height: 1.55; }
+    .tf-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .tf-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1rem;
+      padding: 10px 26px; border-radius: 50px; border: 2px solid #ddd;
+      background: white; cursor: pointer; transition: .15s;
+    }
+    .tf-btn:hover { background: #e3f2fd; }
+    .tf-btn.correct { background: #e8f5e9; border-color: var(--green); color: #1b5e20; }
+    .tf-btn.wrong   { background: #ffebee; border-color: var(--pink);  color: #b71c1c; }
+    .tf-feedback { font-size: .9rem; font-weight: 800; margin-top: 10px; min-height: 22px; }
+
+    /* ══════════════════════════════
+       ACTIVITY 4 – FILL BLANKS
+    ══════════════════════════════ */
+    .word-bank {
+      background: #e3f2fd; border-radius: 14px;
+      padding: 12px 18px; margin-bottom: 20px;
+      font-size: .9rem; font-weight: 800; color: #555;
+    }
+    .word-bank span { color: #1565c0; font-weight: 900; }
+    .fill-list { display: flex; flex-direction: column; gap: 16px; }
+    .fill-item { font-size: 1.05rem; font-weight: 700; line-height: 2.4; }
+    .fill-item input {
+      font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800;
+      padding: 4px 12px; border-radius: 8px; border: 2px dashed #bbb;
+      width: 140px; text-align: center; outline: none; transition: .2s;
+    }
+    .fill-item input:focus { border-color: #42a5f5; border-style: solid; }
+    .fill-item input.ok  { border-color: var(--green); background: #efffef; color: #1b5e20; border-style:solid; }
+    .fill-item input.bad { border-color: var(--pink);  background: #fff0f4; color: #b71c1c; border-style:solid; }
+
+    /* ══════════════════════════════
+       SHARED BUTTONS + SCORE
+    ══════════════════════════════ */
+    .score-line {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      color: #1565c0; margin-top: 14px; min-height: 32px;
+    }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .big-btn {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      padding: 12px 26px; border-radius: 50px; border: none; cursor: pointer; transition: .2s;
+    }
+    .big-btn.blue  { background: #1565c0; color: white; box-shadow: 0 4px 0 #0d47a1; }
+    .big-btn.blue:hover { background: #1976d2; transform: translateY(-2px); }
+    .big-btn.reset { background: #eee; color: #666; box-shadow: 0 4px 0 #ccc; }
+    .big-btn.reset:hover { background: #e0e0e0; }
+    .big-btn.next  { background: #42a5f5; color: white; box-shadow: 0 4px 0 #1976d2; }
+    .big-btn.next:hover  { background: #1e88e5; transform: translateY(-2px); }
+    .big-btn:disabled { opacity: .4; cursor: default; transform: none !important; }
+
+    /* ══════════════════════════════
+       CHEER
+    ══════════════════════════════ */
+    .cheer-box {
+      background: linear-gradient(135deg,#1565c0,#42a5f5);
+      border-radius: 24px; text-align: center;
+      padding: 36px 20px; margin-bottom: 32px; display: none;
+    }
+    .cheer-box.show { display: block; animation: popIn .4s ease; }
+    .cheer-box .trophy { font-size: 64px; display: block; margin-bottom: 10px; }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: white;
+      text-shadow: 2px 3px rgba(0,0,0,.15);
+    }
+    .cheer-box p { font-size: 1rem; font-weight: 800; color: rgba(255,255,255,.9); margin-top: 8px; }
+
+    footer { text-align: center; color: #aaa; font-size: .85rem; font-weight: 600; padding: 20px; }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- ══════════════════════════════
+     ANIMATED SKY HEADER
+══════════════════════════════ -->
+<div class="sky-header">
+  <div class="hcloud c1"></div>
+  <div class="hcloud c2"></div>
+  <div class="hcloud c3"></div>
+  <div class="hsun"></div>
+  <span class="header-badge">4th May 2026 · Geography</span>
+  <h1>Weather &amp; Seasons ⛅</h1>
+  <p>Learn about the sky, the air, and Ghana's two seasons! 🌍</p>
+</div>
+
+<div class="main">
+
+  <!-- ── INTRO ── -->
+  <div class="intro-box">
+    <p><span class="hl">Weather</span> tells us how the <strong>air</strong> and <strong>sky</strong> are at a time.</p>
+    <p>Examples of weather: <span class="hl">sunny</span> ☀️ · <span class="hl">rainy</span> 🌧️ · <span class="hl">windy</span> 💨 · <span class="hl">cloudy</span> ☁️</p>
+    <p><strong>Ghana</strong> has <span class="hl">two main seasons</span> — the <strong>rainy (wet) season</strong> 🌧️ and the <strong>sunny (dry) season</strong> ☀️</p>
+  </div>
+
+  <!-- ══ ANIMATED WEATHER CARDS ══ -->
+  <div class="section-label">☀️ Types of Weather</div>
+  <p style="font-size:.95rem;font-weight:700;color:#888;margin-bottom:18px;">Tap a card to learn about each type of weather!</p>
+
+  <div class="weather-grid">
+
+    <!-- SUNNY -->
+    <div class="wx-card sunny" onclick="this.style.transform=this.style.transform?'':'translateY(-6px)'">
+      <div class="wx-sky">
+        <div class="sun-anim">
+          <div class="sun-ray" style="transform:rotate(0deg)  translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(45deg) translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(90deg) translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(135deg)translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(180deg)translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(225deg)translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(270deg)translateY(-42px)"></div>
+          <div class="sun-ray" style="transform:rotate(315deg)translateY(-42px)"></div>
+        </div>
+      </div>
+      <div class="wx-label">
+        <div class="wx-name" style="color:#e65100">☀️ Sunny</div>
+        <div class="wx-desc">The sun shines <strong>brightly</strong> in the sky!</div>
+      </div>
+    </div>
+
+    <!-- RAINY -->
+    <div class="wx-card rainy" onclick="this.style.transform=this.style.transform?'':'translateY(-6px)'">
+      <div class="wx-sky" id="rainySky">
+        <div class="rain-cloud"></div>
+        <!-- raindrops injected by JS -->
+      </div>
+      <div class="wx-label">
+        <div class="wx-name" style="color:#1565c0">🌧️ Rainy</div>
+        <div class="wx-desc">Rain <strong>falls</strong> from the sky!</div>
+      </div>
+    </div>
+
+    <!-- WINDY -->
+    <div class="wx-card windy" onclick="this.style.transform=this.style.transform?'':'translateY(-6px)'">
+      <div class="wx-sky" id="windysky">
+        <!-- wind lines + leaves injected by JS -->
+      </div>
+      <div class="wx-label">
+        <div class="wx-name" style="color:#006064">💨 Windy</div>
+        <div class="wx-desc">The <strong>air</strong> is moving fast!</div>
+      </div>
+    </div>
+
+    <!-- CLOUDY -->
+    <div class="wx-card cloudy" onclick="this.style.transform=this.style.transform?'':'translateY(-6px)'">
+      <div class="wx-sky" id="cloudySky">
+        <!-- clouds injected by JS -->
+      </div>
+      <div class="wx-label">
+        <div class="wx-name" style="color:#455a64">☁️ Cloudy</div>
+        <div class="wx-desc"><strong>Clouds</strong> cover the sky!</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ GHANA'S TWO SEASONS ══ -->
+  <div class="section-label">🌍 Ghana's Two Seasons</div>
+  <div class="seasons-row">
+    <div class="season-card wet">
+      <span class="season-icon">🌧️</span>
+      <h3>Rainy (Wet) Season</h3>
+      <p>It <strong>rains a lot</strong>! The ground gets wet and rivers fill up. Plants grow well during this season.</p>
+    </div>
+    <div class="season-card dry">
+      <span class="season-icon">☀️</span>
+      <h3>Sunny (Dry) Season</h3>
+      <p>The sun shines and it is <strong>very hot</strong>! There is little or no rain. It can be dusty and dry.</p>
+    </div>
+  </div>
+
+  <!-- ══ ACTIVITY 1: WEATHER GUESSER ══ -->
+  <div class="activity-box">
+    <h2 style="color:#e65100">🔍 Activity 1 — What's the Weather?</h2>
+    <p class="hint">Look at the clue and tap the correct type of weather!</p>
+    <div class="guess-counter" id="guessCounter">Question 1 of 8</div>
+    <div class="guess-scene">
+      <span class="guess-icon" id="guessIcon">☀️</span>
+      <div class="guess-clue"  id="guessClue">The sun is shining brightly!</div>
+      <div class="guess-detail" id="guessDetail">It feels warm and bright outside.</div>
+      <div class="guess-choices" id="guessChoices"></div>
+      <div class="guess-feedback" id="guessFb"></div>
+    </div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="big-btn next"  id="guessNextBtn" onclick="nextGuess()" disabled>Next Question →</button>
+      <button class="big-btn reset" onclick="buildGuess()">Start Over 🔄</button>
+    </div>
+    <div class="score-line" id="guessScore" style="text-align:center"></div>
+  </div>
+
+  <!-- ══ ACTIVITY 2: SEASON SORT ══ -->
+  <div class="activity-box">
+    <h2 style="color:#1565c0">🗂️ Activity 2 — Which Season?</h2>
+    <p class="hint">Tap each clue to put it in the correct season bucket!</p>
+    <div class="season-sort-zone">
+      <div class="season-bucket wet">
+        <h4>🌧️ Rainy Season</h4>
+        <div id="wetBucket"></div>
+      </div>
+      <div class="season-bucket dry">
+        <h4>☀️ Dry Season</h4>
+        <div id="dryBucket"></div>
+      </div>
+    </div>
+    <div class="season-items-row" id="seasonItems"></div>
+    <div class="score-line" id="seasonMsg" style="text-align:center">Tap a clue to sort it! 👆</div>
+  </div>
+
+  <!-- ══ ACTIVITY 3: TRUE / FALSE ══ -->
+  <div class="activity-box">
+    <h2 style="color:var(--green)">🧠 Activity 3 — True or False?</h2>
+    <p class="hint">Read each sentence and tap True or False!</p>
+    <ul class="tf-list">
+
+      <li class="tf-item" data-correct="true">
+        <p>Weather tells us how the air and sky are at a time. ⛅</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>When it is sunny, the sun shines brightly. ☀️</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>Ghana has four seasons — spring, summer, autumn and winter. 🌸</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>When it is cloudy, clouds cover the sky. ☁️</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>Ghana has a rainy season and a dry season. 🌍</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="false">
+        <p>When it is windy, rain falls from the sky. 💨</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+      <li class="tf-item" data-correct="true">
+        <p>In the dry season, the sun shines and there is little rain. ☀️</p>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this,'true')">✅ True</button>
+          <button class="tf-btn" onclick="checkTF(this,'false')">❌ False</button>
+        </div>
+        <div class="tf-feedback"></div>
+      </li>
+
+    </ul>
+    <div class="score-line" id="tfScore"></div>
+  </div>
+
+  <!-- ══ ACTIVITY 4: FILL BLANKS ══ -->
+  <div class="activity-box">
+    <h2 style="color:#6a1b9a">✏️ Activity 4 — Fill in the Blanks!</h2>
+    <p class="hint">Use the word bank to complete each sentence.</p>
+    <div class="word-bank">
+      📖 Word bank: <span>sunny</span> · <span>rainy</span> · <span>windy</span> · <span>cloudy</span> · <span>two</span> · <span>weather</span> · <span>sky</span> · <span>air</span>
+    </div>
+    <div class="fill-list" id="fillList">
+      <div class="fill-item">
+        <input type="text" data-answer="weather" placeholder="?"> tells us how the air and sky are at a time.
+      </div>
+      <div class="fill-item">
+        When it is <input type="text" data-answer="sunny" placeholder="?">, the sun shines brightly.
+      </div>
+      <div class="fill-item">
+        When it is <input type="text" data-answer="rainy" placeholder="?">, rain falls from the sky.
+      </div>
+      <div class="fill-item">
+        When it is <input type="text" data-answer="windy" placeholder="?">, the air is moving.
+      </div>
+      <div class="fill-item">
+        When it is <input type="text" data-answer="cloudy" placeholder="?">, clouds cover the sky.
+      </div>
+      <div class="fill-item">
+        Ghana has <input type="text" data-answer="two" placeholder="?"> main seasons.
+      </div>
+      <div class="fill-item">
+        Clouds cover the <input type="text" data-answer="sky" placeholder="?"> when it is cloudy.
+      </div>
+      <div class="fill-item">
+        When it is windy, the <input type="text" data-answer="air" placeholder="?"> is moving.
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="big-btn blue"  onclick="checkFill()">Check Answers ✅</button>
+      <button class="big-btn reset" onclick="resetFill()">Try Again 🔄</button>
+    </div>
+    <div class="score-line" id="fillScore"></div>
+  </div>
+
+  <!-- ── CHEER ── -->
+  <div class="cheer-box" id="cheerBox">
+    <span class="trophy">🏆</span>
+    <h2>You're a Weather Expert, Tikky!</h2>
+    <p>Amazing work! You know all about weather and Ghana's seasons! ⛅🌍🌟</p>
+  </div>
+
+</div><!-- /main -->
+
+<footer>4th May 2026 · Geography · Weather &amp; Seasons · Tikky's Learning Space 🌈</footer>
+
+<script>
+/* ════════════════════════
+   BUILD WEATHER ANIMATIONS
+════════════════════════ */
+// Raindrops
+const rainSky = document.getElementById('rainysky') || document.querySelector('.wx-card.rainy .wx-sky');
+document.querySelector('.wx-card.rainy .wx-sky').id = 'rainysky2';
+const rSky = document.querySelector('.wx-card.rainy .wx-sky');
+for (let i = 0; i < 14; i++) {
+  const d = document.createElement('div');
+  d.className = 'raindrop';
+  const h = 6 + Math.random() * 14;
+  d.style.cssText = `height:${h}px;left:${8+Math.random()*82}%;
+    animation-duration:${.6+Math.random()*.8}s;
+    animation-delay:${-Math.random()*1.2}s;opacity:${.5+Math.random()*.5}`;
+  rSky.appendChild(d);
+}
+
+// Wind lines + leaves
+const wSky = document.querySelector('.wx-card.windy .wx-sky');
+[0,1,2,3,4].forEach(i => {
+  const l = document.createElement('div');
+  l.className = 'wind-line';
+  l.style.cssText = `width:${30+Math.random()*50}px;
+    top:${15+i*18}%;left:0;
+    animation-duration:${1.5+Math.random()*1.5}s;
+    animation-delay:${-Math.random()*2}s`;
+  wSky.appendChild(l);
+});
+['🍃','🌿','🍂'].forEach((e,i) => {
+  const lf = document.createElement('div');
+  lf.className = 'leaf'; lf.textContent = e;
+  lf.style.cssText = `top:${20+i*25}%;left:0;
+    animation-duration:${2+Math.random()*2}s;
+    animation-delay:${-Math.random()*2.5}s`;
+  wSky.appendChild(lf);
+});
+
+// Cloudy clouds
+const cSky = document.querySelector('.wx-card.cloudy .wx-sky');
+[
+  { w:80,h:26,t:14,l:10,bw:42,bh:42,bt:-21,bl:10, aw:30,ah:30,at:-16,al:38, dur:4,del:0 },
+  { w:60,h:20,t:52,l:40,bw:34,bh:34,bt:-17,bl:8,  aw:22,ah:22,at:-12,al:30, dur:5,del:-2},
+].forEach(c => {
+  const cl = document.createElement('div');
+  cl.className='cloud-anim';
+  cl.style.cssText=`width:${c.w}px;height:${c.h}px;top:${c.t}%;left:${c.l}%;
+    animation-duration:${c.dur}s;animation-delay:${c.del}s`;
+  cl.style.setProperty('--bw',c.bw+'px');
+  // easier: use inline style on pseudo via filter
+  cSky.appendChild(cl);
+  // add two "bumps" as spans
+  ['before','after'].forEach((p,pi) => {
+    const bmp = document.createElement('div');
+    bmp.style.cssText = `position:absolute;background:#eceff1;border-radius:50%;
+      width:${pi===0?c.bw:c.aw}px;height:${pi===0?c.bh:c.ah}px;
+      top:${pi===0?c.bt:c.at}px;left:${pi===0?c.bl:c.al}px`;
+    cl.appendChild(bmp);
+  });
+});
+
+/* ════════════════════════
+   ACTIVITY 1 – WEATHER GUESSER
+════════════════════════ */
+const guessQs = [
+  { icon:'☀️', clue:'The sun shines brightly!',           detail:'It is warm and bright outside.',       answer:'Sunny',  wrong:['Rainy','Cloudy'] },
+  { icon:'🌧️', clue:'Rain falls from the sky!',           detail:'You need an umbrella.',                answer:'Rainy',  wrong:['Sunny','Windy']  },
+  { icon:'💨', clue:'The air is moving fast!',            detail:'Your hair is blowing everywhere.',     answer:'Windy',  wrong:['Cloudy','Rainy']  },
+  { icon:'☁️', clue:'Clouds cover the whole sky!',        detail:'It is grey and a little dark.',        answer:'Cloudy', wrong:['Sunny','Windy']   },
+  { icon:'☀️', clue:'It is hot and bright today!',        detail:'The sun is high in the sky.',          answer:'Sunny',  wrong:['Windy','Rainy']   },
+  { icon:'🌧️', clue:'Puddles are forming on the ground!', detail:'It rained a lot this morning.',        answer:'Rainy',  wrong:['Cloudy','Sunny']  },
+  { icon:'💨', clue:'Trees are bending and swaying!',     detail:'The wind is really strong today.',     answer:'Windy',  wrong:['Sunny','Cloudy']  },
+  { icon:'☁️', clue:'You cannot see the sun at all!',     detail:'The sky is full of grey clouds.',      answer:'Cloudy', wrong:['Rainy','Windy']   },
+];
+let gIdx = 0, gCorrect = 0, gAnswered = false;
+
+function buildGuess() {
+  gIdx = 0; gCorrect = 0; gAnswered = false;
+  document.getElementById('guessScore').textContent = '';
+  document.getElementById('guessNextBtn').disabled = true;
+  showGuessQ();
+}
+
+function showGuessQ() {
+  if (gIdx >= guessQs.length) {
+    document.getElementById('guessScore').textContent =
+      `🎯 ${gCorrect} out of ${guessQs.length}! ${gCorrect >= 7 ? '🌟 Amazing!' : 'Great try!'}`;
+    document.getElementById('guessNextBtn').disabled = true;
+    if (gCorrect >= 7) tryCheer();
+    return;
+  }
+  gAnswered = false;
+  const q = guessQs[gIdx];
+  document.getElementById('guessCounter').textContent = `Question ${gIdx+1} of ${guessQs.length}`;
+  document.getElementById('guessIcon').textContent  = q.icon;
+  document.getElementById('guessClue').textContent  = q.clue;
+  document.getElementById('guessDetail').textContent= q.detail;
+  document.getElementById('guessFb').textContent    = '';
+  document.getElementById('guessNextBtn').disabled  = true;
+
+  const opts = [q.answer, ...q.wrong].sort(()=>Math.random()-.5);
+  const cc = document.getElementById('guessChoices');
+  cc.innerHTML = '';
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'guess-btn';
+    btn.textContent = opt;
+    btn.onclick = () => answerGuess(btn, opt, q.answer, cc);
+    cc.appendChild(btn);
+  });
+}
+
+function answerGuess(btn, chosen, correct, cc) {
+  if (gAnswered) return;
+  gAnswered = true;
+  cc.querySelectorAll('.guess-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correct) b.classList.add('reveal');
+  });
+  const fb = document.getElementById('guessFb');
+  if (chosen === correct) {
+    btn.classList.add('correct'); gCorrect++;
+    const msgs = ['⭐ Correct!','🌟 Great!','✅ Well done!','🎉 Yes!'];
+    fb.style.color='#1b5e20'; fb.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color='#b71c1c'; fb.textContent=`❌ Not quite! It was ${correct}.`;
+  }
+  gIdx++;
+  document.getElementById('guessNextBtn').disabled = false;
+  if (gIdx >= guessQs.length) document.getElementById('guessNextBtn').textContent='See Score 🎯';
+}
+
+function nextGuess() { showGuessQ(); }
+buildGuess();
+
+/* ════════════════════════
+   ACTIVITY 2 – SEASON SORT
+════════════════════════ */
+const seasonItems = [
+  { label:'☔ It rains a lot',           type:'wet' },
+  { label:'☀️ The sun shines every day', type:'dry' },
+  { label:'💧 Rivers fill up with water', type:'wet' },
+  { label:'🌵 The ground is very dry',   type:'dry' },
+  { label:'🌱 Plants grow well',         type:'wet' },
+  { label:'🌬️ It can be dusty',          type:'dry' },
+  { label:'🌊 Floods can happen',        type:'wet' },
+  { label:'🥵 It is very hot',           type:'dry' },
+];
+let ssDone = 0;
+
+function buildSeasonSort() {
+  ssDone = 0;
+  document.getElementById('wetBucket').innerHTML = '';
+  document.getElementById('dryBucket').innerHTML = '';
+  document.getElementById('seasonMsg').textContent = 'Tap a clue to sort it! 👆';
+  document.getElementById('seasonMsg').style.color = '#888';
+  const row = document.getElementById('seasonItems');
+  row.innerHTML = '';
+  [...seasonItems].sort(()=>Math.random()-.5).forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'season-item-btn';
+    btn.textContent = item.label;
+    btn.onclick = () => doSeasonSort(item, btn);
+    row.appendChild(btn);
+  });
+}
+
+function doSeasonSort(item, btn) {
+  const bucket = document.getElementById(item.type === 'wet' ? 'wetBucket' : 'dryBucket');
+  const chip = document.createElement('span');
+  chip.className = 'season-chip';
+  chip.style.background = item.type==='wet' ? '#bbdefb' : '#ffe082';
+  chip.style.color       = item.type==='wet' ? '#0d47a1' : '#e65100';
+  chip.textContent = item.label;
+  bucket.appendChild(chip);
+  btn.remove();
+  ssDone++;
+  const msgs=['Well done!','Correct!','Great!','⭐ Yes!','Brilliant!'];
+  document.getElementById('seasonMsg').style.color='#1b5e20';
+  document.getElementById('seasonMsg').textContent=msgs[Math.floor(Math.random()*msgs.length)];
+  if (ssDone === seasonItems.length) {
+    document.getElementById('seasonMsg').textContent='🎉 You sorted all the clues! You are a weather star!';
+    tryCheer();
+  }
+}
+buildSeasonSort();
+
+/* ════════════════════════
+   ACTIVITY 3 – TRUE / FALSE
+════════════════════════ */
+let tfDone=0, tfCorrect=0;
+const tfItems=document.querySelectorAll('.tf-item');
+
+function checkTF(btn, answer) {
+  const item=btn.closest('.tf-item');
+  if(item.querySelector('.tf-btn.correct,.tf-btn.wrong')) return;
+  const correct=item.dataset.correct;
+  item.querySelectorAll('.tf-btn').forEach(b=>b.disabled=true);
+  const fb=item.querySelector('.tf-feedback');
+  if(answer===correct){
+    btn.classList.add('correct'); tfCorrect++;
+    fb.style.color='#1b5e20'; fb.textContent='✅ That is correct! Well done!';
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color='#b71c1c';
+    fb.textContent='❌ Not quite! The answer is '+(correct==='true'?'TRUE ✅':'FALSE ❌')+'.';
+  }
+  tfDone++;
+  if(tfDone===tfItems.length){
+    document.getElementById('tfScore').textContent=
+      `🎯 ${tfCorrect} out of ${tfItems.length}! ${tfCorrect===tfItems.length?'🌟 Perfect!':'Good try!'}`;
+    tryCheer();
+  }
+}
+
+/* ════════════════════════
+   ACTIVITY 4 – FILL BLANKS
+════════════════════════ */
+function checkFill(){
+  const inputs=document.querySelectorAll('#fillList input');
+  let score=0;
+  inputs.forEach(inp=>{
+    inp.classList.remove('ok','bad');
+    if(inp.value.trim().toLowerCase()===inp.dataset.answer.toLowerCase()){inp.classList.add('ok');score++;}
+    else inp.classList.add('bad');
+  });
+  document.getElementById('fillScore').textContent=
+    `🎯 ${score} out of ${inputs.length}! ${score===inputs.length?'🌟 All correct!':'Check the red boxes!'}`;
+  if(score===inputs.length) tryCheer();
+}
+function resetFill(){
+  document.querySelectorAll('#fillList input').forEach(i=>{i.value='';i.classList.remove('ok','bad');});
+  document.getElementById('fillScore').textContent='';
+}
+
+/* ════════════════════════
+   CHEER
+════════════════════════ */
+let cheerCount=0;
+function tryCheer(){
+  cheerCount++;
+  if(cheerCount>=2){
+    const box=document.getElementById('cheerBox');
+    box.classList.add('show');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+</script>
+</body>
+</html>
