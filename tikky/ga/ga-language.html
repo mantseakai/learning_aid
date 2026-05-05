@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌟 Ga Language Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:   #F5A623;
+  --green:  #27AE60;
+  --red:    #E74C3C;
+  --blue:   #2980B9;
+  --purple: #8E44AD;
+  --bg:     #FFFBF2;
+  --dark:   #2C1810;
+  --kente1: #F5A623;
+  --kente2: #27AE60;
+  --kente3: #E74C3C;
+  --kente4: #1A1A2E;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Kente-inspired header band */
+.kente-band {
+  height: 14px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--kente4) 0px, var(--kente4) 18px,
+    var(--kente1) 18px, var(--kente1) 36px,
+    var(--kente2) 36px, var(--kente2) 54px,
+    var(--kente3) 54px, var(--kente3) 72px,
+    var(--kente4) 72px, var(--kente4) 90px
+  );
+  position: sticky; top: 0; z-index: 100;
+}
+.kente-band-bot { position: fixed; bottom: 0; left: 0; right: 0; }
+
+/* Adinkra-style background symbols */
+body::before {
+  content: '✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦';
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  font-size: 2rem; color: rgba(245,166,35,0.04);
+  word-spacing: 2rem; line-height: 4rem;
+  pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+
+.app { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 16px 16px 80px; }
+
+/* Header */
+.header { text-align: center; padding: 20px 0 12px; }
+.header .flag { font-size: 3.5rem; display: block; animation: sway 2s ease-in-out infinite; }
+@keyframes sway { 0%,100%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} }
+.header h1 {
+  font-family: 'Baloo 2', cursive; font-size: 2.2rem; font-weight: 800;
+  color: var(--dark); margin: 8px 0 4px;
+}
+.header h1 span { color: var(--gold); }
+.header p { color: #888; font-size: 1rem; font-weight: 700; }
+.ga-intro {
+  background: linear-gradient(135deg, #FFF8E7, #FFF0CC);
+  border-radius: 18px; padding: 14px 18px; margin: 12px 0;
+  border: 2px dashed var(--gold); font-size: 1rem; color: #7a5800; font-weight: 700;
+}
+
+/* Stars */
+.stars-row { display: flex; justify-content: center; gap: 8px; margin: 12px 0 18px; }
+.star { font-size: 1.8rem; filter: grayscale(1) opacity(0.25); transition: all 0.3s; }
+.star.lit { filter: none; animation: sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+@keyframes sPop { 0%{transform:scale(0)} 60%{transform:scale(1.5) rotate(-15deg)} 100%{transform:scale(1)} }
+
+/* Tabs */
+.tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+.tab {
+  padding: 10px 18px; border-radius: 50px;
+  border: 2.5px solid transparent;
+  font-family: 'Baloo 2', cursive; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; background: white; color: #bbb;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.07); transition: all 0.2s;
+}
+.tab:hover { color: #666; transform: translateY(-2px); }
+.tab.active { background: var(--gold); color: white; border-color: #c87800; box-shadow: 0 4px 0 #c87800; transform: translateY(-3px); }
+.tab:nth-child(2).active { background: var(--green); border-color: #1a8a40; box-shadow: 0 4px 0 #1a8a40; }
+.tab:nth-child(3).active { background: var(--blue); border-color: #1a6090; box-shadow: 0 4px 0 #1a6090; }
+.tab:nth-child(4).active { background: var(--purple); border-color: #6a2a8a; box-shadow: 0 4px 0 #6a2a8a; }
+
+.panel { display: none; } .panel.active { display: block; }
+
+/* Card */
+.card {
+  background: white; border-radius: 24px; padding: 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.06), 0 14px 30px rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.sec-title { font-family: 'Baloo 2', cursive; font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; }
+
+/* ---- VOCABULARY CARDS ---- */
+.vocab-grid { display: flex; flex-direction: column; gap: 10px; }
+.vocab-row {
+  display: flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, #FFFBF2, #FFF8E7);
+  border-radius: 16px; padding: 14px 16px;
+  border: 2px solid rgba(245,166,35,0.2);
+  cursor: pointer; transition: all 0.2s;
+}
+.vocab-row:hover { transform: translateX(6px); border-color: var(--gold); }
+.vocab-emoji { font-size: 2rem; flex-shrink: 0; }
+.vocab-ga { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; color: var(--dark); flex: 1; }
+.vocab-syllables { font-size: 0.8rem; color: #aaa; font-weight: 700; display: block; margin-top: 2px; }
+.vocab-arrow { color: #ddd; font-size: 1.3rem; }
+.vocab-en { font-size: 1rem; font-weight: 800; color: var(--gold); }
+
+/* Syllable breakdown */
+.syllable-box {
+  display: inline-flex; gap: 4px; flex-wrap: wrap;
+}
+.syl {
+  padding: 4px 10px; border-radius: 50px; font-family: 'Baloo 2', cursive;
+  font-size: 0.9rem; font-weight: 800; color: white;
+}
+
+/* ---- MATCH GAME ---- */
+.match-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.match-col-title { font-family: 'Baloo 2', cursive; font-size: 0.9rem; font-weight: 800; color: #aaa; text-align: center; margin-bottom: 8px; }
+.match-item {
+  padding: 13px 10px; border-radius: 14px; text-align: center;
+  font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: all 0.18s; border: 2.5px solid transparent;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.08); user-select: none;
+}
+.match-ga { background: #FFF8E7; color: var(--dark); }
+.match-en { background: #F0FFF4; color: #1a5c30; }
+.match-item:hover { transform: translateY(-3px); }
+.match-item.selected { box-shadow: 0 0 0 3px var(--gold); transform: scale(1.05); }
+.match-item.correct { background: #D5F5E3; color: #1a5c30; border-color: var(--green); animation: cPop 0.4s ease; }
+.match-item.wrong { animation: cShake 0.4s ease; background: #FDEDEC; border-color: var(--red); }
+@keyframes cPop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+@keyframes cShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
+.match-dots { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; background: #ddd; transition: background 0.3s; }
+.dot.done { background: var(--green); }
+.dot.cur { background: var(--gold); }
+
+/* ---- SYLLABLE BUILDER ---- */
+.syl-target {
+  background: linear-gradient(135deg, #FFF8E7, #FFF0CC);
+  border-radius: 18px; padding: 20px; text-align: center;
+  margin-bottom: 16px; border: 2px dashed var(--gold);
+}
+.syl-target .target-en { font-family: 'Baloo 2', cursive; font-size: 1.3rem; color: #7a5800; font-weight: 800; }
+.syl-target .target-hint { font-size: 0.85rem; color: #aaa; font-weight: 700; margin-top: 4px; }
+
+.syl-bank { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
+.syl-chip {
+  padding: 10px 16px; border-radius: 50px; font-family: 'Baloo 2', cursive;
+  font-size: 1rem; font-weight: 800; cursor: pointer; color: white;
+  transition: all 0.18s; box-shadow: 0 4px 0 rgba(0,0,0,0.12); user-select: none;
+}
+.syl-chip:hover { transform: translateY(-3px); }
+.syl-chip.used { opacity: 0.3; pointer-events: none; }
+
+.syl-slots {
+  min-height: 52px; background: #F8F9FA; border-radius: 14px;
+  padding: 10px 12px; border: 3px dashed #dee2e6;
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.syl-slot-chip {
+  padding: 10px 16px; border-radius: 50px; font-family: 'Baloo 2', cursive;
+  font-size: 1rem; font-weight: 800; color: white; cursor: pointer;
+  animation: chipIn 0.2s ease; box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+}
+@keyframes chipIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+.slot-hint { color: #ccc; font-weight: 700; font-size: 0.9rem; }
+
+/* Progress */
+.prog-wrap { background: #f0f0f0; border-radius: 50px; height: 9px; margin-bottom: 12px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--gold), var(--red)); transition: width 0.5s; }
+.prog-label { font-size: 0.8rem; color: #aaa; font-weight: 700; text-align: right; margin-top: 3px; }
+
+/* Quiz */
+.quiz-q {
+  background: linear-gradient(135deg, #FFF8E7, #FFF0CC);
+  border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 16px;
+  border: 2px solid rgba(245,166,35,0.2);
+}
+.quiz-q .q-emoji { font-size: 3.5rem; display: block; margin-bottom: 8px; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.quiz-q p { font-family: 'Baloo 2', cursive; font-size: 1.2rem; font-weight: 800; color: var(--dark); }
+
+.quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quiz-opt {
+  padding: 15px 10px; border-radius: 16px; border: 2.5px solid #f0f0f0;
+  background: white; font-family: 'Baloo 2', cursive; font-size: 1.05rem;
+  font-weight: 700; color: #555; cursor: pointer; transition: all 0.18s; text-align: center;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.07);
+}
+.quiz-opt:hover { border-color: var(--gold); transform: translateY(-3px); }
+.quiz-opt.correct { background: #D5F5E3; color: #1a5c30; border-color: var(--green); box-shadow: 0 4px 0 #1a8a40; animation: cPop 0.4s ease; }
+.quiz-opt.wrong { background: #FDEDEC; color: #922b21; border-color: var(--red); animation: cShake 0.4s ease; }
+
+.feedback {
+  text-align: center; font-family: 'Baloo 2', cursive; font-size: 1.15rem; font-weight: 800;
+  padding: 12px; border-radius: 14px; display: none; margin-top: 12px;
+}
+.feedback.ok { display: block; background: #D5F5E3; color: #1a5c30; }
+.feedback.no { display: block; background: #FDEDEC; color: #922b21; }
+
+/* Buttons */
+.btn { padding: 12px 28px; border-radius: 50px; border: none; font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; cursor: pointer; color: white; transition: all 0.15s; }
+.btn-gold { background: var(--gold); color: white; box-shadow: 0 5px 0 #c87800; }
+.btn-green { background: var(--green); box-shadow: 0 5px 0 #1a8a40; }
+.btn-gray { background: #adb5bd; box-shadow: 0 5px 0 #868e96; font-size: 0.95rem; padding: 10px 20px; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(2px); box-shadow: none; }
+.btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+
+/* Passage */
+.passage-box {
+  background: linear-gradient(135deg, #F9F9F9, #F0F0F0);
+  border-radius: 18px; padding: 20px; font-size: 1.05rem;
+  line-height: 2; color: #444; font-weight: 700;
+  border: 1px solid #eee; margin-bottom: 14px;
+}
+.passage-box .ga-word {
+  color: #7a5800; font-weight: 900; font-family: 'Baloo 2', cursive;
+  background: #FFF8E7; padding: 2px 8px; border-radius: 8px;
+  cursor: pointer; transition: background 0.2s;
+}
+.passage-box .ga-word:hover { background: var(--gold); color: white; }
+
+/* Celebration */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 500; justify-content: center; align-items: center; }
+.overlay.show { display: flex; }
+.cel-box {
+  background: white; border-radius: 30px; padding: 36px 30px; text-align: center;
+  max-width: 300px; animation: zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.cel-box::before { content: ''; display: block; height: 10px; background: repeating-linear-gradient(90deg, var(--kente4) 0 12px, var(--kente1) 12px 24px, var(--kente2) 24px 36px, var(--kente3) 36px 48px); border-radius: 8px 8px 0 0; margin: -36px -30px 20px; }
+@keyframes zoomIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
+.cel-box .ce { font-size: 3.5rem; display: block; margin-bottom: 8px; }
+.cel-box h2 { font-family: 'Baloo 2', cursive; font-size: 2rem; color: var(--dark); margin-bottom: 8px; }
+.cel-box p { color: #777; font-size: 1rem; margin-bottom: 18px; }
+
+@media(max-width:460px) {
+  .match-wrap { grid-template-columns: 1fr; }
+  .quiz-opts { grid-template-columns: 1fr; }
+  .header h1 { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+<div class="kente-band"></div>
+
+<div class="app">
+  <div class="header">
+    <span class="flag">🇬🇭</span>
+    <h1>Ga Language — <span>Nikanemo!</span></h1>
+    <p>Term 3 · Let's learn Ga together!</p>
+    <div class="ga-intro">
+      📖 <strong>Nikanemo</strong> means <em>Reading</em> in Ga!<br>
+      <span style="font-size:0.9rem">In Ga, we break words into syllables called <strong>kakadi</strong></span>
+    </div>
+  </div>
+
+  <div class="stars-row" id="starsRow">
+    <span class="star" id="st1">⭐</span><span class="star" id="st2">⭐</span>
+    <span class="star" id="st3">⭐</span><span class="star" id="st4">⭐</span>
+    <span class="star" id="st5">⭐</span><span class="star" id="st6">⭐</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('vocab',this)">📖 Words</button>
+    <button class="tab" onclick="showTab('match',this)">🔗 Match</button>
+    <button class="tab" onclick="showTab('syllables',this)">🔤 Syllables</button>
+    <button class="tab" onclick="showTab('quiz',this)">🧠 Quiz</button>
+  </div>
+
+  <!-- ===== VOCABULARY ===== -->
+  <div class="panel active" id="tab-vocab">
+    <div class="card">
+      <div class="sec-title" style="color:var(--gold)">📖 Ga Words & Meanings</div>
+      <p style="color:#aaa;font-size:0.9rem;font-weight:700;margin-bottom:12px;">👆 Tap any word to hear a tip!</p>
+      <div class="vocab-grid" id="vocabGrid"></div>
+    </div>
+    <div class="card">
+      <div class="sec-title" style="color:var(--green)">📜 Reading Passage (Nikanemo)</div>
+      <div class="passage-box">
+        <span class="ga-word" onclick="showTip('Adɔkɔ','A person\'s name in Ga')">Adɔkɔ</span> ye <span class="ga-word" onclick="showTip('yɔɔ','beans')">yɔɔ</span> kɛ <span class="ga-word" onclick="showTip('wɔlɔ','egg')">wɔlɔ</span>.<br>
+        <span class="ga-word" onclick="showTip('Yɔɔ','beans')">Yɔɔ</span> kɛ <span class="ga-word" onclick="showTip('wɔlɔ','egg')">wɔlɔ</span> <span class="ga-word" onclick="showTip('ŋɔɔ','sweet/good')">ŋɔɔ</span> waa.<br>
+        <span class="ga-word" onclick="showTip('Adɔkɔ','A person\'s name')">Adɔkɔ</span> <span class="ga-word" onclick="showTip('wɔlɔ','egg')">wɔlɔ</span> kɛ eye <span class="ga-word" onclick="showTip('yɔɔ','beans')">yɔɔ</span><br>
+        kɛ <span class="ga-word" onclick="showTip('wɔlɔ','egg')">wɔlɔ</span>. <span class="ga-word" onclick="showTip('Ɔsɔfɔ','a title/elder')">Ɔsɔfɔ</span> he <span class="ga-word" onclick="showTip('bɔɔlɔ','ball')">bɔɔlɔ</span><br>
+        kɛ <span class="ga-word" onclick="showTip('lɔɔftɔlɔ','oven/fire place')">lɔɔftɔlɔ</span>. <span class="ga-word" onclick="showTip('kɔkɔ','porridge')">kɔkɔ</span> hɔɔ <span class="ga-word" onclick="showTip('dɔkɔɔ','a type of food')">dɔkɔɔ</span> kɛ<br>
+        <span class="ga-word" onclick="showTip('dɛkidɔkɔ','a special dish')">dɛkidɔkɔ</span>.
+      </div>
+      <p style="color:#aaa;font-size:0.85rem;font-weight:700;text-align:center">👆 Tap any highlighted word to learn its meaning!</p>
+    </div>
+  </div>
+
+  <!-- ===== MATCH ===== -->
+  <div class="panel" id="tab-match">
+    <div class="card">
+      <div class="sec-title" style="color:var(--green)">🔗 Match Ga to English!</div>
+      <p style="color:#aaa;font-size:0.9rem;font-weight:700;margin-bottom:14px;">Tap a Ga word, then tap its English meaning!</p>
+      <div class="match-wrap">
+        <div>
+          <div class="match-col-title">🇬🇭 Ga word</div>
+          <div id="matchGa" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+        <div>
+          <div class="match-col-title">🇬🇧 English</div>
+          <div id="matchEn" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+      <div class="match-dots" id="matchDots"></div>
+      <div class="feedback" id="matchFeedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== SYLLABLES ===== -->
+  <div class="panel" id="tab-syllables">
+    <div class="card">
+      <div class="sec-title" style="color:var(--blue)">🔤 Build the Ga Word!</div>
+      <p style="color:#aaa;font-size:0.9rem;font-weight:700;margin-bottom:14px;">Tap the syllables in the right order to spell the Ga word!</p>
+      <div class="prog-wrap"><div class="prog-fill" id="sylBar" style="width:0%"></div></div>
+      <div class="prog-label" id="sylLabel">Word 1 of 8</div>
+      <div class="syl-target">
+        <span class="target-en" id="sylTarget">Loading...</span>
+        <div class="target-hint" id="sylHint"></div>
+      </div>
+      <div class="syl-bank" id="sylBank"></div>
+      <div class="syl-slots" id="sylSlots"><span class="slot-hint">Tap syllables above 👆</span></div>
+      <div class="feedback" id="sylFeedback"></div>
+      <div class="btn-row">
+        <button class="btn btn-gray" onclick="resetSyl()">🔄 Clear</button>
+        <button class="btn btn-green" onclick="checkSyl()">✅ Check!</button>
+        <button class="btn btn-gold" id="sylNext" style="display:none" onclick="nextSyl()">Next ➡️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="panel" id="tab-quiz">
+    <div class="card">
+      <div class="sec-title" style="color:var(--purple)">🧠 Ga Language Quiz!</div>
+      <div class="prog-wrap"><div class="prog-fill" id="qBar" style="width:0%"></div></div>
+      <div class="prog-label" id="qLabel">Question 1 of 12</div>
+      <div class="quiz-q">
+        <span class="q-emoji" id="qEmoji">🇬🇭</span>
+        <p id="qText">Loading...</p>
+      </div>
+      <div class="quiz-opts" id="qOpts"></div>
+      <div class="feedback" id="qFeedback"></div>
+      <button class="btn btn-gold" id="qNext" style="display:none;margin:14px auto 0" onclick="nextQ()">Next ➡️</button>
+    </div>
+  </div>
+</div>
+
+<div class="kente-band kente-band-bot"></div>
+
+<!-- Celebration -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="ce" id="celEmoji">🎉</span>
+    <h2 id="celTitle">Oyiwala dɔŋŋ!</h2>
+    <p id="celMsg">Well done! You're learning Ga!</p>
+    <button class="btn btn-gold" style="width:100%" onclick="document.getElementById('overlay').classList.remove('show')">Keep Going! 🚀</button>
+  </div>
+</div>
+
+<script>
+// ---- Data from notebook ----
+const vocab = [
+  { ga:'gɔɔ',      syls:['gɔ','ɔ'],        en:'Cemetery',  emoji:'⚰️',  col:'#8E44AD' },
+  { ga:'hɔɔ',      syls:['hɔ','ɔ'],        en:'Saturday',  emoji:'📅',  col:'#2980B9' },
+  { ga:'jɔɔ',      syls:['jɔ','ɔ'],        en:'Descend / Bless', emoji:'🙏', col:'#27AE60' },
+  { ga:'mɔɔ',      syls:['mɔ','ɔ'],        en:'Castle',    emoji:'🏰',  col:'#E74C3C' },
+  { ga:'ŋɔɔ',      syls:['ŋɔ','ɔ'],        en:'Sweet',     emoji:'🍯',  col:'#F5A623' },
+  { ga:'sɔɔ',      syls:['sɔ','ɔ'],        en:'Fetch / Catch', emoji:'🤲', col:'#16A085' },
+  { ga:'yɔɔ',      syls:['yɔ','ɔ'],        en:'Beans',     emoji:'🫘',  col:'#8B4513' },
+  { ga:'fɔlɔɔ',    syls:['fɔ','lɔ','ɔ'],   en:'Stew',      emoji:'🍲',  col:'#C0392B' },
+  { ga:'bɔdɔɔ',    syls:['bɔ','dɔ','ɔ'],   en:'Soft',      emoji:'🧸',  col:'#9B59B6' },
+  { ga:'bɔɔlɔ',    syls:['bɔɔ','lɔ'],      en:'Ball',      emoji:'⚽',  col:'#2C3E50' },
+  { ga:'kɔɔyɔ',   syls:['kɔɔ','yɔ'],      en:'Wind',      emoji:'🌬️',  col:'#3498DB' },
+  { ga:'wɔlɔ',     syls:['wɔ','lɔ'],       en:'Egg',       emoji:'🥚',  col:'#F39C12' },
+];
+
+const sylColors = ['#F5A623','#27AE60','#E74C3C','#8E44AD','#2980B9','#16A085','#C0392B'];
+
+// ---- Stars ----
+let starCount = 0;
+function addStar() { if(starCount<6){ starCount++; document.getElementById('st'+starCount).classList.add('lit'); } }
+function celebrate(emoji,title,msg) {
+  document.getElementById('celEmoji').textContent=emoji;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+
+// ---- Tabs ----
+function showTab(id,btn) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='match') initMatch();
+  if(id==='syllables') initSyl();
+  if(id==='quiz') initQuiz();
+}
+
+// ---- Vocab tip ----
+function showTip(word, meaning) {
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#2C1810;color:#F5A623;padding:12px 22px;border-radius:50px;font-family:Baloo 2,cursive;font-size:1rem;z-index:999;box-shadow:0 6px 20px rgba(0,0,0,0.3);border:1px solid rgba(245,166,35,0.3);white-space:nowrap;font-weight:800';
+  tip.textContent = '🇬🇭 "' + word + '" = ' + meaning;
+  document.body.appendChild(tip);
+  setTimeout(()=>tip.remove(), 2500);
+}
+
+// ---- Build vocab cards ----
+(function buildVocab() {
+  const el = document.getElementById('vocabGrid');
+  vocab.forEach(v => {
+    const row = document.createElement('div');
+    row.className = 'vocab-row';
+    const sylHtml = v.syls.map((s,i) => `<span class="syl" style="background:${sylColors[i%sylColors.length]}">${s}</span>`).join('+');
+    row.innerHTML = `
+      <div class="vocab-emoji">${v.emoji}</div>
+      <div style="flex:1">
+        <div class="vocab-ga">${v.ga}</div>
+        <div class="syllable-box">${sylHtml}</div>
+      </div>
+      <div class="vocab-arrow">→</div>
+      <div class="vocab-en">${v.en}</div>`;
+    row.onclick = () => showTip(v.ga, v.en);
+    el.appendChild(row);
+  });
+})();
+
+// ---- MATCH GAME ----
+let matchSel = null, matchMatched = new Set(), matchSubset = [];
+function initMatch() {
+  matchSel = null; matchMatched = new Set();
+  matchSubset = [...vocab].sort(()=>Math.random()-0.5).slice(0,5);
+  const gaEl = document.getElementById('matchGa');
+  const enEl = document.getElementById('matchEnglish') || document.getElementById('matchEn');
+  gaEl.innerHTML = ''; enEl.innerHTML = '';
+  const enShuffle = [...matchSubset].sort(()=>Math.random()-0.5);
+  matchSubset.forEach((v,i) => {
+    const el = makeMatchEl(v.ga+' '+v.emoji, i, 'ga');
+    gaEl.appendChild(el);
+  });
+  enShuffle.forEach(v => {
+    const i = matchSubset.indexOf(v);
+    const el = makeMatchEl(v.en, i, 'en');
+    enEl.appendChild(el);
+  });
+  const dots = document.getElementById('matchDots');
+  dots.innerHTML = '';
+  for(let i=0;i<5;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' cur':'');d.id='md'+i;dots.appendChild(d);
+  }
+  document.getElementById('matchFeedback').className='feedback';
+}
+function makeMatchEl(text, idx, side) {
+  const el = document.createElement('div');
+  el.className = 'match-item match-'+(side==='ga'?'ga':'en');
+  el.textContent = text; el.dataset.idx = idx; el.dataset.side = side;
+  el.onclick = () => onMatch(el, idx, side);
+  return el;
+}
+function onMatch(el, idx, side) {
+  if(matchMatched.has(idx)) return;
+  const s = matchSel;
+  if(!s){ matchSel={el,idx,side}; el.classList.add('selected'); return; }
+  if(s.side===side){ s.el.classList.remove('selected'); matchSel={el,idx,side}; el.classList.add('selected'); return; }
+  s.el.classList.remove('selected');
+  if(s.idx===idx){
+    s.el.classList.add('correct'); el.classList.add('correct');
+    matchMatched.add(idx); matchSel=null;
+    const n=matchMatched.size-1;
+    document.getElementById('md'+n).className='dot done';
+    if(matchMatched.size<5){ const nx=document.getElementById('md'+matchMatched.size); if(nx)nx.className='dot cur'; }
+    if(matchMatched.size===5){ addStar(); setTimeout(()=>celebrate('🎊','Oyiwala!','You matched all the Ga words! Excellent!'),600); setTimeout(initMatch,3500); }
+  } else {
+    s.el.classList.add('wrong'); el.classList.add('wrong'); matchSel=null;
+    const fb=document.getElementById('matchFeedback');
+    fb.textContent='🤔 Try again! Look carefully at the words.'; fb.className='feedback no';
+    setTimeout(()=>{ s.el.classList.remove('wrong'); el.classList.remove('wrong'); fb.className='feedback'; },900);
+  }
+}
+
+// ---- SYLLABLE BUILDER ----
+let sylIdx=0, sylSlots=[], sylUsed=new Set();
+const sylWords = vocab.slice(0,8);
+function initSyl(){ sylIdx=0; loadSylWord(); }
+function loadSylWord(){
+  sylSlots=[]; sylUsed=new Set();
+  const w = sylWords[sylIdx];
+  document.getElementById('sylTarget').textContent = w.emoji+' '+w.en;
+  document.getElementById('sylHint').textContent = 'Build the Ga word: '+w.ga;
+  document.getElementById('sylBar').style.width=(sylIdx/sylWords.length*100)+'%';
+  document.getElementById('sylLabel').textContent=`Word ${sylIdx+1} of ${sylWords.length}`;
+  document.getElementById('sylFeedback').className='feedback';
+  document.getElementById('sylNext').style.display='none';
+  const bank=document.getElementById('sylBank');
+  bank.innerHTML='';
+  // Shuffled syllables + 1-2 distractors
+  const distractors = ['ba','ni','ko','le','ma'].sort(()=>Math.random()-0.5).slice(0,2);
+  const allSyls = [...w.syls, ...distractors].sort(()=>Math.random()-0.5);
+  allSyls.forEach((s,i)=>{
+    const chip=document.createElement('div');
+    chip.className='syl-chip';
+    chip.style.background=sylColors[i%sylColors.length];
+    chip.style.boxShadow=`0 4px 0 ${sylColors[i%sylColors.length]}aa`;
+    chip.textContent=s; chip.dataset.idx=i;
+    chip.onclick=()=>addSyl(chip,s,i);
+    bank.appendChild(chip);
+  });
+  renderSylSlots();
+}
+function addSyl(chip,s,i){ if(sylUsed.has(i))return; sylUsed.add(i); chip.classList.add('used'); sylSlots.push({s,i}); renderSylSlots(); document.getElementById('sylFeedback').className='feedback'; }
+function removeSyl(j){ const r=sylSlots.splice(j,1)[0]; sylUsed.delete(r.i); document.querySelectorAll('.syl-chip').forEach(c=>{if(parseInt(c.dataset.idx)===r.i)c.classList.remove('used');}); renderSylSlots(); }
+function renderSylSlots(){
+  const el=document.getElementById('sylSlots'); el.innerHTML='';
+  if(sylSlots.length===0){ el.innerHTML='<span class="slot-hint">Tap syllables above 👆</span>'; return; }
+  sylSlots.forEach((s,j)=>{
+    const pill=document.createElement('div'); pill.className='syl-slot-chip';
+    pill.style.background=sylColors[s.i%sylColors.length];
+    pill.textContent=s.s; pill.title='Tap to remove'; pill.onclick=()=>removeSyl(j);
+    el.appendChild(pill);
+  });
+}
+function checkSyl(){
+  const w=sylWords[sylIdx];
+  const built=sylSlots.map(s=>s.s).join('');
+  const fb=document.getElementById('sylFeedback');
+  if(built===w.ga){
+    fb.textContent='🌟 Correct! '+w.ga+' = '+w.en+'!'; fb.className='feedback ok';
+    addStar(); document.getElementById('sylNext').style.display='inline-block';
+    if(sylIdx===sylWords.length-1) setTimeout(()=>celebrate('🏆','Syllable Master!','You built all the Ga words! Amazing!'),600);
+  } else {
+    fb.textContent='🤔 Not quite! The syllables are: '+w.syls.join(' + '); fb.className='feedback no';
+  }
+}
+function resetSyl(){ sylSlots=[]; sylUsed=new Set(); document.querySelectorAll('.syl-chip').forEach(c=>c.classList.remove('used')); renderSylSlots(); document.getElementById('sylFeedback').className='feedback'; document.getElementById('sylNext').style.display='none'; }
+function nextSyl(){ sylIdx=(sylIdx+1)%sylWords.length; loadSylWord(); }
+
+// ---- QUIZ ----
+const quizQs = [
+  {emoji:'⚰️', q:'What does "gɔɔ" mean in English?', answer:'Cemetery', opts:['Ball','Cemetery','Saturday','Sweet']},
+  {emoji:'📅', q:'What does "hɔɔ" mean in English?', answer:'Saturday', opts:['Sunday','Monday','Saturday','Friday']},
+  {emoji:'🍯', q:'What does "ŋɔɔ" mean?', answer:'Sweet', opts:['Sour','Soft','Sweet','Salty']},
+  {emoji:'🫘', q:'What does "yɔɔ" mean?', answer:'Beans', opts:['Rice','Beans','Stew','Bread']},
+  {emoji:'🍲', q:'What is "stew" in Ga?', answer:'fɔlɔɔ', opts:['yɔɔ','gɔɔ','fɔlɔɔ','mɔɔ']},
+  {emoji:'⚽', q:'What is "ball" in Ga?', answer:'bɔɔlɔ', opts:['bɔdɔɔ','bɔɔlɔ','kɔɔyɔ','sɔɔ']},
+  {emoji:'🥚', q:'What does "wɔlɔ" mean?', answer:'Egg', opts:['Water','Egg','Beans','Stew']},
+  {emoji:'🏰', q:'What does "mɔɔ" mean?', answer:'Castle', opts:['Castle','Stew','Water','Beans']},
+  {emoji:'🧸', q:'What does "bɔdɔɔ" mean?', answer:'Soft', opts:['Hard','Soft','Big','Small']},
+  {emoji:'🌬️', q:'What does "kɔɔyɔ" mean?', answer:'Wind', opts:['Water','Fire','Wind','Earth']},
+  {emoji:'🤲', q:'What does "sɔɔ" mean?', answer:'Fetch / Catch', opts:['Throw','Fetch / Catch','Run','Jump']},
+  {emoji:'🙏', q:'What does "jɔɔ" mean?', answer:'Descend / Bless', opts:['Ascend','Descend / Bless','Dance','Sing']},
+].sort(()=>Math.random()-0.5).slice(0,12);
+let qIdx=0, qAnswered=false;
+function initQuiz(){ qIdx=0; loadQ(); }
+function loadQ(){
+  qAnswered=false;
+  const q=quizQs[qIdx];
+  document.getElementById('qEmoji').textContent=q.emoji;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qBar').style.width=(qIdx/quizQs.length*100)+'%';
+  document.getElementById('qLabel').textContent=`Question ${qIdx+1} of ${quizQs.length}`;
+  document.getElementById('qFeedback').className='feedback';
+  document.getElementById('qNext').style.display='none';
+  const opts=document.getElementById('qOpts'); opts.innerHTML='';
+  [...q.opts].sort(()=>Math.random()-0.5).forEach(o=>{
+    const b=document.createElement('button'); b.className='quiz-opt'; b.textContent=o;
+    b.onclick=()=>answerQ(b,o,q.answer); opts.appendChild(b);
+  });
+}
+function answerQ(btn,chosen,correct){
+  if(qAnswered)return; qAnswered=true;
+  const fb=document.getElementById('qFeedback');
+  if(chosen===correct){
+    btn.classList.add('correct'); fb.textContent='🌟 Oyiwala! Correct!'; fb.className='feedback ok';
+    addStar();
+    if(qIdx===quizQs.length-1) setTimeout(()=>celebrate('🎓','Quiz Complete!','Oyiwala dɔŋŋ! You know your Ga words!'),600);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    fb.textContent='🤔 The answer is: '+correct; fb.className='feedback no';
+  }
+  document.getElementById('qNext').style.display='block';
+}
+function nextQ(){ qIdx=(qIdx+1)%quizQs.length; loadQ(); }
+
+// Init
+initMatch(); initSyl(); initQuiz();
+</script>
+</body>
+</html>
