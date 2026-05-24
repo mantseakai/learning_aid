@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subtraction 2-Digit Numbers – Tikky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f3f0ff;
+      color: #333;
+      min-height: 100vh;
+      padding-top: 70px;
+      padding-bottom: 60px;
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: #7c4dff; color: #fff;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(124,77,255,0.4);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #4527a0; transform: translateX(-2px); }
+
+    /* ===== CHEER BANNER ===== */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #7c4dff, #b39ddb);
+      color: #fff;
+      text-align: center;
+      padding: 18px 24px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      border-radius: 20px;
+      margin: 0 auto 32px;
+      max-width: 720px;
+      box-shadow: 0 6px 24px rgba(124,77,255,0.35);
+      animation: popIn 0.5s ease;
+    }
+    .cheer-banner.visible { display: block; }
+
+    /* ===== LAYOUT ===== */
+    .page { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #7c4dff 0%, #b39ddb 100%);
+      border-radius: 28px;
+      padding: 40px 28px 36px;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 36px;
+      box-shadow: 0 8px 32px rgba(124,77,255,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 12px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    .hero-date {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border-radius: 50px;
+      padding: 6px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+    }
+    .minus-visual {
+      font-size: clamp(5rem, 18vw, 9rem);
+      line-height: 1;
+      animation: bounce 2s infinite;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+    }
+
+    /* ===== SECTION CARD ===== */
+    .section-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 28px 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 20px rgba(124,77,255,0.12);
+      border: 3px solid #e8e0ff;
+    }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: #7c4dff;
+      margin-bottom: 6px;
+    }
+    .section-sub {
+      color: #888;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .workbook-demo {
+      background: #faf8ff;
+      border: 2px solid #b39ddb;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .workbook-demo h4 {
+      font-family: 'Fredoka One', cursive;
+      color: #4527a0;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+    .col-layout {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .col-label-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .col-label {
+      width: 70px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .col-label.tens { color: #7c4dff; }
+    .col-label.ones { color: #ff6d00; }
+
+    .col-box {
+      width: 70px;
+      min-height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      flex-direction: column;
+    }
+    .col-box.tens { background: #7c4dff; }
+    .col-box.ones { background: #ff6d00; }
+    .col-box.answer { background: #2e7d32; font-size: 2rem; }
+    .col-box.answer.tens { background: #388e3c; }
+    .col-box.answer.ones { background: #43a047; }
+
+    .op-sign {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #7c4dff;
+      padding: 0 4px;
+      align-self: center;
+    }
+    .line-divider {
+      width: 160px;
+      height: 4px;
+      background: #4527a0;
+      margin: 8px auto;
+      border-radius: 2px;
+    }
+
+    .step-list {
+      text-align: left;
+      list-style: none;
+      margin-top: 12px;
+    }
+    .step-list li {
+      padding: 8px 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #444;
+      border-bottom: 1px dashed #e0d7ff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .step-num {
+      background: #7c4dff;
+      color: #fff;
+      border-radius: 50%;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* ===== EXAMPLE CARDS ===== */
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .example-card {
+      background: linear-gradient(135deg, #f3f0ff, #e8e0ff);
+      border: 2px solid #b39ddb;
+      border-radius: 16px;
+      padding: 16px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .example-card:hover { transform: scale(1.05); box-shadow: 0 6px 18px rgba(124,77,255,0.25); }
+    .example-card .eq {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: #4527a0;
+    }
+    .example-card .ans-reveal {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: #7c4dff;
+      min-height: 36px;
+      margin-top: 4px;
+      transition: opacity 0.3s;
+    }
+    .example-card .tap-hint {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    /* ===== ACTIVITIES SHARED ===== */
+    .activity-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .activity-badge {
+      background: #7c4dff;
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      padding: 6px 16px;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .activity-title-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #4527a0;
+    }
+
+    /* ===== STAR TRAIL ===== */
+    .star-trail {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .trail-star {
+      font-size: 1.8rem;
+      opacity: 0.25;
+      transition: all 0.4s;
+    }
+    .trail-star.lit {
+      opacity: 1;
+      animation: pop 0.4s ease;
+    }
+
+    /* ===== COLUMN SUM DISPLAY ===== */
+    .sum-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px auto 20px;
+    }
+    .sum-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sum-digit-box {
+      width: 64px; height: 64px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #fff;
+      border: 3px solid transparent;
+    }
+    .sum-digit-box.tens { background: #7c4dff; }
+    .sum-digit-box.ones { background: #ff6d00; }
+    .sum-digit-box.blank {
+      background: #fff;
+      border: 3px dashed #b39ddb;
+      color: #b39ddb;
+      font-size: 1.5rem;
+    }
+    .sum-op {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #7c4dff;
+      padding: 0 2px;
+    }
+    .sum-line {
+      width: 145px;
+      height: 4px;
+      background: #4527a0;
+      border-radius: 2px;
+      margin: 6px 0;
+    }
+    .answer-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .answer-display-box {
+      min-width: 120px;
+      padding: 10px 18px;
+      background: #f3f0ff;
+      border: 3px dashed #b39ddb;
+      border-radius: 16px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.4rem;
+      color: #7c4dff;
+      text-align: center;
+      letter-spacing: 6px;
+      min-height: 66px;
+    }
+
+    /* ===== NUMBER PAD ===== */
+    .numpad-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .numpad-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 52px);
+      gap: 8px;
+      justify-content: center;
+    }
+    .numpad-btn {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: #7c4dff;
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.1s;
+      box-shadow: 0 4px 0 #4527a0;
+    }
+    .numpad-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #4527a0; }
+    .numpad-btn.del { background: #b39ddb; box-shadow: 0 4px 0 #7c4dff; font-size: 1.2rem; }
+    .numpad-btn.del:active { transform: translateY(3px); }
+    .numpad-btn.check-btn {
+      background: #2e7d32;
+      box-shadow: 0 4px 0 #1b5e20;
+      font-size: 1.3rem;
+      width: auto;
+      padding: 0 18px;
+    }
+    .numpad-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    /* ===== QUIZ / PICK ANSWER ===== */
+    .quiz-question {
+      text-align: center;
+    }
+    .quiz-sum-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.4rem;
+      color: #4527a0;
+      margin-bottom: 20px;
+    }
+    .choice-grid {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .choice-btn {
+      width: 90px; height: 90px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #f3f0ff, #e8e0ff);
+      border: 3px solid #b39ddb;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #4527a0;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .choice-btn:hover { transform: scale(1.08); background: #e8e0ff; }
+    .choice-btn.correct-flash {
+      background: #4caf50; border-color: #2e7d32; color: #fff;
+      animation: popIn 0.4s ease;
+    }
+    .choice-btn.wrong-flash {
+      background: #ef5350; border-color: #b71c1c; color: #fff;
+      animation: shake 0.4s ease;
+    }
+
+    /* ===== TRUE / FALSE ===== */
+    .tf-list { display: flex; flex-direction: column; gap: 14px; }
+    .tf-item {
+      background: #faf8ff;
+      border: 2px solid #e0d7ff;
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .tf-statement {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #4527a0;
+    }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 3px solid;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tf-btn.true-btn { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .tf-btn.false-btn { background: #ffebee; border-color: #ef5350; color: #b71c1c; }
+    .tf-btn:hover { transform: scale(1.08); }
+    .tf-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .tf-btn.correct-pick { background: #4caf50; color: #fff; border-color: #2e7d32; animation: popIn 0.4s; }
+    .tf-btn.wrong-pick { background: #ef5350; color: #fff; border-color: #b71c1c; animation: shake 0.4s; }
+    .tf-result { font-size: 0.9rem; font-weight: 700; min-width: 40px; }
+
+    /* ===== COLUMN CHALLENGE ===== */
+    .col-challenge-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .col-challenge-item {
+      background: #faf8ff;
+      border: 2px solid #e0d7ff;
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .col-challenge-item h4 {
+      font-family: 'Fredoka One', cursive;
+      color: #7c4dff;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+    }
+    .col-challenge-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .col-sum-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .col-labels-row {
+      display: flex;
+      gap: 6px;
+    }
+    .col-mini-label {
+      width: 56px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .col-mini-label.t { color: #7c4dff; }
+    .col-mini-label.o { color: #ff6d00; }
+    .col-digit-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .col-digit {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+    .col-digit.t { background: #7c4dff; }
+    .col-digit.o { background: #ff6d00; }
+    .col-mini-op {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: #7c4dff;
+      padding: 0 2px;
+    }
+    .col-mini-line {
+      width: 118px;
+      height: 3px;
+      background: #4527a0;
+      border-radius: 2px;
+    }
+    .col-answer-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .col-answer-label {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #7c4dff;
+    }
+    .col-input-row {
+      display: flex;
+      gap: 6px;
+    }
+    .col-input-box {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      border: 3px dashed #b39ddb;
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #7c4dff;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .col-input-box.active { border-color: #7c4dff; background: #f3f0ff; }
+    .col-input-box.correct { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; }
+    .col-input-box.wrong { border-color: #ef5350; background: #ffebee; color: #b71c1c; animation: shake 0.4s; }
+    .col-check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .col-check-btn {
+      padding: 8px 18px;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #1b5e20;
+    }
+    .col-check-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #1b5e20; }
+    .col-feedback { font-size: 0.95rem; font-weight: 700; min-height: 22px; }
+    .col-mini-pad {
+      display: grid;
+      grid-template-columns: repeat(5, 44px);
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .col-mini-pad-btn {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: #7c4dff;
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #4527a0;
+    }
+    .col-mini-pad-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #4527a0; }
+    .col-mini-pad-btn.del { background: #b39ddb; box-shadow: 0 3px 0 #7c4dff; }
+    .which-box-hint {
+      font-size: 0.8rem;
+      color: #888;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* ===== DONE MESSAGE ===== */
+    .done-msg {
+      display: none;
+      text-align: center;
+      padding: 16px;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+      border: 2px solid #4caf50;
+      border-radius: 16px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #2e7d32;
+      margin-top: 16px;
+      animation: popIn 0.5s ease;
+    }
+    .done-msg.show { display: block; }
+
+    /* ===== FEEDBACK BAR ===== */
+    .feedback-bar {
+      min-height: 36px;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+    .feedback-bar.correct { color: #2e7d32; }
+    .feedback-bar.wrong { color: #b71c1c; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    @keyframes greenFlash {
+      0% { background: inherit; }
+      30% { background: #c8e6c9; }
+      100% { background: inherit; }
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      background: #e8e0ff;
+      border-radius: 50px;
+      height: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #7c4dff, #b39ddb);
+      border-radius: 50px;
+      transition: width 0.5s ease;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 500px) {
+      .choice-btn { width: 76px; height: 76px; font-size: 1.6rem; }
+      .numpad-grid { grid-template-columns: repeat(5, 46px); }
+      .numpad-btn { width: 46px; height: 46px; font-size: 1.3rem; }
+      .col-mini-pad { grid-template-columns: repeat(5, 40px); }
+      .col-mini-pad-btn { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div class="page">
+
+  <!-- CHEER BANNER -->
+  <div class="cheer-banner" id="cheerBanner">
+    Superstar, Tikky! You can subtract big numbers! 🔢⭐
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-title">Subtraction 2-Digit Numbers ➖</div>
+    <div class="hero-date">📅 11th May 2026</div>
+    <span class="minus-visual">➖</span>
+    <p style="font-size:1.05rem;font-weight:700;margin-top:12px;opacity:0.9;">
+      Taking away bigger numbers — you've got this, Tikky! 💪
+    </p>
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <div class="section-card">
+    <div class="section-title">🔍 How It Works</div>
+    <div class="section-sub">Split it into Tens and Ones!</div>
+
+    <div class="workbook-demo">
+      <h4>Example: 53 − 41 = ?</h4>
+
+      <div class="col-label-row">
+        <div class="col-label tens">Tens</div>
+        <div style="width:10px;"></div>
+        <div class="col-label ones">Ones</div>
+      </div>
+
+      <!-- 53 row -->
+      <div class="col-layout">
+        <div class="col-box tens">5</div>
+        <div style="width:10px;"></div>
+        <div class="col-box ones">3</div>
+      </div>
+
+      <!-- minus sign + 41 row -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;">
+        <span class="op-sign">−</span>
+        <div class="col-box tens">4</div>
+        <div style="width:10px;"></div>
+        <div class="col-box ones">1</div>
+      </div>
+
+      <div class="line-divider"></div>
+
+      <!-- answer row -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;">
+        <span style="width:40px;"></span>
+        <div class="col-box answer tens">1</div>
+        <div style="width:10px;"></div>
+        <div class="col-box answer ones">2</div>
+      </div>
+
+      <ul class="step-list" style="max-width:320px;margin:16px auto 0;">
+        <li><span class="step-num">1</span><span>Subtract the <b>Ones</b>: 3 − 1 = <b style="color:#ff6d00;">2</b></span></li>
+        <li><span class="step-num">2</span><span>Subtract the <b>Tens</b>: 5 − 4 = <b style="color:#7c4dff;">1</b></span></li>
+        <li><span class="step-num">3</span><span>Put them together: <b style="color:#2e7d32;">12</b> ✅</span></li>
+      </ul>
+    </div>
+
+    <!-- Notebook example cards -->
+    <p style="font-weight:800;color:#4527a0;margin-bottom:10px;">
+      📓 Your notebook examples — tap to reveal the answer!
+    </p>
+    <div class="example-grid">
+      <div class="example-card" onclick="revealAns(this,'12')">
+        <div class="eq">53 − 41</div>
+        <div class="ans-reveal" id="r0"></div>
+        <div class="tap-hint">Tap me!</div>
+      </div>
+      <div class="example-card" onclick="revealAns(this,'24')">
+        <div class="eq">96 − 72</div>
+        <div class="ans-reveal" id="r1"></div>
+        <div class="tap-hint">Tap me!</div>
+      </div>
+      <div class="example-card" onclick="revealAns(this,'32')">
+        <div class="eq">82 − 50</div>
+        <div class="ans-reveal" id="r2"></div>
+        <div class="tap-hint">Tap me!</div>
+      </div>
+      <div class="example-card" onclick="revealAns(this,'26')">
+        <div class="eq">37 − 11</div>
+        <div class="ans-reveal" id="r3"></div>
+        <div class="tap-hint">Tap me!</div>
+      </div>
+      <div class="example-card" onclick="revealAns(this,'43')">
+        <div class="eq">67 − 24</div>
+        <div class="ans-reveal" id="r4"></div>
+        <div class="tap-hint">Tap me!</div>
+      </div>
+      <div class="example-card" onclick="revealAns(this,'31')">
+        <div class="eq">73 − 42</div>
+        <div class="ans-reveal" id="r5"></div>
+        <div class="tap-hint">Tap me!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 1: TAP THE ANSWER ===== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <div class="activity-badge">Activity 1</div>
+      <div class="activity-title-text">🔢 Tap the Answer!</div>
+    </div>
+    <div class="section-sub">Type the answer using the number pad, then tap ✅</div>
+
+    <!-- Star trail -->
+    <div class="star-trail" id="a1Stars">
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+    </div>
+
+    <div id="a1QuestionWrap">
+      <!-- Question rendered by JS -->
+      <div class="sum-display" id="a1SumDisplay"></div>
+
+      <div class="numpad-wrap">
+        <div class="answer-display-box" id="a1AnswerBox">__</div>
+        <div class="numpad-grid">
+          <button class="numpad-btn" onclick="a1Tap('1')">1</button>
+          <button class="numpad-btn" onclick="a1Tap('2')">2</button>
+          <button class="numpad-btn" onclick="a1Tap('3')">3</button>
+          <button class="numpad-btn" onclick="a1Tap('4')">4</button>
+          <button class="numpad-btn" onclick="a1Tap('5')">5</button>
+          <button class="numpad-btn" onclick="a1Tap('6')">6</button>
+          <button class="numpad-btn" onclick="a1Tap('7')">7</button>
+          <button class="numpad-btn" onclick="a1Tap('8')">8</button>
+          <button class="numpad-btn" onclick="a1Tap('9')">9</button>
+          <button class="numpad-btn" onclick="a1Tap('0')">0</button>
+          <button class="numpad-btn del" onclick="a1Del()">⌫</button>
+        </div>
+        <div class="numpad-row">
+          <button class="numpad-btn check-btn" onclick="a1Check()">✅ Check</button>
+        </div>
+      </div>
+      <div class="feedback-bar" id="a1Feedback"></div>
+    </div>
+    <div class="done-msg" id="a1Done">🎉 Amazing! All 6 done! You're a star! ⭐⭐⭐</div>
+  </div>
+
+  <!-- ===== ACTIVITY 2: PICK THE RIGHT ANSWER ===== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <div class="activity-badge">Activity 2</div>
+      <div class="activity-title-text">🎯 Pick the Right Answer!</div>
+    </div>
+    <div class="section-sub">Tap the correct answer from the three choices</div>
+
+    <!-- Progress bar -->
+    <div class="progress-wrap">
+      <div class="progress-fill" id="a2Progress" style="width:0%"></div>
+    </div>
+
+    <div id="a2QuestionWrap">
+      <div class="quiz-question">
+        <div class="quiz-sum-text" id="a2SumText"></div>
+        <div class="choice-grid" id="a2Choices"></div>
+        <div class="feedback-bar" id="a2Feedback"></div>
+      </div>
+    </div>
+    <div class="done-msg" id="a2Done">🏆 Brilliant! All 8 questions correct! You're amazing! 🌟</div>
+  </div>
+
+  <!-- ===== ACTIVITY 3: FILL IN THE ANSWER ===== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <div class="activity-badge">Activity 3</div>
+      <div class="activity-title-text">✏️ Fill in the Answer!</div>
+    </div>
+    <div class="section-sub">Work out the answer and tap the digits!</div>
+
+    <div class="star-trail" id="a3Stars">
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+      <span class="trail-star">⭐</span>
+    </div>
+
+    <div id="a3QuestionWrap">
+      <div class="sum-display" id="a3SumDisplay"></div>
+      <div class="numpad-wrap">
+        <div class="answer-display-box" id="a3AnswerBox">__</div>
+        <div class="numpad-grid">
+          <button class="numpad-btn" onclick="a3Tap('1')">1</button>
+          <button class="numpad-btn" onclick="a3Tap('2')">2</button>
+          <button class="numpad-btn" onclick="a3Tap('3')">3</button>
+          <button class="numpad-btn" onclick="a3Tap('4')">4</button>
+          <button class="numpad-btn" onclick="a3Tap('5')">5</button>
+          <button class="numpad-btn" onclick="a3Tap('6')">6</button>
+          <button class="numpad-btn" onclick="a3Tap('7')">7</button>
+          <button class="numpad-btn" onclick="a3Tap('8')">8</button>
+          <button class="numpad-btn" onclick="a3Tap('9')">9</button>
+          <button class="numpad-btn" onclick="a3Tap('0')">0</button>
+          <button class="numpad-btn del" onclick="a3Del()">⌫</button>
+        </div>
+        <div class="numpad-row">
+          <button class="numpad-btn check-btn" onclick="a3Check()">✅ Check</button>
+        </div>
+      </div>
+      <div class="feedback-bar" id="a3Feedback"></div>
+    </div>
+    <div class="done-msg" id="a3Done">🎉 Fantastic! You filled them all in! Brilliant work! ✨</div>
+  </div>
+
+  <!-- ===== ACTIVITY 4: TRUE OR FALSE ===== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <div class="activity-badge">Activity 4</div>
+      <div class="activity-title-text">✅ True or False?</div>
+    </div>
+    <div class="section-sub">Is the maths sum correct? Tap TRUE or FALSE!</div>
+
+    <div class="tf-list" id="tfList">
+      <!-- Rendered by JS -->
+    </div>
+    <div class="done-msg" id="a4Done">🌟 Superb! You know your subtraction so well! 🔢</div>
+  </div>
+
+  <!-- ===== ACTIVITY 5: COLUMN CHALLENGE ===== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <div class="activity-badge">Activity 5</div>
+      <div class="activity-title-text">📐 Column Subtraction Challenge!</div>
+    </div>
+    <div class="section-sub">Fill in the Tens answer AND the Ones answer!</div>
+
+    <div class="col-challenge-grid" id="colChallengeGrid">
+      <!-- Rendered by JS -->
+    </div>
+    <div class="done-msg" id="a5Done">🏆 WOW! You completed the Column Challenge! You're a Maths Superstar! 🌟🔢</div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+/* ============================================================
+   GLOBAL STATE
+   ============================================================ */
+let cheerCount = 0;
+
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const banner = document.getElementById('cheerBanner');
+    banner.classList.add('visible');
+    banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+/* ============================================================
+   HOW IT WORKS — reveal answers
+   ============================================================ */
+function revealAns(card, ans) {
+  const box = card.querySelector('.ans-reveal');
+  const hint = card.querySelector('.tap-hint');
+  if (box.textContent === '') {
+    box.textContent = '= ' + ans;
+    box.style.animation = 'none';
+    void box.offsetWidth;
+    box.style.animation = 'popIn 0.4s ease';
+    if (hint) hint.textContent = 'Great! 🎉';
+  }
+}
+
+/* ============================================================
+   HELPER — build column sum display HTML
+   ============================================================ */
+function buildSumHTML(a, b) {
+  const aT = Math.floor(a / 10), aO = a % 10;
+  const bT = Math.floor(b / 10), bO = b % 10;
+  return `
+    <div class="sum-row">
+      <div class="sum-digit-box tens">${aT}</div>
+      <div class="sum-digit-box ones">${aO}</div>
+    </div>
+    <div class="sum-row" style="margin-top:4px;">
+      <span class="sum-op">−</span>
+      <div class="sum-digit-box tens">${bT}</div>
+      <div class="sum-digit-box ones">${bO}</div>
+    </div>
+    <div class="sum-line"></div>
+  `;
+}
+
+/* ============================================================
+   ACTIVITY 1 — Tap the Answer (number pad, column format)
+   ============================================================ */
+const a1Questions = [
+  {a:53,b:41,ans:'12'},
+  {a:96,b:72,ans:'24'},
+  {a:82,b:50,ans:'32'},
+  {a:37,b:11,ans:'26'},
+  {a:67,b:24,ans:'43'},
+  {a:73,b:42,ans:'31'},
+];
+let a1Current = 0;
+let a1Input = '';
+let a1Correct = 0;
+
+function a1Render() {
+  const q = a1Questions[a1Current];
+  document.getElementById('a1SumDisplay').innerHTML = buildSumHTML(q.a, q.b);
+  a1Input = '';
+  document.getElementById('a1AnswerBox').textContent = '__';
+  document.getElementById('a1Feedback').textContent = '';
+  document.getElementById('a1Feedback').className = 'feedback-bar';
+}
+
+function a1Tap(d) {
+  if (a1Input.length >= 2) return;
+  a1Input += d;
+  document.getElementById('a1AnswerBox').textContent = a1Input.padEnd(2, '_').split('').join(' ');
+  if (a1Input.length === 0) document.getElementById('a1AnswerBox').textContent = '__';
+}
+
+function a1Del() {
+  a1Input = a1Input.slice(0, -1);
+  const box = document.getElementById('a1AnswerBox');
+  if (a1Input.length === 0) { box.textContent = '__'; return; }
+  box.textContent = a1Input.padEnd(2, '_').split('').join(' ');
+}
+
+function a1Check() {
+  if (a1Input.length === 0) return;
+  const q = a1Questions[a1Current];
+  const fb = document.getElementById('a1Feedback');
+  const box = document.getElementById('a1AnswerBox');
+  if (a1Input === q.ans) {
+    fb.textContent = '✅ Correct! Well done! 🎉';
+    fb.className = 'feedback-bar correct';
+    box.style.animation = 'none'; void box.offsetWidth;
+    box.style.animation = 'popIn 0.4s ease';
+    // light star
+    const stars = document.querySelectorAll('#a1Stars .trail-star');
+    if (a1Correct < 6) { stars[a1Correct].classList.add('lit'); }
+    a1Correct++;
+    a1Current++;
+    if (a1Current >= a1Questions.length) {
+      setTimeout(() => {
+        document.getElementById('a1QuestionWrap').style.display = 'none';
+        document.getElementById('a1Done').classList.add('show');
+        addCheer();
+      }, 800);
+    } else {
+      setTimeout(a1Render, 700);
+    }
+  } else {
+    fb.textContent = '❌ Try again! Check the ones and tens!';
+    fb.className = 'feedback-bar wrong';
+    box.style.animation = 'none'; void box.offsetWidth;
+    box.style.animation = 'shake 0.4s ease';
+    a1Input = '';
+    setTimeout(() => { box.textContent = '__'; }, 400);
+  }
+}
+
+a1Render();
+
+/* ============================================================
+   ACTIVITY 2 — Pick the Right Answer (3-choice quiz)
+   ============================================================ */
+const a2Questions = [
+  {sum:'53 − 41 = ?', choices:[14,12,22], correct:12},
+  {sum:'96 − 72 = ?', choices:[24,34,14], correct:24},
+  {sum:'82 − 50 = ?', choices:[22,42,32], correct:32},
+  {sum:'37 − 11 = ?', choices:[16,26,36], correct:26},
+  {sum:'67 − 24 = ?', choices:[33,43,53], correct:43},
+  {sum:'73 − 42 = ?', choices:[31,21,41], correct:31},
+  {sum:'85 − 43 = ?', choices:[42,52,32], correct:42},
+  {sum:'79 − 35 = ?', choices:[34,54,44], correct:44},
+];
+let a2Current = 0;
+let a2Locked = false;
+
+function a2Render() {
+  const q = a2Questions[a2Current];
+  document.getElementById('a2SumText').textContent = q.sum;
+  const choiceWrap = document.getElementById('a2Choices');
+  choiceWrap.innerHTML = '';
+  q.choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.onclick = () => a2Pick(btn, c, q.correct);
+    choiceWrap.appendChild(btn);
+  });
+  document.getElementById('a2Feedback').textContent = '';
+  document.getElementById('a2Feedback').className = 'feedback-bar';
+  document.getElementById('a2Progress').style.width = ((a2Current / a2Questions.length) * 100) + '%';
+  a2Locked = false;
+}
+
+function a2Pick(el, val, correct) {
+  if (a2Locked) return;
+  a2Locked = true;
+  const fb = document.getElementById('a2Feedback');
+  if (val === correct) {
+    el.classList.add('correct-flash');
+    fb.textContent = '✅ Yes! ' + correct + ' is right! 🎉';
+    fb.className = 'feedback-bar correct';
+    a2Current++;
+    if (a2Current >= a2Questions.length) {
+      document.getElementById('a2Progress').style.width = '100%';
+      setTimeout(() => {
+        document.getElementById('a2QuestionWrap').style.display = 'none';
+        document.getElementById('a2Done').classList.add('show');
+        addCheer();
+      }, 900);
+    } else {
+      setTimeout(a2Render, 900);
+    }
+  } else {
+    el.classList.add('wrong-flash');
+    fb.textContent = '❌ Not quite — try again!';
+    fb.className = 'feedback-bar wrong';
+    setTimeout(() => {
+      el.classList.remove('wrong-flash');
+      a2Locked = false;
+    }, 600);
+  }
+}
+
+a2Render();
+
+/* ============================================================
+   ACTIVITY 3 — Fill in the Answer
+   ============================================================ */
+const a3Questions = [
+  {a:45,b:23,ans:'22'},
+  {a:68,b:45,ans:'23'},
+  {a:77,b:34,ans:'43'},
+  {a:89,b:56,ans:'33'},
+  {a:56,b:32,ans:'24'},
+  {a:98,b:61,ans:'37'},
+];
+let a3Current = 0;
+let a3Input = '';
+let a3Correct = 0;
+
+function a3Render() {
+  const q = a3Questions[a3Current];
+  document.getElementById('a3SumDisplay').innerHTML = buildSumHTML(q.a, q.b);
+  a3Input = '';
+  document.getElementById('a3AnswerBox').textContent = '__';
+  document.getElementById('a3Feedback').textContent = '';
+  document.getElementById('a3Feedback').className = 'feedback-bar';
+}
+
+function a3Tap(d) {
+  if (a3Input.length >= 2) return;
+  a3Input += d;
+  const box = document.getElementById('a3AnswerBox');
+  box.textContent = a3Input.padEnd(2, '_').split('').join(' ');
+}
+
+function a3Del() {
+  a3Input = a3Input.slice(0, -1);
+  const box = document.getElementById('a3AnswerBox');
+  if (a3Input.length === 0) { box.textContent = '__'; return; }
+  box.textContent = a3Input.padEnd(2, '_').split('').join(' ');
+}
+
+function a3Check() {
+  if (a3Input.length === 0) return;
+  const q = a3Questions[a3Current];
+  const fb = document.getElementById('a3Feedback');
+  const box = document.getElementById('a3AnswerBox');
+  if (a3Input === q.ans) {
+    fb.textContent = '✅ Correct! Great work! 🌟';
+    fb.className = 'feedback-bar correct';
+    box.style.animation = 'none'; void box.offsetWidth;
+    box.style.animation = 'popIn 0.4s ease';
+    const stars = document.querySelectorAll('#a3Stars .trail-star');
+    if (a3Correct < 6) { stars[a3Correct].classList.add('lit'); }
+    a3Correct++;
+    a3Current++;
+    if (a3Current >= a3Questions.length) {
+      setTimeout(() => {
+        document.getElementById('a3QuestionWrap').style.display = 'none';
+        document.getElementById('a3Done').classList.add('show');
+        addCheer();
+      }, 800);
+    } else {
+      setTimeout(a3Render, 700);
+    }
+  } else {
+    fb.textContent = '❌ Try again! Think carefully!';
+    fb.className = 'feedback-bar wrong';
+    box.style.animation = 'none'; void box.offsetWidth;
+    box.style.animation = 'shake 0.4s ease';
+    a3Input = '';
+    setTimeout(() => { box.textContent = '__'; }, 400);
+  }
+}
+
+a3Render();
+
+/* ============================================================
+   ACTIVITY 4 — True or False
+   ============================================================ */
+const tfItems = [
+  {stmt:'53 − 41 = 12', correct:true},
+  {stmt:'96 − 72 = 34', correct:false, hint:'It\'s 24!'},
+  {stmt:'82 − 50 = 32', correct:true},
+  {stmt:'37 − 11 = 16', correct:false, hint:'It\'s 26!'},
+  {stmt:'67 − 24 = 43', correct:true},
+  {stmt:'73 − 42 = 41', correct:false, hint:'It\'s 31!'},
+];
+let tfDone = 0;
+
+function buildTF() {
+  const list = document.getElementById('tfList');
+  tfItems.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.id = 'tfItem' + i;
+    div.innerHTML = `
+      <div class="tf-statement">${item.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn" id="tfT${i}" onclick="pickTF(${i}, true)">TRUE ✅</button>
+        <button class="tf-btn false-btn" id="tfF${i}" onclick="pickTF(${i}, false)">FALSE ❌</button>
+      </div>
+      <div class="tf-result" id="tfRes${i}"></div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function pickTF(i, picked) {
+  const item = tfItems[i];
+  const tBtn = document.getElementById('tfT' + i);
+  const fBtn = document.getElementById('tfF' + i);
+  const res = document.getElementById('tfRes' + i);
+  tBtn.disabled = true;
+  fBtn.disabled = true;
+  if (picked === item.correct) {
+    const clickedBtn = picked ? tBtn : fBtn;
+    clickedBtn.classList.add('correct-pick');
+    res.textContent = '✅';
+    res.style.color = '#2e7d32';
+  } else {
+    const clickedBtn = picked ? tBtn : fBtn;
+    clickedBtn.classList.add('wrong-pick');
+    res.textContent = '❌ ' + (item.hint || '');
+    res.style.color = '#b71c1c';
+    // show correct
+    const correctBtn = item.correct ? tBtn : fBtn;
+    setTimeout(() => { correctBtn.classList.add('correct-pick'); }, 500);
+  }
+  tfDone++;
+  if (tfDone >= tfItems.length) {
+    setTimeout(() => {
+      document.getElementById('a4Done').classList.add('show');
+      addCheer();
+    }, 800);
+  }
+}
+
+buildTF();
+
+/* ============================================================
+   ACTIVITY 5 — Column Subtraction Challenge
+   ============================================================ */
+const colProblems = [
+  {a:64,b:32,tens:3,ones:2},
+  {a:75,b:41,tens:3,ones:4},
+  {a:88,b:55,tens:3,ones:3},
+  {a:47,b:23,tens:2,ones:4},
+  {a:86,b:52,tens:3,ones:4},
+  {a:74,b:31,tens:4,ones:3},
+];
+
+// State per problem: {tensInput, onesInput, active:'tens'|'ones', done}
+const colState = colProblems.map(() => ({
+  tensInput: '', onesInput: '', active: 'tens', done: false
+}));
+let colAllDone = 0;
+
+function buildColChallenge() {
+  const grid = document.getElementById('colChallengeGrid');
+  colProblems.forEach((p, i) => {
+    const aT = Math.floor(p.a/10), aO = p.a%10;
+    const bT = Math.floor(p.b/10), bO = p.b%10;
+    const div = document.createElement('div');
+    div.className = 'col-challenge-item';
+    div.id = 'colItem' + i;
+    div.innerHTML = `
+      <h4>Problem ${i+1}: ${p.a} − ${p.b} = ?</h4>
+      <div class="col-challenge-inner">
+        <!-- Sum block -->
+        <div class="col-sum-block">
+          <div class="col-labels-row">
+            <div class="col-mini-label t">Tens</div>
+            <div class="col-mini-label o">Ones</div>
+          </div>
+          <div class="col-digit-row">
+            <div class="col-digit t">${aT}</div>
+            <div class="col-digit o">${aO}</div>
+          </div>
+          <div class="col-digit-row" style="margin-top:4px;">
+            <span class="col-mini-op">−</span>
+            <div class="col-digit t">${bT}</div>
+            <div class="col-digit o">${bO}</div>
+          </div>
+          <div class="col-mini-line" style="margin-top:6px;"></div>
+        </div>
+
+        <!-- Answer block -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
+          <div style="font-weight:800;font-size:0.85rem;color:#7c4dff;">Your Answer:</div>
+          <div class="col-input-row">
+            <div class="col-input-box" id="colT${i}" onclick="setColActive(${i},'tens')" title="Tens digit">_</div>
+            <div class="col-input-box" id="colO${i}" onclick="setColActive(${i},'ones')" title="Ones digit">_</div>
+          </div>
+          <div class="which-box-hint" id="colHint${i}">👆 Tens box is selected</div>
+          <div class="col-check-row">
+            <button class="col-check-btn" onclick="checkCol(${i})">✅ Check</button>
+            <div class="col-feedback" id="colFb${i}"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini numpad for this problem -->
+      <div class="col-mini-pad" id="colPad${i}">
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'1')">1</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'2')">2</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'3')">3</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'4')">4</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'5')">5</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'6')">6</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'7')">7</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'8')">8</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'9')">9</button>
+        <button class="col-mini-pad-btn" onclick="colTap(${i},'0')">0</button>
+        <button class="col-mini-pad-btn del" onclick="colDel(${i})">⌫</button>
+      </div>
+    `;
+    grid.appendChild(div);
+    // Set initial active highlight
+    updateColBoxHighlight(i);
+  });
+}
+
+function setColActive(i, which) {
+  if (colState[i].done) return;
+  colState[i].active = which;
+  updateColBoxHighlight(i);
+}
+
+function updateColBoxHighlight(i) {
+  const tBox = document.getElementById('colT'+i);
+  const oBox = document.getElementById('colO'+i);
+  const hint = document.getElementById('colHint'+i);
+  if (!tBox) return;
+  tBox.classList.toggle('active', colState[i].active === 'tens');
+  oBox.classList.toggle('active', colState[i].active === 'ones');
+  hint.textContent = colState[i].active === 'tens'
+    ? '👆 Tens box selected (purple)'
+    : '👆 Ones box selected (orange)';
+}
+
+function colTap(i, d) {
+  if (colState[i].done) return;
+  const s = colState[i];
+  if (s.active === 'tens') {
+    s.tensInput = d; // single digit
+    document.getElementById('colT'+i).textContent = d;
+    // Auto-switch to ones
+    s.active = 'ones';
+    updateColBoxHighlight(i);
+  } else {
+    s.onesInput = d;
+    document.getElementById('colO'+i).textContent = d;
+  }
+}
+
+function colDel(i) {
+  if (colState[i].done) return;
+  const s = colState[i];
+  if (s.active === 'ones' && s.onesInput !== '') {
+    s.onesInput = '';
+    document.getElementById('colO'+i).textContent = '_';
+  } else if (s.tensInput !== '') {
+    s.tensInput = '';
+    document.getElementById('colT'+i).textContent = '_';
+    s.active = 'tens';
+    updateColBoxHighlight(i);
+  }
+}
+
+function checkCol(i) {
+  const s = colState[i];
+  const p = colProblems[i];
+  const fb = document.getElementById('colFb'+i);
+  const tBox = document.getElementById('colT'+i);
+  const oBox = document.getElementById('colO'+i);
+
+  if (s.tensInput === '' || s.onesInput === '') {
+    fb.textContent = '⬆️ Fill both boxes first!';
+    fb.style.color = '#888';
+    return;
+  }
+
+  const tensOk = parseInt(s.tensInput) === p.tens;
+  const onesOk = parseInt(s.onesInput) === p.ones;
+
+  // Reset classes
+  tBox.classList.remove('correct','wrong');
+  oBox.classList.remove('correct','wrong');
+
+  if (tensOk && onesOk) {
+    tBox.classList.add('correct');
+    oBox.classList.add('correct');
+    fb.textContent = '✅ Perfect! ' + p.a + ' − ' + p.b + ' = ' + (p.tens*10+p.ones) + ' 🎉';
+    fb.style.color = '#2e7d32';
+    s.done = true;
+    // Disable pad buttons
+    const pad = document.getElementById('colPad'+i);
+    pad.querySelectorAll('button').forEach(b => b.disabled = true);
+    tBox.classList.remove('active');
+    oBox.classList.remove('active');
+    document.getElementById('colHint'+i).textContent = '✅ Done!';
+    colAllDone++;
+    if (colAllDone >= colProblems.length) {
+      setTimeout(() => {
+        document.getElementById('a5Done').classList.add('show');
+        addCheer();
+      }, 800);
+    }
+  } else {
+    if (!tensOk) {
+      tBox.classList.add('wrong');
+      tBox.style.animation='none'; void tBox.offsetWidth;
+      tBox.style.animation='shake 0.4s ease';
+    }
+    if (!onesOk) {
+      oBox.classList.add('wrong');
+      oBox.style.animation='none'; void oBox.offsetWidth;
+      oBox.style.animation='shake 0.4s ease';
+    }
+    fb.textContent = '❌ Not quite! Try again!';
+    fb.style.color = '#b71c1c';
+    // Clear wrong boxes
+    if (!tensOk) { s.tensInput = ''; tBox.textContent = '_'; tBox.classList.remove('wrong'); }
+    if (!onesOk) { s.onesInput = ''; oBox.textContent = '_'; oBox.classList.remove('wrong'); }
+    s.active = tensOk ? 'ones' : 'tens';
+    setTimeout(() => updateColBoxHighlight(i), 450);
+  }
+}
+
+buildColChallenge();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇫🇷 Le ou La?</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & ROOT ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:    #1565c0;
+  --blue-lt: #1e88e5;
+  --blue-bg: #e3f2fd;
+  --red:     #c62828;
+  --red-lt:  #e53935;
+  --red-bg:  #ffebee;
+  --white:   #ffffff;
+  --cream:   #fafafa;
+  --green:   #2e7d32;
+  --green-lt:#43a047;
+  --gold:    #f9a825;
+  --shadow:  rgba(0,0,0,0.15);
+  --radius:  18px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  40%     { transform: translateY(-12px); }
+  60%     { transform: translateY(-6px); }
+}
+@keyframes popIn {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px); }
+  40%     { transform: translateX(8px); }
+  60%     { transform: translateX(-5px); }
+  80%     { transform: translateX(5px); }
+}
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideRight {
+  0%   { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(200px); opacity: 0; }
+}
+@keyframes waveFlag {
+  0%,100% { transform: rotate(-6deg); }
+  50%     { transform: rotate(6deg); }
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(249,168,37,0.6); }
+  50%     { box-shadow: 0 0 0 12px rgba(249,168,37,0); }
+}
+@keyframes flipCard {
+  0%   { transform: rotateY(0deg); }
+  50%  { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+/* ===== BACK BUTTON ===== */
+.back-home-btn {
+  position: fixed; top: 16px; left: 16px; z-index: 999;
+  background: var(--white); color: var(--blue);
+  border: 3px solid var(--blue); border-radius: 50px;
+  padding: 8px 18px; font-family: 'Fredoka One', cursive;
+  font-size: 1rem; text-decoration: none;
+  box-shadow: 0 3px 10px var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.back-home-btn:hover { transform: scale(1.05); box-shadow: 0 5px 16px var(--shadow); }
+
+/* ===== BODY ===== */
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(160deg, #0d2b7a 0%, #1565c0 45%, #7b1820 100%);
+  min-height: 100vh; overflow-x: hidden;
+}
+
+/* Flag bar */
+.flag-bar {
+  height: 10px;
+  background: linear-gradient(90deg, var(--blue) 33.3%, var(--white) 33.3%, var(--white) 66.6%, var(--red) 66.6%);
+  position: sticky; top: 0; z-index: 100;
+}
+
+/* ===== MAIN WRAPPER ===== */
+.app { max-width: 720px; margin: 0 auto; padding: 16px 14px 100px; position: relative; }
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center; padding: 50px 20px 36px;
+  animation: fadeIn 0.6s ease;
+}
+.hero-flag {
+  font-size: 3.5rem; display: inline-block;
+  animation: waveFlag 2s ease-in-out infinite;
+}
+.hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  color: var(--white); text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+  margin: 10px 0 6px;
+}
+.hero .subtitle {
+  font-size: 1.2rem; color: rgba(255,255,255,0.88);
+  font-weight: 700; margin-bottom: 28px;
+}
+.article-badges {
+  display: flex; justify-content: center; gap: 20px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem; padding: 16px 40px;
+  border-radius: 20px; color: var(--white);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  animation: bounce 2.2s ease-in-out infinite;
+  letter-spacing: 2px;
+}
+.badge.le { background: var(--blue); animation-delay: 0s; }
+.badge.la { background: var(--red);  animation-delay: 0.4s; }
+
+/* ===== SECTION CARD ===== */
+.section {
+  background: var(--white); border-radius: 24px;
+  padding: 28px 20px; margin-top: 24px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+  animation: fadeIn 0.5s ease;
+}
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem; text-align: center; margin-bottom: 20px;
+  color: #222;
+}
+
+/* ===== VOCABULARY GALLERY ===== */
+.vocab-columns {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.vocab-col-head {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem; text-align: center;
+  margin-bottom: 10px; padding: 10px;
+  border-radius: 12px; color: var(--white);
+}
+.vocab-col-head.le-head { background: var(--blue); }
+.vocab-col-head.la-head { background: var(--red); }
+.vocab-col { display: flex; flex-direction: column; gap: 10px; }
+
+.vocab-card {
+  border-radius: 14px; padding: 12px 10px;
+  text-align: center; cursor: pointer;
+  transition: transform 0.15s;
+  border: 3px solid transparent;
+  min-height: 90px; display: flex;
+  flex-direction: column; justify-content: center;
+  user-select: none;
+}
+.vocab-card.le-card {
+  background: var(--blue-bg); border-color: var(--blue-lt);
+}
+.vocab-card.la-card {
+  background: var(--red-bg); border-color: var(--red-lt);
+}
+.vocab-card:hover { transform: scale(1.04); }
+.vocab-card.flipped { animation: flipCard 0.35s ease; }
+
+.card-front, .card-back { transition: all 0.2s; }
+.card-emoji  { font-size: 1.6rem; line-height: 1; }
+.card-article {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem; margin-top: 2px;
+}
+.card-article.le { color: var(--blue); }
+.card-article.la { color: var(--red); }
+.card-word {
+  font-size: 1.15rem; font-weight: 900; color: #1a1a1a;
+  margin: 1px 0;
+}
+.card-english {
+  font-size: 0.8rem; color: #555; font-weight: 600;
+  font-style: italic;
+}
+.card-back-text {
+  font-size: 1rem; font-weight: 800; color: #333;
+}
+
+/* ===== ACTIVITY HEADER ===== */
+.act-header {
+  background: linear-gradient(90deg, var(--blue) 33%, var(--white) 33%, var(--white) 66%, var(--red) 66%);
+  border-radius: 14px 14px 0 0; height: 8px; margin: -28px -20px 18px;
+  border-radius: 24px 24px 0 0;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap {
+  background: #e0e0e0; border-radius: 50px; height: 18px;
+  margin: 14px 0; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 50px;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+  transition: width 0.4s ease;
+}
+.progress-label {
+  text-align: center; font-weight: 800; font-size: 0.9rem; color: #555;
+}
+
+/* ===== ACTIVITY 1 - DRAG SORT ===== */
+.sort-word-display {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem; text-align: center; padding: 24px;
+  background: var(--cream); border-radius: 16px;
+  margin: 14px 0; color: #222; letter-spacing: 1px;
+  border: 3px dashed #ccc;
+  min-height: 90px; display: flex; align-items: center; justify-content: center;
+}
+.sort-word-display .word-emoji { font-size: 2rem; margin-right: 10px; }
+.sort-buttons { display: flex; gap: 18px; justify-content: center; margin-top: 16px; }
+.sort-btn {
+  font-family: 'Fredoka One', cursive; font-size: 2rem;
+  padding: 18px 48px; border-radius: 20px; border: none;
+  cursor: pointer; color: var(--white);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  transition: transform 0.12s, box-shadow 0.12s;
+  letter-spacing: 2px;
+}
+.sort-btn:hover { transform: scale(1.07); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+.sort-btn.le-btn { background: var(--blue); }
+.sort-btn.la-btn { background: var(--red); }
+
+.sort-correct-list {
+  margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px;
+  min-height: 40px;
+}
+.correct-chip {
+  font-weight: 800; font-size: 0.85rem; padding: 5px 12px;
+  border-radius: 50px; color: var(--white); animation: popIn 0.3s ease;
+}
+.correct-chip.le { background: var(--blue); }
+.correct-chip.la { background: var(--red); }
+
+/* ===== ACTIVITY 2 - QUIZ ===== */
+.quiz-question {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem; text-align: center;
+  margin: 10px 0 20px; color: #222;
+}
+.quiz-question span.blank {
+  display: inline-block; width: 70px; height: 10px;
+  background: #ccc; border-radius: 4px;
+  vertical-align: middle; margin-right: 6px;
+}
+.quiz-options { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.quiz-opt {
+  font-family: 'Fredoka One', cursive; font-size: 1.6rem;
+  padding: 14px 32px; border-radius: 16px; border: 3px solid #ddd;
+  cursor: pointer; background: var(--cream); color: #333;
+  transition: transform 0.12s, background 0.15s;
+}
+.quiz-opt:hover { background: #f0f0f0; transform: scale(1.05); }
+.quiz-opt.correct-opt { background: #c8e6c9; border-color: var(--green); color: var(--green); }
+.quiz-opt.wrong-opt   { background: #ffcdd2; border-color: var(--red); color: var(--red);
+  animation: shake 0.4s ease; }
+.quiz-progress {
+  font-weight: 800; text-align: center; color: #777;
+  margin-bottom: 10px; font-size: 0.95rem;
+}
+.quiz-done { display: none; text-align: center; padding: 20px 0; }
+.quiz-done.show { display: block; animation: popIn 0.4s ease; }
+
+/* ===== ACTIVITY 3 - MATCHING ===== */
+.match-area { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.match-col-head {
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  text-align: center; padding: 8px; border-radius: 10px;
+  color: var(--white); margin-bottom: 4px;
+}
+.match-col-head.fr { background: var(--blue); }
+.match-col-head.en { background: var(--red); }
+
+.match-col { display: flex; flex-direction: column; gap: 9px; }
+.match-item {
+  padding: 12px 10px; border-radius: 12px; text-align: center;
+  font-weight: 800; font-size: 1rem; cursor: pointer;
+  background: var(--cream); border: 3px solid #ddd;
+  transition: all 0.15s;
+}
+.match-item:hover:not(.matched) { background: #e8eaf6; border-color: #9fa8da; }
+.match-item.selected { border-color: var(--gold); background: #fff9c4; transform: scale(1.04); animation: pulse 1s infinite; }
+.match-item.matched  { background: #c8e6c9; border-color: var(--green); color: var(--green); cursor: default; }
+.match-item.shaking  { animation: shake 0.4s ease; }
+.match-item.fr-item  { color: var(--blue); }
+.match-item.en-item  { color: var(--red-lt); }
+
+/* ===== ACTIVITY 4 - VRAI / FAUX ===== */
+.vf-item {
+  background: var(--cream); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 12px;
+  border: 3px solid #e0e0e0;
+}
+.vf-statement {
+  font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: #222;
+}
+.vf-buttons { display: flex; gap: 12px; }
+.vf-btn {
+  font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+  padding: 10px 28px; border-radius: 12px; border: none;
+  cursor: pointer; color: var(--white); flex: 1;
+  transition: transform 0.12s;
+}
+.vf-btn:hover { transform: scale(1.04); }
+.vf-btn.vrai-btn { background: var(--green); }
+.vf-btn.faux-btn { background: var(--red); }
+.vf-btn.correct-ans { box-shadow: 0 0 0 4px var(--gold); }
+.vf-btn.wrong-ans   { animation: shake 0.4s ease; opacity: 0.6; }
+.vf-item.answered .vf-btn { cursor: default; }
+.vf-feedback {
+  margin-top: 8px; font-size: 0.88rem; font-weight: 800;
+  color: #555; display: none;
+}
+.vf-item.answered .vf-feedback { display: block; }
+
+/* ===== ACTIVITY 5 - FILL IN BLANK ===== */
+.word-bank {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center; padding: 16px;
+  background: #f5f5f5; border-radius: 16px; margin-bottom: 20px;
+}
+.bank-chip {
+  font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+  padding: 10px 26px; border-radius: 50px; color: var(--white);
+  cursor: pointer; transition: transform 0.12s, opacity 0.2s;
+  user-select: none;
+}
+.bank-chip.le-chip { background: var(--blue); }
+.bank-chip.la-chip { background: var(--red); }
+.bank-chip:hover:not(.used) { transform: scale(1.08); }
+.bank-chip.used { opacity: 0.4; cursor: default; transform: none; }
+
+.fill-sentence {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--cream); border-radius: 12px;
+  padding: 12px 16px; margin-bottom: 10px;
+  border: 3px solid #e0e0e0; flex-wrap: wrap;
+}
+.fill-blank {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 64px; height: 38px; border-radius: 10px;
+  border: 3px dashed #aaa; font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem; padding: 0 10px;
+  background: var(--white); cursor: pointer;
+  transition: all 0.15s;
+}
+.fill-blank:hover { border-color: var(--blue-lt); background: #e3f2fd; }
+.fill-blank.filled-le { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.fill-blank.filled-la { background: var(--red);  color: var(--white); border-color: var(--red); }
+.fill-blank.correct-fill { background: var(--green); color: var(--white); border-color: var(--green); }
+.fill-blank.wrong-fill   { animation: shake 0.4s ease; border-color: var(--red-lt); }
+.fill-rest  { font-size: 1.05rem; font-weight: 700; color: #333; }
+
+/* ===== CHEER BANNER ===== */
+.cheer-banner {
+  display: none; text-align: center; padding: 30px 20px;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+  border-radius: 24px; margin-top: 28px; color: var(--white);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.cheer-banner.show { display: block; animation: popIn 0.5s ease; }
+.cheer-banner h2 {
+  font-family: 'Fredoka One', cursive; font-size: 2.2rem;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+}
+.cheer-stars { font-size: 2.5rem; margin: 8px 0; animation: bounce 1.5s infinite; display: block; }
+
+/* ===== RESULT BADGE ===== */
+.result-badge {
+  display: none; text-align: center; padding: 20px;
+  background: #e8f5e9; border-radius: 16px; margin-top: 16px;
+  border: 3px solid var(--green);
+}
+.result-badge.show { display: block; animation: popIn 0.4s ease; }
+.result-badge p {
+  font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: var(--green);
+}
+
+/* ===== GENERAL UTILS ===== */
+.shake { animation: shake 0.4s ease !important; }
+.pop   { animation: pop   0.3s ease; }
+.hidden { display: none !important; }
+
+/* Star count top right */
+.star-counter {
+  position: fixed; top: 16px; right: 16px; z-index: 999;
+  background: var(--gold); color: #7a5200;
+  border-radius: 50px; padding: 8px 16px;
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+}
+
+/* Divider */
+.divider {
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue) 33%, var(--white) 33%, var(--white) 66%, var(--red) 66%);
+  border-radius: 4px; margin: 28px 0 0;
+}
+
+@media (max-width: 500px) {
+  .vocab-columns { grid-template-columns: 1fr 1fr; }
+  .vocab-card { padding: 8px 6px; }
+  .card-emoji { font-size: 1.2rem; }
+  .card-word  { font-size: 0.95rem; }
+  .sort-btn   { font-size: 1.5rem; padding: 14px 32px; }
+  .sort-word-display { font-size: 1.8rem; }
+  .match-area { gap: 8px; }
+  .match-item { font-size: 0.88rem; padding: 9px 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="flag-bar"></div>
+<a href="../index.html" class="back-home-btn">← Back</a>
+<div class="star-counter" id="starCounter">⭐ 0 / 5</div>
+
+<div class="app">
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <span class="hero-flag">🇫🇷</span>
+    <h1>Le ou La?</h1>
+    <p class="subtitle">20 French words to learn!</p>
+    <div class="article-badges">
+      <div class="badge le">LE</div>
+      <div class="badge la">LA</div>
+    </div>
+  </div>
+
+  <!-- ===== VOCABULARY GALLERY ===== -->
+  <div class="section">
+    <div class="act-header"></div>
+    <div class="section-title">📚 Vocabulary Gallery</div>
+    <p style="text-align:center;color:#777;font-size:0.9rem;margin-bottom:16px;font-weight:700;">Tap a card to flip it!</p>
+
+    <div class="vocab-columns">
+      <!-- LE column -->
+      <div>
+        <div class="vocab-col-head le-head">LE 💙</div>
+        <div class="vocab-col" id="leCol"></div>
+      </div>
+      <!-- LA column -->
+      <div>
+        <div class="vocab-col-head la-head">LA ❤️</div>
+        <div class="vocab-col" id="laCol"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 1 ===== -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="act-header"></div>
+    <div class="section-title">🎯 Activity 1 — Le ou La? Sort!</div>
+    <p style="text-align:center;color:#777;font-size:0.92rem;margin-bottom:14px;font-weight:700;">Tap LE or LA for each word!</p>
+
+    <div class="progress-wrap"><div class="progress-fill" id="sortProgress" style="width:0%"></div></div>
+    <div class="progress-label" id="sortLabel">0 / 20</div>
+
+    <div class="sort-word-display" id="sortDisplay">
+      <span class="word-emoji" id="sortEmoji"></span>
+      <span id="sortWord">Ready?</span>
+    </div>
+    <div class="sort-buttons">
+      <button class="sort-btn le-btn" onclick="sortAnswer('le')">LE</button>
+      <button class="sort-btn la-btn" onclick="sortAnswer('la')">LA</button>
+    </div>
+    <div class="sort-correct-list" id="sortCorrectList"></div>
+    <div class="result-badge" id="sortDone">
+      <p>Parfait! All 20 sorted! 🎉</p>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 2 ===== -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="act-header"></div>
+    <div class="section-title">✏️ Activity 2 — Pick the Article!</div>
+    <div class="quiz-progress" id="quizProgress">Question 1 / 10</div>
+    <div class="quiz-question" id="quizQ"></div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div class="quiz-done" id="quizDone">
+      <p style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--green)">Superbe! 10/10 🎉</p>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 3 ===== -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="act-header"></div>
+    <div class="section-title">🔗 Activity 3 — Match French to English!</div>
+    <p style="text-align:center;color:#777;font-size:0.92rem;margin-bottom:14px;font-weight:700;">Tap a French word, then tap its English match!</p>
+
+    <div class="match-area">
+      <div>
+        <div class="match-col-head fr">🇫🇷 French</div>
+        <div class="match-col" id="matchFrCol"></div>
+      </div>
+      <div>
+        <div class="match-col-head en">🇬🇧 English</div>
+        <div class="match-col" id="matchEnCol"></div>
+      </div>
+    </div>
+    <div class="result-badge" id="matchDone">
+      <p>All matched! Incroyable! 🎉</p>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 4 ===== -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="act-header"></div>
+    <div class="section-title">✅ Activity 4 — Vrai ou Faux?</div>
+    <p style="text-align:center;color:#777;font-size:0.92rem;margin-bottom:14px;font-weight:700;">Is it TRUE (Vrai) or FALSE (Faux)?</p>
+    <div id="vfList"></div>
+    <div class="result-badge" id="vfDone">
+      <p>Brillant! All correct! 🎉</p>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 5 ===== -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="act-header"></div>
+    <div class="section-title">🖊️ Activity 5 — Fill in the Blank!</div>
+    <p style="text-align:center;color:#777;font-size:0.92rem;margin-bottom:14px;font-weight:700;">Tap a [le] or [la] chip, then tap the blank!</p>
+
+    <div class="word-bank" id="wordBank">
+      <div class="bank-chip le-chip" data-val="le" onclick="selectChip(this)">le</div>
+      <div class="bank-chip le-chip" data-val="le" onclick="selectChip(this)">le</div>
+      <div class="bank-chip le-chip" data-val="le" onclick="selectChip(this)">le</div>
+      <div class="bank-chip le-chip" data-val="le" onclick="selectChip(this)">le</div>
+      <div class="bank-chip le-chip" data-val="le" onclick="selectChip(this)">le</div>
+      <div class="bank-chip la-chip" data-val="la" onclick="selectChip(this)">la</div>
+      <div class="bank-chip la-chip" data-val="la" onclick="selectChip(this)">la</div>
+      <div class="bank-chip la-chip" data-val="la" onclick="selectChip(this)">la</div>
+      <div class="bank-chip la-chip" data-val="la" onclick="selectChip(this)">la</div>
+      <div class="bank-chip la-chip" data-val="la" onclick="selectChip(this)">la</div>
+    </div>
+
+    <div id="fillSentences"></div>
+    <div class="result-badge" id="fillDone">
+      <p>Excellent! All blanks filled! 🎉</p>
+    </div>
+  </div>
+
+  <!-- ===== CHEER BANNER ===== -->
+  <div class="cheer-banner" id="cheerBanner">
+    <h2>Magnifique, Tikky!</h2>
+    <span class="cheer-stars">🇫🇷⭐🇫🇷⭐🇫🇷</span>
+    <p style="font-size:1.1rem;font-weight:700;margin-top:8px">Tu connais 20 mots! 🎉</p>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+/* ================================================================
+   DATA
+   ================================================================ */
+const leWords = [
+  { word:'stylo',   english:'pen',          emoji:'🖊️'  },
+  { word:'tam-tam', english:'drum',         emoji:'🥁'  },
+  { word:'vélo',    english:'bicycle',      emoji:'🚲'  },
+  { word:'garçon',  english:'boy',          emoji:'👦'  },
+  { word:'tableau', english:'blackboard',   emoji:'🖼️'  },
+  { word:'crayon',  english:'pencil',       emoji:'✏️'  },
+  { word:'cartable',english:'school bag',   emoji:'🎒'  },
+  { word:'livre',   english:'book',         emoji:'📖'  },
+  { word:'cahier',  english:'exercise book',emoji:'📓'  },
+  { word:'sac',     english:'bag',          emoji:'👜'  },
+];
+const laWords = [
+  { word:'table',  english:'table', emoji:'🪑'  },
+  { word:'règle',  english:'ruler', emoji:'📏'  },
+  { word:'chaise', english:'chair', emoji:'🪑'  },
+  { word:'pomme',  english:'apple', emoji:'🍎'  },
+  { word:'craie',  english:'chalk', emoji:'🖍️'  },
+  { word:'fille',  english:'girl',  emoji:'👧'  },
+  { word:'gomme',  english:'eraser',emoji:'🧽'  },
+  { word:'boîte',  english:'box',   emoji:'📦'  },
+  { word:'maison', english:'house', emoji:'🏠'  },
+  { word:'porte',  english:'door',  emoji:'🚪'  },
+];
+
+/* ================================================================
+   CHEER COUNTER
+   ================================================================ */
+let cheerCount = 0;
+function addCheer() {
+  cheerCount++;
+  document.getElementById('starCounter').textContent = '⭐ ' + cheerCount + ' / 5';
+  if (cheerCount >= 2) {
+    document.getElementById('cheerBanner').classList.add('show');
+    document.getElementById('cheerBanner').scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+}
+
+/* ================================================================
+   VOCABULARY GALLERY
+   ================================================================ */
+function buildGallery() {
+  const leCol = document.getElementById('leCol');
+  const laCol = document.getElementById('laCol');
+
+  leWords.forEach(w => leCol.appendChild(makeVocabCard('le', w)));
+  laWords.forEach(w => laCol.appendChild(makeVocabCard('la', w)));
+}
+
+function makeVocabCard(art, w) {
+  const card = document.createElement('div');
+  card.className = 'vocab-card ' + art + '-card';
+  card.dataset.showing = 'front';
+  card.innerHTML = `
+    <div class="card-front">
+      <div class="card-emoji">${w.emoji}</div>
+      <div class="card-article ${art}">${art}</div>
+      <div class="card-word">${w.word}</div>
+      <div class="card-english">${w.english}</div>
+    </div>`;
+  card.addEventListener('click', () => flipVocabCard(card, art, w));
+  return card;
+}
+
+function flipVocabCard(card, art, w) {
+  card.classList.add('flipped');
+  setTimeout(() => {
+    if (card.dataset.showing === 'front') {
+      card.innerHTML = `<div class="card-back"><div style="font-size:1.8rem">${w.emoji}</div><div class="card-back-text">the ${w.english}</div></div>`;
+      card.dataset.showing = 'back';
+    } else {
+      card.innerHTML = `
+        <div class="card-front">
+          <div class="card-emoji">${w.emoji}</div>
+          <div class="card-article ${art}">${art}</div>
+          <div class="card-word">${w.word}</div>
+          <div class="card-english">${w.english}</div>
+        </div>`;
+      card.dataset.showing = 'front';
+    }
+    card.classList.remove('flipped');
+  }, 175);
+}
+
+/* ================================================================
+   ACTIVITY 1 — SORT
+   ================================================================ */
+const allSortWords = [
+  ...leWords.map(w => ({ art:'le', word:w.word, emoji:w.emoji })),
+  ...laWords.map(w => ({ art:'la', word:w.word, emoji:w.emoji })),
+];
+let sortQueue = [], sortIndex = 0, sortCorrect = 0, sortDone = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initSort() {
+  sortQueue = shuffle(allSortWords);
+  sortIndex = 0; sortCorrect = 0; sortDone = false;
+  showSortWord();
+}
+
+function showSortWord() {
+  if (sortIndex >= sortQueue.length) {
+    document.getElementById('sortDisplay').innerHTML = '<span style="font-family:\'Fredoka One\',cursive;color:#2e7d32;font-size:1.8rem">All done! 🎉</span>';
+    document.getElementById('sortDone').classList.add('show');
+    addCheer();
+    return;
+  }
+  const item = sortQueue[sortIndex];
+  document.getElementById('sortEmoji').textContent = item.emoji;
+  document.getElementById('sortWord').textContent = item.word;
+}
+
+function sortAnswer(chosen) {
+  if (sortDone) return;
+  if (sortIndex >= sortQueue.length) return;
+  const item = sortQueue[sortIndex];
+  const display = document.getElementById('sortDisplay');
+
+  if (chosen === item.art) {
+    // Correct
+    sortIndex++; sortCorrect++;
+    const chip = document.createElement('div');
+    chip.className = 'correct-chip ' + item.art;
+    chip.textContent = item.art + ' ' + item.word;
+    document.getElementById('sortCorrectList').appendChild(chip);
+    display.style.animation = 'none';
+    display.offsetHeight; // reflow
+    display.style.animation = 'pop 0.3s ease';
+    updateSortProgress();
+    setTimeout(showSortWord, 300);
+  } else {
+    // Wrong
+    display.style.animation = 'none';
+    display.offsetHeight;
+    display.style.animation = 'shake 0.4s ease';
+    setTimeout(() => display.style.animation = '', 400);
+  }
+}
+
+function updateSortProgress() {
+  const pct = (sortIndex / 20) * 100;
+  document.getElementById('sortProgress').style.width = pct + '%';
+  document.getElementById('sortLabel').textContent = sortIndex + ' / 20';
+}
+
+/* ================================================================
+   ACTIVITY 2 — QUIZ
+   ================================================================ */
+const quizData = [
+  { sentence:'___ stylo',   opts:['la','le','une'],  answer:'le'  },
+  { sentence:'___ table',   opts:['la','le','un'],   answer:'la'  },
+  { sentence:'___ cahier',  opts:['la','le','une'],  answer:'le'  },
+  { sentence:'___ pomme',   opts:['la','le','les'],  answer:'la'  },
+  { sentence:'___ cartable',opts:['la','une','le'],  answer:'le'  },
+  { sentence:'___ maison',  opts:['le','la','un'],   answer:'la'  },
+  { sentence:'___ livre',   opts:['le','la','les'],  answer:'le'  },
+  { sentence:'___ porte',   opts:['le','la','un'],   answer:'la'  },
+  { sentence:'___ crayon',  opts:['la','le','une'],  answer:'le'  },
+  { sentence:'___ chaise',  opts:['le','la','un'],   answer:'la'  },
+];
+let quizIndex = 0, quizCorrectCount = 0, quizAnswered = false;
+
+function initQuiz() { quizIndex = 0; quizCorrectCount = 0; renderQuiz(); }
+
+function renderQuiz() {
+  if (quizIndex >= quizData.length) {
+    document.getElementById('quizQ').textContent = '';
+    document.getElementById('quizOpts').innerHTML = '';
+    document.getElementById('quizDone').classList.add('show');
+    addCheer();
+    return;
+  }
+  quizAnswered = false;
+  const q = quizData[quizIndex];
+  document.getElementById('quizProgress').textContent = 'Question ' + (quizIndex + 1) + ' / 10';
+
+  // Build question with blank
+  const qDiv = document.getElementById('quizQ');
+  qDiv.innerHTML = '';
+  const parts = q.sentence.split('___');
+  const span = document.createElement('span');
+  span.className = 'blank';
+  qDiv.appendChild(document.createTextNode(parts[0] || ''));
+  qDiv.appendChild(span);
+  qDiv.appendChild(document.createTextNode((parts[1] || '').replace(/^\s/, '')));
+
+  const optsDiv = document.getElementById('quizOpts');
+  optsDiv.innerHTML = '';
+  q.opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => pickQ(btn, opt === q.answer ? 'correct' : 'wrong', quizIndex);
+    optsDiv.appendChild(btn);
+  });
+}
+
+function pickQ(el, result, qNum) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  el.classList.add(result === 'correct' ? 'correct-opt' : 'wrong-opt');
+
+  if (result === 'correct') {
+    quizCorrectCount++;
+    setTimeout(() => { quizIndex++; renderQuiz(); }, 700);
+  } else {
+    // Show correct answer then move on
+    const opts = document.querySelectorAll('.quiz-opt');
+    const correct = quizData[quizIndex].answer;
+    opts.forEach(o => { if (o.textContent === correct) o.classList.add('correct-opt'); });
+    setTimeout(() => { quizIndex++; renderQuiz(); }, 1200);
+  }
+}
+
+/* ================================================================
+   ACTIVITY 3 — MATCHING
+   ================================================================ */
+const matchPairs = [
+  { fr:'le stylo',  en:'the pen'     },
+  { fr:'la pomme',  en:'the apple'   },
+  { fr:'le livre',  en:'the book'    },
+  { fr:'la porte',  en:'the door'    },
+  { fr:'le garçon', en:'the boy'     },
+  { fr:'la maison', en:'the house'   },
+  { fr:'le vélo',   en:'the bicycle' },
+  { fr:'la règle',  en:'the ruler'   },
+];
+let matchSelected = null, matchCount = 0;
+
+function initMatch() {
+  const frShuffled = shuffle(matchPairs.map(p => p.fr));
+  const enShuffled = shuffle(matchPairs.map(p => p.en));
+  const frCol = document.getElementById('matchFrCol');
+  const enCol = document.getElementById('matchEnCol');
+  frCol.innerHTML = ''; enCol.innerHTML = '';
+
+  frShuffled.forEach(fr => {
+    const el = document.createElement('div');
+    el.className = 'match-item fr-item';
+    el.textContent = fr;
+    el.dataset.val = fr;
+    el.dataset.side = 'fr';
+    el.onclick = () => matchClick(el);
+    frCol.appendChild(el);
+  });
+  enShuffled.forEach(en => {
+    const el = document.createElement('div');
+    el.className = 'match-item en-item';
+    el.textContent = en;
+    el.dataset.val = en;
+    el.dataset.side = 'en';
+    el.onclick = () => matchClick(el);
+    enCol.appendChild(el);
+  });
+}
+
+function matchClick(el) {
+  if (el.classList.contains('matched')) return;
+
+  if (!matchSelected) {
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected'); matchSelected = null; return;
+    }
+    el.classList.add('selected');
+    matchSelected = el;
+    return;
+  }
+
+  // Two selected
+  if (el === matchSelected) { el.classList.remove('selected'); matchSelected = null; return; }
+  if (el.dataset.side === matchSelected.dataset.side) {
+    matchSelected.classList.remove('selected');
+    matchSelected = el;
+    el.classList.add('selected');
+    return;
+  }
+
+  // Check pair
+  const fr = matchSelected.dataset.side === 'fr' ? matchSelected.dataset.val : el.dataset.val;
+  const en = matchSelected.dataset.side === 'en' ? matchSelected.dataset.val : el.dataset.val;
+  const pair = matchPairs.find(p => p.fr === fr && p.en === en);
+
+  if (pair) {
+    [matchSelected, el].forEach(e => {
+      e.classList.remove('selected');
+      e.classList.add('matched');
+    });
+    matchSelected = null;
+    matchCount++;
+    if (matchCount >= 8) {
+      document.getElementById('matchDone').classList.add('show');
+      addCheer();
+    }
+  } else {
+    // Wrong
+    [matchSelected, el].forEach(e => {
+      e.classList.remove('selected');
+      e.classList.add('shaking');
+      setTimeout(() => e.classList.remove('shaking'), 450);
+    });
+    matchSelected = null;
+  }
+}
+
+/* ================================================================
+   ACTIVITY 4 — VRAI / FAUX
+   ================================================================ */
+const vfData = [
+  { stmt:"Le stylo means 'the pen'.",        answer:'vrai', hint:'Le stylo = the pen ✓' },
+  { stmt:"La garçon is correct French.",      answer:'faux', hint:'It should be LE garçon (masculine)' },
+  { stmt:"La pomme means 'the apple'.",       answer:'vrai', hint:'La pomme = the apple ✓' },
+  { stmt:"Le chaise is correct French.",      answer:'faux', hint:'It should be LA chaise (feminine)' },
+  { stmt:"Le cahier means 'the exercise book'.", answer:'vrai', hint:'Le cahier = the exercise book ✓' },
+  { stmt:"La vélo is correct French.",        answer:'faux', hint:'It should be LE vélo (masculine)' },
+  { stmt:"La fille means 'the girl'.",        answer:'vrai', hint:'La fille = the girl ✓' },
+  { stmt:"Le gomme is correct French.",       answer:'faux', hint:'It should be LA gomme (feminine)' },
+];
+let vfAnswered = 0, vfCorrectCount = 0;
+
+function initVF() {
+  const list = document.getElementById('vfList');
+  list.innerHTML = '';
+  vfData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'vf-item';
+    div.id = 'vf-' + i;
+    div.innerHTML = `
+      <div class="vf-statement">${i + 1}. ${item.stmt}</div>
+      <div class="vf-buttons">
+        <button class="vf-btn vrai-btn" onclick="answerVF(${i},'vrai')">✅ Vrai</button>
+        <button class="vf-btn faux-btn" onclick="answerVF(${i},'faux')">❌ Faux</button>
+      </div>
+      <div class="vf-feedback" id="vff-${i}"></div>`;
+    list.appendChild(div);
+  });
+}
+
+function answerVF(i, chosen) {
+  const item = vfData[i];
+  const div  = document.getElementById('vf-' + i);
+  if (div.classList.contains('answered')) return;
+  div.classList.add('answered');
+
+  const btns = div.querySelectorAll('.vf-btn');
+  const feedback = document.getElementById('vff-' + i);
+
+  if (chosen === item.answer) {
+    btns.forEach(b => {
+      if ((chosen === 'vrai' && b.classList.contains('vrai-btn')) ||
+          (chosen === 'faux' && b.classList.contains('faux-btn'))) {
+        b.classList.add('correct-ans');
+      }
+    });
+    feedback.textContent = '✓ ' + item.hint;
+    feedback.style.color = '#2e7d32';
+    vfCorrectCount++;
+  } else {
+    const wrongBtn = chosen === 'vrai' ? div.querySelector('.vrai-btn') : div.querySelector('.faux-btn');
+    wrongBtn.classList.add('wrong-ans');
+    const rightBtn = item.answer === 'vrai' ? div.querySelector('.vrai-btn') : div.querySelector('.faux-btn');
+    rightBtn.classList.add('correct-ans');
+    feedback.textContent = '✗ ' + item.hint;
+    feedback.style.color = '#c62828';
+  }
+
+  vfAnswered++;
+  if (vfAnswered >= vfData.length) {
+    document.getElementById('vfDone').classList.add('show');
+    addCheer();
+  }
+}
+
+/* ================================================================
+   ACTIVITY 5 — FILL IN BLANK
+   ================================================================ */
+const fillData = [
+  { rest:'stylo est rouge.',   answer:'le'  },
+  { rest:'table est grande.',  answer:'la'  },
+  { rest:'livre est ici.',     answer:'le'  },
+  { rest:'maison est belle.',  answer:'la'  },
+  { rest:'garçon joue.',       answer:'le'  },
+  { rest:'porte est ouverte.', answer:'la'  },
+  { rest:'cahier est neuf.',   answer:'le'  },
+  { rest:'pomme est rouge.',   answer:'la'  },
+  { rest:'vélo est rapide.',   answer:'le'  },
+  { rest:'chaise est ici.',    answer:'la'  },
+];
+let fillSelected = null;  // currently selected chip
+let fillCorrect = 0;
+let fillAnswered = [];
+
+function initFill() {
+  fillAnswered = new Array(fillData.length).fill(false);
+  fillCorrect = 0;
+  const container = document.getElementById('fillSentences');
+  container.innerHTML = '';
+  fillData.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-sentence';
+    const blank = document.createElement('div');
+    blank.className = 'fill-blank';
+    blank.id = 'blank-' + i;
+    blank.dataset.index = i;
+    blank.textContent = '___';
+    blank.onclick = () => fillBlankClick(blank, i, item.answer);
+    const rest = document.createElement('span');
+    rest.className = 'fill-rest';
+    rest.textContent = item.rest;
+    row.appendChild(blank);
+    row.appendChild(rest);
+    container.appendChild(row);
+  });
+
+  // Reset chips
+  document.querySelectorAll('.bank-chip').forEach(c => c.classList.remove('used'));
+  fillSelected = null;
+}
+
+function selectChip(chip) {
+  if (chip.classList.contains('used')) return;
+  // Deselect previous
+  document.querySelectorAll('.bank-chip.selected-chip').forEach(c => c.classList.remove('selected-chip'));
+  if (fillSelected === chip) { fillSelected = null; return; }
+  chip.classList.add('selected-chip');
+  fillSelected = chip;
+}
+
+function fillBlankClick(blank, i, answer) {
+  if (fillAnswered[i]) return;
+  if (!fillSelected) return;
+
+  const chosen = fillSelected.dataset.val;
+  fillAnswered[i] = true;
+  blank.textContent = chosen;
+
+  if (chosen === answer) {
+    blank.classList.add('filled-' + chosen, 'correct-fill');
+    blank.classList.remove('filled-' + (chosen === 'le' ? 'la' : 'le'));
+    fillSelected.classList.add('used');
+    fillSelected.classList.remove('selected-chip');
+    fillSelected = null;
+    fillCorrect++;
+    if (fillCorrect >= fillData.length) {
+      document.getElementById('fillDone').classList.add('show');
+      addCheer();
+    }
+  } else {
+    blank.classList.add('filled-' + chosen, 'wrong-fill');
+    fillAnswered[i] = false;
+    setTimeout(() => {
+      blank.classList.remove('filled-' + chosen, 'wrong-fill');
+      blank.textContent = '___';
+    }, 500);
+    // Return chip
+    fillSelected.classList.remove('selected-chip');
+    fillSelected = null;
+  }
+}
+
+// Style for selected chip (added dynamically since we needed JS)
+const style = document.createElement('style');
+style.textContent = '.bank-chip.selected-chip { outline: 4px solid var(--gold); transform: scale(1.1); }';
+document.head.appendChild(style);
+
+/* ================================================================
+   INIT
+   ================================================================ */
+buildGallery();
+initSort();
+initQuiz();
+initMatch();
+initVF();
+initFill();
+</script>
+</body>
+</html>

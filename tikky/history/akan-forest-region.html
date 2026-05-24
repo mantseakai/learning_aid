@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Akan Forest Region 🌿 — Tikky's History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #efebe9;
+      padding: 20px 16px 100px;
+      min-height: 100vh;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: #6d4c41; border: 2px solid #3e2723;
+      color: #fff; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #3e2723; transform: translateX(-2px); }
+
+    /* ── CHEER BANNER ── */
+    .cheer-banner {
+      display: none;
+      max-width: 820px; margin: 0 auto 28px;
+      background: linear-gradient(135deg, #006b3f, #fcd116);
+      border: 4px solid #ce1126;
+      border-radius: 24px; padding: 22px 28px;
+      text-align: center; font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: #fff; text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+      animation: popIn 0.5s ease;
+    }
+    .cheer-banner.visible { display: block; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes bounce {
+      0%,100%{transform:translateY(0)} 30%{transform:translateY(-18px)} 60%{transform:translateY(-8px)}
+    }
+    @keyframes popIn {
+      0%{transform:scale(0.4);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1}
+    }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)} 40%{transform:translateX(10px)}
+      60%{transform:translateX(-8px)} 80%{transform:translateX(8px)}
+    }
+    @keyframes pop {
+      0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)}
+    }
+    @keyframes slideIn {
+      0%{transform:translateX(-60px);opacity:0} 100%{transform:translateX(0);opacity:1}
+    }
+    @keyframes glowGreen {
+      0%{box-shadow:0 0 0 rgba(0,107,63,0)} 50%{box-shadow:0 0 30px 8px rgba(0,107,63,0.5)} 100%{box-shadow:0 0 0 rgba(0,107,63,0)}
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 820px; margin: 0 auto 36px;
+      background: white; border-radius: 28px;
+      padding: 28px 24px;
+      box-shadow: 0 4px 20px rgba(109,76,65,0.12);
+      border: 2px solid #d7ccc8;
+    }
+    .section-heading {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      color: #3e2723;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 820px; margin: 0 auto 36px;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .flag-stripe-red   { background: #ce1126; height: 44px; }
+    .flag-stripe-gold  { background: #fcd116; height: 44px; display: flex; align-items: center; justify-content: center; }
+    .flag-stripe-green { background: #006b3f; height: 44px; }
+    .black-star { font-size: 34px; }
+
+    .hero-body {
+      background: white; padding: 30px 24px 28px; text-align: center;
+    }
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 7vw, 3rem);
+      color: #3e2723;
+      line-height: 1.1; margin-bottom: 12px;
+    }
+    .date-badge {
+      display: inline-block;
+      background: #6d4c41; color: #fff;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+      padding: 6px 20px; border-radius: 50px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .def-box {
+      background: #efebe9; border-left: 6px solid #6d4c41;
+      border-radius: 16px; padding: 18px 20px;
+      font-size: clamp(1rem, 3vw, 1.15rem);
+      color: #3e2723; font-weight: 700;
+      text-align: left; line-height: 1.55;
+    }
+
+    /* ── REGION CARDS ── */
+    .region-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media(max-width:500px){ .region-grid { grid-template-columns: 1fr; } }
+    .region-card {
+      background: linear-gradient(135deg, #efebe9, #d7ccc8);
+      border: 3px solid #a1887f;
+      border-radius: 22px; padding: 24px 16px;
+      text-align: center; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .region-card:hover { transform: scale(1.04); box-shadow: 0 6px 24px rgba(109,76,65,0.2); }
+    .region-card.tapped {
+      border-color: #006b3f;
+      box-shadow: 0 0 30px 6px rgba(0,107,63,0.45);
+      animation: bounce 0.55s ease;
+    }
+    .region-card-emoji { font-size: 2.4rem; margin-bottom: 8px; }
+    .region-card-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      color: #3e2723;
+    }
+    .region-pin { font-size: 1.4rem; }
+
+    /* ── WEST AFRICA PANEL ── */
+    .wa-panel {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border: 3px solid #006b3f; border-radius: 22px;
+      padding: 28px 20px; text-align: center;
+      margin-bottom: 16px;
+    }
+    .wa-icon { font-size: 4rem; margin-bottom: 10px; }
+    .wa-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: #006b3f; margin-bottom: 8px;
+    }
+    .ghana-highlight {
+      display: inline-block;
+      background: #006b3f; color: #fcd116;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem; padding: 6px 20px;
+      border-radius: 50px; margin-bottom: 12px;
+    }
+    .fun-fact {
+      background: #fcd116; color: #3e2723;
+      font-weight: 800; font-size: 1.05rem;
+      border-radius: 14px; padding: 12px 18px;
+      display: inline-block; margin-top: 6px;
+    }
+
+    /* ── AKAN ACTIVITY CARDS ── */
+    .activity-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media(max-width:500px){ .activity-grid { grid-template-columns: 1fr; } }
+    .akan-card {
+      border-radius: 22px; padding: 22px 16px;
+      text-align: center; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      user-select: none;
+      position: relative; overflow: hidden;
+    }
+    .akan-card:nth-child(odd)  { background: linear-gradient(135deg, #6d4c41, #a1887f); color: #fff; border: 3px solid #3e2723; }
+    .akan-card:nth-child(even) { background: linear-gradient(135deg, #fcd116, #ffe082); color: #3e2723; border: 3px solid #f9a825; }
+    .akan-card:hover { transform: scale(1.04); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+    .akan-card.tapped { animation: pop 0.4s ease; }
+    .akan-emoji { font-size: 2.8rem; margin-bottom: 8px; }
+    .akan-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+      margin-bottom: 6px;
+    }
+    .akan-desc { font-size: 0.95rem; font-weight: 700; line-height: 1.4; opacity: 0.9; }
+
+    /* ── ACTIVITY SHARED ── */
+    .activity-label {
+      display: inline-block;
+      background: #3e2723; color: #fcd116;
+      font-family: 'Fredoka One', cursive; font-size: 0.95rem;
+      padding: 4px 16px; border-radius: 50px; margin-bottom: 14px;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+      color: #3e2723; margin-bottom: 18px; text-align: center;
+    }
+    .btn {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      border: none; border-radius: 50px; padding: 12px 24px;
+      cursor: pointer; font-size: 1rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .btn:hover { transform: scale(1.06); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+    .btn-green  { background: #006b3f; color: #fff; }
+    .btn-red    { background: #ce1126; color: #fff; }
+    .btn-brown  { background: #6d4c41; color: #fff; }
+    .btn-gold   { background: #fcd116; color: #3e2723; border: 2px solid #f9a825; }
+    .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+
+    /* ── ACTIVITY 1 — SORT ── */
+    .sort-card {
+      background: linear-gradient(135deg, #efebe9, #d7ccc8);
+      border: 3px solid #a1887f; border-radius: 22px;
+      padding: 28px 20px; text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+      color: #3e2723; margin-bottom: 16px;
+      min-height: 100px; display: flex; align-items: center; justify-content: center;
+    }
+    .sort-card.shake { animation: shake 0.5s ease; }
+    .progress-bar-wrap { background: #d7ccc8; border-radius: 50px; height: 14px; margin: 14px 0; overflow: hidden; }
+    .progress-bar      { background: #006b3f; height: 100%; border-radius: 50px; transition: width 0.4s; }
+    .progress-label    { text-align: center; font-weight: 800; color: #3e2723; font-size: 0.95rem; margin-bottom: 6px; }
+    .sort-done { text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #006b3f; display: none; }
+    .bucket-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
+    .bucket {
+      flex: 1; min-width: 140px; border-radius: 18px; padding: 14px;
+      border: 3px dashed; text-align: center;
+    }
+    .bucket-akan { border-color: #006b3f; background: #e8f5e9; }
+    .bucket-not  { border-color: #ce1126; background: #ffebee; }
+    .bucket-heading { font-family: 'Fredoka One', cursive; font-size: 1rem; margin-bottom: 8px; }
+    .bucket-akan .bucket-heading { color: #006b3f; }
+    .bucket-not  .bucket-heading { color: #ce1126; }
+    .bucket-item {
+      display: inline-block; background: white; border-radius: 50px;
+      padding: 4px 12px; margin: 3px; font-weight: 800; font-size: 0.88rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    /* ── ACTIVITY 2 — QUIZ ── */
+    .quiz-question {
+      background: #efebe9; border-radius: 16px;
+      padding: 18px 20px; margin-bottom: 16px;
+      font-size: clamp(1rem, 3vw, 1.15rem);
+      font-weight: 800; color: #3e2723; line-height: 1.5;
+    }
+    .quiz-counter { text-align: right; font-weight: 800; color: #6d4c41; font-size: 0.9rem; margin-bottom: 6px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-opt {
+      background: white; border: 3px solid #a1887f;
+      border-radius: 14px; padding: 14px 18px;
+      cursor: pointer; font-weight: 800; font-size: 1rem;
+      color: #3e2723; text-align: left;
+      transition: all 0.15s;
+    }
+    .quiz-opt:hover:not(.done-opt) { background: #efebe9; border-color: #6d4c41; transform: scale(1.02); }
+    .quiz-opt.correct-opt { background: #e8f5e9; border-color: #006b3f; color: #006b3f; animation: popIn 0.4s ease; }
+    .quiz-opt.wrong-opt   { background: #ffebee; border-color: #ce1126; color: #ce1126; animation: shake 0.4s ease; }
+    .quiz-opt.done-opt    { cursor: default; opacity: 0.7; }
+    .quiz-next-btn { display: none; }
+    .quiz-done { display: none; text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #006b3f; }
+
+    /* ── ACTIVITY 3 — MATCH ── */
+    .match-wrap { display: flex; gap: 16px; flex-wrap: wrap; }
+    .match-col { flex: 1; min-width: 140px; display: flex; flex-direction: column; gap: 10px; }
+    .match-item {
+      background: white; border: 3px solid #a1887f;
+      border-radius: 14px; padding: 14px 12px;
+      cursor: pointer; font-weight: 800; font-size: 0.92rem;
+      color: #3e2723; text-align: center;
+      transition: all 0.2s; user-select: none;
+    }
+    .match-item:hover:not(.locked) { border-color: #6d4c41; background: #efebe9; transform: scale(1.03); }
+    .match-item.selected { border-color: #fcd116; background: #fffde7; box-shadow: 0 0 12px rgba(252,209,22,0.6); }
+    .match-item.shake    { animation: shake 0.4s ease; }
+    .match-item.locked   { background: #e8f5e9; border-color: #006b3f; color: #006b3f; cursor: default; }
+    .match-done { display: none; text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #006b3f; }
+
+    /* ── ACTIVITY 4 — TRUE/FALSE ── */
+    .tf-item {
+      background: #efebe9; border: 3px solid #d7ccc8;
+      border-radius: 16px; padding: 16px 18px; margin-bottom: 12px;
+    }
+    .tf-question { font-weight: 800; color: #3e2723; font-size: 1rem; margin-bottom: 10px; }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      flex: 1; padding: 10px; border-radius: 50px; border: none;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .tf-true  { background: #006b3f; color: #fff; }
+    .tf-false { background: #ce1126; color: #fff; }
+    .tf-btn:hover:not(:disabled) { transform: scale(1.06); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .tf-btn:disabled { opacity: 0.5; cursor: default; }
+    .tf-item.tf-correct { border-color: #006b3f; background: #e8f5e9; }
+    .tf-item.tf-wrong   { border-color: #ce1126; background: #ffebee; animation: shake 0.4s ease; }
+    .tf-feedback { font-size: 0.9rem; font-weight: 800; margin-top: 8px; display: none; }
+    .tf-correct .tf-feedback { display: block; color: #006b3f; }
+    .tf-wrong   .tf-feedback { display: block; color: #ce1126; }
+    .tf-done { display: none; text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #006b3f; margin-top: 12px; }
+
+    /* ── ACTIVITY 5 — FILL IN THE BLANK ── */
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 20px; padding: 16px;
+      background: #efebe9; border-radius: 16px;
+      border: 3px solid #d7ccc8;
+    }
+    .word-chip {
+      background: #6d4c41; color: #fff;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+      padding: 8px 18px; border-radius: 50px; cursor: pointer;
+      transition: all 0.15s; user-select: none;
+      border: none;
+    }
+    .word-chip:hover:not(:disabled) { background: #3e2723; transform: scale(1.06); }
+    .word-chip:disabled { opacity: 0.35; cursor: default; transform: none; }
+    .fill-sentence {
+      background: white; border: 3px solid #d7ccc8;
+      border-radius: 14px; padding: 14px 18px; margin-bottom: 10px;
+      font-weight: 800; color: #3e2723; font-size: 1rem;
+      line-height: 1.6;
+    }
+    .fill-blank {
+      display: inline-block;
+      min-width: 80px; border-bottom: 3px solid #6d4c41;
+      padding: 2px 8px; border-radius: 6px 6px 0 0;
+      text-align: center; color: #6d4c41;
+      cursor: pointer; transition: all 0.2s;
+      font-style: italic;
+    }
+    .fill-blank.selected { background: #fffde7; border-color: #fcd116; color: #3e2723; font-style: normal; }
+    .fill-blank.correct  { background: #e8f5e9; border-color: #006b3f; color: #006b3f; cursor: default; font-style: normal; }
+    .fill-blank.wrong    { background: #ffebee; border-color: #ce1126; color: #ce1126; animation: shake 0.4s ease; }
+    .fill-done { display: none; text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #006b3f; margin-top: 12px; }
+
+    /* ── SCORE STAR ── */
+    .score-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin-top: 10px;
+    }
+    .score-star { font-size: 1.8rem; animation: popIn 0.4s ease; }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- CHEER BANNER -->
+<div class="cheer-banner" id="cheerBanner">
+  Amazing, Tikky! You know about the Akan people! 🇬🇭⭐
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="flag-stripe-red"></div>
+  <div class="flag-stripe-gold"><span class="black-star">⭐</span></div>
+  <div class="flag-stripe-green"></div>
+  <div class="hero-body">
+    <div class="hero-title">The Akan Forest Region 🌿</div>
+    <div class="date-badge">📅 14th May 2026</div>
+    <div class="def-box">
+      The Ancient Ghana Empire and the Akan forest regions were located in <strong>West Africa</strong>.
+      The <strong>Akan people</strong> lived in the forest areas of Ghana. 🌍🌿
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     AKAN REGIONS SECTION
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-heading">Akan Areas of Ghana 🇬🇭</div>
+  <div class="region-grid">
+    <div class="region-card" onclick="tapRegion(this)">
+      <div class="region-pin">📍</div>
+      <div class="region-card-emoji">🌟</div>
+      <div class="region-card-name">Ashanti Region</div>
+    </div>
+    <div class="region-card" onclick="tapRegion(this)">
+      <div class="region-pin">📍</div>
+      <div class="region-card-emoji">🌿</div>
+      <div class="region-card-name">Eastern Region</div>
+    </div>
+    <div class="region-card" onclick="tapRegion(this)">
+      <div class="region-pin">📍</div>
+      <div class="region-card-emoji">🏔️</div>
+      <div class="region-card-name">Central Region</div>
+    </div>
+    <div class="region-card" onclick="tapRegion(this)">
+      <div class="region-pin">📍</div>
+      <div class="region-card-emoji">🌳</div>
+      <div class="region-card-name">Bono Region</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MAP VISUAL
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-heading">Where is Ghana? 🌍</div>
+  <div class="wa-panel">
+    <div class="wa-icon">🌍</div>
+    <div class="wa-label">📍 West Africa</div>
+    <div><span class="ghana-highlight">🇬🇭 Ghana is right HERE!</span></div>
+    <p style="color:#3e2723;font-weight:800;font-size:0.95rem;margin-top:10px;line-height:1.5;">
+      The Akan people lived in the forest regions of Ghana 🌿<br>
+      in the big, green forests of West Africa! 🌲🌲🌲
+    </p>
+  </div>
+  <div class="fun-fact">🌟 Fun Fact: Ghana is in West Africa! 🌍</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     AKAN PEOPLE SECTION
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-heading">What did the Akan People Do? 🏛️</div>
+  <div class="activity-grid">
+    <div class="akan-card" onclick="tapAkan(this)">
+      <div class="akan-emoji">🌾</div>
+      <div class="akan-title">Farmers</div>
+      <div class="akan-desc">They grew crops and food in the forest.</div>
+    </div>
+    <div class="akan-card" onclick="tapAkan(this)">
+      <div class="akan-emoji">🪙</div>
+      <div class="akan-title">Gold Traders</div>
+      <div class="akan-desc">They traded gold with other people.</div>
+    </div>
+    <div class="akan-card" onclick="tapAkan(this)">
+      <div class="akan-emoji">🏹</div>
+      <div class="akan-title">Hunters</div>
+      <div class="akan-desc">They hunted animals in the forest.</div>
+    </div>
+    <div class="akan-card" onclick="tapAkan(this)">
+      <div class="akan-emoji">🎨</div>
+      <div class="akan-title">Craft Makers</div>
+      <div class="akan-desc">They made beautiful crafts and art.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACTIVITY 1 — AKAN REGION OR NOT?
+══════════════════════════════════════════════ -->
+<div class="section" id="act1">
+  <div style="text-align:center;">
+    <div class="activity-label">Activity 1</div>
+  </div>
+  <div class="activity-title">Akan Region or Not? 🗺️</div>
+
+  <div class="progress-label" id="a1ProgressLabel">Question 1 of 8</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="a1Progress" style="width:0%"></div></div>
+
+  <div class="sort-card" id="a1Card">Ashanti</div>
+
+  <div class="btn-row">
+    <button class="btn btn-green" onclick="sortAnswer(true)">✅ Akan Region</button>
+    <button class="btn btn-red"   onclick="sortAnswer(false)">❌ Not Akan Region</button>
+  </div>
+
+  <div class="bucket-row" style="margin-top:20px;">
+    <div class="bucket bucket-akan">
+      <div class="bucket-heading">✅ Akan Regions</div>
+      <div id="akanBucket"></div>
+    </div>
+    <div class="bucket bucket-not">
+      <div class="bucket-heading">❌ Not Akan</div>
+      <div id="notBucket"></div>
+    </div>
+  </div>
+
+  <div class="sort-done" id="a1Done">
+    🎉 Brilliant, Tikky! You sorted them all! ⭐
+    <div class="score-row" id="a1Stars"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACTIVITY 2 — PICK THE RIGHT ANSWER
+══════════════════════════════════════════════ -->
+<div class="section" id="act2">
+  <div style="text-align:center;">
+    <div class="activity-label">Activity 2</div>
+  </div>
+  <div class="activity-title">Pick the Right Answer! 🎯</div>
+  <div class="quiz-counter" id="q2Counter">Question 1 of 8</div>
+  <div class="quiz-question" id="q2Text"></div>
+  <div class="quiz-options" id="q2Opts"></div>
+  <div class="btn-row" style="margin-top:16px;">
+    <button class="btn btn-brown quiz-next-btn" id="q2Next" onclick="nextQuizQ()">Next ➡️</button>
+  </div>
+  <div class="quiz-done" id="q2Done">🌟 Wow, Tikky! You got them all! 🎊</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACTIVITY 3 — MATCH THE ACTIVITY
+══════════════════════════════════════════════ -->
+<div class="section" id="act3">
+  <div style="text-align:center;">
+    <div class="activity-label">Activity 3</div>
+  </div>
+  <div class="activity-title">Match the Akan Activity! 🔗</div>
+  <p style="text-align:center;font-weight:800;color:#6d4c41;margin-bottom:16px;">
+    Tap a name on the left, then tap its description on the right! 👇
+  </p>
+  <div class="match-wrap">
+    <div class="match-col" id="matchLeft">
+      <div class="match-item" data-id="1" onclick="matchTap(this,'left')">🌾 Farmers</div>
+      <div class="match-item" data-id="2" onclick="matchTap(this,'left')">🪙 Gold Traders</div>
+      <div class="match-item" data-id="3" onclick="matchTap(this,'left')">🏹 Hunters</div>
+      <div class="match-item" data-id="4" onclick="matchTap(this,'left')">🎨 Craft Makers</div>
+    </div>
+    <div class="match-col" id="matchRight">
+      <!-- shuffled at runtime -->
+    </div>
+  </div>
+  <div class="match-done" id="match3Done">🎉 Perfect matching, Tikky! 🌟</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACTIVITY 4 — TRUE OR FALSE
+══════════════════════════════════════════════ -->
+<div class="section" id="act4">
+  <div style="text-align:center;">
+    <div class="activity-label">Activity 4</div>
+  </div>
+  <div class="activity-title">True or False? 🤔</div>
+  <div id="tfList"></div>
+  <div class="tf-done" id="tf4Done">⭐ Amazing, Tikky! All correct! 🎊</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACTIVITY 5 — FILL IN THE BLANK
+══════════════════════════════════════════════ -->
+<div class="section" id="act5">
+  <div style="text-align:center;">
+    <div class="activity-label">Activity 5</div>
+  </div>
+  <div class="activity-title">Fill in the Blank! ✏️</div>
+  <p style="text-align:center;font-weight:800;color:#6d4c41;margin-bottom:14px;">
+    Tap a word, then tap the blank where it belongs! 👇
+  </p>
+  <div class="word-bank" id="wordBank"></div>
+  <div id="fillSentences"></div>
+  <div class="fill-done" id="fill5Done">🌿 Fantastic, Tikky! You filled them all in! 🎊</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+// ── CHEER COUNTER ──
+let cheerCount = 0;
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const banner = document.getElementById('cheerBanner');
+    banner.classList.add('visible');
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// ── REGION CARD TAP ──
+function tapRegion(el) {
+  el.classList.remove('tapped');
+  void el.offsetWidth;
+  el.classList.add('tapped');
+}
+
+// ── AKAN ACTIVITY CARD TAP ──
+function tapAkan(el) {
+  el.classList.remove('tapped');
+  void el.offsetWidth;
+  el.classList.add('tapped');
+}
+
+// ══════════════════════════════════════════
+// ACTIVITY 1 — SORT
+// ══════════════════════════════════════════
+const sortItems = [
+  { name: 'Ashanti',      isAkan: true  },
+  { name: 'Northern',     isAkan: false },
+  { name: 'Eastern',      isAkan: true  },
+  { name: 'Volta',        isAkan: false },
+  { name: 'Central',      isAkan: true  },
+  { name: 'Greater Accra',isAkan: false },
+  { name: 'Bono',         isAkan: true  },
+  { name: 'Western',      isAkan: false },
+];
+let a1Index = 0;
+let a1Correct = 0;
+
+function renderSortCard() {
+  const item = sortItems[a1Index];
+  document.getElementById('a1Card').textContent = item.name;
+  document.getElementById('a1ProgressLabel').textContent = `Question ${a1Index + 1} of ${sortItems.length}`;
+  document.getElementById('a1Progress').style.width = `${(a1Index / sortItems.length) * 100}%`;
+}
+
+function addToBucket(name, isAkan) {
+  const bucket = isAkan ? document.getElementById('akanBucket') : document.getElementById('notBucket');
+  const chip = document.createElement('span');
+  chip.className = 'bucket-item';
+  chip.textContent = name;
+  bucket.appendChild(chip);
+}
+
+function sortAnswer(userSaysAkan) {
+  const item = sortItems[a1Index];
+  const card = document.getElementById('a1Card');
+  if (userSaysAkan === item.isAkan) {
+    a1Correct++;
+    addToBucket(item.name, item.isAkan);
+    a1Index++;
+    if (a1Index >= sortItems.length) {
+      card.style.display = 'none';
+      document.querySelectorAll('#act1 .btn-row').forEach(r => r.style.display = 'none');
+      document.getElementById('a1Progress').style.width = '100%';
+      document.getElementById('a1ProgressLabel').textContent = 'All done! 🎉';
+      const doneEl = document.getElementById('a1Done');
+      doneEl.style.display = 'block';
+      const stars = document.getElementById('a1Stars');
+      for (let i = 0; i < a1Correct; i++) {
+        const s = document.createElement('span'); s.className = 'score-star'; s.textContent = '⭐';
+        stars.appendChild(s);
+      }
+      addCheer();
+    } else {
+      renderSortCard();
+    }
+  } else {
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 500);
+  }
+}
+
+renderSortCard();
+
+// ══════════════════════════════════════════
+// ACTIVITY 2 — QUIZ
+// ══════════════════════════════════════════
+const quizData = [
+  {
+    q: 'The Akan people lived in the ___ areas of Ghana.',
+    opts: ['coastal', 'desert', 'forest 🌿'],
+    correct: 2
+  },
+  {
+    q: 'The Akan Empire was located in ___.',
+    opts: ['East Africa', 'West Africa 🌍', 'North Africa'],
+    correct: 1
+  },
+  {
+    q: 'Which is an Akan region?',
+    opts: ['Northern', 'Volta', 'Ashanti 🌟'],
+    correct: 2
+  },
+  {
+    q: 'The Akan people were farmers. This means they ___.',
+    opts: ['hunted', 'traded', 'grew crops 🌾'],
+    correct: 2
+  },
+  {
+    q: 'The Akan people traded ___.',
+    opts: ['silver', 'gold 🪙', 'diamonds'],
+    correct: 1
+  },
+  {
+    q: 'Hunters in the Akan community ___.',
+    opts: ['grew crops', 'made crafts', 'hunted animals 🏹'],
+    correct: 2
+  },
+  {
+    q: 'How many Akan regions are listed?',
+    opts: ['3', '4 ✅', '5'],
+    correct: 1
+  },
+  {
+    q: 'The Akan people also ___.',
+    opts: ['sailed ships', 'made crafts 🎨', 'built pyramids'],
+    correct: 1
+  },
+];
+
+let qIndex = 0;
+let q2Score = 0;
+let q2Answered = false;
+
+function renderQuiz() {
+  const data = quizData[qIndex];
+  document.getElementById('q2Counter').textContent = `Question ${qIndex + 1} of ${quizData.length}`;
+  document.getElementById('q2Text').textContent = data.q;
+  const optsEl = document.getElementById('q2Opts');
+  optsEl.innerHTML = '';
+  data.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = `${['a)', 'b)', 'c)'][i]} ${opt}`;
+    btn.onclick = () => pickQ(btn, i === data.correct ? 'correct' : 'wrong', i);
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('q2Next').style.display = 'none';
+  q2Answered = false;
+}
+
+function pickQ(el, result, idx) {
+  if (q2Answered) return;
+  q2Answered = true;
+  const allOpts = document.querySelectorAll('.quiz-opt');
+  allOpts.forEach(o => { o.classList.add('done-opt'); o.onclick = null; });
+  // highlight correct
+  allOpts[quizData[qIndex].correct].classList.add('correct-opt');
+  if (result === 'correct') {
+    el.classList.add('correct-opt');
+    q2Score++;
+  } else {
+    el.classList.add('wrong-opt');
+  }
+  document.getElementById('q2Next').style.display = 'inline-block';
+}
+
+function nextQuizQ() {
+  qIndex++;
+  if (qIndex >= quizData.length) {
+    document.getElementById('q2Counter').style.display = 'none';
+    document.getElementById('q2Text').style.display = 'none';
+    document.getElementById('q2Opts').style.display = 'none';
+    document.getElementById('q2Next').style.display = 'none';
+    document.getElementById('q2Done').style.display = 'block';
+    addCheer();
+  } else {
+    renderQuiz();
+  }
+}
+
+renderQuiz();
+
+// ══════════════════════════════════════════
+// ACTIVITY 3 — MATCH
+// ══════════════════════════════════════════
+const matchPairs = [
+  { id: 1, left: '🌾 Farmers',      right: 'Grew crops in the forest 🌾' },
+  { id: 2, left: '🪙 Gold Traders', right: 'Traded precious metal 🪙'    },
+  { id: 3, left: '🏹 Hunters',      right: 'Hunted animals 🏹'           },
+  { id: 4, left: '🎨 Craft Makers', right: 'Made beautiful art 🎨'       },
+];
+
+let matchSelected = null; // { side, id, el }
+let matchDone = 0;
+
+// Shuffle right column
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+const shuffledRight = shuffle([...matchPairs]);
+const rightCol = document.getElementById('matchRight');
+shuffledRight.forEach(p => {
+  const div = document.createElement('div');
+  div.className = 'match-item';
+  div.dataset.id = p.id;
+  div.textContent = p.right;
+  div.onclick = () => matchTap(div, 'right');
+  rightCol.appendChild(div);
+});
+
+function matchTap(el, side) {
+  if (el.classList.contains('locked')) return;
+
+  if (!matchSelected) {
+    // First selection
+    el.classList.add('selected');
+    matchSelected = { side, id: el.dataset.id, el };
+    return;
+  }
+
+  // Second selection must be opposite side
+  if (matchSelected.side === side) {
+    matchSelected.el.classList.remove('selected');
+    el.classList.add('selected');
+    matchSelected = { side, id: el.dataset.id, el };
+    return;
+  }
+
+  // Check pair
+  if (matchSelected.id === el.dataset.id) {
+    // Correct
+    matchSelected.el.classList.remove('selected');
+    matchSelected.el.classList.add('locked');
+    el.classList.add('locked');
+    matchSelected.el.onclick = null;
+    el.onclick = null;
+    matchDone++;
+    matchSelected = null;
+    if (matchDone >= matchPairs.length) {
+      document.getElementById('match3Done').style.display = 'block';
+      addCheer();
+    }
+  } else {
+    // Wrong
+    el.classList.add('shake');
+    matchSelected.el.classList.add('shake');
+    setTimeout(() => {
+      el.classList.remove('shake');
+      matchSelected.el.classList.remove('shake', 'selected');
+      matchSelected = null;
+    }, 500);
+  }
+}
+
+// ══════════════════════════════════════════
+// ACTIVITY 4 — TRUE / FALSE
+// ══════════════════════════════════════════
+const tfData = [
+  { q: 'The Akan people lived in the forest areas of Ghana.', answer: true,  feedback: '✅ Yes! They lived in the forest! 🌿' },
+  { q: 'The Akan Empire was in East Africa.',                  answer: false, feedback: '❌ No! It was in West Africa! 🌍'      },
+  { q: 'The Ashanti Region is an Akan area.',                  answer: true,  feedback: '✅ Yes! Ashanti is an Akan region! 🌟' },
+  { q: 'The Akan people only did one job.',                    answer: false, feedback: '❌ No! They did many things! 🌾🪙🏹🎨' },
+  { q: 'The Akan people traded gold.',                         answer: true,  feedback: '✅ Yes! They traded gold! 🪙'          },
+  { q: 'The Bono Region is an Akan area.',                     answer: true,  feedback: '✅ Yes! Bono is an Akan region! 🌳'   },
+];
+
+let tfAnswered = 0;
+
+const tfList = document.getElementById('tfList');
+tfData.forEach((item, i) => {
+  const div = document.createElement('div');
+  div.className = 'tf-item';
+  div.id = `tf${i}`;
+  div.innerHTML = `
+    <div class="tf-question">${i + 1}. ${item.q}</div>
+    <div class="tf-btns">
+      <button class="tf-btn tf-true"  onclick="tfAnswer(${i}, true)"  id="tfT${i}">👍 True</button>
+      <button class="tf-btn tf-false" onclick="tfAnswer(${i}, false)" id="tfF${i}">👎 False</button>
+    </div>
+    <div class="tf-feedback" id="tfFb${i}">${item.feedback}</div>
+  `;
+  tfList.appendChild(div);
+});
+
+function tfAnswer(i, userAnswer) {
+  const item = tfData[i];
+  const div  = document.getElementById(`tf${i}`);
+  const fb   = document.getElementById(`tfFb${i}`);
+  document.getElementById(`tfT${i}`).disabled = true;
+  document.getElementById(`tfF${i}`).disabled = true;
+  if (userAnswer === item.answer) {
+    div.classList.add('tf-correct');
+  } else {
+    div.classList.add('tf-wrong');
+  }
+  tfAnswered++;
+  if (tfAnswered >= tfData.length) {
+    document.getElementById('tf4Done').style.display = 'block';
+    addCheer();
+  }
+}
+
+// ══════════════════════════════════════════
+// ACTIVITY 5 — FILL IN THE BLANK
+// ══════════════════════════════════════════
+const wordBankWords = ['forest', 'West Africa', 'gold', 'Ashanti', 'hunters', 'crafts', 'farmers', 'Akan'];
+
+const fillSentencesData = [
+  { sentence: 'The Akan people lived in the ___ areas of Ghana.',   answer: 'forest'      },
+  { sentence: 'The Ancient Ghana Empire was in ___.',               answer: 'West Africa'  },
+  { sentence: 'The ___ people lived in forest areas.',              answer: 'Akan'         },
+  { sentence: 'The Akan people traded ___.',                        answer: 'gold'         },
+  { sentence: '___ Region is an example of an Akan area.',          answer: 'Ashanti'      },
+  { sentence: 'The Akan people were ___ who grew crops.',           answer: 'farmers'      },
+  { sentence: 'They were also ___ who caught animals.',             answer: 'hunters'      },
+  { sentence: 'They made beautiful ___ and art.',                   answer: 'crafts'       },
+];
+
+let selectedWord = null;
+let fillCompleted = 0;
+
+// Build word bank chips
+const wbEl = document.getElementById('wordBank');
+wordBankWords.forEach(w => {
+  const btn = document.createElement('button');
+  btn.className = 'word-chip';
+  btn.textContent = w;
+  btn.dataset.word = w;
+  btn.onclick = () => selectWord(btn);
+  wbEl.appendChild(btn);
+});
+
+// Build sentences
+const fillEl = document.getElementById('fillSentences');
+fillSentencesData.forEach((item, i) => {
+  const parts = item.sentence.split('___');
+  const div = document.createElement('div');
+  div.className = 'fill-sentence';
+  div.innerHTML =
+    parts[0] +
+    `<span class="fill-blank" id="blank${i}" data-idx="${i}" onclick="tapBlank(this)">___</span>` +
+    (parts[1] || '');
+  fillEl.appendChild(div);
+});
+
+function selectWord(btn) {
+  // deselect previous
+  if (selectedWord) selectedWord.style.outline = '';
+  selectedWord = btn;
+  btn.style.outline = '3px solid #fcd116';
+}
+
+function tapBlank(el) {
+  if (!selectedWord) return;
+  const idx    = parseInt(el.dataset.idx);
+  const word   = selectedWord.dataset.word;
+  const answer = fillSentencesData[idx].answer;
+
+  if (el.classList.contains('correct')) return;
+
+  if (word === answer) {
+    el.textContent = word;
+    el.classList.add('correct');
+    // Disable the chip
+    const chip = document.querySelector(`.word-chip[data-word="${word}"]`);
+    if (chip) chip.disabled = true;
+    selectedWord.style.outline = '';
+    selectedWord = null;
+    fillCompleted++;
+    if (fillCompleted >= fillSentencesData.length) {
+      document.getElementById('fill5Done').style.display = 'block';
+      addCheer();
+    }
+  } else {
+    el.classList.remove('wrong');
+    void el.offsetWidth;
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 500);
+    selectedWord.style.outline = '';
+    selectedWord = null;
+  }
+}
+</script>
+
+</body>
+</html>

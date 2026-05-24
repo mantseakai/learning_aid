@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roles of Parents 👨‍👩‍👧 — Tikky's BK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green:   #558b2f;
+      --green2:  #689f38;
+      --green3:  #aed581;
+      --amber:   #f9a825;
+      --amber2:  #ffca28;
+      --amber3:  #fff9c4;
+      --bg:      #f1f8e9;
+      --text:    #33691e;
+      --dark:    #1b5e20;
+      --white:   #ffffff;
+      --radius:  20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 12% 88%, rgba(85,139,47,0.08) 0%, transparent 45%),
+        radial-gradient(circle at 88% 12%, rgba(249,168,37,0.10) 0%, transparent 45%);
+      color: #33691e;
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: var(--green);
+      border: none;
+      color: white; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.92rem;
+      padding: 8px 18px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 14px rgba(85,139,47,0.35);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #33691e; transform: translateX(-2px); }
+
+    /* ── Cheer banner ── */
+    .cheer-banner {
+      display: none;
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 9998;
+      background: linear-gradient(135deg, var(--green) 0%, var(--amber) 100%);
+      color: white; font-family: 'Fredoka One', cursive;
+      font-size: 1.25rem; padding: 16px 32px; border-radius: 50px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.22);
+      text-align: center;
+      animation: popIn 0.5s cubic-bezier(.175,.885,.32,1.275) both;
+      max-width: 90vw;
+    }
+    .cheer-banner.visible { display: block; }
+
+    /* ── Hero header ── */
+    .hero {
+      background: linear-gradient(135deg, #558b2f 0%, #33691e 40%, #f9a825 100%);
+      text-align: center;
+      padding: 72px 20px 52px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='20' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+    }
+    .hero-emoji { font-size: 80px; display: block; position: relative; animation: bob 2.4s infinite ease-in-out; }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      color: white; position: relative;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.25);
+      margin-top: 10px;
+    }
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      color: white; font-weight: 700; font-size: 0.9rem;
+      padding: 5px 18px; border-radius: 50px;
+      margin: 10px 0; position: relative;
+    }
+    .hero-sub {
+      font-size: 1.2rem; color: rgba(255,255,255,0.92);
+      font-weight: 700; position: relative;
+    }
+
+    /* ── Section wrapper ── */
+    .section {
+      max-width: 860px;
+      margin: 36px auto;
+      padding: 0 16px;
+    }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem; color: var(--green);
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title span { font-size: 1.5rem; }
+
+    /* ── Role cards ── */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .role-card {
+      border-radius: 24px;
+      padding: 32px 24px;
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+      text-align: center;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .role-card:nth-child(odd) {
+      background: linear-gradient(135deg, #558b2f 0%, #689f38 100%);
+      color: white;
+    }
+    .role-card:nth-child(even) {
+      background: linear-gradient(135deg, #f9a825 0%, #ffca28 100%);
+      color: #33691e;
+    }
+    .role-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+    .role-card.active {
+      box-shadow: 0 0 0 5px white, 0 0 0 9px var(--amber), 0 14px 36px rgba(0,0,0,0.2);
+      animation: bounce 0.5s ease;
+    }
+    .role-card .card-emoji { font-size: 60px; display: block; margin-bottom: 12px; }
+    .role-card .card-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem; margin-bottom: 8px;
+    }
+    .role-card .card-desc { font-size: 1rem; font-weight: 600; line-height: 1.4; opacity: 0.92; }
+
+    /* ── Dictation words ── */
+    .dict-grid {
+      display: flex; flex-wrap: wrap; gap: 12px;
+    }
+    .dict-badge {
+      background: white;
+      border: 3px solid var(--green3);
+      color: var(--dark);
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      padding: 10px 22px; border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 3px 10px rgba(85,139,47,0.12);
+      position: relative;
+      min-width: 120px; text-align: center;
+    }
+    .dict-badge:hover { background: var(--amber3); border-color: var(--amber); }
+    .dict-badge.spelling { background: var(--amber2); border-color: var(--amber); }
+    .dict-letters {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.4rem; font-weight: 900;
+      letter-spacing: 8px; color: var(--green);
+      text-align: center; padding: 8px 0 2px;
+      animation: popIn 0.3s ease;
+    }
+
+    /* ── Activity base ── */
+    .activity-box {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: 0 4px 20px rgba(85,139,47,0.10);
+      border: 2px solid var(--green3);
+    }
+
+    /* ── Activity 1 ── */
+    .scenario-card {
+      background: var(--bg);
+      border-radius: 16px; padding: 20px;
+      margin-bottom: 16px;
+      border: 2px solid var(--green3);
+    }
+    .scenario-text {
+      font-size: 1.1rem; font-weight: 700; color: var(--dark);
+      margin-bottom: 14px;
+    }
+    .choice-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .choice-btn {
+      background: var(--green);
+      color: white; border: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      padding: 10px 18px; border-radius: 50px;
+      cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 3px 10px rgba(85,139,47,0.20);
+    }
+    .choice-btn:hover { background: var(--dark); }
+    .choice-btn.correct-ans { background: #2e7d32 !important; }
+    .choice-btn.wrong-ans { background: #c62828 !important; animation: shake 0.4s ease; }
+    .choice-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .scenario-result { font-size: 1rem; font-weight: 700; margin-top: 10px; min-height: 24px; }
+
+    /* ── Activity 2 quiz ── */
+    .quiz-q {
+      background: var(--bg);
+      border-radius: 16px; padding: 18px 20px;
+      margin-bottom: 14px;
+      border: 2px solid var(--green3);
+    }
+    .quiz-q .q-text { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+    .quiz-choices { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-btn {
+      background: white; border: 2.5px solid var(--green3);
+      color: var(--dark); font-family: 'Nunito', sans-serif;
+      font-size: 0.97rem; font-weight: 700;
+      padding: 10px 16px; border-radius: 12px;
+      cursor: pointer; text-align: left;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover { border-color: var(--green); background: #f1f8e9; }
+    .quiz-btn.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
+    .quiz-btn.wrong { background: #ffebee; border-color: #c62828; color: #b71c1c; animation: shake 0.4s ease; }
+    .quiz-btn:disabled { cursor: not-allowed; }
+
+    /* ── Activity 3 match ── */
+    .match-container {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-item {
+      background: white; border: 2.5px solid var(--green3);
+      border-radius: 14px; padding: 12px 16px;
+      font-size: 1rem; font-weight: 700; color: var(--dark);
+      cursor: pointer; text-align: center;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .match-item:hover { border-color: var(--green); background: var(--bg); }
+    .match-item.selected { border-color: var(--amber); background: var(--amber3); box-shadow: 0 0 0 3px var(--amber); }
+    .match-item.locked { border-color: var(--green); background: #c8e6c9; color: #1b5e20; cursor: default; pointer-events: none; }
+    .match-item.shake-it { animation: shake 0.4s ease; }
+    .match-label { font-size: 0.75rem; font-weight: 700; color: #9e9e9e; text-align: center; margin-bottom: 6px; font-family: 'Fredoka One', cursive; letter-spacing: 1px; }
+
+    /* ── Activity 4 T/F ── */
+    .tf-item {
+      background: var(--bg); border-radius: 14px;
+      padding: 16px 20px; margin-bottom: 12px;
+      border: 2px solid var(--green3);
+    }
+    .tf-stmt { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+    .tf-row { display: flex; gap: 12px; }
+    .tf-btn {
+      padding: 10px 28px; border-radius: 50px;
+      border: none; cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      transition: all 0.2s;
+    }
+    .tf-true { background: #43a047; color: white; }
+    .tf-false { background: #e53935; color: white; }
+    .tf-btn:hover { filter: brightness(1.1); }
+    .tf-btn.correct { box-shadow: 0 0 0 4px #fff, 0 0 0 7px #2e7d32; }
+    .tf-btn.wrong { animation: shake 0.4s ease; opacity: 0.5; }
+    .tf-btn:disabled { cursor: not-allowed; }
+
+    /* ── Activity 5 Spelling ── */
+    .spell-progress {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .spell-progress-bar-wrap {
+      flex: 1; background: #dcedc8; border-radius: 50px; height: 14px;
+    }
+    .spell-progress-bar {
+      background: linear-gradient(90deg, var(--green) 0%, var(--amber) 100%);
+      height: 14px; border-radius: 50px;
+      transition: width 0.4s ease;
+    }
+    .spell-word-counter { font-weight: 800; font-size: 0.95rem; color: var(--green); white-space: nowrap; }
+
+    .spell-word-area {
+      text-align: center; padding: 20px 10px;
+    }
+    .spell-emoji { font-size: 72px; display: block; margin-bottom: 10px; animation: bob 2s infinite ease-in-out; }
+    .spell-clue { font-size: 1rem; color: #558b2f; font-weight: 700; margin-bottom: 16px; }
+    .spell-target {
+      display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .spell-slot {
+      width: 44px; height: 50px;
+      border-bottom: 4px solid var(--green);
+      display: flex; align-items: flex-end; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: var(--dark);
+      transition: all 0.2s;
+    }
+    .spell-slot.filled { color: var(--green); }
+    .spell-slot.correct-slot { border-color: #2e7d32; color: #1b5e20; }
+    .spell-tiles {
+      display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .spell-tile {
+      width: 44px; height: 50px;
+      background: white; border: 3px solid var(--green3);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--dark);
+      cursor: pointer; transition: all 0.18s;
+      box-shadow: 0 3px 8px rgba(85,139,47,0.12);
+      user-select: none;
+    }
+    .spell-tile:hover { background: var(--amber3); border-color: var(--amber); transform: translateY(-3px); }
+    .spell-tile.used { opacity: 0; pointer-events: none; }
+    .spell-tile.shake-tile { animation: shake 0.4s ease; }
+    .spell-tile.pop-tile { animation: pop 0.4s ease; }
+    .spell-stars {
+      display: flex; justify-content: center; gap: 6px;
+      margin-top: 8px;
+    }
+    .spell-star { font-size: 1.6rem; filter: grayscale(1) opacity(0.4); transition: all 0.3s; }
+    .spell-star.earned { filter: none; animation: pop 0.4s ease; }
+    .spell-done-msg { font-size: 1.2rem; font-weight: 800; color: var(--green); text-align: center; margin-top: 12px; }
+
+    /* ── Done checkmark ── */
+    .activity-done {
+      text-align: center; padding: 16px;
+      font-size: 1.15rem; font-weight: 800; color: #2e7d32;
+      background: #e8f5e9; border-radius: 12px; margin-top: 14px;
+    }
+
+    /* ── Animations ── */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      30%      { transform: translateY(-16px); }
+      60%      { transform: translateY(-8px); }
+    }
+    @keyframes bob {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-10px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.5) translateX(-50%); opacity: 0; }
+      80%  { transform: scale(1.08) translateX(-50%); }
+      100% { transform: scale(1) translateX(-50%); opacity: 1; }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.35); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+
+    /* ── Progress dots ── */
+    .prog-dots {
+      display: flex; justify-content: center; gap: 10px; margin: 8px 0 24px;
+    }
+    .prog-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #dcedc8; transition: background 0.3s;
+    }
+    .prog-dot.done { background: var(--green); }
+
+    /* ── Misc ── */
+    .section-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--green); color: white;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 500px) {
+      .match-container { grid-template-columns: 1fr 1fr; }
+      .roles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html" class="back-home-btn">← Back</a>
+
+  <!-- Cheer Banner -->
+  <div class="cheer-banner" id="cheerBanner">
+    Amazing, Tikky! You know what parents do! 👨‍👩‍👧⭐
+  </div>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <span class="hero-emoji">👨‍👩‍👧</span>
+    <h1>Roles of Parents 👨‍👩‍👧</h1>
+    <div class="date-badge">22nd May 2026</div>
+    <p class="hero-sub">What do our parents do for us? 💛</p>
+  </header>
+
+  <!-- ── ROLES SECTION ── -->
+  <div class="section">
+    <h2 class="section-title"><span>🌟</span> 5 Roles of Parents</h2>
+    <p style="font-size:1.05rem;font-weight:700;color:#558b2f;margin-bottom:18px;">Tap each card to learn about it!</p>
+
+    <div class="roles-grid" id="rolesGrid">
+      <div class="role-card" onclick="glowCard(this)">
+        <span class="card-emoji">🏠</span>
+        <div class="card-name">A Home</div>
+        <div class="card-desc">Our parents give us a safe home to live in.</div>
+      </div>
+      <div class="role-card" onclick="glowCard(this)">
+        <span class="card-emoji">🍽️</span>
+        <div class="card-name">Food</div>
+        <div class="card-desc">They make sure we have food to eat every day.</div>
+      </div>
+      <div class="role-card" onclick="glowCard(this)">
+        <span class="card-emoji">🎒</span>
+        <div class="card-name">Education</div>
+        <div class="card-desc">They send us to school so we can learn.</div>
+      </div>
+      <div class="role-card" onclick="glowCard(this)">
+        <span class="card-emoji">🛡️</span>
+        <div class="card-name">Security</div>
+        <div class="card-desc">They keep us safe and protect us.</div>
+      </div>
+      <div class="role-card" onclick="glowCard(this)">
+        <span class="card-emoji">🌱</span>
+        <div class="card-name">Training</div>
+        <div class="card-desc">They teach us right from wrong and help us grow.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DICTATION WORDS ── -->
+  <div class="section">
+    <h2 class="section-title"><span>✏️</span> Dictation Words</h2>
+    <p style="font-size:1rem;font-weight:700;color:#558b2f;margin-bottom:14px;">Tap a word to see its letters!</p>
+    <div class="dict-grid" id="dictGrid">
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 1 ── -->
+  <div class="section">
+    <h2 class="section-title"><span class="section-number">1</span> What do parents provide?</h2>
+    <div class="activity-box">
+      <p style="font-size:1rem;font-weight:700;margin-bottom:18px;color:#558b2f;">Read each situation and tap the correct role! 🎯</p>
+      <div id="act1Container"></div>
+      <div id="act1Done" class="activity-done" style="display:none;">🎉 Well done, Tikky! You matched all 5!</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 2 ── -->
+  <div class="section">
+    <h2 class="section-title"><span class="section-number">2</span> Pick the Right Answer</h2>
+    <div class="activity-box">
+      <p style="font-size:1rem;font-weight:700;margin-bottom:18px;color:#558b2f;">Choose the best answer for each question! 🌟</p>
+      <div id="act2Container"></div>
+      <div id="act2Done" class="activity-done" style="display:none;">⭐ Amazing! You got all the quiz questions!</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 3 ── -->
+  <div class="section">
+    <h2 class="section-title"><span class="section-number">3</span> Match Role to Emoji</h2>
+    <div class="activity-box">
+      <p style="font-size:1rem;font-weight:700;margin-bottom:18px;color:#558b2f;">Tap a role on the left, then tap its emoji on the right! 🔗</p>
+      <div class="match-container">
+        <div>
+          <div class="match-label">ROLES</div>
+          <div class="match-col" id="matchLeft"></div>
+        </div>
+        <div>
+          <div class="match-label">EMOJIS</div>
+          <div class="match-col" id="matchRight"></div>
+        </div>
+      </div>
+      <div id="act3Done" class="activity-done" style="display:none;">🎊 Perfect! You matched them all!</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 4 ── -->
+  <div class="section">
+    <h2 class="section-title"><span class="section-number">4</span> True or False?</h2>
+    <div class="activity-box">
+      <p style="font-size:1rem;font-weight:700;margin-bottom:18px;color:#558b2f;">Is each statement TRUE or FALSE? 🤔</p>
+      <div id="act4Container"></div>
+      <div id="act4Done" class="activity-done" style="display:none;">🌈 Brilliant! You know what's true and false!</div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 5 ── -->
+  <div class="section">
+    <h2 class="section-title"><span class="section-number">5</span> Spelling: Dictation Words</h2>
+    <div class="activity-box">
+      <div class="spell-progress">
+        <span class="spell-word-counter" id="spellCounter">Word 1 of 8</span>
+        <div class="spell-progress-bar-wrap">
+          <div class="spell-progress-bar" id="spellBar" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="spell-stars" id="spellStars"></div>
+      <div class="spell-word-area" id="spellArea"></div>
+      <div id="act5Done" class="activity-done" style="display:none;">🏆 AMAZING! You spelled all 8 words correctly, Tikky!</div>
+    </div>
+  </div>
+
+  <div style="height:100px;"></div>
+
+  <script>
+    // ── cheer system ──
+    let cheerCount = 0;
+    function addCheer() {
+      cheerCount++;
+      if (cheerCount >= 2) {
+        document.getElementById('cheerBanner').classList.add('visible');
+      }
+    }
+
+    // ── role card glow ──
+    function glowCard(el) {
+      document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // ── Dictation words ──
+    const dictWords = ['father','mother','parents','blood','group','related','nuclear','family'];
+    const dictMeanings = {
+      father: '👨 Dad — the male parent',
+      mother: '👩 Mum — the female parent',
+      parents: '👨‍👩 Both father and mother together',
+      blood: '🩸 What flows in our bodies; also means family connection',
+      group: '👥 People or things together',
+      related: '🔗 Connected by family',
+      nuclear: '☢️ A small, close family (parents + children)',
+      family: '👨‍👩‍👧 The people we live with and love'
+    };
+
+    function buildDictGrid() {
+      const grid = document.getElementById('dictGrid');
+      dictWords.forEach(word => {
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px;';
+
+        const badge = document.createElement('div');
+        badge.className = 'dict-badge';
+        badge.textContent = word;
+
+        const letters = document.createElement('div');
+        letters.className = 'dict-letters';
+        letters.style.display = 'none';
+
+        let open = false;
+        let timer = null;
+
+        badge.addEventListener('click', () => {
+          if (open) {
+            clearTimeout(timer);
+            letters.style.display = 'none';
+            badge.classList.remove('spelling');
+            open = false;
+          } else {
+            badge.classList.add('spelling');
+            // animate letters one by one
+            const chars = word.split('');
+            let displayed = '';
+            letters.textContent = '';
+            letters.style.display = 'block';
+            let i = 0;
+            function showNext() {
+              if (i < chars.length) {
+                displayed += chars[i];
+                letters.textContent = displayed.split('').join(' ');
+                i++;
+                timer = setTimeout(showNext, 320);
+              } else {
+                timer = setTimeout(() => {
+                  letters.style.display = 'none';
+                  badge.classList.remove('spelling');
+                  open = false;
+                }, 1800);
+              }
+            }
+            showNext();
+            open = true;
+          }
+        });
+
+        const meaning = document.createElement('div');
+        meaning.style.cssText = 'font-size:0.78rem;font-weight:700;color:#689f38;text-align:center;max-width:130px;line-height:1.3;';
+        meaning.textContent = dictMeanings[word];
+
+        wrap.appendChild(badge);
+        wrap.appendChild(letters);
+        wrap.appendChild(meaning);
+        grid.appendChild(wrap);
+      });
+    }
+    buildDictGrid();
+
+    // ─────────────────────────────────────────────────────────
+    // ACTIVITY 1 — scenario matching
+    // ─────────────────────────────────────────────────────────
+    const scenarios = [
+      {
+        text: '🌧️ "It is raining outside. We stay dry inside."',
+        choices: ['🏠 Home', '🍽️ Food', '🎒 School'],
+        correct: '🏠 Home'
+      },
+      {
+        text: '🍚 "Tikky is hungry. Mummy cooks rice."',
+        choices: ['🏠 Home', '🍽️ Food', '🛡️ Security'],
+        correct: '🍽️ Food'
+      },
+      {
+        text: '🎒 "Tikky goes to school with her bag."',
+        choices: ['🍽️ Food', '🎒 Education', '🏠 Home'],
+        correct: '🎒 Education'
+      },
+      {
+        text: '🤝 "Daddy holds Tikky\'s hand crossing the road."',
+        choices: ['🎒 Education', '🛡️ Security', '🍽️ Food'],
+        correct: '🛡️ Security'
+      },
+      {
+        text: '🙏 "Mummy teaches Tikky to say \'please\' and \'thank you\'."',
+        choices: ['🏠 Home', '🍽️ Food', '🌱 Training'],
+        correct: '🌱 Training'
+      }
+    ];
+
+    let act1Done = 0;
+    function buildAct1() {
+      const container = document.getElementById('act1Container');
+      scenarios.forEach((s, si) => {
+        const card = document.createElement('div');
+        card.className = 'scenario-card';
+
+        const txt = document.createElement('div');
+        txt.className = 'scenario-text';
+        txt.textContent = s.text;
+
+        const row = document.createElement('div');
+        row.className = 'choice-row';
+
+        const result = document.createElement('div');
+        result.className = 'scenario-result';
+
+        s.choices.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'choice-btn';
+          btn.textContent = ch;
+          btn.addEventListener('click', function() {
+            if (ch === s.correct) {
+              btn.classList.add('correct-ans');
+              result.textContent = '✅ Correct!';
+              result.style.color = '#2e7d32';
+              row.querySelectorAll('button').forEach(b => b.disabled = true);
+              act1Done++;
+              if (act1Done === scenarios.length) {
+                document.getElementById('act1Done').style.display = 'block';
+                addCheer();
+              }
+            } else {
+              btn.classList.remove('wrong-ans');
+              void btn.offsetWidth;
+              btn.classList.add('wrong-ans');
+              result.textContent = '❌ Try again!';
+              result.style.color = '#c62828';
+            }
+          });
+          row.appendChild(btn);
+        });
+
+        card.appendChild(txt);
+        card.appendChild(row);
+        card.appendChild(result);
+        container.appendChild(card);
+      });
+    }
+    buildAct1();
+
+    // ─────────────────────────────────────────────────────────
+    // ACTIVITY 2 — quiz
+    // ─────────────────────────────────────────────────────────
+    const quizData = [
+      {
+        q: 'How many roles of parents are listed?',
+        choices: ['a) 3', 'b) 4', 'c) 5'],
+        correct: 'c) 5'
+      },
+      {
+        q: 'Parents provide us with a _____.',
+        choices: ['a) toy', 'b) home', 'c) car'],
+        correct: 'b) home'
+      },
+      {
+        q: 'They keep us safe. This is called _____.',
+        choices: ['a) training', 'b) food', 'c) security'],
+        correct: 'c) security'
+      },
+      {
+        q: 'Sending us to school provides _____.',
+        choices: ['a) security', 'b) education', 'c) food'],
+        correct: 'b) education'
+      },
+      {
+        q: 'Parents train us to _____.',
+        choices: ['a) know right from wrong', 'b) cook food', 'c) build homes'],
+        correct: 'a) know right from wrong'
+      },
+      {
+        q: 'Which is NOT a role of parents?',
+        choices: ['a) provide food', 'b) buy presents', 'c) provide security'],
+        correct: 'b) buy presents'
+      },
+      {
+        q: 'Our parents provide us with food because _____.',
+        choices: ['a) they are bored', 'b) we need food to grow', 'c) food is free'],
+        correct: 'b) we need food to grow'
+      },
+      {
+        q: 'Which comes first in the list?',
+        choices: ['a) training', 'b) security', 'c) a home'],
+        correct: 'c) a home'
+      }
+    ];
+
+    let act2Done = 0;
+    function buildAct2() {
+      const container = document.getElementById('act2Container');
+      quizData.forEach((qd, qi) => {
+        const box = document.createElement('div');
+        box.className = 'quiz-q';
+
+        const qtxt = document.createElement('div');
+        qtxt.className = 'q-text';
+        qtxt.textContent = `Q${qi + 1}: ${qd.q}`;
+
+        const choices = document.createElement('div');
+        choices.className = 'quiz-choices';
+
+        qd.choices.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-btn';
+          btn.textContent = ch;
+          btn.addEventListener('click', function() {
+            if (ch === qd.correct) {
+              btn.classList.add('correct');
+              choices.querySelectorAll('button').forEach(b => b.disabled = true);
+              act2Done++;
+              if (act2Done === quizData.length) {
+                document.getElementById('act2Done').style.display = 'block';
+                addCheer();
+              }
+            } else {
+              btn.classList.remove('wrong');
+              void btn.offsetWidth;
+              btn.classList.add('wrong');
+            }
+          });
+          choices.appendChild(btn);
+        });
+
+        box.appendChild(qtxt);
+        box.appendChild(choices);
+        container.appendChild(box);
+      });
+    }
+    buildAct2();
+
+    // ─────────────────────────────────────────────────────────
+    // ACTIVITY 3 — match role to emoji
+    // ─────────────────────────────────────────────────────────
+    const matchPairs = [
+      { role: 'A Home',     emoji: '🏠' },
+      { role: 'Food',       emoji: '🍽️' },
+      { role: 'Education',  emoji: '🎒' },
+      { role: 'Security',   emoji: '🛡️' },
+      { role: 'Training',   emoji: '🌱' }
+    ];
+
+    // Shuffle emojis
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    let selectedLeft = null;
+    let matchedCount = 0;
+
+    function buildAct3() {
+      const leftCol = document.getElementById('matchLeft');
+      const rightCol = document.getElementById('matchRight');
+      const shuffledEmojis = shuffle(matchPairs.map(p => p.emoji));
+
+      matchPairs.forEach((pair, i) => {
+        const lItem = document.createElement('div');
+        lItem.className = 'match-item';
+        lItem.textContent = pair.role;
+        lItem.dataset.role = pair.role;
+        lItem.addEventListener('click', () => selectLeft(lItem));
+        leftCol.appendChild(lItem);
+      });
+
+      shuffledEmojis.forEach(emoji => {
+        const rItem = document.createElement('div');
+        rItem.className = 'match-item';
+        rItem.textContent = emoji;
+        rItem.dataset.emoji = emoji;
+        rItem.addEventListener('click', () => selectRight(rItem));
+        rightCol.appendChild(rItem);
+      });
+    }
+
+    function selectLeft(el) {
+      if (el.classList.contains('locked')) return;
+      document.querySelectorAll('#matchLeft .match-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedLeft = el;
+    }
+
+    function selectRight(el) {
+      if (!selectedLeft) return;
+      if (el.classList.contains('locked')) return;
+
+      const role = selectedLeft.dataset.role;
+      const emoji = el.dataset.emoji;
+      const pair = matchPairs.find(p => p.role === role);
+
+      if (pair && pair.emoji === emoji) {
+        // correct
+        selectedLeft.classList.remove('selected');
+        selectedLeft.classList.add('locked');
+        selectedLeft.textContent = pair.role + ' ' + emoji;
+        el.classList.add('locked');
+        selectedLeft = null;
+        matchedCount++;
+        if (matchedCount === matchPairs.length) {
+          document.getElementById('act3Done').style.display = 'block';
+          addCheer();
+        }
+      } else {
+        // wrong — shake both
+        el.classList.add('shake-it');
+        selectedLeft.classList.add('shake-it');
+        setTimeout(() => {
+          el.classList.remove('shake-it');
+          if (selectedLeft) selectedLeft.classList.remove('shake-it');
+        }, 420);
+      }
+    }
+
+    buildAct3();
+
+    // ─────────────────────────────────────────────────────────
+    // ACTIVITY 4 — True or False
+    // ─────────────────────────────────────────────────────────
+    const tfData = [
+      { stmt: 'Parents provide us with a home.', answer: true },
+      { stmt: 'Parents do not care about our education.', answer: false },
+      { stmt: 'Security means keeping us safe.', answer: true },
+      { stmt: 'Training means teaching us right from wrong.', answer: true },
+      { stmt: 'Parents only provide food.', answer: false },
+      { stmt: 'Our parents provide us with 5 things.', answer: true }
+    ];
+
+    let act4Done = 0;
+    function buildAct4() {
+      const container = document.getElementById('act4Container');
+      tfData.forEach((item, i) => {
+        const box = document.createElement('div');
+        box.className = 'tf-item';
+
+        const stmt = document.createElement('div');
+        stmt.className = 'tf-stmt';
+        stmt.textContent = `${i + 1}. ${item.stmt}`;
+
+        const row = document.createElement('div');
+        row.className = 'tf-row';
+
+        const tBtn = document.createElement('button');
+        tBtn.className = 'tf-btn tf-true';
+        tBtn.textContent = '✅ TRUE';
+
+        const fBtn = document.createElement('button');
+        fBtn.className = 'tf-btn tf-false';
+        fBtn.textContent = '❌ FALSE';
+
+        function handlePick(chosen) {
+          const isCorrect = chosen === item.answer;
+          tBtn.disabled = true;
+          fBtn.disabled = true;
+          if (isCorrect) {
+            (chosen ? tBtn : fBtn).classList.add('correct');
+            act4Done++;
+            if (act4Done === tfData.length) {
+              document.getElementById('act4Done').style.display = 'block';
+              addCheer();
+            }
+          } else {
+            (chosen ? tBtn : fBtn).classList.add('wrong');
+            (chosen ? fBtn : tBtn).classList.add('correct');
+          }
+        }
+
+        tBtn.addEventListener('click', () => handlePick(true));
+        fBtn.addEventListener('click', () => handlePick(false));
+
+        row.appendChild(tBtn);
+        row.appendChild(fBtn);
+        box.appendChild(stmt);
+        box.appendChild(row);
+        container.appendChild(box);
+      });
+    }
+    buildAct4();
+
+    // ─────────────────────────────────────────────────────────
+    // ACTIVITY 5 — Spelling game
+    // ─────────────────────────────────────────────────────────
+    const spellWords = [
+      { word: 'father',  emoji: '👨',    clue: 'Dad — the male parent' },
+      { word: 'mother',  emoji: '👩',    clue: 'Mum — the female parent' },
+      { word: 'parents', emoji: '👨‍👩',   clue: 'Father and mother together' },
+      { word: 'blood',   emoji: '🩸',    clue: 'It flows in our body and connects family' },
+      { word: 'group',   emoji: '👥',    clue: 'People together' },
+      { word: 'related', emoji: '🔗',    clue: 'Connected by family' },
+      { word: 'nuclear', emoji: '🏠',    clue: 'A small close family unit' },
+      { word: 'family',  emoji: '👨‍👩‍👧',  clue: 'The people we love and live with' }
+    ];
+
+    let spellIndex = 0;
+    let spellTyped = [];
+    const earnedStars = [];
+
+    function buildStars() {
+      const container = document.getElementById('spellStars');
+      container.innerHTML = '';
+      spellWords.forEach((_, i) => {
+        const s = document.createElement('span');
+        s.className = 'spell-star' + (earnedStars[i] ? ' earned' : '');
+        s.id = `star-${i}`;
+        s.textContent = '⭐';
+        container.appendChild(s);
+      });
+    }
+
+    function buildSpellWord() {
+      if (spellIndex >= spellWords.length) {
+        document.getElementById('spellArea').innerHTML = '';
+        document.getElementById('act5Done').style.display = 'block';
+        document.getElementById('spellCounter').textContent = '✅ All done!';
+        document.getElementById('spellBar').style.width = '100%';
+        addCheer();
+        return;
+      }
+
+      const w = spellWords[spellIndex];
+      const letters = w.word.split('');
+      const shuffledLetters = shuffle([...letters]);
+      spellTyped = [];
+
+      // Update counter + bar
+      document.getElementById('spellCounter').textContent = `Word ${spellIndex + 1} of ${spellWords.length}`;
+      document.getElementById('spellBar').style.width = `${(spellIndex / spellWords.length) * 100}%`;
+
+      const area = document.getElementById('spellArea');
+      area.innerHTML = '';
+
+      // Emoji
+      const emojiEl = document.createElement('span');
+      emojiEl.className = 'spell-emoji';
+      emojiEl.textContent = w.emoji;
+
+      // Clue
+      const clueEl = document.createElement('div');
+      clueEl.className = 'spell-clue';
+      clueEl.textContent = w.clue;
+
+      // Target slots
+      const targetRow = document.createElement('div');
+      targetRow.className = 'spell-target';
+      targetRow.id = 'spellTarget';
+      letters.forEach(() => {
+        const slot = document.createElement('div');
+        slot.className = 'spell-slot';
+        slot.textContent = '';
+        targetRow.appendChild(slot);
+      });
+
+      // Tiles
+      const tilesRow = document.createElement('div');
+      tilesRow.className = 'spell-tiles';
+      tilesRow.id = 'spellTiles';
+      shuffledLetters.forEach((ch, ti) => {
+        const tile = document.createElement('div');
+        tile.className = 'spell-tile';
+        tile.textContent = ch;
+        tile.dataset.letter = ch;
+        tile.dataset.idx = ti;
+        tile.addEventListener('click', function() { tapTile(tile, letters); });
+        tilesRow.appendChild(tile);
+      });
+
+      area.appendChild(emojiEl);
+      area.appendChild(clueEl);
+      area.appendChild(targetRow);
+      area.appendChild(tilesRow);
+    }
+
+    function tapTile(tile, correctLetters) {
+      if (tile.classList.contains('used')) return;
+
+      const pos = spellTyped.length;
+      const ch = tile.dataset.letter;
+
+      if (ch === correctLetters[pos]) {
+        // correct
+        spellTyped.push(ch);
+        tile.classList.add('used', 'pop-tile');
+        const slots = document.querySelectorAll('.spell-slot');
+        slots[pos].textContent = ch;
+        slots[pos].classList.add('filled');
+
+        if (spellTyped.length === correctLetters.length) {
+          // word complete
+          slots.forEach(s => s.classList.add('correct-slot'));
+          earnedStars[spellIndex] = true;
+          const starEl = document.getElementById(`star-${spellIndex}`);
+          if (starEl) starEl.classList.add('earned');
+
+          setTimeout(() => {
+            spellIndex++;
+            buildSpellWord();
+          }, 900);
+        }
+      } else {
+        // wrong
+        tile.classList.remove('shake-tile');
+        void tile.offsetWidth;
+        tile.classList.add('shake-tile');
+        setTimeout(() => tile.classList.remove('shake-tile'), 420);
+
+        // reset typed + clear slots
+        spellTyped = [];
+        document.querySelectorAll('.spell-slot').forEach(s => {
+          s.textContent = '';
+          s.classList.remove('filled');
+        });
+        // restore used tiles
+        document.querySelectorAll('.spell-tile').forEach(t => {
+          t.classList.remove('used', 'pop-tile');
+        });
+      }
+    }
+
+    buildStars();
+    buildSpellWord();
+  </script>
+</body>
+</html>

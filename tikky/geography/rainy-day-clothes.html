@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rainy Day Clothes 🌧️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0277bd;
+      --accent:  #29b6f6;
+      --bg:      #e1f5fe;
+      --dark:    #01579b;
+      --cloud:   #78909c;
+      --puddle:  #4dd0e1;
+      --rain:    #29b6f6;
+      --white:   #ffffff;
+      --green:   #00c853;
+      --red:     #f44336;
+      --gold:    #ffd600;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: var(--primary); border: 2px solid var(--dark);
+      color: white; font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(1,87,155,.3);
+      transition: all .2s;
+    }
+    .back-home-btn:hover { background: var(--dark); transform: translateX(-2px); }
+
+    /* ══════════════════════════════
+       HERO / HEADER
+    ══════════════════════════════ */
+    .hero {
+      background: linear-gradient(180deg, #01579b 0%, #0288d1 55%, #29b6f6 100%);
+      padding: 70px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    /* Animated rain drops */
+    .raindrop {
+      position: absolute;
+      width: 3px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.6);
+      animation: rain-fall linear infinite;
+      top: -60px;
+    }
+    @keyframes rain-fall {
+      0%   { transform: translateY(0) rotate(15deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(420px) rotate(15deg); opacity: 0; }
+    }
+
+    /* Clouds in hero */
+    .hcloud {
+      position: absolute;
+      background: rgba(255,255,255,.45);
+      border-radius: 50px;
+      animation: drift linear infinite;
+    }
+    .hcloud::before, .hcloud::after {
+      content:''; position:absolute;
+      background: rgba(255,255,255,.45); border-radius:50%;
+    }
+    .hcloud.c1 { width:100px;height:32px; top:22%;left:-110px; animation-duration:20s; }
+    .hcloud.c1::before { width:55px;height:55px; top:-28px;left:12px; }
+    .hcloud.c1::after  { width:40px;height:40px; top:-20px;left:44px; }
+    .hcloud.c2 { width:130px;height:38px; top:60%;left:-140px; animation-duration:26s; animation-delay:-11s; opacity:.35; }
+    .hcloud.c2::before { width:65px;height:65px; top:-32px;left:16px; }
+    .hcloud.c2::after  { width:48px;height:48px; top:-24px;left:58px; }
+    .hcloud.c3 { width:75px;height:24px; top:14%;left:-90px; animation-duration:22s; animation-delay:-6s; opacity:.3; }
+    .hcloud.c3::before { width:42px;height:42px; top:-21px;left:9px; }
+    @keyframes drift { from{left:-160px} to{left:110%} }
+
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.2rem, 7vw, 3.6rem);
+      color: white;
+      text-shadow: 0 4px 16px rgba(0,0,0,.35);
+      position: relative; z-index: 2;
+      animation: popIn .6s cubic-bezier(.3,1.4,.5,1) both;
+    }
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.2);
+      border: 2px solid rgba(255,255,255,.5);
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 5px 18px;
+      border-radius: 50px;
+      margin-top: 10px;
+      position: relative; z-index: 2;
+    }
+    .definition-box {
+      background: rgba(255,255,255,.18);
+      border: 2px solid rgba(255,255,255,.4);
+      border-radius: 18px;
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 16px 28px;
+      margin: 22px auto 0;
+      max-width: 540px;
+      position: relative; z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ══════════════════════════════
+       CHEER BANNER
+    ══════════════════════════════ */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #0277bd, #29b6f6);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 20px 24px;
+      border-radius: 20px;
+      margin: 24px auto;
+      max-width: 700px;
+      box-shadow: 0 8px 28px rgba(2,119,189,.4);
+      animation: popIn .5s ease both;
+    }
+    .cheer-banner.show { display: block; }
+
+    /* ══════════════════════════════
+       MAIN CONTAINER
+    ══════════════════════════════ */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+    }
+
+    /* Section headings */
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: var(--primary);
+      text-align: center;
+      margin: 36px 0 18px;
+    }
+    .section-title span { font-size: 1.5rem; }
+
+    /* ══════════════════════════════
+       CLOTHES CARDS GRID
+    ══════════════════════════════ */
+    .clothes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .cloth-card {
+      background: white;
+      border: 3px solid var(--accent);
+      border-radius: 22px;
+      padding: 24px 14px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .15s, border-color .2s, box-shadow .2s;
+      box-shadow: 0 4px 14px rgba(2,119,189,.12);
+      user-select: none;
+    }
+    .cloth-card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(2,119,189,.22); }
+    .cloth-card.tapped {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+      animation: bounce .4s ease;
+      box-shadow: 0 0 0 4px rgba(2,119,189,.25), 0 8px 22px rgba(2,119,189,.25);
+    }
+    .cloth-emoji { font-size: 3.2rem; display: block; margin-bottom: 8px; }
+    .cloth-name  { font-family: 'Fredoka One', cursive; font-size: 1.15rem; color: var(--dark); margin-bottom: 6px; }
+    .cloth-desc  { font-size: .88rem; font-weight: 700; color: var(--cloud); }
+
+    /* ══════════════════════════════
+       ACTIVITY WRAPPERS
+    ══════════════════════════════ */
+    .activity-box {
+      background: white;
+      border: 3px solid var(--accent);
+      border-radius: 26px;
+      padding: 28px 22px 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 18px rgba(2,119,189,.1);
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.45rem;
+      color: var(--primary);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .activity-subtitle {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cloud);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    /* Progress dots */
+    .prog-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 6px 0 14px;
+    }
+    .prog-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #cfd8dc;
+      transition: background .3s;
+    }
+    .prog-dot.done { background: var(--primary); }
+
+    /* ══════════════════════════════
+       ACTIVITY 1 — TAP TO SORT
+    ══════════════════════════════ */
+    .sort-card {
+      background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+      border: 3px solid var(--accent);
+      border-radius: 22px;
+      padding: 30px 20px;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: var(--dark);
+      margin-bottom: 18px;
+      min-height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 2px 8px rgba(2,119,189,.1);
+    }
+    .sort-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+    .sort-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      padding: 14px 28px;
+      border: none; border-radius: 50px;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    .sort-btn:hover { transform: translateY(-2px); }
+    .sort-btn.rainy { background: var(--primary); color: white; }
+    .sort-btn.sunny { background: #ffb300; color: white; }
+    .sort-bin {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      min-height: 48px; padding: 10px;
+      background: #f0f9ff; border-radius: 14px;
+      border: 2px dashed var(--accent);
+    }
+    .sort-bin .bin-item {
+      background: var(--primary); color: white;
+      font-weight: 800; font-size: .85rem;
+      padding: 5px 12px; border-radius: 50px;
+      animation: popIn .3s ease;
+    }
+    .sort-result-msg {
+      text-align: center; font-weight: 800; font-size: 1.05rem;
+      margin-top: 12px; min-height: 28px;
+    }
+    .sort-result-msg.good { color: var(--green); }
+    .sort-result-msg.bad  { color: var(--red);   }
+
+    /* ══════════════════════════════
+       ACTIVITY 2 — QUIZ
+    ══════════════════════════════ */
+    .quiz-question {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-align: center;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .quiz-options {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .quiz-opt {
+      background: #f0f9ff;
+      border: 2.5px solid var(--accent);
+      border-radius: 16px;
+      padding: 14px 20px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+    .quiz-opt:hover { background: #e1f5fe; transform: translateY(-2px); }
+    .quiz-opt.correct { background: #e8f5e9; border-color: var(--green); color: var(--green); pointer-events: none; }
+    .quiz-opt.wrong   { background: #ffeef0; border-color: var(--red);   color: var(--red);   animation: shake .4s ease; pointer-events: none; }
+    .quiz-nav {
+      display: flex; justify-content: center; gap: 12px; margin-top: 18px;
+    }
+    .quiz-nav-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      padding: 10px 24px; border: none;
+      border-radius: 50px; cursor: pointer;
+      background: var(--primary); color: white;
+      box-shadow: 0 4px 12px rgba(2,119,189,.3);
+      transition: transform .15s;
+    }
+    .quiz-nav-btn:hover { transform: translateY(-2px); }
+    .quiz-counter {
+      text-align: center;
+      font-weight: 800;
+      color: var(--cloud);
+      margin-bottom: 12px;
+    }
+
+    /* ══════════════════════════════
+       ACTIVITY 3 — MATCH
+    ══════════════════════════════ */
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
+    }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-item {
+      background: #f0f9ff;
+      border: 2.5px solid var(--accent);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-weight: 800;
+      font-size: .95rem;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+    .match-item:hover { background: #e1f5fe; }
+    .match-item.selected { background: var(--accent); color: white; border-color: var(--primary); }
+    .match-item.matched  { background: #e8f5e9; border-color: var(--green); color: #1b5e20; pointer-events: none; font-weight: 900; }
+    .match-item.wrong    { animation: shake .4s ease; }
+    .match-score-msg { text-align: center; font-weight: 800; font-size: 1.1rem; margin-top: 14px; min-height: 26px; }
+
+    /* ══════════════════════════════
+       ACTIVITY 4 — TRUE / FALSE
+    ══════════════════════════════ */
+    .tf-list { display: flex; flex-direction: column; gap: 14px; }
+    .tf-row {
+      background: #f0f9ff;
+      border: 2.5px solid var(--accent);
+      border-radius: 18px;
+      padding: 14px 16px;
+    }
+    .tf-stmt {
+      font-weight: 800; font-size: 1rem;
+      margin-bottom: 10px; color: var(--dark);
+    }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      flex: 1;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.05rem;
+      padding: 10px; border: none;
+      border-radius: 12px; cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 3px 8px rgba(0,0,0,.12);
+    }
+    .tf-btn.true-btn  { background: var(--green); color: white; }
+    .tf-btn.false-btn { background: var(--red);   color: white; }
+    .tf-btn:hover { opacity: .85; transform: scale(1.03); }
+    .tf-btn.correct-pick { outline: 4px solid var(--gold); opacity: 1; pointer-events: none; }
+    .tf-btn.wrong-pick   { opacity: .4; animation: shake .4s ease; pointer-events: none; }
+    .tf-btn.locked       { pointer-events: none; opacity: .55; }
+
+    /* ══════════════════════════════
+       ACTIVITY 5 — FILL IN THE BLANK
+    ══════════════════════════════ */
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+      padding: 14px;
+      background: #e1f5fe;
+      border-radius: 16px;
+      border: 2px dashed var(--accent);
+    }
+    .word-chip {
+      background: var(--primary); color: white;
+      font-weight: 800; font-size: 1rem;
+      padding: 7px 18px; border-radius: 50px;
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 3px 8px rgba(2,119,189,.25);
+    }
+    .word-chip:hover { transform: scale(1.08); background: var(--dark); }
+    .word-chip.used  { opacity: .35; pointer-events: none; }
+    .fill-list { display: flex; flex-direction: column; gap: 14px; }
+    .fill-row {
+      background: #f0f9ff;
+      border: 2.5px solid var(--accent);
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .fill-blank {
+      display: inline-block;
+      min-width: 80px;
+      border-bottom: 3px solid var(--primary);
+      padding: 2px 8px;
+      margin: 0 4px;
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      cursor: pointer;
+      text-align: center;
+      border-radius: 4px;
+      transition: all .2s;
+    }
+    .fill-blank.filled   { color: var(--dark); background: rgba(41,182,246,.15); border-bottom-color: var(--accent); }
+    .fill-blank.correct  { color: var(--green); border-bottom-color: var(--green); background: rgba(0,200,83,.1); cursor: default; }
+    .fill-blank.wrong    { color: var(--red);   border-bottom-color: var(--red); background: rgba(244,67,54,.1); animation: shake .4s ease; }
+    .fill-check-btn {
+      display: block; margin: 20px auto 0;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      padding: 13px 36px; border: none;
+      border-radius: 50px; cursor: pointer;
+      background: var(--primary); color: white;
+      box-shadow: 0 4px 14px rgba(2,119,189,.35);
+      transition: transform .15s;
+    }
+    .fill-check-btn:hover { transform: translateY(-2px); }
+
+    /* ══════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════ */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      30%      { transform: translateY(-14px); }
+      60%      { transform: translateY(-6px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(.4); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1);  opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Done message */
+    .done-msg {
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-top: 16px;
+      animation: popIn .5s ease both;
+    }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+      .match-grid { grid-template-columns: 1fr; }
+      .match-col:first-child { order: 1; }
+      .match-col:last-child  { order: 2; }
+      .clothes-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Back button -->
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero" id="hero">
+  <!-- floating clouds -->
+  <div class="hcloud c1"></div>
+  <div class="hcloud c2"></div>
+  <div class="hcloud c3"></div>
+
+  <h1 class="hero-title">Rainy Day Clothes 🌧️</h1>
+  <div class="date-badge">📅 14th May 2026</div>
+  <div class="definition-box">
+    ☁️ A rainy day is a day when <strong>rainfall</strong> falls from the clouds.
+  </div>
+</div>
+
+<!-- ═══════════════ CHEER BANNER ═══════════════ -->
+<div class="container">
+  <div class="cheer-banner" id="cheerBanner">
+    🌧️⭐ Wonderful, Tikky! You're ready for a rainy day! 🌧️⭐
+  </div>
+
+  <!-- ═══════════════ CLOTHES SECTION ═══════════════ -->
+  <div class="section-title">☂️ Rainy Day Clothes — Tap Each One!</div>
+  <div class="clothes-grid" id="clothesGrid">
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">🧥</span>
+      <div class="cloth-name">Raincoat</div>
+      <div class="cloth-desc">Keeps the body dry</div>
+    </div>
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">👢</span>
+      <div class="cloth-name">Wellington Boots</div>
+      <div class="cloth-desc">Protect the feet from mud and water</div>
+    </div>
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">🧣</span>
+      <div class="cloth-name">Sweater / Jacket</div>
+      <div class="cloth-desc">Keeps the body warm</div>
+    </div>
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">🧢</span>
+      <div class="cloth-name">Cap or Hood</div>
+      <div class="cloth-desc">Covers the head</div>
+    </div>
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">🌊</span>
+      <div class="cloth-name">Waterproof Clothing</div>
+      <div class="cloth-desc">Prevents getting wet</div>
+    </div>
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">☂️</span>
+      <div class="cloth-name">Umbrella</div>
+      <div class="cloth-desc">Keeps the rain off your body</div>
+    </div>
+    <div class="cloth-card" onclick="tapCard(this)">
+      <span class="cloth-emoji">🥾</span>
+      <div class="cloth-name">Rain Boots</div>
+      <div class="cloth-desc">Keep the feet dry</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 1 ═══════════════ -->
+  <div class="section-title"><span>🎮</span> Activity 1: Rainy Day or Not?</div>
+  <div class="activity-box">
+    <div class="activity-title">☁️ Rainy Day or Not? ☀️</div>
+    <div class="activity-subtitle">Tap the right button for each item!</div>
+    <div class="prog-bar" id="sortProg"></div>
+    <div class="sort-card" id="sortCard">Loading...</div>
+    <div class="sort-btns">
+      <button class="sort-btn rainy" onclick="sortAnswer(true)">🌧️ Rainy Day</button>
+      <button class="sort-btn sunny" onclick="sortAnswer(false)">☀️ Not Rainy Day</button>
+    </div>
+    <div class="sort-result-msg" id="sortMsg"></div>
+    <div style="margin-top:12px">
+      <strong style="color:var(--primary); font-size:.9rem;">✅ Rainy Day items:</strong>
+      <div class="sort-bin" id="sortBin"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 2 ═══════════════ -->
+  <div class="section-title"><span>🎮</span> Activity 2: What Does It Do?</div>
+  <div class="activity-box">
+    <div class="activity-title">🤔 What does it do?</div>
+    <div class="quiz-counter" id="quizCounter">Question 1 of 8</div>
+    <div class="prog-bar" id="quizProg"></div>
+    <div class="quiz-question" id="quizQ">...</div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div class="quiz-nav">
+      <button class="quiz-nav-btn" id="quizNextBtn" onclick="nextQuiz()" style="display:none">Next ➜</button>
+    </div>
+    <div class="done-msg" id="quizDone" style="display:none">🎉 Brilliant! All done! 🎉</div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 3 ═══════════════ -->
+  <div class="section-title"><span>🎮</span> Activity 3: Match Clothing to Reason</div>
+  <div class="activity-box">
+    <div class="activity-title">🔗 Match the clothing to its reason!</div>
+    <div class="activity-subtitle">Tap one from the left, then one from the right.</div>
+    <div class="match-grid">
+      <div class="match-col" id="matchLeft"></div>
+      <div class="match-col" id="matchRight"></div>
+    </div>
+    <div class="match-score-msg" id="matchMsg"></div>
+    <div class="done-msg" id="matchDone" style="display:none">🎉 Perfect matches, Tikky! 🎉</div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 4 ═══════════════ -->
+  <div class="section-title"><span>🎮</span> Activity 4: True or False?</div>
+  <div class="activity-box">
+    <div class="activity-title">✅ True or False?</div>
+    <div class="tf-list" id="tfList"></div>
+    <div class="done-msg" id="tfDone" style="display:none">🎉 You got them all! 🎉</div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 5 ═══════════════ -->
+  <div class="section-title"><span>🎮</span> Activity 5: Fill in the Blank</div>
+  <div class="activity-box">
+    <div class="activity-title">✏️ Fill in the blank!</div>
+    <div class="activity-subtitle">Tap a word from the box, then tap the blank to fill it.</div>
+    <div class="word-bank" id="wordBank"></div>
+    <div class="fill-list" id="fillList"></div>
+    <button class="fill-check-btn" onclick="checkFill()">Check my answers ✔</button>
+    <div class="done-msg" id="fillDone" style="display:none">🌧️ Amazing, Tikky! All correct! 🌧️</div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ═══════════════════════════════════════
+   SHARED STATE
+═══════════════════════════════════════ */
+let cheerCount = 0;
+
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    document.getElementById('cheerBanner').classList.add('show');
+    document.getElementById('cheerBanner').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+/* ═══════════════════════════════════════
+   RAIN ANIMATION — build droplets in hero
+═══════════════════════════════════════ */
+(function buildRain() {
+  const hero = document.getElementById('hero');
+  const count = 28;
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'raindrop';
+    const h = Math.random() * 18 + 8;    // height 8-26px
+    d.style.height = h + 'px';
+    d.style.left   = (Math.random() * 100) + '%';
+    d.style.animationDuration  = (Math.random() * 1.2 + 0.8) + 's';
+    d.style.animationDelay     = (Math.random() * 2.5)        + 's';
+    d.style.opacity = (Math.random() * 0.4 + 0.3).toFixed(2);
+    hero.appendChild(d);
+  }
+})();
+
+/* ═══════════════════════════════════════
+   CLOTHES CARDS
+═══════════════════════════════════════ */
+function tapCard(el) {
+  el.classList.toggle('tapped');
+}
+
+/* ═══════════════════════════════════════
+   ACTIVITY 1 — TAP TO SORT
+═══════════════════════════════════════ */
+const sortItems = [
+  { label: '🧥 Raincoat',             isRainy: true  },
+  { label: '👢 Wellington Boots',      isRainy: true  },
+  { label: '☂️ Umbrella',             isRainy: true  },
+  { label: '🌊 Waterproof Jacket',    isRainy: true  },
+  { label: '🧢 Hood',                 isRainy: true  },
+  { label: '🩱 Swimsuit',             isRainy: false },
+  { label: '👡 Sandals',              isRainy: false },
+  { label: '🕶️ Sunglasses',           isRainy: false },
+  { label: '👕 T-shirt',              isRainy: false },
+  { label: '🩳 Shorts',               isRainy: false },
+];
+
+let sortIndex = 0;
+let sortCorrect = 0;
+const sortShuffled = [...sortItems].sort(() => Math.random() - .5);
+
+function buildSortProg() {
+  const bar = document.getElementById('sortProg');
+  bar.innerHTML = '';
+  sortShuffled.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'prog-dot' + (i < sortIndex ? ' done' : '');
+    bar.appendChild(d);
+  });
+}
+
+function showSortCard() {
+  if (sortIndex >= sortShuffled.length) {
+    document.getElementById('sortCard').textContent = '🎉 All sorted!';
+    document.getElementById('sortMsg').textContent = '✅ Activity complete!';
+    document.getElementById('sortMsg').className = 'sort-result-msg good';
+    addCheer();
+    return;
+  }
+  document.getElementById('sortCard').textContent = sortShuffled[sortIndex].label;
+  document.getElementById('sortMsg').textContent = '';
+  buildSortProg();
+}
+
+function sortAnswer(guessRainy) {
+  if (sortIndex >= sortShuffled.length) return;
+  const item = sortShuffled[sortIndex];
+  const msg  = document.getElementById('sortMsg');
+  if (guessRainy === item.isRainy) {
+    msg.textContent = '✅ Correct!';
+    msg.className = 'sort-result-msg good';
+    if (item.isRainy) {
+      const bin  = document.getElementById('sortBin');
+      const chip = document.createElement('div');
+      chip.className = 'bin-item';
+      chip.textContent = item.label;
+      bin.appendChild(chip);
+    }
+    sortIndex++;
+    buildSortProg();
+    setTimeout(showSortCard, 800);
+  } else {
+    msg.textContent = '❌ Try again!';
+    msg.className = 'sort-result-msg bad';
+    const card = document.getElementById('sortCard');
+    card.style.animation = 'none';
+    requestAnimationFrame(() => { card.style.animation = 'shake .4s ease'; });
+    setTimeout(() => { card.style.animation = ''; }, 500);
+  }
+}
+
+showSortCard();
+
+/* ═══════════════════════════════════════
+   ACTIVITY 2 — QUIZ
+═══════════════════════════════════════ */
+const quizData = [
+  {
+    q: 'A raincoat keeps the body ___.',
+    opts: ['warm', 'dry', 'cool'],
+    correct: 1
+  },
+  {
+    q: 'Wellington boots protect the feet from ___.',
+    opts: ['sun', 'mud and water', 'cold wind'],
+    correct: 1
+  },
+  {
+    q: 'A sweater/jacket keeps the body ___.',
+    opts: ['warm', 'dry', 'cool'],
+    correct: 0
+  },
+  {
+    q: 'A cap or hood covers the ___.',
+    opts: ['feet', 'hands', 'head'],
+    correct: 2
+  },
+  {
+    q: 'Waterproof clothing prevents getting ___.',
+    opts: ['cold', 'wet', 'muddy'],
+    correct: 1
+  },
+  {
+    q: 'An umbrella keeps ___.',
+    opts: ['feet dry', 'body warm', 'rain off your body'],
+    correct: 2
+  },
+  {
+    q: 'A rainy day is when ___ falls from the clouds.',
+    opts: ['snow', 'hail', 'rainfall'],
+    correct: 2
+  },
+  {
+    q: 'Which is NOT worn on a rainy day?',
+    opts: ['Raincoat', 'Wellington boots', 'Sandals'],
+    correct: 2
+  },
+];
+
+let quizIndex = 0;
+let quizAnswered = false;
+let quizDoneCount = 0;
+
+function buildQuizProg() {
+  const bar = document.getElementById('quizProg');
+  bar.innerHTML = '';
+  quizData.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'prog-dot' + (i < quizDoneCount ? ' done' : '');
+    bar.appendChild(d);
+  });
+}
+
+function showQuiz(idx) {
+  if (idx >= quizData.length) {
+    document.getElementById('quizDone').style.display = 'block';
+    document.getElementById('quizCounter').style.display = 'none';
+    document.getElementById('quizQ').style.display = 'none';
+    document.getElementById('quizOpts').style.display = 'none';
+    addCheer();
+    return;
+  }
+  const data = quizData[idx];
+  quizAnswered = false;
+  document.getElementById('quizCounter').textContent = 'Question ' + (idx + 1) + ' of ' + quizData.length;
+  document.getElementById('quizQ').textContent = data.q;
+  document.getElementById('quizNextBtn').style.display = 'none';
+  buildQuizProg();
+
+  const optsEl = document.getElementById('quizOpts');
+  optsEl.innerHTML = '';
+  data.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = function() { pickQ(btn, i === data.correct ? 'correct' : 'wrong', idx); };
+    optsEl.appendChild(btn);
+  });
+}
+
+function pickQ(el, result, qNum) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const optsEl = document.getElementById('quizOpts');
+  const allOpts = optsEl.querySelectorAll('.quiz-opt');
+  el.classList.add(result);
+  // Show correct answer if wrong
+  if (result === 'wrong') {
+    allOpts[quizData[qNum].correct].classList.add('correct');
+  }
+  // Disable all
+  allOpts.forEach(o => o.style.pointerEvents = 'none');
+  quizDoneCount = qNum + 1;
+  buildQuizProg();
+  document.getElementById('quizNextBtn').style.display = 'inline-block';
+}
+
+function nextQuiz() {
+  quizIndex++;
+  showQuiz(quizIndex);
+}
+
+showQuiz(0);
+
+/* ═══════════════════════════════════════
+   ACTIVITY 3 — MATCH
+═══════════════════════════════════════ */
+const matchPairs = [
+  { left: '🧥 Raincoat',           right: 'Keeps body dry' },
+  { left: '👢 Wellington Boots',    right: 'Protects feet from mud' },
+  { left: '🧣 Sweater',            right: 'Keeps body warm' },
+  { left: '☂️ Umbrella',           right: 'Shields from rain' },
+  { left: '🧢 Hood',               right: 'Covers the head' },
+  { left: '🌊 Waterproof Clothing',right: 'Prevents getting wet' },
+];
+
+let matchSelected = null;   // { side, idx, el, value }
+let matchDone = 0;
+
+function buildMatch() {
+  const leftCol  = document.getElementById('matchLeft');
+  const rightCol = document.getElementById('matchRight');
+  leftCol.innerHTML = '';
+  rightCol.innerHTML = '';
+
+  const rightShuffled = [...matchPairs.map(p => p.right)].sort(() => Math.random() - .5);
+
+  matchPairs.forEach((pair, i) => {
+    const lEl = document.createElement('div');
+    lEl.className = 'match-item';
+    lEl.textContent = pair.left;
+    lEl.dataset.value = pair.right;
+    lEl.dataset.side  = 'left';
+    lEl.dataset.idx   = i;
+    lEl.onclick = () => matchTap(lEl);
+    leftCol.appendChild(lEl);
+  });
+
+  rightShuffled.forEach((val, i) => {
+    const rEl = document.createElement('div');
+    rEl.className = 'match-item';
+    rEl.textContent = val;
+    rEl.dataset.value = val;
+    rEl.dataset.side  = 'right';
+    rEl.dataset.idx   = i;
+    rEl.onclick = () => matchTap(rEl);
+    rightCol.appendChild(rEl);
+  });
+}
+
+function matchTap(el) {
+  if (el.classList.contains('matched')) return;
+  const side = el.dataset.side;
+
+  if (!matchSelected) {
+    // First tap
+    el.classList.add('selected');
+    matchSelected = el;
+    return;
+  }
+
+  if (matchSelected === el) {
+    // Deselect
+    el.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+
+  if (matchSelected.dataset.side === side) {
+    // Same side — switch selection
+    matchSelected.classList.remove('selected');
+    el.classList.add('selected');
+    matchSelected = el;
+    return;
+  }
+
+  // Two different sides — check match
+  const leftEl  = side === 'left'  ? el : matchSelected;
+  const rightEl = side === 'right' ? el : matchSelected;
+
+  if (leftEl.dataset.value === rightEl.dataset.value) {
+    // Correct
+    leftEl.classList.remove('selected');
+    rightEl.classList.remove('selected');
+    leftEl.classList.add('matched');
+    rightEl.classList.add('matched');
+    matchDone++;
+    document.getElementById('matchMsg').textContent = '✅ Matched ' + matchDone + ' / 6!';
+    matchSelected = null;
+    if (matchDone === 6) {
+      document.getElementById('matchDone').style.display = 'block';
+      document.getElementById('matchMsg').textContent = '';
+      addCheer();
+    }
+  } else {
+    // Wrong
+    leftEl.classList.remove('selected');
+    rightEl.classList.remove('selected');
+    leftEl.classList.add('wrong');
+    rightEl.classList.add('wrong');
+    document.getElementById('matchMsg').textContent = '❌ Not a match — try again!';
+    matchSelected = null;
+    setTimeout(() => {
+      leftEl.classList.remove('wrong');
+      rightEl.classList.remove('wrong');
+    }, 500);
+  }
+}
+
+buildMatch();
+
+/* ═══════════════════════════════════════
+   ACTIVITY 4 — TRUE / FALSE
+═══════════════════════════════════════ */
+const tfData = [
+  { stmt: 'A rainy day is when rainfall falls from the clouds.', answer: true  },
+  { stmt: 'A raincoat keeps the body warm.',                     answer: false },
+  { stmt: 'Wellington boots protect the feet from mud and water.', answer: true },
+  { stmt: 'We wear sandals on a rainy day.',                     answer: false },
+  { stmt: 'An umbrella is used on rainy days.',                  answer: true  },
+  { stmt: 'Waterproof clothing lets the rain in.',               answer: false },
+];
+
+let tfDone = 0;
+
+function buildTF() {
+  const list = document.getElementById('tfList');
+  list.innerHTML = '';
+  tfData.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'tf-row';
+    row.innerHTML = `
+      <div class="tf-stmt">${i + 1}. ${item.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn"  onclick="tfAnswer(this, true,  ${i}, ${item.answer})">✅ TRUE</button>
+        <button class="tf-btn false-btn" onclick="tfAnswer(this, false, ${i}, ${item.answer})">❌ FALSE</button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function tfAnswer(btn, guess, idx, correct) {
+  const row  = btn.closest('.tf-row');
+  const btns = row.querySelectorAll('.tf-btn');
+  if (guess === correct) {
+    btn.classList.add('correct-pick');
+    btns.forEach(b => { if (b !== btn) b.classList.add('locked'); });
+    tfDone++;
+    if (tfDone === tfData.length) {
+      setTimeout(() => {
+        document.getElementById('tfDone').style.display = 'block';
+        addCheer();
+      }, 400);
+    }
+  } else {
+    btn.classList.add('wrong-pick');
+  }
+}
+
+buildTF();
+
+/* ═══════════════════════════════════════
+   ACTIVITY 5 — FILL IN THE BLANK
+═══════════════════════════════════════ */
+const wordBankWords = ['dry', 'warm', 'head', 'wet', 'mud', 'clouds', 'rainfall', 'boots'];
+
+const fillSentences = [
+  { before: 'A raincoat keeps the body',  after: '.',                                   answer: 'dry'      },
+  { before: 'A sweater keeps the body',   after: '.',                                   answer: 'warm'     },
+  { before: 'A hood covers the',          after: '.',                                   answer: 'head'     },
+  { before: 'Waterproof clothing prevents getting', after: '.',                         answer: 'wet'      },
+  { before: 'Wellington boots protect from', after: 'and water.',                       answer: 'mud'      },
+  { before: '',                           after: 'falls from the clouds on a rainy day.', answer: 'rainfall' },
+  { before: 'Rain falls from the',        after: '.',                                   answer: 'clouds'   },
+  { before: 'Wellington',                 after: 'protect the feet.',                   answer: 'boots'    },
+];
+
+let fillSelected = null;   // currently selected word chip text
+let fillAnswers  = new Array(fillSentences.length).fill(null);
+let fillChecked  = false;
+
+function buildFill() {
+  // Word bank
+  const bank = document.getElementById('wordBank');
+  bank.innerHTML = '';
+  wordBankWords.forEach(word => {
+    const chip = document.createElement('div');
+    chip.className = 'word-chip';
+    chip.textContent = word;
+    chip.dataset.word = word;
+    chip.onclick = () => selectWord(chip);
+    bank.appendChild(chip);
+  });
+
+  // Sentences
+  const list = document.getElementById('fillList');
+  list.innerHTML = '';
+  fillSentences.forEach((sent, i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-row';
+    row.innerHTML =
+      (sent.before ? sent.before + ' ' : '') +
+      `<span class="fill-blank" id="blank-${i}" onclick="fillBlank(${i})">_____</span>` +
+      (sent.after  ? ' ' + sent.after  : '');
+    list.appendChild(row);
+  });
+}
+
+function selectWord(chip) {
+  // Deselect previous chip
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+  fillSelected = chip.dataset.word;
+  chip.style.outline = '3px solid var(--dark)';
+}
+
+function fillBlank(idx) {
+  if (!fillSelected) return;
+  if (fillChecked) return;
+  const blank = document.getElementById('blank-' + idx);
+  if (blank.classList.contains('correct')) return;
+
+  // Un-use previous word in this blank
+  if (fillAnswers[idx]) {
+    const prevChip = [...document.querySelectorAll('.word-chip')]
+      .find(c => c.dataset.word === fillAnswers[idx]);
+    if (prevChip) prevChip.classList.remove('used');
+  }
+
+  fillAnswers[idx] = fillSelected;
+  blank.textContent = fillSelected;
+  blank.classList.add('filled');
+  blank.classList.remove('wrong');
+
+  // Mark chip used
+  const chip = [...document.querySelectorAll('.word-chip')]
+    .find(c => c.dataset.word === fillSelected && !c.classList.contains('used'));
+  if (chip) chip.classList.add('used');
+
+  // Deselect
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+  fillSelected = null;
+}
+
+function checkFill() {
+  let allCorrect = true;
+  fillSentences.forEach((sent, i) => {
+    const blank = document.getElementById('blank-' + i);
+    if (fillAnswers[i] === sent.answer) {
+      blank.classList.add('correct');
+      blank.classList.remove('wrong', 'filled');
+    } else {
+      blank.classList.add('wrong');
+      blank.classList.remove('correct');
+      allCorrect = false;
+    }
+  });
+  if (allCorrect) {
+    fillChecked = true;
+    document.getElementById('fillDone').style.display = 'block';
+    addCheer();
+  }
+}
+
+buildFill();
+</script>
+</body>
+</html>

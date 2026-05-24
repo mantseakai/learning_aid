@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Patterns 🔢 — Tikky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f3f0ff;
+      color: #333;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.95);
+      border: 2px solid #b39ddb;
+      color: #7c4dff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 14px rgba(124,77,255,0.18);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #7c4dff; color: white; transform: translateX(-2px); }
+
+    /* ===== CHEER BANNER ===== */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #7c4dff, #b39ddb);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 18px 24px;
+      border-radius: 20px;
+      margin: 24px auto 0;
+      max-width: 700px;
+      box-shadow: 0 6px 24px rgba(124,77,255,0.35);
+      animation: popIn 0.5s ease;
+    }
+    .cheer-banner.show { display: block; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(160deg, #7c4dff 0%, #b39ddb 100%);
+      color: white;
+      text-align: center;
+      padding: 70px 24px 48px;
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.4rem, 8vw, 3.8rem);
+      margin-bottom: 12px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.18);
+    }
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 30px;
+      padding: 6px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .hero .subtitle {
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .main { max-width: 760px; margin: 0 auto; padding: 28px 16px; }
+
+    /* ===== INTRO CARD ===== */
+    .intro-card {
+      background: white;
+      border-radius: 22px;
+      padding: 26px 28px;
+      margin-bottom: 30px;
+      border-left: 7px solid #7c4dff;
+      box-shadow: 0 4px 20px rgba(124,77,255,0.12);
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.6;
+      color: #4527a0;
+    }
+    .intro-card span { color: #7c4dff; }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-header {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem;
+      margin: 36px 0 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* ===== PATTERN PANELS ===== */
+    .pattern-panel {
+      border-radius: 22px;
+      padding: 26px 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s;
+    }
+    .pattern-panel:hover { transform: scale(1.01); }
+    .pattern-panel:active { transform: scale(0.98); }
+
+    .panel-purple { background: linear-gradient(135deg, #ede7f6, #d1c4e9); border: 3px solid #7c4dff; }
+    .panel-teal   { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border: 3px solid #00897b; }
+    .panel-orange { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 3px solid #ef6c00; }
+    .panel-red    { background: linear-gradient(135deg, #ffebee, #ffcdd2); border: 3px solid #c62828; }
+
+    .panel-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+    .panel-purple .panel-title { color: #4527a0; }
+    .panel-teal   .panel-title { color: #00695c; }
+    .panel-orange .panel-title { color: #e65100; }
+    .panel-red    .panel-title { color: #b71c1c; }
+
+    /* Number Train */
+    .num-train {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      align-items: center; margin-bottom: 16px;
+    }
+    .num-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+      position: relative;
+      opacity: 0;
+      animation: none;
+    }
+    .num-circle.visible { opacity: 1; animation: bounceIn 0.5s ease; }
+
+    .nc-purple { background: #7c4dff; }
+    .nc-teal   { background: #00897b; }
+    .nc-orange { background: #ef6c00; }
+    .nc-red    { background: #c62828; }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: rgba(0,0,0,0.35);
+      font-weight: 900;
+    }
+
+    /* Rule badge */
+    .rule-badge {
+      display: inline-block;
+      padding: 7px 18px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: white;
+      margin-top: 10px;
+    }
+    .rb-purple { background: #7c4dff; }
+    .rb-teal   { background: #00897b; }
+    .rb-orange { background: #ef6c00; }
+    .rb-red    { background: #c62828; }
+
+    .fun-fact {
+      margin-top: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    /* Dot pairs visual */
+    .dot-row { display: flex; gap: 10px; margin: 12px 0; flex-wrap: wrap; }
+    .dot-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .dot-group span { font-size: 0.78rem; font-weight: 800; color: rgba(0,0,0,0.5); }
+    .dots { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; max-width: 44px; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .dot-teal   { background: #00897b; }
+    .dot-orange { background: #ef6c00; }
+    .dot-lone   { background: #ff5722; border: 2px solid #bf360c; }
+
+    /* Rocket countdown */
+    .rocket-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .rocket-num {
+      background: #c62828; color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 8px rgba(198,40,40,0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .rocket-num.vis { opacity: 1; animation: popIn 0.4s ease; }
+    .rocket-arrow { font-size: 1.2rem; color: #b71c1c; }
+
+    /* ===== ACTIVITY SECTIONS ===== */
+    .activity-section {
+      background: white;
+      border-radius: 22px;
+      padding: 26px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: #4527a0;
+      margin-bottom: 6px;
+    }
+    .activity-sub {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    /* Progress dots */
+    .progress-dots { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .pdot {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #ddd; transition: background 0.3s;
+    }
+    .pdot.done { background: #7c4dff; }
+    .pdot.wrong { background: #ef5350; }
+
+    /* ===== ACTIVITY 1 & 3 — MCQ ===== */
+    .q-box {
+      background: #f3f0ff;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .q-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #4527a0;
+      margin-bottom: 16px;
+    }
+    .q-sequence {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: #7c4dff;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .q-blank {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: white;
+      border: 3px dashed #7c4dff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      color: #7c4dff;
+    }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choice-btn {
+      padding: 14px 10px;
+      border-radius: 14px;
+      border: 3px solid #b39ddb;
+      background: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: #4527a0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .choice-btn:hover { background: #ede7f6; border-color: #7c4dff; }
+    .choice-btn.correct { background: #c8e6c9; border-color: #388e3c; color: #1b5e20; }
+    .choice-btn.wrong-ans { background: #ffcdd2; border-color: #c62828; color: #b71c1c; animation: shake 0.4s; }
+    .choice-btn:disabled { cursor: default; }
+
+    .q-feedback {
+      margin-top: 14px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      min-height: 28px;
+      text-align: center;
+    }
+    .q-feedback.good { color: #2e7d32; }
+    .q-feedback.bad  { color: #c62828; }
+
+    /* ===== ACTIVITY 2 — ODD / EVEN SORT ===== */
+    .sort-arena { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .sort-number-display {
+      font-family: 'Fredoka One', cursive;
+      font-size: 5rem;
+      color: #4527a0;
+      background: #f3f0ff;
+      border-radius: 24px;
+      width: 130px; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(124,77,255,0.2);
+      animation: popIn 0.3s ease;
+    }
+    .sort-buttons { display: flex; gap: 16px; }
+    .sort-btn {
+      padding: 18px 32px;
+      border-radius: 18px;
+      border: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .sort-btn:hover { transform: scale(1.06); }
+    .sort-btn.odd-btn  { background: #ef6c00; color: white; }
+    .sort-btn.even-btn { background: #00897b; color: white; }
+    .sort-btn.shake-it { animation: shake 0.4s; }
+
+    .sort-columns {
+      display: flex; gap: 16px; width: 100%;
+    }
+    .sort-col {
+      flex: 1;
+      background: #f5f5f5;
+      border-radius: 16px;
+      padding: 14px;
+      min-height: 90px;
+    }
+    .sort-col-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .sort-col.odd-col   { border: 3px solid #ef6c00; }
+    .sort-col.even-col  { border: 3px solid #00897b; }
+    .sort-col.odd-col .sort-col-title  { color: #e65100; }
+    .sort-col.even-col .sort-col-title { color: #00695c; }
+    .sorted-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sorted-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: white;
+      animation: popIn 0.3s ease;
+    }
+    .sorted-chip.odd-chip  { background: #ef6c00; }
+    .sorted-chip.even-chip { background: #00897b; }
+
+    .sort-done-msg { font-size: 1.1rem; font-weight: 800; color: #4527a0; text-align: center; min-height: 28px; }
+
+    /* ===== ACTIVITY 4 — TRUE / FALSE ===== */
+    .tf-list { display: flex; flex-direction: column; gap: 14px; }
+    .tf-item {
+      background: #f3f0ff;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .tf-statement { font-size: 1.1rem; font-weight: 700; color: #333; }
+    .tf-buttons { display: flex; gap: 10px; }
+    .tf-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 3px solid transparent;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tf-btn.true-btn  { background: #e8f5e9; border-color: #388e3c; color: #2e7d32; }
+    .tf-btn.false-btn { background: #ffebee; border-color: #c62828; color: #b71c1c; }
+    .tf-btn:hover:not(:disabled) { transform: scale(1.04); }
+    .tf-btn.selected-correct { background: #c8e6c9; border-color: #2e7d32; }
+    .tf-btn.selected-wrong   { background: #ffcdd2; border-color: #c62828; animation: shake 0.4s; }
+    .tf-btn:disabled { cursor: default; opacity: 0.7; }
+
+    /* ===== ACTIVITY 5 — FILL THE BLANK ===== */
+    .fill-q {
+      background: #f3f0ff;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .fill-sequence {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .fill-num {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem;
+      color: #4527a0;
+    }
+    .fill-blank {
+      width: 64px; height: 64px;
+      border-radius: 14px;
+      border: 3px dashed #7c4dff;
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #7c4dff;
+    }
+    .fill-blank.filled-correct { background: #c8e6c9; border-color: #388e3c; color: #1b5e20; border-style: solid; animation: popIn 0.3s; }
+    .fill-blank.filled-wrong   { background: #ffcdd2; border-color: #c62828; color: #b71c1c; border-style: solid; animation: shake 0.4s; }
+    .fill-separator { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #b39ddb; }
+
+    .number-bank { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .bank-btn {
+      width: 60px; height: 60px;
+      border-radius: 14px;
+      border: 3px solid #b39ddb;
+      background: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: #4527a0;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .bank-btn:hover:not(:disabled) { background: #ede7f6; border-color: #7c4dff; transform: scale(1.08); }
+    .bank-btn:disabled { opacity: 0.4; cursor: default; }
+
+    /* ===== DONE BADGE ===== */
+    .done-badge {
+      display: none;
+      text-align: center;
+      padding: 16px;
+      background: linear-gradient(135deg, #7c4dff, #b39ddb);
+      color: white;
+      border-radius: 16px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      margin-top: 18px;
+      animation: popIn 0.4s ease;
+    }
+    .done-badge.show { display: block; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes bounceIn {
+      0%   { transform: scale(0) translateY(30px); opacity: 0; }
+      60%  { transform: scale(1.2) translateY(-8px); opacity: 1; }
+      80%  { transform: scale(0.9) translateY(4px); }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-10px); }
+      40%       { transform: translateX(10px); }
+      60%       { transform: translateX(-8px); }
+      80%       { transform: translateX(8px); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.35); }
+      100% { transform: scale(1); }
+    }
+    @keyframes rocketSlide {
+      from { transform: translateX(-40px); opacity: 0; }
+      to   { transform: translateX(0);     opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="date-badge">📅 20th May 2026</div>
+  <h1>Number Patterns 🔢</h1>
+  <p class="subtitle">Numbers love patterns! Can you spot them? 👀</p>
+</div>
+
+<div class="main">
+
+  <!-- CHEER BANNER -->
+  <div class="cheer-banner" id="cheerBanner">
+    Brilliant, Tikky! You can spot number patterns! 🔢⭐
+  </div>
+
+  <!-- INTRO CARD -->
+  <div class="intro-card">
+    There are many patterns in numbers. Some are made by counting in <span>2s or 10s</span>.
+    Others have special names like <span>ODD</span> and <span>EVEN</span> numbers!
+  </div>
+
+  <!-- ===== PATTERN PANELS ===== -->
+  <div class="section-header" style="color:#4527a0;">🎨 The 4 Patterns</div>
+
+  <!-- Panel 1 — Counting in 1s -->
+  <div class="pattern-panel panel-purple" id="panel1" onclick="animateTrain('train1','nc-purple')">
+    <div class="panel-title">🟣 Count in 1s</div>
+    <div class="num-train" id="train1">
+      <div class="num-circle nc-purple">1</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">2</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">3</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">4</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">5</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">6</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">7</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">8</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">9</div><div class="arrow">→</div>
+      <div class="num-circle nc-purple">10</div>
+    </div>
+    <div class="rule-badge rb-purple">+1 each time</div>
+    <p style="font-size:0.9rem;color:#555;margin-top:8px;font-weight:700;">👆 Tap the panel to animate!</p>
+  </div>
+
+  <!-- Panel 2 — Even Numbers -->
+  <div class="pattern-panel panel-teal" id="panel2" onclick="animateTrain('train2','nc-teal')">
+    <div class="panel-title">🟢 Even Numbers</div>
+    <div class="num-train" id="train2">
+      <div class="num-circle nc-teal">2</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">4</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">6</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">8</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">10</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">12</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">14</div><div class="arrow">→</div>
+      <div class="num-circle nc-teal">16</div>
+    </div>
+    <!-- Dot pairs -->
+    <div class="dot-row">
+      <div class="dot-group"><div class="dots"><div class="dot dot-teal"></div><div class="dot dot-teal"></div></div><span>2</span></div>
+      <div class="dot-group"><div class="dots"><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div></div><span>4</span></div>
+      <div class="dot-group"><div class="dots"><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div></div><span>6</span></div>
+      <div class="dot-group"><div class="dots"><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div><div class="dot dot-teal"></div></div><span>8</span></div>
+    </div>
+    <div class="rule-badge rb-teal">+2 each time · ends in 0, 2, 4, 6, 8</div>
+    <p class="fun-fact">Even numbers can be shared equally! 🤝</p>
+  </div>
+
+  <!-- Panel 3 — Odd Numbers -->
+  <div class="pattern-panel panel-orange" id="panel3" onclick="animateTrain('train3','nc-orange')">
+    <div class="panel-title">🟠 Odd Numbers</div>
+    <div class="num-train" id="train3">
+      <div class="num-circle nc-orange">1</div><div class="arrow">→</div>
+      <div class="num-circle nc-orange">3</div><div class="arrow">→</div>
+      <div class="num-circle nc-orange">5</div><div class="arrow">→</div>
+      <div class="num-circle nc-orange">7</div><div class="arrow">→</div>
+      <div class="num-circle nc-orange">9</div><div class="arrow">→</div>
+      <div class="num-circle nc-orange">11</div><div class="arrow">→</div>
+      <div class="num-circle nc-orange">13</div>
+    </div>
+    <!-- Dot groups showing leftover -->
+    <div class="dot-row">
+      <div class="dot-group">
+        <div class="dots"><div class="dot dot-lone"></div></div><span>1</span>
+      </div>
+      <div class="dot-group">
+        <div class="dots"><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-lone"></div></div><span>3</span>
+      </div>
+      <div class="dot-group">
+        <div class="dots"><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-lone"></div></div><span>5</span>
+      </div>
+      <div class="dot-group">
+        <div class="dots"><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-orange"></div><div class="dot dot-lone"></div></div><span>7</span>
+      </div>
+    </div>
+    <div class="rule-badge rb-orange">+2 each time · ends in 1, 3, 5, 7, 9</div>
+    <p class="fun-fact">Odd numbers always have one left over! 👆</p>
+  </div>
+
+  <!-- Panel 4 — Counting Backwards -->
+  <div class="pattern-panel panel-red" id="panel4" onclick="animateRocket()">
+    <div class="panel-title">🔴 Count Backwards 🚀</div>
+    <div class="rocket-row" id="rocketRow">
+      <div class="rocket-num" id="rn10">10</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn9">9</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn8">8</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn7">7</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn6">6</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn5">5</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn4">4</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn3">3</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn2">2</div><div class="rocket-arrow">→</div>
+      <div class="rocket-num" id="rn1">1</div><div class="rocket-arrow">→</div>
+      <div style="font-size:2rem;">🚀</div>
+    </div>
+    <div class="rule-badge rb-red">−1 each time</div>
+    <p style="font-size:0.9rem;color:#555;margin-top:8px;font-weight:700;">👆 Tap to launch the rocket!</p>
+  </div>
+
+  <!-- ===== ACTIVITY 1 — What comes next? ===== -->
+  <div class="activity-section">
+    <div class="activity-title">🎯 Activity 1 — What comes next?</div>
+    <div class="activity-sub">Look at the pattern and tap the missing number!</div>
+    <div class="progress-dots" id="a1dots"></div>
+    <div id="a1container"></div>
+    <div class="done-badge" id="a1done">🎉 Amazing! You finished Activity 1!</div>
+  </div>
+
+  <!-- ===== ACTIVITY 2 — Odd or Even? ===== -->
+  <div class="activity-section">
+    <div class="activity-title">🔢 Activity 2 — Odd or Even?</div>
+    <div class="activity-sub">Look at the number. Is it ODD or EVEN? Tap the right button!</div>
+    <div class="progress-dots" id="a2dots"></div>
+    <div class="sort-arena">
+      <div class="sort-number-display" id="sortNum">?</div>
+      <div class="sort-buttons">
+        <button class="sort-btn odd-btn"  onclick="sortAnswer('odd')">ODD 🟠</button>
+        <button class="sort-btn even-btn" onclick="sortAnswer('even')">EVEN 🟢</button>
+      </div>
+      <div class="sort-columns">
+        <div class="sort-col odd-col">
+          <div class="sort-col-title">ODD 🟠</div>
+          <div class="sorted-chips" id="oddChips"></div>
+        </div>
+        <div class="sort-col even-col">
+          <div class="sort-col-title">EVEN 🟢</div>
+          <div class="sorted-chips" id="evenChips"></div>
+        </div>
+      </div>
+      <div class="sort-done-msg" id="sortMsg"></div>
+    </div>
+    <div class="done-badge" id="a2done">🎉 Superstar! You sorted them all!</div>
+  </div>
+
+  <!-- ===== ACTIVITY 3 — Pick the right answer ===== -->
+  <div class="activity-section">
+    <div class="activity-title">💬 Activity 3 — Pick the right answer!</div>
+    <div class="activity-sub">Read each question and tap the best answer.</div>
+    <div class="progress-dots" id="a3dots"></div>
+    <div id="a3container"></div>
+    <div class="done-badge" id="a3done">🎉 Fantastic! All questions done!</div>
+  </div>
+
+  <!-- ===== ACTIVITY 4 — True or False? ===== -->
+  <div class="activity-section">
+    <div class="activity-title">✅ Activity 4 — True or False?</div>
+    <div class="activity-sub">Is each sentence true or false? Tap your answer!</div>
+    <div class="progress-dots" id="a4dots"></div>
+    <div class="tf-list" id="a4list"></div>
+    <div class="done-badge" id="a4done">🎉 Well done! You know your patterns!</div>
+  </div>
+
+  <!-- ===== ACTIVITY 5 — Complete the pattern ===== -->
+  <div class="activity-section">
+    <div class="activity-title">🧩 Activity 5 — Complete the pattern!</div>
+    <div class="activity-sub">Find the missing number and tap it to fill the gap!</div>
+    <div class="progress-dots" id="a5dots"></div>
+    <div id="a5container"></div>
+    <div class="done-badge" id="a5done">🎉 You did it! Patterns master! 🔢⭐</div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+/* ==================== GLOBAL ==================== */
+let cheerCount = 0;
+
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    document.getElementById('cheerBanner').classList.add('show');
+    document.getElementById('cheerBanner').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+/* ==================== PANEL ANIMATIONS ==================== */
+function animateTrain(trainId, cls) {
+  const circles = document.querySelectorAll('#' + trainId + ' .num-circle');
+  circles.forEach(c => { c.classList.remove('visible'); c.style.animation = 'none'; });
+  circles.forEach((c, i) => {
+    setTimeout(() => {
+      c.style.animation = '';
+      c.classList.add('visible');
+    }, i * 200);
+  });
+}
+
+function animateRocket() {
+  const ids = [10,9,8,7,6,5,4,3,2,1];
+  ids.forEach(n => {
+    const el = document.getElementById('rn' + n);
+    el.classList.remove('vis');
+    el.style.animation = 'none';
+  });
+  ids.forEach((n, i) => {
+    setTimeout(() => {
+      const el = document.getElementById('rn' + n);
+      el.style.animation = '';
+      el.classList.add('vis');
+    }, i * 220);
+  });
+}
+
+/* Initial animate on load */
+window.addEventListener('load', () => {
+  setTimeout(() => animateTrain('train1','nc-purple'), 400);
+  setTimeout(() => animateTrain('train2','nc-teal'), 700);
+  setTimeout(() => animateTrain('train3','nc-orange'), 1000);
+  setTimeout(() => animateRocket(), 1300);
+});
+
+/* ==================== BUILD PROGRESS DOTS ==================== */
+function buildDots(containerId, count) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'pdot';
+    d.id = containerId + '_dot' + i;
+    el.appendChild(d);
+  }
+}
+function markDot(containerId, idx, state) {
+  const d = document.getElementById(containerId + '_dot' + idx);
+  if (d) d.classList.add(state);
+}
+
+/* ==================== ACTIVITY 1 ==================== */
+const a1Questions = [
+  { seq: ['2','4','6','8','?'], choices: ['9','10','11','12'], answer: '10' },
+  { seq: ['1','3','5','7','?'], choices: ['8','9','10','6'],   answer: '9' },
+  { seq: ['10','9','8','7','?'], choices: ['5','8','6','4'],   answer: '6' },
+  { seq: ['1','2','3','4','?'], choices: ['5','6','7','4'],    answer: '5' },
+  { seq: ['4','6','8','10','?'], choices: ['11','13','12','14'], answer: '12' },
+  { seq: ['9','7','5','3','?'], choices: ['2','1','4','0'],    answer: '1' },
+  { seq: ['2','4','6','?','10'], choices: ['7','8','9','5'],   answer: '8' },
+  { seq: ['10','8','6','?','2'], choices: ['3','5','4','6'],   answer: '4' },
+];
+let a1Current = 0;
+let a1Score = 0;
+
+function buildA1() {
+  buildDots('a1dots', a1Questions.length);
+  renderA1(0);
+}
+
+function renderA1(idx) {
+  const container = document.getElementById('a1container');
+  if (idx >= a1Questions.length) {
+    container.innerHTML = '';
+    document.getElementById('a1done').classList.add('show');
+    addCheer();
+    return;
+  }
+  const q = a1Questions[idx];
+  const seqHtml = q.seq.map(n => n === '?'
+    ? '<div class="q-blank">❓</div>'
+    : '<span style="font-family:\'Fredoka One\',cursive;font-size:1.6rem;color:#4527a0;">' + n + '</span>'
+  ).join('<span class="arrow" style="color:#b39ddb;font-size:1.3rem;margin:0 4px;">→</span>');
+
+  const choicesHtml = q.choices.map(c =>
+    `<button class="choice-btn" onclick="a1Pick(this,'${c}','${q.answer}',${idx})">${c}</button>`
+  ).join('');
+
+  container.innerHTML = `
+    <div class="q-box">
+      <div class="q-text">Question ${idx+1} of ${a1Questions.length}</div>
+      <div class="q-sequence">${seqHtml}</div>
+      <div class="choices">${choicesHtml}</div>
+      <div class="q-feedback" id="a1fb"></div>
+    </div>`;
+}
+
+function a1Pick(el, chosen, answer, idx) {
+  const btns = el.parentElement.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  if (chosen === answer) {
+    el.classList.add('correct');
+    document.getElementById('a1fb').textContent = '⭐ Yes! That\'s right!';
+    document.getElementById('a1fb').className = 'q-feedback good';
+    markDot('a1dots', idx, 'done');
+    a1Current++;
+    setTimeout(() => renderA1(a1Current), 900);
+  } else {
+    el.classList.add('wrong-ans');
+    document.getElementById('a1fb').textContent = '❌ Not quite! Try again!';
+    document.getElementById('a1fb').className = 'q-feedback bad';
+    setTimeout(() => {
+      btns.forEach(b => { b.disabled = false; b.classList.remove('wrong-ans'); });
+      document.getElementById('a1fb').textContent = '';
+    }, 900);
+  }
+}
+
+/* ==================== ACTIVITY 2 ==================== */
+const a2Numbers = [2, 7, 4, 9, 6, 3, 10, 5, 8, 1, 12, 11];
+let a2Idx = 0;
+let a2Active = true;
+
+function buildA2() {
+  buildDots('a2dots', a2Numbers.length);
+  renderSortNum();
+}
+
+function renderSortNum() {
+  if (a2Idx >= a2Numbers.length) {
+    document.getElementById('sortNum').textContent = '🎉';
+    document.getElementById('sortMsg').textContent = 'You sorted them all!';
+    document.getElementById('a2done').classList.add('show');
+    a2Active = false;
+    addCheer();
+    return;
+  }
+  const el = document.getElementById('sortNum');
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = 'popIn 0.3s ease';
+  el.textContent = a2Numbers[a2Idx];
+}
+
+function sortAnswer(choice) {
+  if (!a2Active || a2Idx >= a2Numbers.length) return;
+  const num = a2Numbers[a2Idx];
+  const isEven = num % 2 === 0;
+  const correct = isEven ? 'even' : 'odd';
+  const oddBtn  = document.querySelector('.sort-btn.odd-btn');
+  const evenBtn = document.querySelector('.sort-btn.even-btn');
+
+  if (choice === correct) {
+    markDot('a2dots', a2Idx, 'done');
+    const chip = document.createElement('div');
+    chip.className = 'sorted-chip ' + (isEven ? 'even-chip' : 'odd-chip');
+    chip.textContent = num;
+    document.getElementById(isEven ? 'evenChips' : 'oddChips').appendChild(chip);
+    a2Idx++;
+    setTimeout(() => renderSortNum(), 300);
+  } else {
+    const wrongBtn = choice === 'odd' ? oddBtn : evenBtn;
+    wrongBtn.classList.add('shake-it');
+    setTimeout(() => wrongBtn.classList.remove('shake-it'), 450);
+    markDot('a2dots', a2Idx, 'wrong');
+    setTimeout(() => {
+      document.getElementById('a2dots').querySelectorAll('.pdot')[a2Idx].classList.remove('wrong');
+    }, 600);
+  }
+}
+
+/* ==================== ACTIVITY 3 ==================== */
+const a3Questions = [
+  { q: '2, 4, 6, 8 are ___ numbers.', choices: ['odd','even','tens'], answer: 'even' },
+  { q: '1, 3, 5, 7 are ___ numbers.', choices: ['odd','even','twos'], answer: 'odd' },
+  { q: 'Even numbers end in:', choices: ['1, 3, 5','0, 2, 4, 6, 8','any digit'], answer: '0, 2, 4, 6, 8' },
+  { q: 'What pattern is 10, 9, 8, 7?', choices: ['counting up','even numbers','counting backwards'], answer: 'counting backwards' },
+  { q: 'Which is an even number?', choices: ['7','8','9'], answer: '8' },
+  { q: 'Which is an odd number?', choices: ['4','6','5'], answer: '5' },
+  { q: 'Count in 2s: 2, 4, 6, ___', choices: ['7','8','9'], answer: '8' },
+  { q: '10, 9, 8... each number gets ___.', choices: ['bigger','smaller','the same'], answer: 'smaller' },
+];
+let a3Current = 0;
+
+function buildA3() {
+  buildDots('a3dots', a3Questions.length);
+  renderA3(0);
+}
+
+function renderA3(idx) {
+  const container = document.getElementById('a3container');
+  if (idx >= a3Questions.length) {
+    container.innerHTML = '';
+    document.getElementById('a3done').classList.add('show');
+    addCheer();
+    return;
+  }
+  const q = a3Questions[idx];
+  const choicesHtml = q.choices.map(c =>
+    `<button class="choice-btn" onclick="a3Pick(this,'${c.replace(/'/g,"\\'")}','${q.answer.replace(/'/g,"\\'")}',${idx})">${c}</button>`
+  ).join('');
+
+  container.innerHTML = `
+    <div class="q-box">
+      <div class="q-text">Question ${idx+1} of ${a3Questions.length}</div>
+      <div style="font-size:1.2rem;font-weight:800;color:#4527a0;margin-bottom:14px;">${q.q}</div>
+      <div class="choices">${choicesHtml}</div>
+      <div class="q-feedback" id="a3fb"></div>
+    </div>`;
+}
+
+function a3Pick(el, chosen, answer, idx) {
+  const btns = el.parentElement.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  if (chosen === answer) {
+    el.classList.add('correct');
+    document.getElementById('a3fb').textContent = '⭐ Correct! Great job!';
+    document.getElementById('a3fb').className = 'q-feedback good';
+    markDot('a3dots', idx, 'done');
+    a3Current++;
+    setTimeout(() => renderA3(a3Current), 900);
+  } else {
+    el.classList.add('wrong-ans');
+    document.getElementById('a3fb').textContent = '❌ Not quite! Try again!';
+    document.getElementById('a3fb').className = 'q-feedback bad';
+    setTimeout(() => {
+      btns.forEach(b => { b.disabled = false; b.classList.remove('wrong-ans'); });
+      document.getElementById('a3fb').textContent = '';
+    }, 900);
+  }
+}
+
+/* ==================== ACTIVITY 4 ==================== */
+const a4Items = [
+  { stmt: '"2, 4, 6, 8 are even numbers."', answer: true },
+  { stmt: '"7 is an even number."', answer: false },
+  { stmt: '"Counting backwards: 10, 9, 8, 7..."', answer: true },
+  { stmt: '"Odd numbers end in 2, 4, 6."', answer: false },
+  { stmt: '"1, 3, 5, 7 are odd numbers."', answer: true },
+  { stmt: '"Even numbers can be shared equally."', answer: true },
+  { stmt: '"The pattern 2, 4, 6 goes up by 1 each time."', answer: false },
+];
+let a4Done = 0;
+
+function buildA4() {
+  buildDots('a4dots', a4Items.length);
+  const list = document.getElementById('a4list');
+  list.innerHTML = '';
+  a4Items.forEach((item, i) => {
+    list.innerHTML += `
+      <div class="tf-item" id="tfitem${i}">
+        <div class="tf-statement">${item.stmt}</div>
+        <div class="tf-buttons">
+          <button class="tf-btn true-btn"  onclick="a4Pick(this, true,  ${item.answer}, ${i})">✅ TRUE</button>
+          <button class="tf-btn false-btn" onclick="a4Pick(this, false, ${item.answer}, ${i})">❌ FALSE</button>
+        </div>
+      </div>`;
+  });
+}
+
+function a4Pick(el, chosen, answer, idx) {
+  const item = document.getElementById('tfitem' + idx);
+  const btns = item.querySelectorAll('.tf-btn');
+  if (btns[0].disabled) return;
+
+  if (chosen === answer) {
+    el.classList.add('selected-correct');
+    btns.forEach(b => b.disabled = true);
+    markDot('a4dots', idx, 'done');
+    a4Done++;
+    if (a4Done === a4Items.length) {
+      document.getElementById('a4done').classList.add('show');
+      addCheer();
+    }
+  } else {
+    el.classList.add('selected-wrong');
+    setTimeout(() => el.classList.remove('selected-wrong'), 500);
+  }
+}
+
+/* ==================== ACTIVITY 5 ==================== */
+const a5Questions = [
+  { before: ['2','4'], after: ['8','10'],  answer: 6,  bank: [6,3,7,5] },
+  { before: ['1'],     after: ['5','7','9'], answer: 3,  bank: [3,2,4,6] },
+  { before: ['10','9'], after: ['7','6'],  answer: 8,  bank: [8,5,6,4] },
+  { before: ['2','4','6'], after: ['10'], answer: 8,  bank: [8,7,9,6] },
+  { before: [],        after: ['3','5','7','9'], answer: 1, bank: [1,2,4,6] },
+  { before: ['4','6','8','10'], after: [], answer: 12, bank: [12,11,13,10] },
+  { before: ['9','8'], after: ['6','5'],  answer: 7,  bank: [7,5,4,6] },
+  { before: ['1','2','3'], after: ['5'], answer: 4,  bank: [4,3,6,5] },
+];
+let a5Current = 0;
+
+function buildA5() {
+  buildDots('a5dots', a5Questions.length);
+  renderA5(0);
+}
+
+function renderA5(idx) {
+  const container = document.getElementById('a5container');
+  if (idx >= a5Questions.length) {
+    container.innerHTML = '';
+    document.getElementById('a5done').classList.add('show');
+    addCheer();
+    return;
+  }
+  const q = a5Questions[idx];
+
+  const beforeNums = q.before.map(n =>
+    `<span class="fill-num">${n}</span><span class="fill-separator">,</span>`
+  ).join('');
+  const afterNums = q.after.length
+    ? '<span class="fill-separator">,</span>' + q.after.map((n, i) =>
+        `<span class="fill-num">${n}</span>` + (i < q.after.length - 1 ? '<span class="fill-separator">,</span>' : '')
+      ).join('')
+    : '';
+
+  const bankHtml = q.bank.map(n =>
+    `<button class="bank-btn" onclick="a5Pick(this, ${n}, ${q.answer}, ${idx})">${n}</button>`
+  ).join('');
+
+  container.innerHTML = `
+    <div class="fill-q">
+      <div class="q-text">Question ${idx+1} of ${a5Questions.length} — Fill the missing number!</div>
+      <div class="fill-sequence">
+        ${beforeNums}
+        <div class="fill-blank" id="fillBlank${idx}">❓</div>
+        ${afterNums}
+      </div>
+      <div style="font-weight:700;color:#666;font-size:0.95rem;margin-bottom:8px;">Tap the right number:</div>
+      <div class="number-bank" id="a5bank${idx}">${bankHtml}</div>
+      <div class="q-feedback" id="a5fb"></div>
+    </div>`;
+}
+
+function a5Pick(el, chosen, answer, idx) {
+  const blank = document.getElementById('fillBlank' + idx);
+  const btns  = document.querySelectorAll('#a5bank' + idx + ' .bank-btn');
+
+  if (chosen === answer) {
+    blank.textContent = chosen;
+    blank.classList.add('filled-correct');
+    el.style.background = '#c8e6c9';
+    btns.forEach(b => b.disabled = true);
+    document.getElementById('a5fb').textContent = '⭐ That\'s it! Well done!';
+    document.getElementById('a5fb').className = 'q-feedback good';
+    markDot('a5dots', idx, 'done');
+    a5Current++;
+    setTimeout(() => renderA5(a5Current), 950);
+  } else {
+    blank.textContent = chosen;
+    blank.classList.add('filled-wrong');
+    document.getElementById('a5fb').textContent = '❌ Hmm, try another!';
+    document.getElementById('a5fb').className = 'q-feedback bad';
+    setTimeout(() => {
+      blank.textContent = '❓';
+      blank.classList.remove('filled-wrong');
+      document.getElementById('a5fb').textContent = '';
+    }, 700);
+  }
+}
+
+/* ==================== INIT ==================== */
+buildA1();
+buildA2();
+buildA3();
+buildA4();
+buildA5();
+</script>
+</body>
+</html>

@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonics Spelling! 🌈</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #fff9e6 0%, #fce4ec 45%, #e8f5e9 100%);
+      padding: 20px 16px 80px;
+      min-height: 100vh;
+    }
+
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92); border: 2px solid rgba(0,0,0,0.14);
+      color: #333; font-family: sans-serif; font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15); backdrop-filter: blur(4px); transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* Hero */
+    .hero {
+      max-width: 860px; margin: 70px auto 32px;
+      background: white; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    .rainbow-stripe {
+      height: 12px;
+      background: linear-gradient(90deg,#e53935,#fb8c00,#fdd835,#43a047,#1e88e5,#8e24aa);
+    }
+    .hero-body { padding: 28px 24px; text-align: center; }
+    .hero-body h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      background: linear-gradient(90deg,#e53935,#fb8c00,#43a047,#1e88e5,#8e24aa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 10px;
+    }
+    .hero-body p { font-size: 1.1rem; font-weight: 800; color: #555; }
+    .hero-emoji { font-size: 3.5rem; margin-bottom: 10px; display: inline-block; animation: bounce 1.8s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    /* Phonics Sound Guide */
+    .sounds-grid {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      max-width: 860px; margin: 0 auto 32px;
+    }
+    .sound-pill {
+      background: white; border-radius: 16px; padding: 12px 16px; text-align: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08); border-top: 5px solid var(--sc, #fb8c00);
+      min-width: 72px; transition: transform 0.2s; cursor: default;
+    }
+    .sound-pill:hover { transform: scale(1.08); }
+    .sound-pill .sp-letter {
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--sc, #fb8c00);
+    }
+    .sound-pill .sp-sound { font-size: 0.78rem; font-weight: 800; color: #777; margin-top: 2px; }
+
+    /* Section */
+    .section { max-width: 860px; margin: 0 auto 32px; }
+    .section-title {
+      font-family: 'Fredoka One', cursive; font-size: clamp(1.4rem,5vw,2rem);
+      margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+    }
+
+    /* Word family cards */
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .family-card {
+      background: white; border-radius: 20px; padding: 18px 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      border-left: 6px solid var(--fc, #e91e8c);
+      cursor: pointer; transition: transform 0.2s;
+    }
+    .family-card:hover { transform: translateY(-3px); }
+    .family-card .fc-pattern {
+      font-family: 'Fredoka One', cursive; font-size: 1.6rem;
+      color: var(--fc, #e91e8c); margin-bottom: 10px; text-align: center;
+    }
+    .family-card .fc-words {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    }
+    .fc-word {
+      background: var(--fbg, #fce4ec);
+      border-radius: 50px; padding: 5px 14px;
+      font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+      color: var(--fc, #e91e8c);
+    }
+    .fc-word span { color: var(--fc, #e91e8c); }
+    .fc-word .root { color: #555; }
+
+    /* ====== SPELL IT GAME ====== */
+    .spell-game {
+      background: white; border-radius: 22px; padding: 26px 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-bottom: 32px; max-width: 860px;
+      margin-left: auto; margin-right: auto;
+      text-align: center;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      color: #1a237e; margin-bottom: 6px;
+      display: flex; align-items: center; gap: 10px; justify-content: center;
+    }
+    .activity-sub { font-size: 0.95rem; font-weight: 700; color: #666; margin-bottom: 20px; }
+
+    .spell-progress {
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      color: #888; margin-bottom: 14px;
+    }
+    .spell-emoji { font-size: 80px; margin-bottom: 10px; display: block; }
+    .spell-prompt {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      color: #333; margin-bottom: 20px;
+    }
+    /* Sound it out — letter by letter */
+    .sound-out {
+      display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .so-letter {
+      width: 52px; height: 52px;
+      background: #e8eaf6; border: 3px solid #7c4dff;
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: #5c35b1;
+      cursor: pointer; transition: 0.15s; user-select: none;
+    }
+    .so-letter:hover, .so-letter.active { background: #7c4dff; color: white; transform: scale(1.15); }
+
+    /* Answer slots */
+    .answer-row {
+      display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;
+    }
+    .ans-slot {
+      width: 58px; height: 68px;
+      background: #f9f9f9; border: 4px dashed #ccc;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: #333;
+      transition: 0.2s; cursor: pointer;
+    }
+    .ans-slot.filled { background: #fff9c4; border-style: solid; border-color: #f9a825; }
+    .ans-slot.correct-slot { background: #e8f5e9; border-color: #43a047; color: #2e7d32; animation: popIn 0.3s; }
+    .ans-slot.wrong-slot { background: #ffebee; border-color: #e53935; animation: shake 0.4s; }
+    @keyframes popIn { from{transform:scale(0.7)} to{transform:scale(1)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+    /* Letter tile keyboard */
+    .letter-tiles {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px;
+    }
+    .l-tile {
+      width: 58px; height: 58px;
+      background: linear-gradient(135deg, #fff9c4, #fff176);
+      border: 3px solid #f9a825; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: #e65100;
+      cursor: pointer; transition: 0.15s; user-select: none;
+      box-shadow: 0 4px 0 #f9a825;
+    }
+    .l-tile:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #f9a825; }
+    .l-tile:active { transform: translateY(2px); box-shadow: 0 1px 0 #f9a825; }
+    .l-tile.used { opacity: 0.3; cursor: not-allowed; pointer-events: none; box-shadow: none; }
+
+    .spell-feedback {
+      font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+      min-height: 36px; margin-bottom: 10px;
+    }
+    .spell-fb-good { color: #2e7d32; }
+    .spell-fb-bad  { color: #c62828; }
+
+    .spell-btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .spell-check-btn, .spell-clear-btn, .spell-next-btn {
+      padding: 12px 26px; border-radius: 50px; border: none;
+      font-family: 'Fredoka One', cursive; font-size: 1.05rem; cursor: pointer; transition: 0.2s;
+    }
+    .spell-check-btn { background: #43a047; color: white; }
+    .spell-check-btn:hover { background: #2e7d32; transform: scale(1.04); }
+    .spell-clear-btn { background: #e0e0e0; color: #555; }
+    .spell-clear-btn:hover { background: #bdbdbd; }
+    .spell-next-btn { background: #1e88e5; color: white; display: none; }
+    .spell-next-btn:hover { background: #1565c0; transform: scale(1.04); }
+
+    .spell-stars {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 10px;
+    }
+    .star { font-size: 1.8rem; filter: grayscale(1); transition: filter 0.3s; }
+    .star.lit { filter: none; animation: popIn 0.4s; }
+
+    /* ====== MISSING VOWEL ====== */
+    .mv-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px;
+    }
+    .mv-item {
+      background: white; border-radius: 16px; padding: 16px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07); text-align: center;
+    }
+    .mv-item .mv-emoji { font-size: 40px; margin-bottom: 8px; }
+    .mv-item .mv-word {
+      font-family: 'Fredoka One', cursive; font-size: 1.8rem;
+      color: #333; margin-bottom: 10px; letter-spacing: 4px;
+    }
+    .mv-item .mv-word .blank-v {
+      display: inline-block; min-width: 28px; border-bottom: 4px solid #7c4dff;
+      color: #7c4dff; vertical-align: bottom; text-align: center;
+    }
+    .vowel-choices { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+    .v-btn {
+      width: 38px; height: 38px; border-radius: 10px;
+      border: 3px solid #c5cae9; background: #f0f5ff;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: #3949ab;
+      cursor: pointer; transition: 0.15s;
+    }
+    .v-btn:hover { border-color: #7c4dff; background: #ede7f6; }
+    .v-btn.correct-v { background: #e8f5e9; border-color: #43a047; color: #2e7d32; }
+    .v-btn.wrong-v   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+
+    /* ====== WORD MATCH ====== */
+    .match-area {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media(max-width:480px){ .match-area { grid-template-columns: 1fr; } }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-label { font-family:'Fredoka One',cursive; font-size:1rem; color:#555; margin-bottom:4px; }
+    .m-item {
+      border-radius: 14px; padding: 12px 16px;
+      font-weight: 800; font-size: 1.1rem; cursor: pointer;
+      transition: 0.2s; user-select: none; text-align: center;
+      border: 3px solid #ddd; background: #f9f9f9;
+    }
+    .m-item:hover { border-color: #7c4dff; background: #ede7f6; }
+    .m-item.selected { background: #e8eaf6; border-color: #5c6bc0; transform: scale(1.03); }
+    .m-item.matched  { background: #e8f5e9; border-color: #43a047; cursor: default; }
+    .m-item.shake    { animation: shake 0.4s; }
+
+    /* Shared activity box */
+    .activity-box {
+      background: white; border-radius: 22px; padding: 26px 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-bottom: 32px; max-width: 860px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    /* True/False */
+    .tf-item { margin-bottom: 18px; }
+    .tf-text { font-size: 1rem; font-weight: 800; color: #222; margin-bottom: 8px; }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      padding: 10px 28px; border-radius: 50px; border: 3px solid #c5cae9;
+      background: #f0f5ff; font-family: 'Nunito',sans-serif;
+      font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.2s;
+    }
+    .tf-btn:hover { border-color: #7c4dff; background: #ede7f6; }
+    .tf-btn.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+    .tf-btn.wrong   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+
+    /* Shared */
+    .feedback { font-size: 1rem; font-weight: 800; margin-top: 8px; min-height: 24px; }
+    .fb-good { color: #2e7d32; }
+    .fb-bad  { color: #c62828; }
+    .score-badge {
+      display: inline-block; background: #fdd835; color: #333;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      padding: 6px 18px; border-radius: 50px; margin-top: 12px;
+    }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    .reset-btn {
+      padding: 12px 28px; border-radius: 50px; border: none;
+      font-family: 'Fredoka One', cursive; font-size: 1rem; cursor: pointer;
+      background: #e0e0e0; color: #555; transition: 0.2s;
+    }
+    .reset-btn:hover { background: #bdbdbd; }
+
+    /* Cheer */
+    .cheer-box {
+      display: none; max-width: 860px; margin: 0 auto 40px;
+      background: linear-gradient(135deg,#e53935,#fb8c00,#fdd835,#43a047,#1e88e5,#8e24aa);
+      border-radius: 24px; padding: 32px 24px; text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cheer-box.show { display: block; }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.8rem,6vw,3rem); color: white;
+      text-shadow: 2px 3px 0 rgba(0,0,0,0.2); margin-bottom: 8px;
+    }
+    .cheer-box p { font-size: 1.1rem; color: rgba(255,255,255,0.95); font-weight: 800; }
+    .cheer-stars { font-size: 2.5rem; margin-bottom: 8px; }
+
+    footer { max-width: 860px; margin: 40px auto 0; text-align: center; color: #888; font-size: 0.9rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="rainbow-stripe"></div>
+  <div class="hero-body">
+    <div class="hero-emoji">🌈</div>
+    <h1>Phonics Spelling!</h1>
+    <p>Sound it out, letter by letter — you CAN do it, Tikky! 🌟</p>
+  </div>
+  <div class="rainbow-stripe"></div>
+</div>
+
+<!-- Vowel sounds guide -->
+<div class="section">
+  <div class="section-title" style="color:#e53935;">🔊 The Magic Vowels</div>
+  <div class="sounds-grid">
+    <div class="sound-pill" style="--sc:#e53935">
+      <div class="sp-letter">A a</div>
+      <div class="sp-sound">"ah" — cat, bat</div>
+    </div>
+    <div class="sound-pill" style="--sc:#fb8c00">
+      <div class="sp-letter">E e</div>
+      <div class="sp-sound">"eh" — hen, pet</div>
+    </div>
+    <div class="sound-pill" style="--sc:#43a047">
+      <div class="sp-letter">I i</div>
+      <div class="sp-sound">"ih" — pig, big</div>
+    </div>
+    <div class="sound-pill" style="--sc:#1e88e5">
+      <div class="sp-letter">O o</div>
+      <div class="sp-sound">"oh" — dog, log</div>
+    </div>
+    <div class="sound-pill" style="--sc:#8e24aa">
+      <div class="sp-letter">U u</div>
+      <div class="sp-sound">"uh" — sun, run</div>
+    </div>
+  </div>
+
+  <!-- Word families -->
+  <div class="section-title" style="color:#7c4dff; margin-top:8px;">👨‍👩‍👧 Word Families — same ending, same sound!</div>
+  <div class="family-grid">
+    <div class="family-card" style="--fc:#e53935;--fbg:#fce4ec">
+      <div class="fc-pattern">_ A T &nbsp;🐱</div>
+      <div class="fc-words">
+        <span class="fc-word"><span class="root">c</span>at</span>
+        <span class="fc-word"><span class="root">b</span>at</span>
+        <span class="fc-word"><span class="root">h</span>at</span>
+        <span class="fc-word"><span class="root">m</span>at</span>
+        <span class="fc-word"><span class="root">r</span>at</span>
+      </div>
+    </div>
+    <div class="family-card" style="--fc:#43a047;--fbg:#e8f5e9">
+      <div class="fc-pattern">_ I G &nbsp;🐷</div>
+      <div class="fc-words">
+        <span class="fc-word"><span class="root">p</span>ig</span>
+        <span class="fc-word"><span class="root">b</span>ig</span>
+        <span class="fc-word"><span class="root">w</span>ig</span>
+        <span class="fc-word"><span class="root">d</span>ig</span>
+        <span class="fc-word"><span class="root">f</span>ig</span>
+      </div>
+    </div>
+    <div class="family-card" style="--fc:#1e88e5;--fbg:#e3f2fd">
+      <div class="fc-pattern">_ O G &nbsp;🐶</div>
+      <div class="fc-words">
+        <span class="fc-word"><span class="root">d</span>og</span>
+        <span class="fc-word"><span class="root">l</span>og</span>
+        <span class="fc-word"><span class="root">f</span>og</span>
+        <span class="fc-word"><span class="root">h</span>og</span>
+        <span class="fc-word"><span class="root">j</span>og</span>
+      </div>
+    </div>
+    <div class="family-card" style="--fc:#fb8c00;--fbg:#fff3e0">
+      <div class="fc-pattern">_ E N &nbsp;🐔</div>
+      <div class="fc-words">
+        <span class="fc-word"><span class="root">h</span>en</span>
+        <span class="fc-word"><span class="root">t</span>en</span>
+        <span class="fc-word"><span class="root">p</span>en</span>
+        <span class="fc-word"><span class="root">m</span>en</span>
+        <span class="fc-word"><span class="root">d</span>en</span>
+      </div>
+    </div>
+    <div class="family-card" style="--fc:#8e24aa;--fbg:#f3e5f5">
+      <div class="fc-pattern">_ U N &nbsp;☀️</div>
+      <div class="fc-words">
+        <span class="fc-word"><span class="root">s</span>un</span>
+        <span class="fc-word"><span class="root">f</span>un</span>
+        <span class="fc-word"><span class="root">r</span>un</span>
+        <span class="fc-word"><span class="root">b</span>un</span>
+        <span class="fc-word"><span class="root">g</span>un</span>
+      </div>
+    </div>
+    <div class="family-card" style="--fc:#00897b;--fbg:#e0f2f1">
+      <div class="fc-pattern">_ E T &nbsp;🐾</div>
+      <div class="fc-words">
+        <span class="fc-word"><span class="root">n</span>et</span>
+        <span class="fc-word"><span class="root">p</span>et</span>
+        <span class="fc-word"><span class="root">w</span>et</span>
+        <span class="fc-word"><span class="root">s</span>et</span>
+        <span class="fc-word"><span class="root">j</span>et</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== ACTIVITY 1: SPELL IT! ====== -->
+<div class="spell-game" id="spellGame">
+  <div class="activity-title">✏️ Activity 1 — Spell It!</div>
+  <div class="activity-sub">See the picture, tap the letters to spell the word! Sound it out first! 🔊</div>
+
+  <div class="spell-progress" id="spellProgress">Word 1 of 10</div>
+  <div class="spell-stars" id="spellStars"></div>
+
+  <div class="spell-emoji" id="spellEmoji">🐱</div>
+  <div class="spell-prompt" id="spellPrompt">cat</div>
+
+  <!-- Sound out boxes -->
+  <p style="font-size:0.85rem;font-weight:700;color:#888;margin-bottom:8px;">👆 Tap each letter to sound it out!</p>
+  <div class="sound-out" id="soundOut"></div>
+
+  <!-- Answer slots -->
+  <p style="font-size:0.85rem;font-weight:700;color:#888;margin-bottom:8px;">Now tap the letter tiles below to spell it!</p>
+  <div class="answer-row" id="answerRow"></div>
+
+  <!-- Letter tiles -->
+  <div class="letter-tiles" id="letterTiles"></div>
+
+  <div class="spell-feedback" id="spellFb"></div>
+
+  <div class="spell-btn-row">
+    <button class="spell-check-btn" onclick="checkSpelling()">✅ Check!</button>
+    <button class="spell-clear-btn" onclick="clearSpelling()">🔄 Clear</button>
+    <button class="spell-next-btn" id="nextBtn" onclick="nextWord()">Next Word ➡️</button>
+  </div>
+
+  <div id="spellDoneMsg" style="display:none; margin-top:18px;">
+    <div class="score-badge" id="spellScore"></div>
+  </div>
+</div>
+
+<!-- ====== ACTIVITY 2: MISSING VOWEL ====== -->
+<div class="activity-box">
+  <div class="activity-title">🔤 Activity 2 — Missing Vowel!</div>
+  <div class="activity-sub">Which vowel (a e i o u) fits in the gap? Tap it! 👆</div>
+
+  <div class="mv-grid">
+    <!-- cat -->
+    <div class="mv-item">
+      <div class="mv-emoji">🐱</div>
+      <div class="mv-word">c<span class="blank-v" id="mvs1">_</span>t</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs1','mv1')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs1','mv1')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs1','mv1')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs1','mv1')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs1','mv1')">u</button>
+      </div>
+      <div class="feedback" id="mv1"></div>
+    </div>
+    <!-- pig -->
+    <div class="mv-item">
+      <div class="mv-emoji">🐷</div>
+      <div class="mv-word">p<span class="blank-v" id="mvs2">_</span>g</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs2','mv2')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs2','mv2')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs2','mv2')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs2','mv2')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs2','mv2')">u</button>
+      </div>
+      <div class="feedback" id="mv2"></div>
+    </div>
+    <!-- dog -->
+    <div class="mv-item">
+      <div class="mv-emoji">🐶</div>
+      <div class="mv-word">d<span class="blank-v" id="mvs3">_</span>g</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs3','mv3')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs3','mv3')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs3','mv3')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs3','mv3')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs3','mv3')">u</button>
+      </div>
+      <div class="feedback" id="mv3"></div>
+    </div>
+    <!-- hen -->
+    <div class="mv-item">
+      <div class="mv-emoji">🐔</div>
+      <div class="mv-word">h<span class="blank-v" id="mvs4">_</span>n</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs4','mv4')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs4','mv4')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs4','mv4')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs4','mv4')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs4','mv4')">u</button>
+      </div>
+      <div class="feedback" id="mv4"></div>
+    </div>
+    <!-- sun -->
+    <div class="mv-item">
+      <div class="mv-emoji">☀️</div>
+      <div class="mv-word">s<span class="blank-v" id="mvs5">_</span>n</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs5','mv5')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs5','mv5')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs5','mv5')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs5','mv5')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs5','mv5')">u</button>
+      </div>
+      <div class="feedback" id="mv5"></div>
+    </div>
+    <!-- bat -->
+    <div class="mv-item">
+      <div class="mv-emoji">🦇</div>
+      <div class="mv-word">b<span class="blank-v" id="mvs6">_</span>t</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs6','mv6')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs6','mv6')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs6','mv6')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs6','mv6')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs6','mv6')">u</button>
+      </div>
+      <div class="feedback" id="mv6"></div>
+    </div>
+    <!-- net -->
+    <div class="mv-item">
+      <div class="mv-emoji">🎣</div>
+      <div class="mv-word">n<span class="blank-v" id="mvs7">_</span>t</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs7','mv7')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs7','mv7')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs7','mv7')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs7','mv7')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs7','mv7')">u</button>
+      </div>
+      <div class="feedback" id="mv7"></div>
+    </div>
+    <!-- big -->
+    <div class="mv-item">
+      <div class="mv-emoji">🐘</div>
+      <div class="mv-word">b<span class="blank-v" id="mvs8">_</span>g</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs8','mv8')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs8','mv8')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs8','mv8')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs8','mv8')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs8','mv8')">u</button>
+      </div>
+      <div class="feedback" id="mv8"></div>
+    </div>
+    <!-- run -->
+    <div class="mv-item">
+      <div class="mv-emoji">🏃</div>
+      <div class="mv-word">r<span class="blank-v" id="mvs9">_</span>n</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs9','mv9')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs9','mv9')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs9','mv9')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs9','mv9')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs9','mv9')">u</button>
+      </div>
+      <div class="feedback" id="mv9"></div>
+    </div>
+    <!-- hat -->
+    <div class="mv-item">
+      <div class="mv-emoji">🎩</div>
+      <div class="mv-word">h<span class="blank-v" id="mvs10">_</span>t</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs10','mv10')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs10','mv10')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs10','mv10')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs10','mv10')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs10','mv10')">u</button>
+      </div>
+      <div class="feedback" id="mv10"></div>
+    </div>
+    <!-- pet -->
+    <div class="mv-item">
+      <div class="mv-emoji">🐱</div>
+      <div class="mv-word">p<span class="blank-v" id="mvs11">_</span>t</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs11','mv11')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs11','mv11')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs11','mv11')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs11','mv11')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs11','mv11')">u</button>
+      </div>
+      <div class="feedback" id="mv11"></div>
+    </div>
+    <!-- log -->
+    <div class="mv-item">
+      <div class="mv-emoji">🪵</div>
+      <div class="mv-word">l<span class="blank-v" id="mvs12">_</span>g</div>
+      <div class="vowel-choices">
+        <button class="v-btn" onclick="pickVowel(this,'a','mvs12','mv12')">a</button>
+        <button class="v-btn" onclick="pickVowel(this,'e','mvs12','mv12')">e</button>
+        <button class="v-btn" onclick="pickVowel(this,'i','mvs12','mv12')">i</button>
+        <button class="v-btn" onclick="pickVowel(this,'o','mvs12','mv12')">o</button>
+        <button class="v-btn" onclick="pickVowel(this,'u','mvs12','mv12')">u</button>
+      </div>
+      <div class="feedback" id="mv12"></div>
+    </div>
+  </div>
+  <div id="mvScore" class="score-badge" style="display:none;margin-top:16px;"></div>
+</div>
+
+<!-- ====== ACTIVITY 3: MATCH WORD TO PICTURE ====== -->
+<div class="activity-box">
+  <div class="activity-title">🔗 Activity 3 — Match Word to Picture!</div>
+  <div class="activity-sub">Tap a word on the left, then tap its picture on the right! 👆</div>
+  <div class="match-area">
+    <div class="match-col">
+      <div class="match-label">📝 Words</div>
+      <div class="m-item" id="mw1" onclick="matchTap('word',1)">cat</div>
+      <div class="m-item" id="mw2" onclick="matchTap('word',2)">dog</div>
+      <div class="m-item" id="mw3" onclick="matchTap('word',3)">pig</div>
+      <div class="m-item" id="mw4" onclick="matchTap('word',4)">sun</div>
+      <div class="m-item" id="mw5" onclick="matchTap('word',5)">hen</div>
+      <div class="m-item" id="mw6" onclick="matchTap('word',6)">hat</div>
+    </div>
+    <div class="match-col">
+      <div class="match-label">🖼️ Pictures</div>
+      <div class="m-item" id="mp4" onclick="matchTap('pic',4)" style="font-size:1.6rem;">☀️</div>
+      <div class="m-item" id="mp1" onclick="matchTap('pic',1)" style="font-size:1.6rem;">🐱</div>
+      <div class="m-item" id="mp6" onclick="matchTap('pic',6)" style="font-size:1.6rem;">🎩</div>
+      <div class="m-item" id="mp3" onclick="matchTap('pic',3)" style="font-size:1.6rem;">🐷</div>
+      <div class="m-item" id="mp2" onclick="matchTap('pic',2)" style="font-size:1.6rem;">🐶</div>
+      <div class="m-item" id="mp5" onclick="matchTap('pic',5)" style="font-size:1.6rem;">🐔</div>
+    </div>
+  </div>
+  <div id="matchFb" class="feedback" style="margin-top:12px;"></div>
+  <div id="matchScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- ====== ACTIVITY 4: TRUE OR FALSE ====== -->
+<div class="activity-box">
+  <div class="activity-title">✅ Activity 4 — Right Spelling?</div>
+  <div class="activity-sub">Is the word spelled correctly? Tap YES ✅ or NO ❌! 👆</div>
+
+  <div class="tf-item">
+    <div class="tf-text">1. 🐱 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">c-a-t</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t1')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t1')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf1fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">2. 🐷 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">p-u-g</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t2')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t2')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf2fb"><span style="color:#666;font-size:0.9rem;">(pig = p-i-g)</span></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">3. ☀️ Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">s-u-n</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t3')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t3')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf3fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">4. 🐶 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">d-a-g</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t4')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t4')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf4fb"><span style="color:#666;font-size:0.9rem;">(dog = d-o-g)</span></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">5. 🐔 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">h-e-n</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t5')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t5')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf5fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">6. 🎩 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">h-i-t</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t6')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t6')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf6fb"><span style="color:#666;font-size:0.9rem;">(hat = h-a-t)</span></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">7. 🪵 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">l-o-g</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t7')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t7')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf7fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">8. 🏃 Is this right? &nbsp;<strong style="font-size:1.3rem;letter-spacing:3px;">r-u-n</strong></div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t8')">✅ Yes!</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t8')">❌ No</button>
+    </div>
+    <div class="feedback" id="tf8fb"></div>
+  </div>
+  <div class="btn-row">
+    <button class="reset-btn" onclick="resetTF()">🔄 Try Again</button>
+  </div>
+  <div id="tfScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- Cheer -->
+<div class="cheer-box" id="cheerBox">
+  <div class="cheer-stars">🌈⭐✏️🌟🎉</div>
+  <h2>Super Speller, Tikky! 🌟</h2>
+  <p>You are doing SO well with your phonics! Keep sounding it out — you've got this! 🎊</p>
+</div>
+
+<footer>Keep practising, Tikky! Sound it out — c… a… t… CAT! 🌈⭐</footer>
+
+<script>
+  /* ============ GLOBAL ============ */
+  let cheerCount = 0, cheerDone = false;
+  function cheer() {
+    cheerCount++;
+    if (cheerCount >= 2 && !cheerDone) {
+      cheerDone = true;
+      const cb = document.getElementById('cheerBox');
+      cb.classList.add('show');
+      cb.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  }
+
+  /* ============ SPELL-IT GAME ============ */
+  const words = [
+    { word:'cat', emoji:'🐱' },
+    { word:'dog', emoji:'🐶' },
+    { word:'pig', emoji:'🐷' },
+    { word:'hen', emoji:'🐔' },
+    { word:'sun', emoji:'☀️' },
+    { word:'bat', emoji:'🦇' },
+    { word:'hat', emoji:'🎩' },
+    { word:'net', emoji:'🎣' },
+    { word:'log', emoji:'🪵' },
+    { word:'run', emoji:'🏃' },
+  ];
+
+  // Shuffle array helper
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let currentWord = 0;
+  let userAnswer = [];
+  let tileOrder = [];
+  let spellScore = 0;
+  const totalWords = words.length;
+
+  // Build the stars strip
+  function buildStars() {
+    const div = document.getElementById('spellStars');
+    div.innerHTML = '';
+    for (let i = 0; i < totalWords; i++) {
+      const s = document.createElement('span');
+      s.className = 'star' + (i < currentWord ? ' lit' : '');
+      s.textContent = '⭐';
+      div.appendChild(s);
+    }
+  }
+
+  function loadWord() {
+    if (currentWord >= totalWords) { showSpellDone(); return; }
+    const w = words[currentWord];
+    document.getElementById('spellProgress').textContent = `Word ${currentWord + 1} of ${totalWords}`;
+    document.getElementById('spellEmoji').textContent = w.emoji;
+    document.getElementById('spellPrompt').textContent = w.word;
+    document.getElementById('spellFb').textContent = '';
+    document.getElementById('spellFb').className = 'spell-feedback';
+    document.getElementById('nextBtn').style.display = 'none';
+
+    buildStars();
+
+    // Sound-out boxes (show all letters)
+    const soDiv = document.getElementById('soundOut');
+    soDiv.innerHTML = '';
+    w.word.split('').forEach(letter => {
+      const box = document.createElement('div');
+      box.className = 'so-letter';
+      box.textContent = letter;
+      box.onclick = function() {
+        this.classList.add('active');
+        setTimeout(() => this.classList.remove('active'), 400);
+      };
+      soDiv.appendChild(box);
+    });
+
+    // Answer slots
+    userAnswer = new Array(w.word.length).fill('');
+    const ansDiv = document.getElementById('answerRow');
+    ansDiv.innerHTML = '';
+    for (let i = 0; i < w.word.length; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'ans-slot';
+      slot.id = 'slot_' + i;
+      slot.onclick = () => removeFromSlot(i);
+      ansDiv.appendChild(slot);
+    }
+
+    // Scrambled tile letters
+    tileOrder = shuffle(w.word.split('').map((l, idx) => ({ l, idx })));
+    const tileDiv = document.getElementById('letterTiles');
+    tileDiv.innerHTML = '';
+    tileOrder.forEach((item, ti) => {
+      const tile = document.createElement('div');
+      tile.className = 'l-tile';
+      tile.id = 'tile_' + ti;
+      tile.textContent = item.l;
+      tile.onclick = () => tapTile(ti, item.l);
+      tileDiv.appendChild(tile);
+    });
+  }
+
+  function tapTile(tileIdx, letter) {
+    const tile = document.getElementById('tile_' + tileIdx);
+    if (tile.classList.contains('used')) return;
+    // Find first empty slot
+    const emptyIdx = userAnswer.indexOf('');
+    if (emptyIdx === -1) return;
+    userAnswer[emptyIdx] = { letter, tileIdx };
+    const slot = document.getElementById('slot_' + emptyIdx);
+    slot.textContent = letter;
+    slot.classList.add('filled');
+    tile.classList.add('used');
+  }
+
+  function removeFromSlot(slotIdx) {
+    if (!userAnswer[slotIdx]) return;
+    const { tileIdx } = userAnswer[slotIdx];
+    userAnswer[slotIdx] = '';
+    const slot = document.getElementById('slot_' + slotIdx);
+    slot.textContent = '';
+    slot.classList.remove('filled', 'correct-slot', 'wrong-slot');
+    document.getElementById('tile_' + tileIdx).classList.remove('used');
+    // Compact — shift filled slots left
+    compact();
+  }
+
+  function compact() {
+    const w = words[currentWord];
+    const filled = userAnswer.filter(x => x !== '');
+    userAnswer = [...filled, ...new Array(w.word.length - filled.length).fill('')];
+    // Re-mark used tiles from scratch
+    document.querySelectorAll('.l-tile').forEach(t => t.classList.remove('used'));
+    userAnswer.forEach((v, i) => {
+      const slot = document.getElementById('slot_' + i);
+      if (v) {
+        slot.textContent = v.letter;
+        slot.classList.add('filled');
+        document.getElementById('tile_' + v.tileIdx).classList.add('used');
+      } else {
+        slot.textContent = '';
+        slot.classList.remove('filled','correct-slot','wrong-slot');
+      }
+    });
+  }
+
+  function clearSpelling() {
+    const w = words[currentWord];
+    userAnswer = new Array(w.word.length).fill('');
+    for (let i = 0; i < w.word.length; i++) {
+      const slot = document.getElementById('slot_' + i);
+      slot.textContent = ''; slot.className = 'ans-slot';
+    }
+    document.querySelectorAll('.l-tile').forEach(t => t.classList.remove('used'));
+    document.getElementById('spellFb').textContent = '';
+    document.getElementById('nextBtn').style.display = 'none';
+  }
+
+  function checkSpelling() {
+    const w = words[currentWord];
+    const typed = userAnswer.map(x => x ? x.letter : '').join('');
+    if (typed.length < w.word.length) {
+      document.getElementById('spellFb').textContent = '👆 Fill in all the letters first!';
+      document.getElementById('spellFb').className = 'spell-feedback spell-fb-bad';
+      return;
+    }
+    const correct = typed === w.word;
+    for (let i = 0; i < w.word.length; i++) {
+      const slot = document.getElementById('slot_' + i);
+      slot.classList.remove('filled');
+      slot.classList.add(correct ? 'correct-slot' : 'wrong-slot');
+    }
+    if (correct) {
+      spellScore++;
+      document.getElementById('spellFb').textContent = '🎉 Amazing! You spelled it!';
+      document.getElementById('spellFb').className = 'spell-feedback spell-fb-good';
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      document.querySelectorAll('.l-tile').forEach(t => t.onclick = null);
+    } else {
+      document.getElementById('spellFb').textContent = `❌ Try again! Sound it out: ${w.word.split('').join(' — ')}`;
+      document.getElementById('spellFb').className = 'spell-feedback spell-fb-bad';
+      setTimeout(() => {
+        clearSpelling();
+        document.getElementById('spellFb').textContent = '👆 Try again!';
+      }, 1800);
+    }
+  }
+
+  function nextWord() {
+    currentWord++;
+    loadWord();
+  }
+
+  function showSpellDone() {
+    document.getElementById('spellDoneMsg').style.display = 'block';
+    document.getElementById('spellScore').textContent = `🌟 You spelled ${spellScore} out of ${totalWords} correctly!`;
+    document.getElementById('spellFb').textContent = '';
+    document.getElementById('nextBtn').style.display = 'none';
+    buildStars();
+    document.getElementById('spellStars').querySelectorAll('.star').forEach(s => s.classList.add('lit'));
+    if (spellScore >= 7) cheer();
+  }
+
+  /* ============ MISSING VOWEL ============ */
+  const mvAnswers = { mv1:'a', mv2:'i', mv3:'o', mv4:'e', mv5:'u', mv6:'a', mv7:'e', mv8:'i', mv9:'u', mv10:'a', mv11:'e', mv12:'o' };
+  let mvDone = {};
+  function pickVowel(el, vowel, slotId, fbId) {
+    if (mvDone[fbId]) return;
+    mvDone[fbId] = true;
+    const correct = mvAnswers[fbId] === vowel;
+    el.classList.add(correct ? 'correct-v' : 'wrong-v');
+    el.closest('.mv-item').querySelectorAll('.v-btn').forEach(b => b.disabled = true);
+    const slot = document.getElementById(slotId);
+    slot.textContent = vowel;
+    slot.style.color = correct ? '#2e7d32' : '#c62828';
+    const fb = document.getElementById(fbId);
+    fb.textContent = correct ? '✅ Yes!' : `❌ It's "${mvAnswers[fbId]}"`;
+    fb.className = 'feedback ' + (correct ? 'fb-good' : 'fb-bad');
+    if (Object.keys(mvDone).length === 12) {
+      const sc = Object.values(mvDone).filter(Boolean).length;
+      document.getElementById('mvScore').textContent = `🌟 You got ${sc} out of 12!`;
+      document.getElementById('mvScore').style.display = 'inline-block';
+      if (sc >= 9) cheer();
+    }
+  }
+
+  /* ============ MATCH ============ */
+  let matchSel = { word: null, pic: null };
+  let matchDone = 0;
+  function matchTap(side, id) {
+    const elId = side === 'word' ? 'mw' + id : 'mp' + id;
+    const el = document.getElementById(elId);
+    if (el.classList.contains('matched')) return;
+    const otherSide = side === 'word' ? 'pic' : 'word';
+    if (matchSel[side] !== null) {
+      const prev = document.getElementById((side === 'word' ? 'mw' : 'mp') + matchSel[side]);
+      if (prev) prev.classList.remove('selected');
+    }
+    el.classList.add('selected');
+    matchSel[side] = id;
+    if (matchSel.word !== null && matchSel.pic !== null) {
+      const wEl = document.getElementById('mw' + matchSel.word);
+      const pEl = document.getElementById('mp' + matchSel.pic);
+      if (matchSel.word === matchSel.pic) {
+        wEl.classList.replace('selected','matched');
+        pEl.classList.replace('selected','matched');
+        matchDone++;
+        document.getElementById('matchFb').textContent = '✅ Correct match!';
+        document.getElementById('matchFb').className = 'feedback fb-good';
+        if (matchDone === 6) {
+          document.getElementById('matchScore').textContent = '🌟 All 6 matched! Brilliant!';
+          document.getElementById('matchScore').style.display = 'inline-block';
+          cheer();
+        }
+      } else {
+        wEl.classList.add('shake'); pEl.classList.add('shake');
+        setTimeout(() => { wEl.classList.remove('shake','selected'); pEl.classList.remove('shake','selected'); }, 500);
+        document.getElementById('matchFb').textContent = '❌ Try again!';
+        document.getElementById('matchFb').className = 'feedback fb-bad';
+      }
+      matchSel = { word: null, pic: null };
+    }
+  }
+
+  /* ============ TRUE/FALSE ============ */
+  const tfAns = { t1:'true', t2:'false', t3:'true', t4:'false', t5:'true', t6:'false', t7:'true', t8:'true' };
+  let tfDone = {};
+  function checkTF(el, picked, key) {
+    if (tfDone[key]) return;
+    tfDone[key] = true;
+    const correct = tfAns[key] === picked;
+    el.classList.add(correct ? 'correct' : 'wrong');
+    el.closest('.tf-item').querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+    const num = key.replace('t','');
+    const fb = document.getElementById('tf' + num + 'fb');
+    fb.innerHTML = correct ? '✅ Correct!' : `❌ Not quite! ${fb.innerHTML}`;
+    fb.className = 'feedback ' + (correct ? 'fb-good' : 'fb-bad');
+    if (Object.keys(tfDone).length === 8) {
+      const sc = Object.values(tfDone).filter(Boolean).length;
+      document.getElementById('tfScore').textContent = `🌟 You got ${sc} out of 8!`;
+      document.getElementById('tfScore').style.display = 'inline-block';
+      if (sc >= 6) cheer();
+    }
+  }
+  function resetTF() {
+    tfDone = {};
+    document.querySelectorAll('.tf-btn').forEach(b => { b.classList.remove('correct','wrong'); b.disabled = false; });
+    const hints = ['','(pig = p-i-g)','','(dog = d-o-g)','','(hat = h-a-t)','',''];
+    for (let i = 1; i <= 8; i++) {
+      const el = document.getElementById('tf' + i + 'fb');
+      if (el) {
+        const h = hints[i-1];
+        el.innerHTML = h ? `<span style="color:#666;font-size:0.9rem;">${h}</span>` : '';
+        el.className = 'feedback';
+      }
+    }
+    document.getElementById('tfScore').style.display = 'none';
+  }
+
+  /* ============ INIT ============ */
+  loadWord();
+</script>
+</body>
+</html>

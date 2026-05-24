@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Tense 🚀 — Tikky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #e91e8c;
+      --light:   #fff0f8;
+      --accent:  #ff6bb5;
+      --dark:    #2a0a1e;
+      --green:   #00c853;
+      --yellow:  #ffd600;
+      --orange:  #ff6d00;
+      --blue:    #2979ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--light);
+      background-image:
+        radial-gradient(circle at 10% 85%, rgba(233,30,140,.07) 0%, transparent 45%),
+        radial-gradient(circle at 90% 15%, rgba(255,107,181,.07) 0%, transparent 45%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,.92); border: 2px solid rgba(233,30,140,.25);
+      color: var(--pink); font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(233,30,140,.15);
+      backdrop-filter: blur(4px); transition: all .2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── Cheer Banner ── */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #e91e8c, #ff6bb5);
+      color: white;
+      text-align: center;
+      padding: 22px 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      letter-spacing: .5px;
+      box-shadow: 0 4px 20px rgba(233,30,140,.35);
+      animation: popIn .5s cubic-bezier(.175,.885,.32,1.275);
+    }
+
+    /* ── HERO HEADER ── */
+    .page-header {
+      background: linear-gradient(135deg, #8b005a 0%, #e91e8c 55%, #ff6bb5 100%);
+      padding: 70px 20px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 70% 40%, rgba(255,214,0,.08) 0%, transparent 60%);
+    }
+    .rocket-icon {
+      font-size: 76px;
+      display: block;
+      position: relative;
+      animation: rocketFloat 3s ease-in-out infinite;
+    }
+    @keyframes rocketFloat {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50%      { transform: translateY(-12px) rotate(5deg); }
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+      color: white; font-weight: 800; font-size: .82rem;
+      padding: 5px 18px; border-radius: 50px; margin-bottom: 12px;
+      letter-spacing: .5px; position: relative;
+    }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      color: white;
+      text-shadow: 3px 4px rgba(0,0,0,.2);
+      position: relative;
+      line-height: 1.1;
+      margin-top: 8px;
+    }
+    .page-header p {
+      color: rgba(255,255,255,.88);
+      font-size: 1.1rem; font-weight: 700;
+      margin-top: 10px; position: relative;
+    }
+
+    /* ── MAIN ── */
+    .main { max-width: 920px; margin: 0 auto; padding: 40px 18px 80px; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem; color: var(--dark);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* ── DEFINITION BOX ── */
+    .definition-box {
+      background: white;
+      border-radius: 22px;
+      padding: 26px 28px;
+      margin-bottom: 28px;
+      border-left: 7px solid var(--pink);
+      box-shadow: 0 4px 18px rgba(233,30,140,.1);
+    }
+    .definition-box p {
+      font-size: 1.2rem; font-weight: 700; line-height: 1.8; color: #444;
+    }
+    .hl-pink { font-weight: 900; color: var(--pink); }
+
+    /* ── FORMULA DISPLAY ── */
+    .formula-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #ffe0f2, #ffd6ec);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 16px rgba(233,30,140,.1);
+    }
+    .formula-pill {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.45rem;
+      padding: 12px 28px;
+      border-radius: 50px;
+      color: white;
+      box-shadow: 0 3px 10px rgba(0,0,0,.15);
+    }
+    .formula-pill.subject  { background: #7c4dff; }
+    .formula-pill.will     { background: var(--pink); font-size: 1.65rem; transform: scale(1.08); }
+    .formula-pill.verb     { background: var(--blue); }
+    .formula-plus {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem; color: #cca;
+      color: var(--pink); opacity: .6;
+    }
+
+    /* ── EXAMPLE CARDS GRID ── */
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .example-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px 18px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(233,30,140,.08);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      user-select: none;
+    }
+    .example-card:hover  { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(233,30,140,.18); }
+    .example-card.tapped { border-color: var(--pink); box-shadow: 0 0 0 4px rgba(233,30,140,.2); }
+    .example-card .ex-emoji { font-size: 42px; margin-bottom: 10px; display: block; }
+    .example-card .ex-text  {
+      font-size: 1.12rem; font-weight: 800; color: #333; line-height: 1.5;
+    }
+    .ex-will {
+      font-weight: 900; color: var(--pink);
+      background: #ffe0f2; padding: 1px 6px; border-radius: 8px;
+    }
+
+    /* ── ACTIVITY BOX ── */
+    .activity-box {
+      background: white;
+      border-radius: 24px;
+      padding: 28px 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 5px 22px rgba(0,0,0,.07);
+    }
+    .activity-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.55rem;
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 6px;
+      color: var(--pink);
+    }
+    .activity-box .hint {
+      font-size: 1rem; font-weight: 700; color: #888;
+      margin-bottom: 24px;
+    }
+
+    /* ── SUCCESS BANNER (per-activity) ── */
+    .act-success {
+      display: none;
+      background: linear-gradient(135deg, #e8f5e9, #c8f7c5);
+      border: 3px solid var(--green);
+      border-radius: 16px;
+      padding: 18px 20px;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: #1b5e20;
+      margin-top: 20px;
+      animation: popIn .4s cubic-bezier(.175,.885,.32,1.275);
+    }
+
+    /* ── ACTIVITY 1: FUTURE OR NOT ── */
+    .sentence-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .sent-btn {
+      background: #fff0f8; border: 3px solid #ffd6ec;
+      border-radius: 16px; padding: 16px 14px;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.05rem;
+      color: var(--dark); cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+    .sent-btn:hover { transform: scale(1.04); border-color: var(--accent); }
+    .sent-btn.correct-sel {
+      background: #e8f5e9; border-color: var(--green);
+      color: #1b5e20;
+      animation: popIn .4s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .sent-btn.wrong-sel {
+      background: #ffe0e0; border-color: #f44336; color: #b71c1c;
+    }
+
+    /* ── ACTIVITY 2: BUILD SENTENCE ── */
+    .build-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .build-counter {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: #888;
+    }
+    .build-assembled {
+      background: var(--light);
+      border-radius: 14px; padding: 16px 20px;
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      color: var(--dark); min-height: 60px;
+      margin-bottom: 22px;
+      display: flex; align-items: center; gap: 10px;
+      flex-wrap: wrap;
+      border: 2px dashed #ffd6ec;
+    }
+    .assembled-word {
+      background: var(--pink); color: white;
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 1.3rem;
+      animation: popIn .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .assembled-word.will-word { background: var(--pink); }
+    .build-parts {
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .part-btn {
+      background: white; border: 3px solid var(--accent);
+      border-radius: 50px; padding: 14px 26px;
+      font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+      color: var(--pink); cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 3px 10px rgba(233,30,140,.12);
+    }
+    .part-btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.06); }
+    .part-btn:disabled { opacity: .35; cursor: default; }
+    .build-result {
+      display: none;
+      background: #e8f5e9; border: 3px solid var(--green);
+      border-radius: 14px; padding: 14px 18px;
+      font-family: 'Fredoka One', cursive; font-size: 1.4rem;
+      color: #1b5e20; text-align: center;
+      animation: popIn .4s cubic-bezier(.175,.885,.32,1.275);
+      margin-bottom: 16px;
+    }
+    .next-btn {
+      background: var(--pink); color: white; border: none;
+      border-radius: 50px; padding: 12px 30px;
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      cursor: pointer; transition: all .2s;
+      box-shadow: 0 4px 14px rgba(233,30,140,.3);
+      display: none;
+    }
+    .next-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(233,30,140,.4); }
+
+    /* ── ACTIVITY 3: QUIZ ── */
+    .quiz-wrap { }
+    .quiz-q {
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 2px dashed #ffd6ec;
+    }
+    .quiz-q:last-child { border-bottom: none; margin-bottom: 0; }
+    .quiz-q .q-text {
+      font-size: 1.15rem; font-weight: 800; color: var(--dark);
+      margin-bottom: 14px; line-height: 1.5;
+    }
+    .quiz-q .q-num {
+      font-family: 'Fredoka One', cursive;
+      color: var(--pink); font-size: 1rem; display: block; margin-bottom: 4px;
+    }
+    .q-options { display: flex; flex-direction: column; gap: 10px; }
+    .q-opt {
+      background: var(--light); border: 3px solid #ffd6ec;
+      border-radius: 14px; padding: 14px 18px;
+      font-weight: 800; font-size: 1.05rem; color: var(--dark);
+      cursor: pointer; transition: all .2s;
+      text-align: left;
+    }
+    .q-opt:hover { border-color: var(--accent); transform: translateX(4px); }
+    .q-opt.q-correct {
+      background: #e8f5e9; border-color: var(--green); color: #1b5e20;
+      animation: popIn .4s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .q-opt.q-wrong {
+      background: #ffe0e0; border-color: #f44336; color: #b71c1c;
+    }
+    .q-opt:disabled, .q-opt.q-correct, .q-opt.q-wrong { pointer-events: none; }
+
+    /* ── ACTIVITY 4: TRUE / FALSE ── */
+    .tf-list { display: flex; flex-direction: column; gap: 16px; }
+    .tf-item {
+      background: var(--light); border-radius: 18px; padding: 16px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      border: 2px solid #ffd6ec;
+    }
+    .tf-sentence {
+      font-weight: 800; font-size: 1.08rem; flex: 1;
+    }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      border: none; border-radius: 50px; padding: 10px 22px;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      cursor: pointer; transition: all .2s;
+    }
+    .tf-btn.true-btn  { background: #a5d6a7; color: #1b5e20; }
+    .tf-btn.false-btn { background: #ef9a9a; color: #b71c1c; }
+    .tf-btn:hover:not(:disabled) { transform: scale(1.08); }
+    .tf-btn:disabled { opacity: .45; cursor: default; }
+    .tf-item.tf-right { background: #e8f5e9; border-color: var(--green); animation: popIn .4s cubic-bezier(.175,.885,.32,1.275); }
+    .tf-item.tf-wrong { background: #ffe0e0; border-color: #f44336; }
+    .tf-badge {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem; display: none;
+    }
+    .tf-item.tf-right .tf-badge { display: inline; color: var(--green); }
+    .tf-item.tf-wrong .tf-badge { display: inline; color: #f44336; }
+
+    /* ── ACTIVITY 5: FILL IN BLANK ── */
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 26px;
+      padding: 18px; background: var(--light);
+      border-radius: 16px; border: 2px dashed #ffd6ec;
+    }
+    .bank-token {
+      background: var(--pink); color: white;
+      border: none; border-radius: 50px; padding: 10px 22px;
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      cursor: pointer; transition: all .2s;
+      box-shadow: 0 3px 10px rgba(233,30,140,.2);
+    }
+    .bank-token:hover { transform: scale(1.08) translateY(-2px); }
+    .bank-token:disabled { opacity: .35; cursor: default; }
+    .fill-sentences { display: flex; flex-direction: column; gap: 16px; }
+    .fill-row {
+      font-size: 1.15rem; font-weight: 800; color: var(--dark);
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      background: white; border-radius: 14px; padding: 14px 18px;
+      border: 2px solid #ffd6ec;
+    }
+    .fill-blank {
+      display: inline-block;
+      min-width: 80px; height: 36px; line-height: 36px;
+      background: var(--light); border-bottom: 3px solid var(--pink);
+      border-radius: 8px 8px 0 0;
+      text-align: center; padding: 0 12px;
+      font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: var(--pink);
+      cursor: pointer; transition: all .2s;
+    }
+    .fill-blank.filled {
+      background: #ffd6ec; border-color: var(--pink);
+      animation: popIn .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .fill-blank.fill-correct { background: #c8f7c5; border-color: var(--green); color: #1b5e20; cursor: default; }
+    .fill-blank.fill-wrong   { background: #ffe0e0; border-color: #f44336; color: #f44336; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      40%      { transform: translateY(-14px); }
+      60%      { transform: translateY(-7px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.5); opacity: 0; }
+      80%  { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      15%  { transform: translateX(-8px); }
+      30%  { transform: translateX(8px); }
+      45%  { transform: translateX(-6px); }
+      60%  { transform: translateX(6px); }
+      75%  { transform: translateX(-3px); }
+      90%  { transform: translateX(3px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+    .shake { animation: shake 0.6s ease !important; }
+    .bounce-anim { animation: bounce .6s ease; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 560px) {
+      .formula-wrap { flex-direction: column; }
+      .example-grid { grid-template-columns: 1fr 1fr; }
+      .sentence-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width: 380px) {
+      .example-grid { grid-template-columns: 1fr; }
+      .sentence-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- ── CHEER BANNER ── -->
+<div class="cheer-banner">
+  Amazing, Tikky! You know the future tense! 🚀⭐
+</div>
+
+<!-- ── HERO HEADER ── -->
+<header class="page-header">
+  <span class="rocket-icon">🚀</span>
+  <div class="header-badge">English · Cambridge Curriculum</div>
+  <h1>Future Tense</h1>
+  <p>📅 11th May 2026</p>
+</header>
+
+<main class="main">
+
+  <!-- ════════════════════════════════ INTRO ════════════════════════════════ -->
+  <div class="section-label">📖 What is the Future Tense?</div>
+
+  <div class="definition-box">
+    <p>The <span class="hl-pink">future tense</span> shows an action that <span class="hl-pink">will happen</span> in the future — later, tomorrow, next week!</p>
+  </div>
+
+  <div class="section-label">✨ The Formula</div>
+
+  <div class="formula-wrap">
+    <span class="formula-pill subject">Subject</span>
+    <span class="formula-plus">+</span>
+    <span class="formula-pill will">WILL</span>
+    <span class="formula-plus">+</span>
+    <span class="formula-pill verb">base verb</span>
+  </div>
+
+  <!-- ════════════════════════════════ EXAMPLES ════════════════════════════════ -->
+  <div class="section-label">💬 Examples</div>
+
+  <div class="example-grid">
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">🏃</span>
+      <div class="ex-text">I <span class="ex-will">will</span> play.</div>
+    </div>
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">🍽️</span>
+      <div class="ex-text">You <span class="ex-will">will</span> eat.</div>
+    </div>
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">😴</span>
+      <div class="ex-text">He / She / It <span class="ex-will">will</span> sleep.</div>
+    </div>
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">💃</span>
+      <div class="ex-text">We <span class="ex-will">will</span> dance.</div>
+    </div>
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">🏠</span>
+      <div class="ex-text">I <span class="ex-will">will</span> go home after school.</div>
+    </div>
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">🌧️</span>
+      <div class="ex-text">It <span class="ex-will">will</span> rain tomorrow.</div>
+    </div>
+    <div class="example-card" onclick="tapCard(this)">
+      <span class="ex-emoji">🎉</span>
+      <div class="ex-text">We <span class="ex-will">will</span> have a party next week.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ ACTIVITY 1 ════════════════════════════════ -->
+  <div class="activity-box" id="act1">
+    <h2>🎯 Activity 1 — Future or Not?</h2>
+    <div class="hint">Tap the sentences that use the <strong>future tense</strong>!</div>
+
+    <div class="sentence-grid" id="a1Grid">
+      <!-- future (correct) -->
+      <button class="sent-btn" onclick="tapFuture(this, true, 'a1')">She will sing. 🎤</button>
+      <button class="sent-btn" onclick="tapFuture(this, true, 'a1')">They will run. 🏃</button>
+      <button class="sent-btn" onclick="tapFuture(this, true, 'a1')">We will eat dinner. 🍽️</button>
+      <button class="sent-btn" onclick="tapFuture(this, true, 'a1')">I will read a book. 📚</button>
+      <!-- NOT future (wrong) -->
+      <button class="sent-btn" onclick="tapFuture(this, false, 'a1')">She sang. 🎶</button>
+      <button class="sent-btn" onclick="tapFuture(this, false, 'a1')">They run fast. 💨</button>
+      <button class="sent-btn" onclick="tapFuture(this, false, 'a1')">We ate dinner. 🥘</button>
+      <button class="sent-btn" onclick="tapFuture(this, false, 'a1')">I am reading. 📖</button>
+    </div>
+
+    <div class="act-success" id="a1Success">
+      🎉 Amazing! You found all the future tense sentences! ✅
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ ACTIVITY 2 ════════════════════════════════ -->
+  <div class="activity-box" id="act2">
+    <h2>🔨 Activity 2 — Build the Sentence!</h2>
+    <div class="hint">Tap the words in order: <strong>Subject → will → verb</strong></div>
+
+    <div class="build-nav">
+      <div class="build-counter" id="buildCounter">Sentence 1 of 5</div>
+      <div style="font-size:.9rem;font-weight:700;color:#aaa;">Tap in order!</div>
+    </div>
+
+    <div class="build-assembled" id="buildAssembled">
+      <span style="color:#ccc;font-size:1rem;font-family:'Nunito',sans-serif;">Your sentence appears here…</span>
+    </div>
+
+    <div class="build-parts" id="buildParts"></div>
+
+    <div class="build-result" id="buildResult"></div>
+    <button class="next-btn" id="buildNextBtn" onclick="nextBuildSentence()">Next ➜</button>
+
+    <div class="act-success" id="a2Success">
+      🎉 Brilliant! You built all 5 future tense sentences! ✅
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ ACTIVITY 3 ════════════════════════════════ -->
+  <div class="activity-box" id="act3">
+    <h2>🧠 Activity 3 — Pick the Right Word!</h2>
+    <div class="hint">Choose the best answer for each question.</div>
+
+    <div class="quiz-wrap" id="quizWrap">
+
+      <div class="quiz-q" id="qq1">
+        <span class="q-num">Question 1</span>
+        <div class="q-text">Tomorrow, I __ go to school.</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',1)">a) went</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',1)">b) <span class="hl-pink">will go</span></button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',1)">c) going</button>
+        </div>
+      </div>
+
+      <div class="quiz-q" id="qq2">
+        <span class="q-num">Question 2</span>
+        <div class="q-text">She __ dance at the party.</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',2)">a) danced</button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',2)">b) is dancing</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',2)">c) <span class="hl-pink">will dance</span></button>
+        </div>
+      </div>
+
+      <div class="quiz-q" id="qq3">
+        <span class="q-num">Question 3</span>
+        <div class="q-text">Which sentence tells the future?</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',3)">a) He slept.</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',3)">b) He <span class="hl-pink">will</span> sleep.</button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',3)">c) He sleeps.</button>
+        </div>
+      </div>
+
+      <div class="quiz-q" id="qq4">
+        <span class="q-num">Question 4</span>
+        <div class="q-text">We <span class="hl-pink">will</span> have a party. The word "will" shows __</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',4)">a) the past</button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',4)">b) right now</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',4)">c) <span class="hl-pink">the future</span></button>
+        </div>
+      </div>
+
+      <div class="quiz-q" id="qq5">
+        <span class="q-num">Question 5</span>
+        <div class="q-text">__ <span class="hl-pink">will</span> eat.</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',5)">a) Go</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',5)">b) <span class="hl-pink">You</span></button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',5)">c) Plays</button>
+        </div>
+      </div>
+
+      <div class="quiz-q" id="qq6">
+        <span class="q-num">Question 6</span>
+        <div class="q-text">It <span class="hl-pink">will</span> __ tomorrow.</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',6)">a) rained</button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',6)">b) raining</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',6)">c) <span class="hl-pink">rain</span></button>
+        </div>
+      </div>
+
+      <div class="quiz-q" id="qq7">
+        <span class="q-num">Question 7</span>
+        <div class="q-text">I <span class="hl-pink">will</span> go home after __.</div>
+        <div class="q-options">
+          <button class="q-opt" onclick="pickQ(this,'wrong',7)">a) yesterday</button>
+          <button class="q-opt" onclick="pickQ(this,'wrong',7)">b) last week</button>
+          <button class="q-opt" onclick="pickQ(this,'correct',7)">c) <span class="hl-pink">school</span></button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="act-success" id="a3Success">
+      🎉 You got them all right! You're a future tense star! ⭐
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ ACTIVITY 4 ════════════════════════════════ -->
+  <div class="activity-box" id="act4">
+    <h2>✅ Activity 4 — True or False?</h2>
+    <div class="hint">Is the sentence correct future tense? Tap TRUE or FALSE!</div>
+
+    <div class="tf-list" id="tfList">
+      <div class="tf-item" id="tf1">
+        <span class="tf-sentence">She <span class="hl-pink">will</span> plays.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','false','tf1')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','false','tf1')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+
+      <div class="tf-item" id="tf2">
+        <span class="tf-sentence">I <span class="hl-pink">will</span> eat.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','true','tf2')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','true','tf2')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+
+      <div class="tf-item" id="tf3">
+        <span class="tf-sentence">We <span class="hl-pink">will</span> danced.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','false','tf3')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','false','tf3')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+
+      <div class="tf-item" id="tf4">
+        <span class="tf-sentence">He <span class="hl-pink">will</span> sleep.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','true','tf4')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','true','tf4')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+
+      <div class="tf-item" id="tf5">
+        <span class="tf-sentence">You <span class="hl-pink">will</span> going home.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','false','tf5')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','false','tf5')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+
+      <div class="tf-item" id="tf6">
+        <span class="tf-sentence">They <span class="hl-pink">will</span> run.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','true','tf6')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','true','tf6')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+
+      <div class="tf-item" id="tf7">
+        <span class="tf-sentence">It <span class="hl-pink">will</span> rains.</span>
+        <div class="tf-btns">
+          <button class="tf-btn true-btn"  onclick="checkTF(this,'true','false','tf7')">TRUE</button>
+          <button class="tf-btn false-btn" onclick="checkTF(this,'false','false','tf7')">FALSE</button>
+        </div>
+        <span class="tf-badge"></span>
+      </div>
+    </div>
+
+    <div class="act-success" id="a4Success">
+      🎉 Perfect! You can spot correct and wrong future tense! ✅
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ ACTIVITY 5 ════════════════════════════════ -->
+  <div class="activity-box" id="act5">
+    <h2>✍️ Activity 5 — Fill in the Blank!</h2>
+    <div class="hint">Tap a word from the word bank, then tap the blank to fill it!</div>
+
+    <div class="word-bank" id="wordBank">
+      <button class="bank-token" id="wt-will"  onclick="selectToken(this,'will')">will</button>
+      <button class="bank-token" id="wt-play"  onclick="selectToken(this,'play')">play</button>
+      <button class="bank-token" id="wt-eat"   onclick="selectToken(this,'eat')">eat</button>
+      <button class="bank-token" id="wt-dance" onclick="selectToken(this,'dance')">dance</button>
+      <button class="bank-token" id="wt-sleep" onclick="selectToken(this,'sleep')">sleep</button>
+      <button class="bank-token" id="wt-She"   onclick="selectToken(this,'She')">She</button>
+      <button class="bank-token" id="wt-rain"  onclick="selectToken(this,'rain')">rain</button>
+      <button class="bank-token" id="wt-party" onclick="selectToken(this,'party')">party</button>
+    </div>
+
+    <div class="fill-sentences" id="fillSentences">
+      <!-- row 1 -->
+      <div class="fill-row">
+        <span>I</span>
+        <span class="fill-blank" id="fb1" data-answer="will" onclick="fillBlank(this)">___</span>
+        <span>play football.</span>
+      </div>
+      <!-- row 2 -->
+      <div class="fill-row">
+        <span>You</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span class="fill-blank" id="fb2" data-answer="eat" onclick="fillBlank(this)">___</span>
+        <span>your dinner.</span>
+      </div>
+      <!-- row 3 -->
+      <div class="fill-row">
+        <span>He</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span class="fill-blank" id="fb3" data-answer="sleep" onclick="fillBlank(this)">___</span>
+        <span>.</span>
+      </div>
+      <!-- row 4 -->
+      <div class="fill-row">
+        <span class="fill-blank" id="fb4" data-answer="She" onclick="fillBlank(this)">___</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span>dance.</span>
+      </div>
+      <!-- row 5 -->
+      <div class="fill-row">
+        <span>We</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span class="fill-blank" id="fb5" data-answer="dance" onclick="fillBlank(this)">___</span>
+        <span>at the party.</span>
+      </div>
+      <!-- row 6 -->
+      <div class="fill-row">
+        <span>It</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span class="fill-blank" id="fb6" data-answer="rain" onclick="fillBlank(this)">___</span>
+        <span>tomorrow.</span>
+      </div>
+      <!-- row 7 -->
+      <div class="fill-row">
+        <span>They</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span>have a</span>
+        <span class="fill-blank" id="fb7" data-answer="party" onclick="fillBlank(this)">___</span>
+        <span>.</span>
+      </div>
+      <!-- row 8 -->
+      <div class="fill-row">
+        <span>I</span>
+        <span class="hl-pink" style="font-weight:900;">will</span>
+        <span class="fill-blank" id="fb8" data-answer="play" onclick="fillBlank(this)">___</span>
+        <span>the piano.</span>
+      </div>
+    </div>
+
+    <div class="act-success" id="a5Success">
+      🎉 You filled every blank correctly! You're amazing, Tikky! 🌟
+    </div>
+  </div>
+
+</main>
+
+<script>
+  /* ─────────────────────────────────────────────────────────────
+     GLOBAL CHEER
+  ───────────────────────────────────────────────────────────── */
+  let cheerCount = 0;
+
+  function cheer() {
+    cheerCount++;
+    if (cheerCount >= 2) {
+      const banner = document.querySelector('.cheer-banner');
+      banner.style.display = 'block';
+      banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     EXAMPLE CARDS
+  ───────────────────────────────────────────────────────────── */
+  function tapCard(el) {
+    el.classList.toggle('tapped');
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     ACTIVITY 1 — FUTURE OR NOT
+  ───────────────────────────────────────────────────────────── */
+  let a1CorrectFound = 0;
+  const A1_TOTAL = 4;
+  let a1Done = false;
+
+  function tapFuture(el, isFuture, actId) {
+    if (a1Done) return;
+    if (el.classList.contains('correct-sel') || el.classList.contains('wrong-sel')) return;
+
+    if (isFuture) {
+      el.classList.add('correct-sel');
+      el.textContent = '✅ ' + el.textContent;
+      a1CorrectFound++;
+      if (a1CorrectFound >= A1_TOTAL) {
+        a1Done = true;
+        const s = document.getElementById('a1Success');
+        s.style.display = 'block';
+        s.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        cheer();
+      }
+    } else {
+      el.classList.add('wrong-sel');
+      el.classList.add('shake');
+      setTimeout(() => el.classList.remove('shake'), 600);
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     ACTIVITY 2 — BUILD THE SENTENCE
+  ───────────────────────────────────────────────────────────── */
+  const buildSentences = [
+    { parts: ['I', 'will', 'play'],  result: 'I will play.' },
+    { parts: ['She', 'will', 'dance'], result: 'She will dance.' },
+    { parts: ['They', 'will', 'eat'],  result: 'They will eat.' },
+    { parts: ['We', 'will', 'sleep'],  result: 'We will sleep.' },
+    { parts: ['He', 'will', 'run'],    result: 'He will run.' },
+  ];
+
+  let buildIdx = 0;
+  let buildPicked = [];
+  let buildExpected = [];
+
+  function renderBuildSentence() {
+    const s = buildSentences[buildIdx];
+    buildPicked = [];
+    buildExpected = s.parts.slice();
+
+    document.getElementById('buildCounter').textContent = `Sentence ${buildIdx + 1} of ${buildSentences.length}`;
+
+    const assembled = document.getElementById('buildAssembled');
+    assembled.innerHTML = '<span style="color:#ccc;font-size:1rem;font-family:\'Nunito\',sans-serif;">Your sentence appears here…</span>';
+
+    const partsDiv = document.getElementById('buildParts');
+    partsDiv.innerHTML = '';
+    // Shuffle parts order for fun
+    const shuffled = [...s.parts].sort(() => Math.random() - .5);
+    shuffled.forEach((word, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'part-btn';
+      btn.textContent = word;
+      btn.onclick = () => tapPart(btn, word);
+      partsDiv.appendChild(btn);
+    });
+
+    document.getElementById('buildResult').style.display = 'none';
+    document.getElementById('buildNextBtn').style.display = 'none';
+  }
+
+  function tapPart(btn, word) {
+    if (btn.disabled) return;
+    const expected = buildExpected[buildPicked.length];
+    if (word !== expected) {
+      btn.classList.add('shake');
+      setTimeout(() => btn.classList.remove('shake'), 600);
+      return;
+    }
+
+    buildPicked.push(word);
+    btn.disabled = true;
+
+    // Update assembled display
+    const assembled = document.getElementById('buildAssembled');
+    if (buildPicked.length === 1) assembled.innerHTML = '';
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'assembled-word' + (word === 'will' ? ' will-word' : '');
+    wordSpan.textContent = word;
+    assembled.appendChild(wordSpan);
+
+    if (buildPicked.length === buildExpected.length) {
+      const resultDiv = document.getElementById('buildResult');
+      const sentence = buildSentences[buildIdx];
+      resultDiv.innerHTML = '✅ ' + sentence.result.replace('will', '<span class="hl-pink">will</span>');
+      resultDiv.style.display = 'block';
+
+      // Disable all part buttons
+      document.querySelectorAll('#buildParts .part-btn').forEach(b => b.disabled = true);
+
+      if (buildIdx < buildSentences.length - 1) {
+        document.getElementById('buildNextBtn').style.display = 'inline-block';
+      } else {
+        // All done!
+        setTimeout(() => {
+          const s = document.getElementById('a2Success');
+          s.style.display = 'block';
+          s.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          cheer();
+        }, 600);
+      }
+    }
+  }
+
+  function nextBuildSentence() {
+    buildIdx++;
+    renderBuildSentence();
+  }
+
+  // Init activity 2
+  renderBuildSentence();
+
+  /* ─────────────────────────────────────────────────────────────
+     ACTIVITY 3 — QUIZ
+  ───────────────────────────────────────────────────────────── */
+  let quizCorrect = 0;
+  const QUIZ_TOTAL = 7;
+  let quizDone = false;
+
+  function pickQ(el, result, qNum) {
+    const qDiv = document.getElementById('qq' + qNum);
+    if (qDiv.dataset.answered) return;
+    qDiv.dataset.answered = '1';
+
+    const opts = qDiv.querySelectorAll('.q-opt');
+    opts.forEach(o => { o.style.pointerEvents = 'none'; });
+
+    if (result === 'correct') {
+      el.classList.add('q-correct');
+      el.innerHTML = '✅ ' + el.innerHTML;
+      quizCorrect++;
+      if (quizCorrect >= QUIZ_TOTAL && !quizDone) {
+        quizDone = true;
+        setTimeout(() => {
+          const s = document.getElementById('a3Success');
+          s.style.display = 'block';
+          s.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          cheer();
+        }, 500);
+      }
+    } else {
+      el.classList.add('q-wrong');
+      el.classList.add('shake');
+      setTimeout(() => el.classList.remove('shake'), 600);
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     ACTIVITY 4 — TRUE / FALSE
+  ───────────────────────────────────────────────────────────── */
+  let tfCorrect = 0;
+  const TF_TOTAL = 7;
+  let tfDone = false;
+
+  function checkTF(btn, picked, key, itemId) {
+    const item = document.getElementById(itemId);
+    if (item.dataset.answered) return;
+    item.dataset.answered = '1';
+
+    const btns = item.querySelectorAll('.tf-btn');
+    btns.forEach(b => b.disabled = true);
+
+    const badge = item.querySelector('.tf-badge');
+
+    if (picked === key) {
+      item.classList.add('tf-right');
+      badge.textContent = '✅ Correct!';
+      tfCorrect++;
+      if (tfCorrect >= TF_TOTAL && !tfDone) {
+        tfDone = true;
+        setTimeout(() => {
+          const s = document.getElementById('a4Success');
+          s.style.display = 'block';
+          s.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          cheer();
+        }, 500);
+      }
+    } else {
+      item.classList.add('tf-wrong');
+      badge.textContent = '❌ Try again!';
+      btn.classList.add('shake');
+      setTimeout(() => btn.classList.remove('shake'), 600);
+      // Re-enable after shake so they can try again
+      setTimeout(() => {
+        delete item.dataset.answered;
+        btns.forEach(b => b.disabled = false);
+        item.classList.remove('tf-wrong');
+        badge.textContent = '';
+      }, 800);
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     ACTIVITY 5 — FILL IN THE BLANK
+  ───────────────────────────────────────────────────────────── */
+  let selectedToken = null;
+  let fillCorrectCount = 0;
+  const FILL_TOTAL = 8;
+  let fillDone = false;
+
+  function selectToken(btn, word) {
+    // Deselect previous
+    if (selectedToken) {
+      selectedToken.btn.style.outline = '';
+      selectedToken.btn.style.transform = '';
+    }
+    if (selectedToken && selectedToken.word === word && selectedToken.btn === btn) {
+      selectedToken = null;
+      return;
+    }
+    selectedToken = { btn, word };
+    btn.style.outline = '3px solid #fff';
+    btn.style.transform = 'scale(1.12)';
+  }
+
+  function fillBlank(blank) {
+    if (blank.classList.contains('fill-correct')) return;
+
+    // If blank already filled (wrong), clear it and return token
+    if (blank.classList.contains('fill-wrong') || blank.classList.contains('filled')) {
+      const oldWord = blank.textContent;
+      // Re-enable that token if it exists
+      const oldToken = document.getElementById('wt-' + oldWord);
+      if (oldToken) oldToken.disabled = false;
+      blank.textContent = '___';
+      blank.classList.remove('filled', 'fill-wrong');
+      blank.style.color = '';
+    }
+
+    if (!selectedToken) return;
+
+    const word = selectedToken.word;
+    const answer = blank.dataset.answer;
+
+    blank.textContent = word;
+    blank.classList.add('filled');
+
+    // Disable this token instance (simple: disable the button)
+    selectedToken.btn.style.outline = '';
+    selectedToken.btn.style.transform = '';
+    selectedToken.btn.disabled = true;
+    selectedToken = null;
+
+    if (word === answer) {
+      blank.classList.remove('filled');
+      blank.classList.add('fill-correct');
+      fillCorrectCount++;
+      if (fillCorrectCount >= FILL_TOTAL && !fillDone) {
+        fillDone = true;
+        setTimeout(() => {
+          const s = document.getElementById('a5Success');
+          s.style.display = 'block';
+          s.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          cheer();
+        }, 400);
+      }
+    } else {
+      blank.classList.add('fill-wrong');
+      blank.classList.add('shake');
+      setTimeout(() => {
+        blank.classList.remove('shake', 'fill-wrong', 'filled');
+        blank.textContent = '___';
+        // Re-enable wrong token
+        const tok = document.getElementById('wt-' + word);
+        if (tok) tok.disabled = false;
+      }, 800);
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scratch Programming 🐱 — Tikky's Lesson</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f1f8e9;
+      color: #1b5e20;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: #2e7d32; color: #fff;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.88rem;
+      padding: 8px 18px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #1b5e20; transform: translateX(-2px); }
+
+    /* ===== CHEER BANNER ===== */
+    .cheer-banner {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+      background: linear-gradient(135deg, #ffab19, #ff8c00);
+      color: #fff; font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      text-align: center; padding: 14px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      animation: popIn 0.5s ease;
+    }
+    .cheer-banner.show { display: block; }
+
+    /* ===== LAYOUT ===== */
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 16px 60px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+      border-radius: 28px;
+      padding: 36px 24px 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(46,125,50,0.25);
+    }
+    .hero .mascot { font-size: 72px; animation: bounce 2s infinite; display: inline-block; }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 7vw, 3rem);
+      color: #fff; margin: 12px 0 16px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .date-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .date-badge {
+      background: rgba(255,255,255,0.2);
+      color: #fff; font-weight: 700; font-size: 0.9rem;
+      padding: 6px 16px; border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+
+    /* ===== SPELLING SPOTLIGHT ===== */
+    .spelling-cards {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .spelling-card {
+      flex: 1 1 280px;
+      background: #fff9c4;
+      border: 3px solid #f9a825;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 1rem; font-weight: 700;
+      color: #5d4037;
+      box-shadow: 0 4px 14px rgba(249,168,37,0.2);
+      animation: popIn 0.4s ease;
+    }
+    .spelling-card strong { color: #2e7d32; }
+
+    /* ===== SECTION CARDS ===== */
+    .section-card {
+      border-radius: 24px;
+      padding: 24px 20px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    }
+    .section-card.gold {
+      background: linear-gradient(135deg, #fff8e1, #fff3cd);
+      border: 3px solid #ffab19;
+    }
+    .section-card.blue {
+      background: linear-gradient(135deg, #e3f2fd, #e8f4fd);
+      border: 3px solid #4c97ff;
+    }
+    .section-card.purple {
+      background: linear-gradient(135deg, #f3e5f5, #ede7f6);
+      border: 3px solid #9966ff;
+    }
+    .section-card h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      margin-bottom: 14px;
+    }
+    .section-card.gold h2 { color: #e65100; }
+    .section-card.blue h2 { color: #1565c0; }
+    .section-card.purple h2 { color: #6a1b9a; }
+    .section-card p { font-size: 1.05rem; margin-bottom: 10px; line-height: 1.6; }
+
+    /* ===== SCRATCH BLOCKS ===== */
+    .scratch-block {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.05rem;
+      color: #fff;
+      margin: 6px 4px;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+      position: relative;
+      cursor: default;
+      user-select: none;
+    }
+    .scratch-block::before {
+      content: '';
+      position: absolute; left: -8px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+    .scratch-block.event { background: #ffab19; }
+    .scratch-block.event::before { border-right: 10px solid #ffab19; }
+    .scratch-block.motion { background: #4c97ff; }
+    .scratch-block.motion::before { border-right: 10px solid #4c97ff; }
+    .scratch-block.looks { background: #9966ff; }
+    .scratch-block.looks::before { border-right: 10px solid #9966ff; }
+
+    .block-stack { margin: 14px 0; }
+
+    /* ===== GREEN FLAG BUTTON ===== */
+    .green-flag-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 90px; height: 90px;
+      background: #43a047;
+      border-radius: 50%;
+      font-size: 48px;
+      border: none; cursor: pointer;
+      box-shadow: 0 6px 0 #2e7d32, 0 8px 24px rgba(67,160,71,0.4);
+      transition: all 0.15s;
+      margin: 16px auto; display: block;
+    }
+    .green-flag-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #2e7d32; }
+    .green-flag-btn.bouncing { animation: bounce 0.6s ease; }
+
+    /* ===== SCRATCH CAT STAGE ===== */
+    .cat-stage {
+      background: #e8f5e9;
+      border: 3px solid #66bb6a;
+      border-radius: 16px;
+      height: 100px;
+      display: flex; align-items: center;
+      padding: 10px 20px;
+      margin: 14px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .stage-cat {
+      font-size: 52px;
+      position: relative;
+      transition: left 0.5s ease;
+      left: 0;
+    }
+    .stage-cat.bounce-anim { animation: bounce 0.5s ease; }
+    .stage-cat.fast-anim { animation: fastSlide 0.5s ease; }
+
+    /* ===== SPEED DEMO BLOCKS ===== */
+    .speed-demo {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin: 14px 0;
+    }
+    .speed-row {
+      flex: 1 1 220px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      border: 2px solid #4c97ff;
+    }
+    .speed-row .emoji { font-size: 36px; display: block; margin: 6px 0; }
+    .speed-row p { font-size: 0.95rem; font-weight: 700; color: #1565c0; }
+
+    /* ===== SPEED BUTTONS ===== */
+    .speed-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .speed-btn {
+      flex: 1 1 120px;
+      padding: 14px 10px;
+      border: none; border-radius: 14px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+      transition: all 0.15s;
+    }
+    .speed-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
+    .speed-btn.slow-btn { background: #4c97ff; }
+    .speed-btn.fast-btn { background: #1565c0; }
+
+    /* ===== SPEECH BUBBLE ===== */
+    .speech-stage {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(255,255,255,0.7); border-radius: 14px;
+      padding: 16px; margin: 14px 0;
+    }
+    .speech-cat { font-size: 54px; flex-shrink: 0; }
+    .speech-bubble {
+      background: #fff;
+      border: 3px solid #9966ff;
+      border-radius: 16px 16px 16px 4px;
+      padding: 12px 18px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: #6a1b9a;
+      position: relative;
+      min-width: 120px;
+      box-shadow: 0 4px 12px rgba(153,102,255,0.2);
+      transition: all 0.3s;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute; left: -14px; bottom: 12px;
+      width: 0; height: 0;
+      border-top: 8px solid transparent;
+      border-right: 14px solid #9966ff;
+      border-bottom: 4px solid transparent;
+    }
+    .word-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .word-btn {
+      padding: 10px 16px;
+      background: #9966ff;
+      color: #fff; border: none; border-radius: 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem; cursor: pointer;
+      box-shadow: 0 4px 0 #6a1b9a;
+      transition: all 0.15s;
+    }
+    .word-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #6a1b9a; }
+
+    /* ===== ACTIVITIES ===== */
+    .activity-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      border: 3px solid #66bb6a;
+    }
+    .activity-card h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+      color: #2e7d32;
+      margin-bottom: 6px;
+    }
+    .activity-card .subtitle {
+      font-size: 0.95rem; color: #666; font-weight: 600; margin-bottom: 16px;
+    }
+
+    /* ===== ACTIVITY 1 — Tap the right block ===== */
+    .scenario {
+      background: #f9fbe7;
+      border: 2px solid #aed581;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .scenario .prompt {
+      font-size: 1.05rem; font-weight: 700; color: #33691e;
+      margin-bottom: 10px;
+    }
+    .scenario-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .sc-btn {
+      flex: 1 1 120px;
+      padding: 10px 12px;
+      border: none; border-radius: 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      cursor: pointer; color: #fff;
+      transition: all 0.2s;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+    }
+    .sc-btn.event-btn { background: #ffab19; }
+    .sc-btn.motion-btn { background: #4c97ff; }
+    .sc-btn.looks-btn { background: #9966ff; }
+    .sc-btn.answer-btn { background: #66bb6a; }
+    .sc-btn.correct { background: #43a047 !important; box-shadow: 0 0 0 4px #a5d6a7; }
+    .sc-btn.wrong { animation: shake 0.4s ease; background: #ef5350 !important; }
+    .sc-btn:disabled { cursor: default; opacity: 0.85; }
+
+    /* ===== ACTIVITY 2 — Quiz ===== */
+    .quiz-q {
+      background: #f9fbe7;
+      border: 2px solid #aed581;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .quiz-q .q-text { font-size: 1.05rem; font-weight: 700; color: #33691e; margin-bottom: 10px; }
+    .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+    .quiz-opt {
+      flex: 1 1 140px;
+      padding: 10px 14px;
+      border: 2px solid #90a4ae;
+      border-radius: 10px;
+      background: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: #333; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-opt.correct { background: #a5d6a7; border-color: #43a047; color: #1b5e20; }
+    .quiz-opt.wrong { animation: shake 0.4s ease; background: #ffcdd2; border-color: #ef5350; }
+    .quiz-opt:disabled { cursor: default; }
+
+    /* ===== ACTIVITY 3 — Matching ===== */
+    .match-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .match-col { display: flex; flex-direction: column; gap: 8px; }
+    .match-item {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .match-left.event-item { background: #fff3cd; border-color: #ffab19; color: #e65100; }
+    .match-left.motion-item { background: #e3f2fd; border-color: #4c97ff; color: #1565c0; }
+    .match-left.looks-item { background: #f3e5f5; border-color: #9966ff; color: #6a1b9a; }
+    .match-right { background: #f5f5f5; border-color: #bdbdbd; color: #333; font-family: 'Nunito', sans-serif; font-weight: 700; }
+    .match-item.selected { transform: scale(1.04); box-shadow: 0 0 0 3px #ffab19; }
+    .match-item.matched { opacity: 0.6; cursor: default; box-shadow: 0 0 0 4px #66bb6a !important; }
+    .match-item.shake { animation: shake 0.4s ease; }
+
+    /* ===== ACTIVITY 4 — True / False ===== */
+    .tf-item {
+      background: #f9fbe7;
+      border: 2px solid #aed581;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .tf-item .tf-text { font-size: 1.05rem; font-weight: 700; color: #33691e; margin-bottom: 10px; }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      flex: 1;
+      padding: 12px;
+      border: none; border-radius: 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      cursor: pointer; color: #fff;
+      transition: all 0.2s;
+    }
+    .tf-true { background: #43a047; box-shadow: 0 4px 0 #2e7d32; }
+    .tf-false { background: #ef5350; box-shadow: 0 4px 0 #c62828; }
+    .tf-btn.correct { box-shadow: 0 0 0 4px #a5d6a7 !important; transform: scale(1.05); }
+    .tf-btn.wrong { animation: shake 0.4s ease; opacity: 0.6; }
+    .tf-btn:disabled { cursor: default; }
+
+    /* ===== ACTIVITY 5 — Build a Program ===== */
+    .build-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .blocks-pool h4, .program-col h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem; color: #555;
+      margin-bottom: 10px;
+    }
+    .pool-block {
+      display: block; width: 100%;
+      padding: 12px 16px;
+      border: none; border-radius: 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer; color: #fff;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .pool-block:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
+    .pool-block.event-blk { background: #ffab19; }
+    .pool-block.motion-blk { background: #4c97ff; }
+    .pool-block.looks-blk { background: #9966ff; }
+    .pool-block:disabled { opacity: 0.4; cursor: default; }
+    .pool-block.shake { animation: shake 0.4s ease; }
+
+    .program-col .program-slot {
+      background: #f5f5f5;
+      border: 2px dashed #bdbdbd;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      color: #999;
+      min-height: 44px;
+      transition: all 0.3s;
+    }
+    .program-slot.filled-event { background: #fff3cd; border: 2px solid #ffab19; color: #e65100; }
+    .program-slot.filled-motion { background: #e3f2fd; border: 2px solid #4c97ff; color: #1565c0; }
+    .program-slot.filled-looks { background: #f3e5f5; border: 2px solid #9966ff; color: #6a1b9a; }
+
+    .build-result {
+      text-align: center;
+      margin-top: 16px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #2e7d32;
+      min-height: 50px;
+    }
+
+    /* ===== DONE BUTTON ===== */
+    .done-btn {
+      display: block; width: 100%;
+      margin-top: 16px; padding: 14px;
+      background: #2e7d32; color: #fff;
+      border: none; border-radius: 14px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #1b5e20;
+      transition: all 0.15s;
+    }
+    .done-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #1b5e20; }
+    .done-btn:disabled { opacity: 0.6; cursor: default; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-bar-wrap {
+      background: #c8e6c9; border-radius: 50px;
+      height: 12px; margin-bottom: 24px; overflow: hidden;
+    }
+    .progress-bar-inner {
+      background: linear-gradient(90deg, #43a047, #66bb6a);
+      height: 100%; border-radius: 50px;
+      width: 0%; transition: width 0.5s ease;
+    }
+    .progress-label {
+      text-align: center; font-weight: 700;
+      color: #2e7d32; font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-18px); }
+      60% { transform: translateY(-8px); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      80% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+    @keyframes fastSlide {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(60px); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes slowSlide {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 500px) {
+      .match-wrap { grid-template-columns: 1fr; }
+      .build-wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div class="cheer-banner" id="cheerBanner">
+  Amazing, Tikky! You're a Scratch programmer! 🐱💻⭐
+</div>
+
+<div class="page-wrap">
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="mascot">🐱</div>
+    <h1>Scratch Programming 🐱</h1>
+    <div class="date-badges">
+      <span class="date-badge">📅 11th May 2026</span>
+      <span class="date-badge">📅 15th May 2026</span>
+    </div>
+  </div>
+
+  <!-- ===== SPELLING SPOTLIGHT ===== -->
+  <div class="spelling-cards">
+    <div class="spelling-card">
+      💡 Spelling tip: <strong>doing</strong> — all lowercase! (not doIng) ✏️
+    </div>
+    <div class="spelling-card">
+      💡 Grammar tip: <strong>The</strong> words appear in a bubble. (not "ha words") 📝
+    </div>
+  </div>
+
+  <!-- ===== PROGRESS ===== -->
+  <p class="progress-label" id="progressLabel">Activities done: 0 / 5 ⭐</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-inner" id="progressBar"></div>
+  </div>
+
+  <!-- ===== SECTION 1 — GREEN FLAG ===== -->
+  <div class="section-card gold">
+    <h2>🚩 Green Flag = START</h2>
+    <p>The <strong>green flag</strong> is used to <strong>start a program</strong>.</p>
+
+    <div class="block-stack">
+      <span class="scratch-block event">🚩 When Green Flag clicked</span>
+    </div>
+
+    <p>When you click it:</p>
+    <p>① The program <strong>begins</strong>.</p>
+    <p>② Scratch cat starts moving or <strong>doing</strong> actions.</p>
+
+    <p style="margin-top:14px; font-weight:700; color:#e65100;">👆 Tap the green flag to see Scratch cat go!</p>
+    <button class="green-flag-btn" id="greenFlagBtn" onclick="onGreenFlag()" title="Click the Green Flag!">🚩</button>
+
+    <div class="cat-stage" id="flagStage">
+      <span class="stage-cat" id="flagCat">🐱</span>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2 — GO FASTER ===== -->
+  <div class="section-card blue">
+    <h2>🏃 Go Faster!</h2>
+    <p>Change the <strong>number</strong> in the block to change how the sprite moves.</p>
+
+    <div class="speed-demo">
+      <div class="speed-row">
+        <div class="block-stack">
+          <span class="scratch-block motion">move <strong>10</strong> steps</span>
+        </div>
+        <span class="emoji">🐢</span>
+        <p>Slow movement</p>
+      </div>
+      <div class="speed-row">
+        <div class="block-stack">
+          <span class="scratch-block motion">move <strong>20</strong> steps</span>
+        </div>
+        <span class="emoji">🐇</span>
+        <p>Fast movement!</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; font-size:1.1rem; font-weight:800; color:#1565c0; margin:10px 0;">
+      Small number → 🐢 Slow &nbsp;|&nbsp; Big number → 🐇 Fast
+    </div>
+
+    <div class="cat-stage" id="speedStage">
+      <span class="stage-cat" id="speedCat">🐱</span>
+    </div>
+
+    <div class="speed-btns">
+      <button class="speed-btn slow-btn" onclick="moveCat('slow')">🐢 Slow (10)</button>
+      <button class="speed-btn fast-btn" onclick="moveCat('fast')">🐇 Fast (20)</button>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3 — SAY BLOCK ===== -->
+  <div class="section-card purple">
+    <h2>💬 Say Block</h2>
+    <p>We can make <strong>Scratch Cat talk</strong> using a <strong>say block</strong>!</p>
+
+    <div class="block-stack">
+      <span class="scratch-block looks">say <span id="sayBlockWord">Hello!</span></span>
+    </div>
+
+    <div class="speech-stage">
+      <span class="speech-cat">🐱</span>
+      <div class="speech-bubble" id="speechBubble">Hello! 💬</div>
+    </div>
+
+    <p>Type words into the say block → <strong>the words</strong> appear in a speech bubble!</p>
+
+    <div class="word-btns">
+      <button class="word-btn" onclick="setSpeech('Hello! 💬', 'Hello!')">Hello!</button>
+      <button class="word-btn" onclick="setSpeech('Good morning! ☀️', 'Good morning!')">Good morning!</button>
+      <button class="word-btn" onclick="setSpeech('I can code! 💻', 'I can code!')">I can code!</button>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 1 — What does it do? ===== -->
+  <div class="activity-card" id="act1">
+    <h3>🎯 Activity 1 — What does it do?</h3>
+    <p class="subtitle">Tap the right Scratch block for each situation!</p>
+
+    <!-- Scenario 1 -->
+    <div class="scenario" id="s1">
+      <div class="prompt">🐱 "I want to START my program."</div>
+      <div class="scenario-btns">
+        <button class="sc-btn event-btn" onclick="checkSc(this, 's1', true)">🚩 Green Flag</button>
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's1', false)">move 10 steps</button>
+        <button class="sc-btn looks-btn" onclick="checkSc(this, 's1', false)">say Hello</button>
+      </div>
+    </div>
+
+    <!-- Scenario 2 -->
+    <div class="scenario" id="s2">
+      <div class="prompt">🐱 "I want Scratch cat to move FAST."</div>
+      <div class="scenario-btns">
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's2', false)">move 5 steps</button>
+        <button class="sc-btn event-btn" onclick="checkSc(this, 's2', false)">🚩 Green Flag</button>
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's2', true)">move 50 steps</button>
+      </div>
+    </div>
+
+    <!-- Scenario 3 -->
+    <div class="scenario" id="s3">
+      <div class="prompt">🐱 "I want Scratch cat to TALK."</div>
+      <div class="scenario-btns">
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's3', false)">move 10 steps</button>
+        <button class="sc-btn looks-btn" onclick="checkSc(this, 's3', true)">say Hello!</button>
+        <button class="sc-btn event-btn" onclick="checkSc(this, 's3', false)">🚩 Green Flag</button>
+      </div>
+    </div>
+
+    <!-- Scenario 4 -->
+    <div class="scenario" id="s4">
+      <div class="prompt">🐱 "I want Scratch cat to move SLOWLY."</div>
+      <div class="scenario-btns">
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's4', false)">move 100 steps</button>
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's4', true)">move 5 steps</button>
+        <button class="sc-btn looks-btn" onclick="checkSc(this, 's4', false)">say Bye!</button>
+      </div>
+    </div>
+
+    <!-- Scenario 5 -->
+    <div class="scenario" id="s5">
+      <div class="prompt">💬 "Words appear in a ___."</div>
+      <div class="scenario-btns">
+        <button class="sc-btn event-btn" onclick="checkSc(this, 's5', false)">green flag</button>
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's5', false)">step</button>
+        <button class="sc-btn answer-btn" onclick="checkSc(this, 's5', true)">speech bubble</button>
+      </div>
+    </div>
+
+    <!-- Scenario 6 -->
+    <div class="scenario" id="s6">
+      <div class="prompt">🚩 "The green flag makes the program ___."</div>
+      <div class="scenario-btns">
+        <button class="sc-btn motion-btn" onclick="checkSc(this, 's6', false)">stop</button>
+        <button class="sc-btn answer-btn" onclick="checkSc(this, 's6', true)">begin</button>
+        <button class="sc-btn looks-btn" onclick="checkSc(this, 's6', false)">sleep</button>
+      </div>
+    </div>
+
+    <button class="done-btn" id="act1Done" onclick="actDone(1)" disabled>✅ All done! Next activity →</button>
+  </div>
+
+  <!-- ===== ACTIVITY 2 — Quiz ===== -->
+  <div class="activity-card" id="act2">
+    <h3>🧠 Activity 2 — Pick the right answer</h3>
+    <p class="subtitle">3 choices — tap the best one!</p>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="q1">
+      <div class="q-text">Q1: The green flag is used to ___ a program.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',1)">a) stop</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',1)">b) delete</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',1)">c) start ⭐</button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="q2">
+      <div class="q-text">Q2: When you click the green flag, Scratch cat starts ___.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',2)">a) sleeping</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',2)">b) moving ⭐</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',2)">c) eating</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="q3">
+      <div class="q-text">Q3: A small number makes the sprite move ___.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'correct',3)">a) slowly ⭐</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',3)">b) fast</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',3)">c) backwards</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="q4">
+      <div class="q-text">Q4: A big number makes the sprite move ___.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',4)">a) slowly</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',4)">b) fast ⭐</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',4)">c) sideways</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="q5">
+      <div class="q-text">Q5: We make Scratch Cat talk using a ___ block.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',5)">a) move</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',5)">b) flag</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',5)">c) say ⭐</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q" id="q6">
+      <div class="q-text">Q6: Words typed in the say block appear in a ___.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'correct',6)">a) speech bubble ⭐</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',6)">b) flag</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',6)">c) step</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q" id="q7">
+      <div class="q-text">Q7: Move 50 steps is ___ than Move 10 steps.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',7)">a) slower</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',7)">b) the same</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',7)">c) faster ⭐</button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q" id="q8">
+      <div class="q-text">Q8: The correct spelling is ___.</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',8)">a) doIng</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',8)">b) Doing</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',8)">c) doing ⭐</button>
+      </div>
+    </div>
+
+    <button class="done-btn" id="act2Done" onclick="actDone(2)" disabled>✅ All done! Next activity →</button>
+  </div>
+
+  <!-- ===== ACTIVITY 3 — Matching ===== -->
+  <div class="activity-card" id="act3">
+    <h3>🔗 Activity 3 — Match the block to what it does</h3>
+    <p class="subtitle">Tap a block on the left, then tap what it does on the right!</p>
+
+    <div class="match-wrap">
+      <div class="match-col" id="leftCol">
+        <div class="match-item match-left event-item" id="ml0" onclick="selectMatch('left', 0)">🚩 Green Flag</div>
+        <div class="match-item match-left motion-item" id="ml1" onclick="selectMatch('left', 1)">move 10 steps</div>
+        <div class="match-item match-left motion-item" id="ml2" onclick="selectMatch('left', 2)">move 50 steps</div>
+        <div class="match-item match-left looks-item" id="ml3" onclick="selectMatch('left', 3)">say Hello!</div>
+        <div class="match-item match-left looks-item" id="ml4" onclick="selectMatch('left', 4)">say Good morning!</div>
+        <div class="match-item match-left event-item" id="ml5" onclick="selectMatch('left', 5)">When clicked</div>
+      </div>
+      <div class="match-col" id="rightCol">
+        <!-- Shuffled right items rendered by JS -->
+      </div>
+    </div>
+
+    <button class="done-btn" id="act3Done" onclick="actDone(3)" disabled>✅ All done! Next activity →</button>
+  </div>
+
+  <!-- ===== ACTIVITY 4 — True / False ===== -->
+  <div class="activity-card" id="act4">
+    <h3>✅ Activity 4 — True or False?</h3>
+    <p class="subtitle">Is the sentence true or false? Tap your answer!</p>
+
+    <div class="tf-item" id="tf1">
+      <div class="tf-text">🐱 "The green flag starts the program."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf1', true)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf1', false)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <div class="tf-item" id="tf2">
+      <div class="tf-text">🐢 "A big number makes the sprite move slowly."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf2', false)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf2', true)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <div class="tf-item" id="tf3">
+      <div class="tf-text">💬 "The say block makes Scratch Cat talk."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf3', true)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf3', false)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <div class="tf-item" id="tf4">
+      <div class="tf-text">🐇 "Move 10 steps is faster than move 50 steps."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf4', false)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf4', true)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <div class="tf-item" id="tf5">
+      <div class="tf-text">💭 "Words in the say block appear in a speech bubble."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf5', true)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf5', false)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <div class="tf-item" id="tf6">
+      <div class="tf-text">🚩 "The green flag stops the program."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf6', false)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf6', true)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <div class="tf-item" id="tf7">
+      <div class="tf-text">🔢 "We can change numbers in a block."</div>
+      <div class="tf-btns">
+        <button class="tf-btn tf-true" onclick="checkTF(this, 'tf7', true)">TRUE ✅</button>
+        <button class="tf-btn tf-false" onclick="checkTF(this, 'tf7', false)">FALSE ❌</button>
+      </div>
+    </div>
+
+    <button class="done-btn" id="act4Done" onclick="actDone(4)" disabled>✅ All done! Next activity →</button>
+  </div>
+
+  <!-- ===== ACTIVITY 5 — Build a Program ===== -->
+  <div class="activity-card" id="act5">
+    <h3>🛠️ Activity 5 — Build a Scratch Program!</h3>
+    <p class="subtitle">Tap the blocks in the RIGHT ORDER to build a program! Start with the green flag! 🚩</p>
+
+    <div class="build-wrap">
+      <div class="blocks-pool">
+        <h4>📦 Blocks (tap in order):</h4>
+        <div id="poolArea"></div>
+      </div>
+      <div class="program-col">
+        <h4>💻 Your Program:</h4>
+        <div id="slot0" class="program-slot">1. ___</div>
+        <div id="slot1" class="program-slot">2. ___</div>
+        <div id="slot2" class="program-slot">3. ___</div>
+        <div id="slot3" class="program-slot">4. ___</div>
+      </div>
+    </div>
+
+    <div class="build-result" id="buildResult"></div>
+    <button class="done-btn" id="act5Done" onclick="actDone(5)" disabled>🎉 Finish!</button>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+  // ===== GLOBAL STATE =====
+  let cheerCount = 0;
+  const totalActivities = 5;
+
+  // Track completions per activity
+  const actDoneMap = {};
+  const scDoneMap = {};   // which scenarios done
+  const qDoneMap = {};    // which quiz questions done
+
+  function updateCheer() {
+    cheerCount++;
+    updateProgress();
+    if (cheerCount >= 2) {
+      document.getElementById('cheerBanner').classList.add('show');
+    }
+  }
+
+  function updateProgress() {
+    const pct = Math.round((cheerCount / totalActivities) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      'Activities done: ' + cheerCount + ' / ' + totalActivities + ' ⭐';
+  }
+
+  // ===== GREEN FLAG =====
+  function onGreenFlag() {
+    const btn = document.getElementById('greenFlagBtn');
+    const cat = document.getElementById('flagCat');
+    btn.classList.add('bouncing');
+    cat.classList.add('bounce-anim');
+    setTimeout(() => {
+      btn.classList.remove('bouncing');
+      cat.classList.remove('bounce-anim');
+    }, 700);
+  }
+
+  // ===== SPEED CAT =====
+  function moveCat(speed) {
+    const cat = document.getElementById('speedCat');
+    cat.classList.remove('bounce-anim', 'fast-anim');
+    void cat.offsetWidth;
+    if (speed === 'fast') {
+      cat.style.animation = 'fastSlide 0.5s ease';
+    } else {
+      cat.style.animation = 'slowSlide 0.8s ease';
+    }
+    setTimeout(() => { cat.style.animation = ''; }, 900);
+  }
+
+  // ===== SPEECH BUBBLE =====
+  function setSpeech(bubbleText, blockWord) {
+    const bubble = document.getElementById('speechBubble');
+    const blockSpan = document.getElementById('sayBlockWord');
+    bubble.style.animation = 'popIn 0.3s ease';
+    bubble.textContent = bubbleText;
+    blockSpan.textContent = blockWord;
+    setTimeout(() => { bubble.style.animation = ''; }, 400);
+  }
+
+  // ===== ACTIVITY 1 — Scenarios =====
+  const scAnswered = {};
+  const scTotal = 6;
+
+  function checkSc(btn, scenarioId, isCorrect) {
+    if (scAnswered[scenarioId]) return;
+    const siblings = btn.closest('.scenario-btns').querySelectorAll('.sc-btn');
+    if (isCorrect) {
+      btn.classList.add('correct');
+      siblings.forEach(b => { b.disabled = true; });
+      scAnswered[scenarioId] = true;
+      checkAct1();
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(() => btn.classList.remove('wrong'), 500);
+    }
+  }
+
+  function checkAct1() {
+    const done = Object.keys(scAnswered).length;
+    if (done >= scTotal) {
+      document.getElementById('act1Done').disabled = false;
+    }
+  }
+
+  // ===== ACTIVITY 2 — Quiz =====
+  const qAnswered = {};
+  const qTotal = 8;
+
+  function pickQ(btn, result, qNum) {
+    if (qAnswered[qNum]) return;
+    const siblings = btn.closest('.quiz-opts').querySelectorAll('.quiz-opt');
+    if (result === 'correct') {
+      btn.classList.add('correct');
+      siblings.forEach(b => { b.disabled = true; });
+      qAnswered[qNum] = true;
+      if (Object.keys(qAnswered).length >= qTotal) {
+        document.getElementById('act2Done').disabled = false;
+      }
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(() => btn.classList.remove('wrong'), 500);
+    }
+  }
+
+  // ===== ACTIVITY 3 — Matching =====
+  const matchPairs = [
+    { left: 0, right: 'Starts the program' },
+    { left: 1, right: 'Moves slowly' },
+    { left: 2, right: 'Moves fast' },
+    { left: 3, right: 'Cat says Hello!' },
+    { left: 4, right: 'Cat says Good morning!' },
+    { left: 5, right: 'Same as green flag' },
+  ];
+
+  // Shuffle right items
+  const rightTexts = matchPairs.map(p => p.right);
+  const shuffled = [...rightTexts].sort(() => Math.random() - 0.5);
+
+  let matchSelectedLeft = null;
+  let matchedCount = 0;
+  const matchedLeft = new Set();
+  const matchedRight = new Set();
+
+  // Build right column
+  window.addEventListener('DOMContentLoaded', function() {
+    const rightCol = document.getElementById('rightCol');
+    shuffled.forEach((text, idx) => {
+      const div = document.createElement('div');
+      div.className = 'match-item match-right';
+      div.id = 'mr' + idx;
+      div.textContent = text;
+      div.onclick = function() { selectMatch('right', idx); };
+      rightCol.appendChild(div);
+    });
+
+    // Build pool for Activity 5
+    buildPool();
+  });
+
+  function selectMatch(side, idx) {
+    if (side === 'left') {
+      if (matchedLeft.has(idx)) return;
+      // Deselect prev
+      document.querySelectorAll('.match-left').forEach(el => el.classList.remove('selected'));
+      matchSelectedLeft = idx;
+      document.getElementById('ml' + idx).classList.add('selected');
+    } else {
+      if (matchedRight.has(idx)) return;
+      if (matchSelectedLeft === null) return;
+
+      // Check if right text matches left
+      const rightText = shuffled[idx];
+      const correctRight = matchPairs[matchSelectedLeft].right;
+
+      if (rightText === correctRight) {
+        // Match!
+        const leftEl = document.getElementById('ml' + matchSelectedLeft);
+        const rightEl = document.getElementById('mr' + idx);
+        leftEl.classList.remove('selected');
+        leftEl.classList.add('matched');
+        leftEl.onclick = null;
+        rightEl.classList.add('matched');
+        rightEl.onclick = null;
+        matchedLeft.add(matchSelectedLeft);
+        matchedRight.add(idx);
+        matchSelectedLeft = null;
+        matchedCount++;
+        if (matchedCount >= 6) {
+          document.getElementById('act3Done').disabled = false;
+        }
+      } else {
+        // Wrong
+        const leftEl = document.getElementById('ml' + matchSelectedLeft);
+        const rightEl = document.getElementById('mr' + idx);
+        leftEl.classList.add('shake');
+        rightEl.classList.add('shake');
+        setTimeout(() => {
+          leftEl.classList.remove('shake', 'selected');
+          rightEl.classList.remove('shake');
+        }, 500);
+        matchSelectedLeft = null;
+        document.querySelectorAll('.match-left').forEach(el => el.classList.remove('selected'));
+      }
+    }
+  }
+
+  // ===== ACTIVITY 4 — True / False =====
+  const tfAnswered = {};
+  const tfTotal = 7;
+
+  function checkTF(btn, itemId, isCorrect) {
+    if (tfAnswered[itemId]) return;
+    const siblings = btn.closest('.tf-btns').querySelectorAll('.tf-btn');
+    if (isCorrect) {
+      btn.classList.add('correct');
+      siblings.forEach(b => { b.disabled = true; });
+      tfAnswered[itemId] = true;
+      if (Object.keys(tfAnswered).length >= tfTotal) {
+        document.getElementById('act4Done').disabled = false;
+      }
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(() => btn.classList.remove('wrong'), 500);
+    }
+  }
+
+  // ===== ACTIVITY 5 — Build a Program =====
+  const correctOrder = [
+    { text: '🚩 When Green Flag clicked', cls: 'event-blk', slotCls: 'filled-event' },
+    { text: 'move 10 steps',             cls: 'motion-blk', slotCls: 'filled-motion' },
+    { text: 'say Hello!',                cls: 'looks-blk',  slotCls: 'filled-looks' },
+    { text: 'move 20 steps',             cls: 'motion-blk', slotCls: 'filled-motion' },
+  ];
+
+  let buildStep = 0;
+  let buildDone = false;
+
+  function buildPool() {
+    const pool = document.getElementById('poolArea');
+    // Shuffled display order — show in random order
+    const displayOrder = [2, 0, 3, 1]; // shuffle indices
+    displayOrder.forEach(idx => {
+      const b = document.createElement('button');
+      b.className = 'pool-block ' + correctOrder[idx].cls;
+      b.id = 'pb' + idx;
+      b.textContent = correctOrder[idx].text;
+      b.setAttribute('data-idx', idx);
+      b.onclick = function() { tapPoolBlock(idx, b); };
+      pool.appendChild(b);
+    });
+  }
+
+  function tapPoolBlock(idx, btn) {
+    if (buildDone || btn.disabled) return;
+    if (idx === buildStep) {
+      // Correct!
+      const slot = document.getElementById('slot' + buildStep);
+      slot.textContent = correctOrder[idx].text;
+      slot.className = 'program-slot ' + correctOrder[idx].slotCls;
+      slot.style.animation = 'popIn 0.3s ease';
+      setTimeout(() => { slot.style.animation = ''; }, 400);
+      btn.disabled = true;
+      buildStep++;
+      if (buildStep >= 4) {
+        buildDone = true;
+        const result = document.getElementById('buildResult');
+        result.innerHTML = '🐱 Program complete! 🎉<br>Scratch cat is running your program!';
+        result.style.animation = 'popIn 0.5s ease';
+        // Animate flag cat
+        const flagCat = document.getElementById('flagCat');
+        flagCat.classList.add('bounce-anim');
+        setTimeout(() => flagCat.classList.remove('bounce-anim'), 700);
+        document.getElementById('act5Done').disabled = false;
+      }
+    } else {
+      // Wrong order
+      btn.classList.add('shake');
+      setTimeout(() => btn.classList.remove('shake'), 500);
+    }
+  }
+
+  // ===== ACTIVITY DONE =====
+  function actDone(num) {
+    if (actDoneMap[num]) return;
+    actDoneMap[num] = true;
+    document.getElementById('act' + num + 'Done').textContent = '🌟 Done! Well done, Tikky!';
+    document.getElementById('act' + num + 'Done').disabled = true;
+    updateCheer();
+  }
+</script>
+</body>
+</html>

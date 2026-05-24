@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Hygiene 🧼 — Tikky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:   #00897b;
+      --accent:    #80cbc4;
+      --bg:        #e0f2f1;
+      --highlight: #004d40;
+      --card-bg:   #ffffff;
+      --yellow:    #ffd600;
+      --green:     #43a047;
+      --red:       #e53935;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 90%, rgba(0,137,123,0.08) 0%, transparent 45%),
+        radial-gradient(circle at 90% 10%, rgba(128,203,196,0.10) 0%, transparent 45%);
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: var(--primary);
+      color: white; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,137,123,0.35);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: var(--highlight); transform: translateX(-2px); }
+
+    /* ── Cheer banner ── */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #00897b, #004d40);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.2rem, 4vw, 1.7rem);
+      text-align: center;
+      padding: 22px 24px;
+      border-radius: 20px;
+      margin: 0 auto 32px;
+      max-width: 860px;
+      box-shadow: 0 6px 24px rgba(0,137,123,0.3);
+      animation: popIn 0.5s ease;
+    }
+    .cheer-banner.visible { display: block; }
+
+    /* ── Hero ── */
+    .page-hero {
+      background: linear-gradient(135deg, #00897b 0%, #00695c 60%, #004d40 100%);
+      text-align: center;
+      padding: 70px 20px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-hero .hero-icon { font-size: 80px; display: block; position: relative; animation: bob 2.5s infinite ease-in-out; }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    .page-hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
+      color: white;
+      text-shadow: 3px 4px 0 rgba(0,0,0,0.18);
+      position: relative;
+    }
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      color: white;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 5px 18px;
+      border-radius: 50px;
+      margin-top: 12px;
+      position: relative;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .definition-box {
+      background: rgba(255,255,255,0.14);
+      border: 2px solid rgba(255,255,255,0.28);
+      border-radius: 16px;
+      padding: 18px 24px;
+      margin: 20px auto 0;
+      max-width: 600px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      position: relative;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Main ── */
+    .main { max-width: 860px; margin: 0 auto; padding: 36px 18px 80px; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 3px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    /* ── Spelling spotlight ── */
+    .spelling-spotlight {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .spell-card {
+      flex: 1; min-width: 220px;
+      background: #fffde7;
+      border: 2px solid #ffd600;
+      border-radius: 16px;
+      padding: 16px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #5d4037;
+      box-shadow: 0 3px 10px rgba(255,214,0,0.2);
+      position: relative;
+    }
+    .spell-card::before {
+      content: '📌';
+      position: absolute;
+      top: -10px; left: 14px;
+      font-size: 1.3rem;
+    }
+    .spell-card .correct-word {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    /* ── 6 Ways grid ── */
+    .ways-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .way-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px 18px 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 3px solid transparent;
+      box-shadow: 0 4px 14px rgba(0,137,123,0.12);
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .way-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,137,123,0.18); }
+    .way-card.tapped {
+      border-color: var(--primary);
+      background: #e0f2f1;
+      animation: bounce 0.45s ease;
+    }
+    .way-card .way-icon { font-size: 48px; display: block; margin-bottom: 10px; }
+    .way-card .way-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.25rem;
+      color: var(--highlight);
+      margin-bottom: 6px;
+    }
+    .way-card .way-title .big-word {
+      font-size: 1.45rem;
+      color: var(--primary);
+    }
+    .way-card .way-desc {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #555;
+    }
+
+    /* ── Activity container ── */
+    .activity-box {
+      background: white;
+      border-radius: 24px;
+      padding: 28px 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 6px 24px rgba(0,137,123,0.1);
+      border: 2px solid var(--accent);
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.35rem;
+      color: var(--highlight);
+      margin-bottom: 6px;
+    }
+    .activity-subtitle {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    /* ── Activity 1: Good/Bad sort ── */
+    .scenario-display {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 22px 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--highlight);
+      margin-bottom: 20px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--accent);
+    }
+    .sort-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .sort-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .sort-btn:active { transform: scale(0.95); }
+    .sort-btn.good { background: #43a047; color: white; }
+    .sort-btn.bad  { background: #e53935; color: white; }
+    .sort-btn:hover { transform: translateY(-2px); }
+    .act1-progress {
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .act1-feedback {
+      text-align: center;
+      font-weight: 800;
+      font-size: 1rem;
+      min-height: 26px;
+      color: var(--green);
+    }
+    .act1-done {
+      text-align: center;
+      display: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--primary);
+      padding: 16px;
+      background: #e0f2f1;
+      border-radius: 14px;
+    }
+
+    /* ── Activity 2: Quiz ── */
+    .quiz-question {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--highlight);
+      margin-bottom: 14px;
+      min-height: 48px;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .quiz-opt {
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      border-radius: 50px;
+      padding: 13px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      font-family: 'Nunito', sans-serif;
+    }
+    .quiz-opt:hover:not(:disabled) { background: #b2dfdb; border-color: var(--primary); }
+    .quiz-opt.correct { background: #c8e6c9; border-color: #43a047; color: #1b5e20; }
+    .quiz-opt.wrong   { background: #ffcdd2; border-color: #e53935; color: #b71c1c; animation: shake 0.4s ease; }
+    .quiz-opt:disabled { cursor: default; }
+    .quiz-progress {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+    }
+    .quiz-done {
+      text-align: center;
+      display: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--primary);
+      padding: 16px;
+      background: #e0f2f1;
+      border-radius: 14px;
+    }
+
+    /* ── Activity 3: Matching ── */
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-item {
+      background: var(--bg);
+      border: 2.5px solid var(--accent);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      user-select: none;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .match-item:hover:not(.locked):not(.disabled) { background: #b2dfdb; border-color: var(--primary); }
+    .match-item.selected { background: #80cbc4; border-color: var(--primary); transform: scale(1.03); }
+    .match-item.locked { background: #c8e6c9; border-color: #43a047; cursor: default; pointer-events: none; }
+    .match-item.shake-it { animation: shake 0.4s ease; }
+    .match-item.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+    .match-done {
+      text-align: center;
+      display: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--primary);
+      padding: 16px;
+      background: #e0f2f1;
+      border-radius: 14px;
+      margin-top: 16px;
+    }
+
+    /* ── Activity 4: True/False ── */
+    .tf-item {
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+    .tf-statement {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--highlight);
+      margin-bottom: 10px;
+    }
+    .tf-btns {
+      display: flex;
+      gap: 10px;
+    }
+    .tf-btn {
+      flex: 1;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .tf-btn.true-btn { background: #43a047; color: white; }
+    .tf-btn.false-btn { background: #e53935; color: white; }
+    .tf-btn:disabled { opacity: 0.5; cursor: default; }
+    .tf-btn.correct-pick { outline: 4px solid #ffd600; transform: scale(1.04); }
+    .tf-btn.wrong-pick { animation: shake 0.4s ease; opacity: 0.5; }
+    .tf-done {
+      text-align: center;
+      display: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--primary);
+      padding: 16px;
+      background: #e0f2f1;
+      border-radius: 14px;
+      margin-top: 8px;
+    }
+
+    /* ── Activity 5: Spelling ── */
+    .spell-game-progress {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .star-trail {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .star-trail .star {
+      font-size: 1.5rem;
+      opacity: 0.25;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .star-trail .star.lit {
+      opacity: 1;
+      transform: scale(1.3);
+      animation: pop 0.4s ease;
+    }
+    .spell-clue {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .spell-word-icon {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 4px;
+    }
+    .spell-answer-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      min-height: 56px;
+    }
+    .answer-tile {
+      width: 46px; height: 52px;
+      background: #e0f2f1;
+      border: 2.5px solid var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--highlight);
+    }
+    .answer-tile.filled { background: white; border-color: var(--primary); }
+    .letter-tiles {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .letter-tile {
+      width: 46px; height: 52px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 0 3px 8px rgba(0,137,123,0.3);
+    }
+    .letter-tile:hover:not(:disabled) { transform: translateY(-3px); background: var(--highlight); }
+    .letter-tile:disabled { opacity: 0.25; cursor: default; }
+    .spell-feedback {
+      text-align: center;
+      font-weight: 800;
+      font-size: 1rem;
+      min-height: 24px;
+      color: var(--green);
+    }
+    .spell-shake { animation: shake 0.45s ease; }
+    .spell-done {
+      text-align: center;
+      display: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--primary);
+      padding: 16px;
+      background: #e0f2f1;
+      border-radius: 14px;
+      margin-top: 8px;
+    }
+
+    /* ── Score bar ── */
+    .score-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--highlight);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      text-align: center;
+      padding: 10px;
+      z-index: 1000;
+      box-shadow: 0 -3px 12px rgba(0,0,0,0.2);
+    }
+
+    /* ── Keyframe animations ── */
+    @keyframes bounce {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.12); }
+      60%  { transform: scale(0.95); }
+      80%  { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.7); opacity: 0; }
+      70%  { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.5); }
+      100% { transform: scale(1.3); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .match-grid { grid-template-columns: 1fr 1fr; }
+      .match-item { font-size: 0.82rem; padding: 10px 8px; }
+      .ways-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html" class="back-home-btn">← Back</a>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <span class="hero-icon">🧼</span>
+    <h1>Personal Hygiene 🧼</h1>
+    <div class="date-badge">📅 12th May 2026</div>
+    <div class="definition-box">
+      Personal Hygiene means keeping our body clean to stay healthy and prevent sickness.
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- Cheer Banner -->
+    <div class="cheer-banner" id="cheerBanner">
+      🌟 Brilliant, Tikky! You know how to stay clean and healthy! 🧼⭐
+    </div>
+
+    <!-- Spelling Spotlight -->
+    <div class="section-label">💡 Spelling Spotlight</div>
+    <div class="spelling-spotlight">
+      <div class="spell-card">
+        💡 Spelling tip: The word is <span class="correct-word">Bath-ing</span> (not Bating) 🛁<br>
+        <span style="font-size:0.85rem;font-weight:400;color:#6d4c41;">Every bath has a <em>h</em> in it — Bath → Bath<strong>ing</strong> ✨</span>
+      </div>
+      <div class="spell-card">
+        💡 Spelling tip: The word is <span class="correct-word">reg-u-lar-ly</span> (not regularm) 📏<br>
+        <span style="font-size:0.85rem;font-weight:400;color:#6d4c41;">Sound it out: <em>reg - u - lar - ly</em> — four fun syllables! ✨</span>
+      </div>
+    </div>
+
+    <!-- 6 Ways -->
+    <div class="section-label">🌿 6 Ways to Keep Clean</div>
+    <div class="ways-grid">
+      <div class="way-card" onclick="tapCard(this)">
+        <span class="way-icon">🛁</span>
+        <div class="way-title"><span class="big-word">BATHING</span></div>
+        <div class="way-desc">Bathe twice a day to keep clean.</div>
+      </div>
+      <div class="way-card" onclick="tapCard(this)">
+        <span class="way-icon">🙌</span>
+        <div class="way-title">Washing Hands</div>
+        <div class="way-desc">Wash hands before and after eating.</div>
+      </div>
+      <div class="way-card" onclick="tapCard(this)">
+        <span class="way-icon">🚽</span>
+        <div class="way-title">Washroom Hands</div>
+        <div class="way-desc">Wash hands after visiting the washroom.</div>
+      </div>
+      <div class="way-card" onclick="tapCard(this)">
+        <span class="way-icon">🤧</span>
+        <div class="way-title">Cover Your Mouth</div>
+        <div class="way-desc">Cover mouth when coughing or sneezing.</div>
+      </div>
+      <div class="way-card" onclick="tapCard(this)">
+        <span class="way-icon">✂️</span>
+        <div class="way-title">Fingernails — <span class="big-word">REGULARLY</span></div>
+        <div class="way-desc">Cut fingernails regularly.</div>
+      </div>
+      <div class="way-card" onclick="tapCard(this)">
+        <span class="way-icon">👗</span>
+        <div class="way-title">Clean Clothes</div>
+        <div class="way-desc">Wear clean clothes every day.</div>
+      </div>
+    </div>
+
+    <!-- Activity 1 -->
+    <div class="activity-box">
+      <div class="activity-title">🎮 Activity 1 — Good or Bad Hygiene?</div>
+      <div class="activity-subtitle">Read each situation and choose ✅ Good or ❌ Bad!</div>
+      <div class="act1-progress" id="a1Progress">Scenario 1 of 8</div>
+      <div class="scenario-display" id="a1Scenario">I bathe every morning and evening.</div>
+      <div class="sort-buttons">
+        <button class="sort-btn good" onclick="sortAnswer(true)">✅ Good Hygiene</button>
+        <button class="sort-btn bad"  onclick="sortAnswer(false)">❌ Bad Hygiene</button>
+      </div>
+      <div class="act1-feedback" id="a1Feedback"></div>
+      <div class="act1-done" id="a1Done">🎉 Amazing! You sorted all 8! Super clean thinking! 🧼</div>
+    </div>
+
+    <!-- Activity 2 -->
+    <div class="activity-box">
+      <div class="activity-title">🧠 Activity 2 — Pick the Right Answer</div>
+      <div class="activity-subtitle">Choose the best answer for each question!</div>
+      <div class="quiz-progress" id="a2Progress">Question 1 of 8</div>
+      <div class="quiz-question" id="a2Question">Personal hygiene means keeping our body ___.</div>
+      <div class="quiz-options" id="a2Options"></div>
+      <div class="quiz-done" id="a2Done">🌟 Perfect! You answered all 8 questions! You're a hygiene expert! ✨</div>
+    </div>
+
+    <!-- Activity 3 -->
+    <div class="activity-box">
+      <div class="activity-title">🔗 Activity 3 — Match Hygiene to Reason</div>
+      <div class="activity-subtitle">Tap a hygiene habit on the left, then tap its reason on the right!</div>
+      <div class="match-grid">
+        <div class="match-col" id="matchLeft"></div>
+        <div class="match-col" id="matchRight"></div>
+      </div>
+      <div class="match-done" id="a3Done">🔥 Brilliant matching! You linked them all! 🌿</div>
+    </div>
+
+    <!-- Activity 4 -->
+    <div class="activity-box">
+      <div class="activity-title">✔️ Activity 4 — True or False?</div>
+      <div class="activity-subtitle">Is each statement TRUE or FALSE? Tap to answer!</div>
+      <div id="tfContainer"></div>
+      <div class="tf-done" id="a4Done">⭐ Wonderful! You got every True/False right! 💪</div>
+    </div>
+
+    <!-- Activity 5 -->
+    <div class="activity-box">
+      <div class="activity-title">✍️ Activity 5 — Spell It Right!</div>
+      <div class="activity-subtitle">Tap the letters in the correct order to spell the word!</div>
+      <div class="spell-game-progress" id="a5Progress">Word 1 of 6</div>
+      <div class="star-trail" id="starTrail">
+        <span class="star" id="star0">⭐</span>
+        <span class="star" id="star1">⭐</span>
+        <span class="star" id="star2">⭐</span>
+        <span class="star" id="star3">⭐</span>
+        <span class="star" id="star4">⭐</span>
+        <span class="star" id="star5">⭐</span>
+      </div>
+      <div class="spell-word-icon" id="a5Icon">🛁</div>
+      <div class="spell-clue" id="a5Clue">We do this twice a day</div>
+      <div class="spell-answer-row" id="a5Answer"></div>
+      <div class="letter-tiles" id="a5Tiles"></div>
+      <div class="spell-feedback" id="a5Feedback"></div>
+      <div class="spell-done" id="a5Done">🎊 You spelled ALL 6 words! You are a SPELLING STAR! 🌟✏️</div>
+    </div>
+
+  </div><!-- end .main -->
+
+  <div class="score-bar" id="scoreBar">⭐ Activities completed: 0 / 5</div>
+
+  <script>
+    // ── Global state ──────────────────────────────────────────────
+    var cheerCount = 0;
+
+    function addCheer() {
+      cheerCount++;
+      document.getElementById('scoreBar').textContent = '⭐ Activities completed: ' + cheerCount + ' / 5';
+      if (cheerCount >= 2) {
+        var banner = document.getElementById('cheerBanner');
+        banner.classList.add('visible');
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // ── Way cards ─────────────────────────────────────────────────
+    function tapCard(el) {
+      el.classList.remove('tapped');
+      void el.offsetWidth;
+      el.classList.add('tapped');
+    }
+
+    // ── Activity 1: Good / Bad Sort ──────────────────────────────
+    var a1Scenarios = [
+      { text: 'I bathe every morning and evening.',           good: true  },
+      { text: 'I sneeze without covering my mouth.',          good: false },
+      { text: 'I wash my hands before eating lunch.',         good: true  },
+      { text: 'I wear the same clothes for a week.',          good: false },
+      { text: 'I cut my fingernails regularly.',              good: true  },
+      { text: "I don't wash my hands after the washroom.",    good: false },
+      { text: 'I cover my mouth when I cough.',               good: true  },
+      { text: 'I never bathe.',                               good: false }
+    ];
+    var a1Index = 0;
+    var a1Done  = false;
+
+    function sortAnswer(isGood) {
+      if (a1Done) return;
+      var current = a1Scenarios[a1Index];
+      var fb = document.getElementById('a1Feedback');
+      var sc = document.getElementById('a1Scenario');
+
+      if (isGood === current.good) {
+        fb.style.color = '#43a047';
+        fb.textContent = '✅ Correct!';
+        a1Index++;
+        if (a1Index >= a1Scenarios.length) {
+          a1Done = true;
+          setTimeout(function() {
+            document.getElementById('a1Done').style.display = 'block';
+            fb.textContent = '';
+            document.getElementById('a1Progress').style.display = 'none';
+            sc.style.display = 'none';
+            document.querySelector('#a1Feedback').closest('.activity-box').querySelectorAll('.sort-btn').forEach(function(b){ b.disabled = true; b.style.opacity='0.4'; });
+          }, 700);
+          addCheer();
+        } else {
+          setTimeout(function() {
+            fb.textContent = '';
+            sc.textContent = a1Scenarios[a1Index].text;
+            document.getElementById('a1Progress').textContent = 'Scenario ' + (a1Index+1) + ' of 8';
+          }, 700);
+        }
+      } else {
+        fb.style.color = '#e53935';
+        fb.textContent = '❌ Try again!';
+        sc.style.animation = 'none';
+        void sc.offsetWidth;
+        sc.style.animation = 'shake 0.4s ease';
+        setTimeout(function() { fb.textContent = ''; }, 900);
+      }
+    }
+
+    // ── Activity 2: Quiz ─────────────────────────────────────────
+    var a2Questions = [
+      { q: 'Personal hygiene means keeping our body ___.', opts: ['busy','clean','tired'], correct: 1 },
+      { q: 'How many times a day should we bathe?',         opts: ['once','twice','never'], correct: 1 },
+      { q: 'We wash hands before and after ___.',           opts: ['sleeping','eating','playing'], correct: 1 },
+      { q: 'We should cover our mouth when ___.',           opts: ['eating','sleeping','coughing or sneezing'], correct: 2 },
+      { q: 'We should cut our fingernails ___.',            opts: ['never','once a year','regularly'], correct: 2 },
+      { q: 'Good hygiene helps us prevent ___.',            opts: ['learning','sickness','sleeping'], correct: 1 },
+      { q: 'Which is good hygiene?',                        opts: ['dirty clothes','washing hands','long nails'], correct: 1 },
+      { q: 'The correct spelling is ___.',                  opts: ['Bating','Bathing','Batheing'], correct: 1 }
+    ];
+    var a2Index = 0;
+    var a2Done  = false;
+
+    function renderQuiz() {
+      if (a2Done) return;
+      var q = a2Questions[a2Index];
+      document.getElementById('a2Progress').textContent = 'Question ' + (a2Index+1) + ' of 8';
+      document.getElementById('a2Question').textContent = q.q;
+      var optContainer = document.getElementById('a2Options');
+      optContainer.innerHTML = '';
+      q.opts.forEach(function(opt, i) {
+        var btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.textContent = String.fromCharCode(97+i) + ') ' + opt;
+        btn.onclick = function() { pickQuiz(i, q.correct, optContainer); };
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function pickQuiz(chosen, correct, container) {
+      var opts = container.querySelectorAll('.quiz-opt');
+      opts.forEach(function(o){ o.disabled = true; });
+      if (chosen === correct) {
+        opts[chosen].classList.add('correct');
+        a2Index++;
+        if (a2Index >= a2Questions.length) {
+          a2Done = true;
+          setTimeout(function() {
+            document.getElementById('a2Done').style.display = 'block';
+            document.getElementById('a2Progress').style.display = 'none';
+            document.getElementById('a2Question').style.display = 'none';
+            container.style.display = 'none';
+          }, 800);
+          addCheer();
+        } else {
+          setTimeout(renderQuiz, 800);
+        }
+      } else {
+        opts[chosen].classList.add('wrong');
+        setTimeout(function() {
+          opts.forEach(function(o){ o.disabled = false; o.classList.remove('wrong','correct'); });
+        }, 800);
+      }
+    }
+
+    renderQuiz();
+
+    // ── Activity 3: Matching ──────────────────────────────────────
+    var matchPairs = [
+      { left: 'Bathing 🛁',          right: 'Removes dirt from skin 🛁' },
+      { left: 'Washing hands 🙌',     right: 'Prevents germs from food 🙌' },
+      { left: 'Covering mouth 🤧',    right: 'Stops germs spreading 🤧' },
+      { left: 'Clean clothes 👗',     right: 'Looks neat and tidy 👗' },
+      { left: 'Cutting nails ✂️',     right: 'Stops dirt under nails ✂️' },
+      { left: 'Visiting washroom 🚽', right: 'Keeps us clean after toilet 🚽' }
+    ];
+
+    // shuffle right column
+    var rightItems = matchPairs.map(function(p, i) { return { text: p.right, pairId: i }; });
+    for (var i = rightItems.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i+1));
+      var tmp = rightItems[i]; rightItems[i] = rightItems[j]; rightItems[j] = tmp;
+    }
+
+    var selectedLeft  = null;
+    var selectedRight = null;
+    var matchedCount  = 0;
+
+    function buildMatch() {
+      var leftCol  = document.getElementById('matchLeft');
+      var rightCol = document.getElementById('matchRight');
+      matchPairs.forEach(function(p, i) {
+        var el = document.createElement('div');
+        el.className = 'match-item';
+        el.textContent = p.left;
+        el.dataset.pairId = i;
+        el.dataset.side = 'left';
+        el.onclick = function() { selectMatch(this); };
+        leftCol.appendChild(el);
+      });
+      rightItems.forEach(function(r) {
+        var el = document.createElement('div');
+        el.className = 'match-item';
+        el.textContent = r.text;
+        el.dataset.pairId = r.pairId;
+        el.dataset.side = 'right';
+        el.onclick = function() { selectMatch(this); };
+        rightCol.appendChild(el);
+      });
+    }
+
+    function selectMatch(el) {
+      if (el.classList.contains('locked') || el.classList.contains('disabled')) return;
+      var side = el.dataset.side;
+      if (side === 'left') {
+        if (selectedLeft) selectedLeft.classList.remove('selected');
+        selectedLeft = el;
+        el.classList.add('selected');
+      } else {
+        if (selectedRight) selectedRight.classList.remove('selected');
+        selectedRight = el;
+        el.classList.add('selected');
+      }
+      if (selectedLeft && selectedRight) {
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      var lId = parseInt(selectedLeft.dataset.pairId);
+      var rId = parseInt(selectedRight.dataset.pairId);
+      if (lId === rId) {
+        selectedLeft.classList.remove('selected');
+        selectedRight.classList.remove('selected');
+        selectedLeft.classList.add('locked');
+        selectedRight.classList.add('locked');
+        selectedLeft.textContent = '✅ ' + selectedLeft.textContent;
+        matchedCount++;
+        selectedLeft = null; selectedRight = null;
+        if (matchedCount >= 6) {
+          document.getElementById('a3Done').style.display = 'block';
+          addCheer();
+        }
+      } else {
+        var l = selectedLeft; var r = selectedRight;
+        l.classList.add('shake-it');
+        r.classList.add('shake-it');
+        setTimeout(function() {
+          l.classList.remove('selected','shake-it');
+          r.classList.remove('selected','shake-it');
+        }, 500);
+        selectedLeft = null; selectedRight = null;
+      }
+    }
+
+    buildMatch();
+
+    // ── Activity 4: True / False ──────────────────────────────────
+    var tfItems = [
+      { stmt: 'Personal hygiene means keeping our body clean.', answer: true  },
+      { stmt: 'We should bathe once a week.',                   answer: false },
+      { stmt: 'We wash hands before eating.',                   answer: true  },
+      { stmt: 'It is okay to sneeze without covering your mouth.', answer: false },
+      { stmt: 'Cutting nails regularly is good hygiene.',       answer: true  },
+      { stmt: 'We should wear dirty clothes.',                   answer: false },
+      { stmt: 'Good hygiene prevents sickness.',                answer: true  }
+    ];
+    var tfAnswered = 0;
+
+    function buildTF() {
+      var container = document.getElementById('tfContainer');
+      tfItems.forEach(function(item, idx) {
+        var div = document.createElement('div');
+        div.className = 'tf-item';
+        div.innerHTML =
+          '<div class="tf-statement">' + (idx+1) + '. ' + item.stmt + '</div>' +
+          '<div class="tf-btns">' +
+            '<button class="tf-btn true-btn"  onclick="pickTF(this,' + idx + ',true)"  >✅ True</button>' +
+            '<button class="tf-btn false-btn" onclick="pickTF(this,' + idx + ',false)">❌ False</button>' +
+          '</div>';
+        container.appendChild(div);
+      });
+    }
+
+    function pickTF(btn, idx, chosen) {
+      var item = tfItems[idx];
+      var parent = btn.closest('.tf-item');
+      var allBtns = parent.querySelectorAll('.tf-btn');
+      allBtns.forEach(function(b){ b.disabled = true; });
+      if (chosen === item.answer) {
+        btn.classList.add('correct-pick');
+        tfAnswered++;
+        if (tfAnswered >= tfItems.length) {
+          setTimeout(function() {
+            document.getElementById('a4Done').style.display = 'block';
+          }, 600);
+          addCheer();
+        }
+      } else {
+        btn.classList.add('wrong-pick');
+        setTimeout(function() {
+          allBtns.forEach(function(b){ b.disabled = false; b.classList.remove('wrong-pick','correct-pick'); });
+        }, 800);
+        tfAnswered = Math.max(0, tfAnswered); // no decrement, just retry
+      }
+    }
+
+    buildTF();
+
+    // ── Activity 5: Spelling ──────────────────────────────────────
+    var spellWords = [
+      { word: 'BATHING',   icon: '🛁', clue: 'We do this twice a day' },
+      { word: 'REGULARLY', icon: '✂️', clue: 'We cut our nails ___' },
+      { word: 'CLEAN',     icon: '🧼', clue: 'Hygiene keeps us ___' },
+      { word: 'HANDS',     icon: '🙌', clue: 'We wash our ___' },
+      { word: 'HEALTHY',   icon: '💪', clue: 'Good hygiene keeps us ___' },
+      { word: 'CLOTHES',   icon: '👗', clue: 'We wear ___ ones' }
+    ];
+    var spellIndex   = 0;
+    var spellTyped   = [];
+    var spellTileEls = [];
+    var spellDone    = false;
+
+    function renderSpell() {
+      if (spellDone) return;
+      var w = spellWords[spellIndex];
+      document.getElementById('a5Progress').textContent = 'Word ' + (spellIndex+1) + ' of 6';
+      document.getElementById('a5Icon').textContent = w.icon;
+      document.getElementById('a5Clue').textContent = w.clue;
+      document.getElementById('a5Feedback').textContent = '';
+      spellTyped = [];
+
+      // Answer slots
+      var ans = document.getElementById('a5Answer');
+      ans.innerHTML = '';
+      for (var i = 0; i < w.word.length; i++) {
+        var slot = document.createElement('div');
+        slot.className = 'answer-tile';
+        slot.id = 'slot' + i;
+        ans.appendChild(slot);
+      }
+
+      // Shuffle letters
+      var letters = w.word.split('');
+      var shuffled = letters.slice();
+      for (var s = shuffled.length - 1; s > 0; s--) {
+        var r = Math.floor(Math.random() * (s+1));
+        var t = shuffled[s]; shuffled[s] = shuffled[r]; shuffled[r] = t;
+      }
+
+      var tilesContainer = document.getElementById('a5Tiles');
+      tilesContainer.innerHTML = '';
+      spellTileEls = [];
+      shuffled.forEach(function(letter, idx) {
+        var btn = document.createElement('button');
+        btn.className = 'letter-tile';
+        btn.textContent = letter;
+        btn.dataset.letter = letter;
+        btn.dataset.idx = idx;
+        btn.onclick = function() { tapLetter(this); };
+        tilesContainer.appendChild(btn);
+        spellTileEls.push(btn);
+      });
+    }
+
+    function tapLetter(btn) {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      spellTyped.push({ letter: btn.dataset.letter, btn: btn });
+      var pos = spellTyped.length - 1;
+      var slot = document.getElementById('slot' + pos);
+      slot.textContent = btn.dataset.letter;
+      slot.classList.add('filled');
+
+      var w = spellWords[spellIndex].word;
+      if (spellTyped.length === w.length) {
+        // Check
+        var typed = spellTyped.map(function(x){ return x.letter; }).join('');
+        if (typed === w) {
+          document.getElementById('a5Feedback').style.color = '#43a047';
+          document.getElementById('a5Feedback').textContent = '✅ Brilliant! ' + w + '!';
+          document.getElementById('star' + spellIndex).classList.add('lit');
+          spellIndex++;
+          if (spellIndex >= spellWords.length) {
+            spellDone = true;
+            setTimeout(function() {
+              document.getElementById('a5Done').style.display = 'block';
+            }, 900);
+            addCheer();
+          } else {
+            setTimeout(renderSpell, 1000);
+          }
+        } else {
+          // Shake and reset
+          document.getElementById('a5Feedback').style.color = '#e53935';
+          document.getElementById('a5Feedback').textContent = '❌ Hmm, try again!';
+          var ansRow = document.getElementById('a5Answer');
+          ansRow.style.animation = 'none';
+          void ansRow.offsetWidth;
+          ansRow.classList.add('spell-shake');
+          setTimeout(function() {
+            ansRow.classList.remove('spell-shake');
+            // Re-enable tiles
+            spellTyped = [];
+            spellTileEls.forEach(function(b){ b.disabled = false; });
+            // Reset slots
+            var slots = document.querySelectorAll('.answer-tile');
+            slots.forEach(function(sl){ sl.textContent = ''; sl.classList.remove('filled'); });
+            document.getElementById('a5Feedback').textContent = '';
+          }, 600);
+        }
+      }
+    }
+
+    renderSpell();
+
+  </script>
+</body>
+</html>

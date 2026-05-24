@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghana's Heroes 🇬🇭 — People who helped develop Ghana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #efebe9;
+      padding: 20px 16px 100px;
+      min-height: 100vh;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: #6d4c41; border: none;
+      color: white; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(61,33,13,0.35);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #3e2723; transform: translateX(-2px); }
+
+    /* ── CHEER BANNER ── */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #ce1126, #fcd116, #006b3f);
+      color: white; text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      padding: 18px 24px;
+      border-radius: 20px;
+      max-width: 820px; margin: 0 auto 32px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      animation: popIn 0.6s ease;
+    }
+    .cheer-banner.show { display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 820px; margin: 0 auto 36px;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .flag-stripe { display: flex; height: 46px; }
+    .flag-stripe .red   { background: #ce1126; flex: 1; }
+    .flag-stripe .gold  { background: #fcd116; flex: 1; display: flex; align-items: center; justify-content: center; }
+    .flag-stripe .green { background: #006b3f; flex: 1; }
+    .black-star { font-size: 32px; animation: bounce 2s infinite; }
+    .hero-body {
+      background: white; padding: 28px 24px 24px; text-align: center;
+    }
+    .hero-body h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      color: #3e2723;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.07);
+      line-height: 1.1; margin-bottom: 10px;
+    }
+    .date-badge {
+      display: inline-block;
+      background: #efebe9; color: #6d4c41;
+      font-weight: 800; font-size: 0.9rem;
+      padding: 5px 16px; border-radius: 30px;
+      border: 2px solid #a1887f; margin-bottom: 14px;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
+      color: #6d4c41; font-weight: 700;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      max-width: 820px; margin: 0 auto 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      color: #3e2723;
+      text-align: center; padding: 0 8px;
+    }
+    .section-title span {
+      background: linear-gradient(90deg, #ce1126 0%, #fcd116 50%, #006b3f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── HERO CARDS ── */
+    .cards-grid {
+      max-width: 900px; margin: 0 auto 44px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; padding: 0 4px;
+    }
+
+    .hero-card {
+      border-radius: 28px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      cursor: pointer;
+      perspective: 1000px;
+      height: 320px;
+      position: relative;
+    }
+    .hero-card .card-inner {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-card.flipped .card-inner { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position: absolute; inset: 0;
+      border-radius: 28px;
+      backface-visibility: hidden;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px; text-align: center;
+    }
+    .card-back { transform: rotateY(180deg); }
+
+    /* Card colours */
+    .card-red    .card-front, .card-red    .card-back { background: linear-gradient(145deg, #e53935, #ef9a9a); }
+    .card-gold   .card-front, .card-gold   .card-back { background: linear-gradient(145deg, #f9a825, #fff176); }
+    .card-green  .card-front, .card-green  .card-back { background: linear-gradient(145deg, #2e7d32, #81c784); }
+    .card-blue   .card-front, .card-blue   .card-back { background: linear-gradient(145deg, #1565c0, #90caf9); }
+    .card-purple .card-front, .card-purple .card-back { background: linear-gradient(145deg, #6a1b9a, #ce93d8); }
+
+    .card-emoji { font-size: 4rem; margin-bottom: 10px; animation: bounce 2.5s infinite; }
+    .card-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.15rem, 4vw, 1.45rem);
+      color: white; text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      line-height: 1.2;
+    }
+    .card-gold .card-name { color: #3e2723; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+    .card-tap-hint {
+      margin-top: 10px; font-size: 0.85rem; font-weight: 700;
+      color: rgba(255,255,255,0.85); letter-spacing: 0.5px;
+    }
+    .card-gold .card-tap-hint { color: rgba(62,39,35,0.7); }
+
+    .card-back .card-contribution {
+      font-size: clamp(0.88rem, 3vw, 1.05rem);
+      font-weight: 800; color: white;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+      margin-bottom: 12px; line-height: 1.4;
+    }
+    .card-gold .card-contribution { color: #3e2723; text-shadow: none; }
+
+    .fun-fact-badge {
+      background: rgba(255,255,255,0.28);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 16px; padding: 8px 12px;
+      font-size: 0.8rem; font-weight: 700;
+      color: white; line-height: 1.35;
+    }
+    .card-gold .fun-fact-badge { background: rgba(62,39,35,0.15); border-color: rgba(62,39,35,0.3); color: #3e2723; }
+    .fun-fact-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 3px;
+      opacity: 0.8;
+    }
+
+    /* ── ACTIVITY BOX ── */
+    .activity-box {
+      max-width: 820px; margin: 0 auto 40px;
+      background: white; border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      border-top: 6px solid #6d4c41;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      color: #3e2723; margin-bottom: 6px;
+    }
+    .activity-instruction {
+      font-size: 0.95rem; color: #6d4c41;
+      font-weight: 700; margin-bottom: 20px;
+    }
+
+    /* ── QUIZ ── */
+    .quiz-question {
+      background: #efebe9; border-radius: 16px;
+      padding: 16px 18px; margin-bottom: 16px;
+    }
+    .quiz-q-text {
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      font-weight: 800; color: #3e2723; margin-bottom: 12px;
+    }
+    .quiz-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .quiz-opt {
+      flex: 1 1 140px;
+      background: white; border: 2.5px solid #a1887f;
+      border-radius: 50px; padding: 9px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem; font-weight: 800;
+      color: #3e2723; cursor: pointer;
+      text-align: center; transition: all 0.18s;
+    }
+    .quiz-opt:hover { background: #efebe9; border-color: #6d4c41; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #2e7d32; animation: popIn 0.4s; pointer-events: none; }
+    .quiz-opt.wrong   { background: #ffebee; border-color: #c62828; color: #c62828; animation: shake 0.4s; }
+    .quiz-opt.locked  { pointer-events: none; opacity: 0.55; }
+    .quiz-result { font-size: 0.8rem; font-weight: 700; margin-top: 6px; min-height: 20px; }
+
+    /* ── MATCHING ── */
+    .match-container { display: flex; gap: 12px; flex-wrap: wrap; }
+    .match-col { flex: 1 1 200px; display: flex; flex-direction: column; gap: 10px; }
+    .match-col-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.9rem; color: #6d4c41; text-align: center; margin-bottom: 4px;
+    }
+    .match-item {
+      background: white; border: 2.5px solid #a1887f;
+      border-radius: 14px; padding: 10px 12px;
+      font-size: 0.85rem; font-weight: 800; color: #3e2723;
+      cursor: pointer; text-align: center;
+      transition: all 0.2s; line-height: 1.35;
+    }
+    .match-item:hover { background: #efebe9; border-color: #6d4c41; }
+    .match-item.selected { border-color: #6d4c41; background: #d7ccc8; }
+    .match-item.matched  { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; pointer-events: none; animation: popIn 0.4s; }
+    .match-item.shaking  { animation: shake 0.4s; border-color: #c62828; background: #ffebee; }
+
+    /* ── TRUE / FALSE ── */
+    .tf-item {
+      background: #efebe9; border-radius: 16px;
+      padding: 14px 16px; margin-bottom: 12px;
+    }
+    .tf-statement {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      font-weight: 800; color: #3e2723; margin-bottom: 10px;
+    }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      flex: 1; padding: 9px 0;
+      border: 2.5px solid #a1887f; border-radius: 50px;
+      background: white; font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 800; color: #3e2723;
+      cursor: pointer; transition: all 0.18s; text-align: center;
+    }
+    .tf-btn:hover { background: #efebe9; }
+    .tf-btn.correct { background: #e8f5e9; border-color: #2e7d32; color: #2e7d32; animation: popIn 0.4s; pointer-events: none; }
+    .tf-btn.wrong   { background: #ffebee; border-color: #c62828; color: #c62828; animation: shake 0.4s; }
+    .tf-btn.locked  { pointer-events: none; opacity: 0.5; }
+    .tf-result { font-size: 0.8rem; font-weight: 700; margin-top: 5px; min-height: 18px; }
+
+    /* ── FILL IN THE BLANK ── */
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      background: #efebe9; border-radius: 14px;
+      padding: 14px 16px; margin-bottom: 20px;
+    }
+    .word-chip {
+      background: white; border: 2.5px solid #a1887f;
+      border-radius: 50px; padding: 6px 16px;
+      font-size: 0.88rem; font-weight: 800; color: #3e2723;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .word-chip:hover { background: #d7ccc8; }
+    .word-chip.used   { opacity: 0.35; pointer-events: none; }
+    .word-chip.correct-word { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; opacity: 0.5; pointer-events: none; }
+
+    .fib-item {
+      background: #efebe9; border-radius: 14px;
+      padding: 12px 16px; margin-bottom: 10px;
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      font-weight: 800; color: #3e2723;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+    }
+    .fib-blank {
+      display: inline-block;
+      min-width: 80px; padding: 4px 10px;
+      border-bottom: 3px solid #6d4c41;
+      background: white; border-radius: 8px;
+      font-weight: 800; color: #3e2723;
+      text-align: center; cursor: pointer;
+      transition: all 0.18s; font-size: 0.9rem;
+    }
+    .fib-blank:hover { background: #efebe9; }
+    .fib-blank.filled-correct { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; pointer-events: none; animation: popIn 0.4s; }
+    .fib-blank.filled-wrong   { border-color: #c62828; background: #ffebee; color: #c62828; animation: shake 0.4s; }
+
+    /* ── ACTIVITY DONE BADGE ── */
+    .done-badge {
+      display: none; text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem; color: #2e7d32;
+      padding: 14px; background: #e8f5e9;
+      border-radius: 16px; margin-top: 16px;
+      animation: popIn 0.5s;
+    }
+    .done-badge.show { display: block; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.6); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-6px); }
+      40%     { transform: translateX(6px); }
+      60%     { transform: translateX(-4px); }
+      80%     { transform: translateX(4px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── GHANA DIVIDER ── */
+    .ghana-divider {
+      max-width: 820px; margin: 0 auto 32px;
+      height: 8px; border-radius: 8px;
+      background: linear-gradient(90deg, #ce1126 33.3%, #fcd116 33.3% 66.6%, #006b3f 66.6%);
+    }
+
+    /* ── PROGRESS TRACKER ── */
+    .progress-bar {
+      max-width: 820px; margin: 0 auto 24px;
+      background: white; border-radius: 16px;
+      padding: 14px 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .progress-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem; color: #6d4c41; white-space: nowrap;
+    }
+    .progress-dots { display: flex; gap: 8px; }
+    .progress-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #d7ccc8; transition: background 0.3s;
+    }
+    .progress-dot.lit { background: #fcd116; box-shadow: 0 0 8px #fcd116; }
+
+    @media (max-width: 480px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .match-container { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html" class="back-home-btn">← Back</a>
+
+  <!-- CHEER BANNER -->
+  <div class="cheer-banner" id="cheerBanner">
+    Brilliant, Tikky! You know Ghana's heroes! 🇬🇭⭐
+  </div>
+
+  <!-- HERO -->
+  <div style="max-width:820px;margin:0 auto 8px;padding-top:56px;"></div>
+  <div class="hero">
+    <div class="flag-stripe">
+      <div class="red"></div>
+      <div class="gold"><span class="black-star">⭐</span></div>
+      <div class="green"></div>
+    </div>
+    <div class="hero-body">
+      <div class="date-badge">18th May 2026</div>
+      <h1>Ghana's Heroes 🇬🇭</h1>
+      <p class="hero-subtitle">People who helped to develop Ghana 🌟</p>
+    </div>
+    <div class="flag-stripe">
+      <div class="red"></div>
+      <div class="gold"><span class="black-star">⭐</span></div>
+      <div class="green"></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <span class="progress-label">Stars earned ⭐</span>
+    <div class="progress-dots">
+      <div class="progress-dot" id="dot0"></div>
+      <div class="progress-dot" id="dot1"></div>
+      <div class="progress-dot" id="dot2"></div>
+      <div class="progress-dot" id="dot3"></div>
+      <div class="progress-dot" id="dot4"></div>
+    </div>
+  </div>
+
+  <!-- SECTION: HERO CARDS -->
+  <p class="section-title">Meet the <span>5 Heroes!</span> 🌟 Tap each card to learn!</p>
+
+  <div class="cards-grid">
+
+    <!-- 1. Theodosia Okoh — red -->
+    <div class="hero-card card-red" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-emoji">🎨</div>
+          <div class="card-name">Theodosia Okoh</div>
+          <div class="card-tap-hint">Tap to discover! 👆</div>
+        </div>
+        <div class="card-back">
+          <div class="card-emoji">🇬🇭</div>
+          <div class="card-contribution">She designed the Ghana flag 🇬🇭</div>
+          <div class="fun-fact-badge">
+            <div class="fun-fact-label">Fun Fact ✨</div>
+            The Ghana flag has red, gold, green and a black star!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Amon Kotei — gold -->
+    <div class="hero-card card-gold" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-emoji">⚜️</div>
+          <div class="card-name">Amon Kotei</div>
+          <div class="card-tap-hint">Tap to discover! 👆</div>
+        </div>
+        <div class="card-back">
+          <div class="card-emoji">🏅</div>
+          <div class="card-contribution">He designed the Coat of Arms ⚜️</div>
+          <div class="fun-fact-badge">
+            <div class="fun-fact-label">Fun Fact ✨</div>
+            The Coat of Arms is Ghana's official symbol of identity!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Philip Gbeho — green -->
+    <div class="hero-card card-green" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-emoji">🎵</div>
+          <div class="card-name">Philip Gbeho</div>
+          <div class="card-tap-hint">Tap to discover! 👆</div>
+        </div>
+        <div class="card-back">
+          <div class="card-emoji">🎼</div>
+          <div class="card-contribution">He wrote the words of Ghana's first national anthem 🎵</div>
+          <div class="fun-fact-badge">
+            <div class="fun-fact-label">Fun Fact ✨</div>
+            The national anthem is sung at special events!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Baba Yara — blue -->
+    <div class="hero-card card-blue" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-emoji">⚽</div>
+          <div class="card-name">Baba Yara<br><span style="font-size:0.75em;opacity:0.85">(Osman Seidou)</span></div>
+          <div class="card-tap-hint">Tap to discover! 👆</div>
+        </div>
+        <div class="card-back">
+          <div class="card-emoji">🏆</div>
+          <div class="card-contribution">He was a great football player ⚽</div>
+          <div class="fun-fact-badge">
+            <div class="fun-fact-label">Fun Fact ✨</div>
+            The Baba Yara Stadium in Kumasi is named after him!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Dr. Ephraim Amu — purple -->
+    <div class="hero-card card-purple" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-emoji">🎶</div>
+          <div class="card-name">Dr. Ephraim Amu</div>
+          <div class="card-tap-hint">Tap to discover! 👆</div>
+        </div>
+        <div class="card-back">
+          <div class="card-emoji">🎤</div>
+          <div class="card-contribution">He wrote more than 200 songs in Ewe, Twi, Ga and English.<br>He also composed "Yen ara asase ni" 🎶</div>
+          <div class="fun-fact-badge">
+            <div class="fun-fact-label">Fun Fact ✨</div>
+            He wrote songs in 4 different languages!
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+  <div class="ghana-divider"></div>
+
+  <!-- ACTIVITY 1: WHO DID IT? QUIZ -->
+  <p class="section-title">Activity 1 — <span>Who did it?</span> 🤔</p>
+
+  <div class="activity-box">
+    <div class="activity-title">Who did it? 🧠</div>
+    <div class="activity-instruction">Pick the right answer! Tap a button. 3 chances per question!</div>
+
+    <!-- Q1 -->
+    <div class="quiz-question" id="q1">
+      <div class="quiz-q-text">1. Who designed the Ghana flag? 🇬🇭</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',1)">a) Amon Kotei</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',1)">b) Theodosia Okoh</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',1)">c) Philip Gbeho</button>
+      </div>
+      <div class="quiz-result" id="qr1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-question" id="q2">
+      <div class="quiz-q-text">2. Who designed the Coat of Arms? ⚜️</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'correct',2)">a) Amon Kotei</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',2)">b) Baba Yara</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',2)">c) Dr. Ephraim Amu</button>
+      </div>
+      <div class="quiz-result" id="qr2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-question" id="q3">
+      <div class="quiz-q-text">3. Who wrote Ghana's first national anthem? 🎵</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',3)">a) Theodosia Okoh</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',3)">b) Amon Kotei</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',3)">c) Philip Gbeho</button>
+      </div>
+      <div class="quiz-result" id="qr3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-question" id="q4">
+      <div class="quiz-q-text">4. Who was a great football player? ⚽</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',4)">a) Philip Gbeho</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',4)">b) Baba Yara</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',4)">c) Dr. Ephraim Amu</button>
+      </div>
+      <div class="quiz-result" id="qr4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-question" id="q5">
+      <div class="quiz-q-text">5. Who wrote more than 200 songs? 🎶</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',5)">a) Theodosia Okoh</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',5)">b) Baba Yara</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',5)">c) Dr. Ephraim Amu</button>
+      </div>
+      <div class="quiz-result" id="qr5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-question" id="q6">
+      <div class="quiz-q-text">6. Theodosia Okoh designed the ___. 🎨</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',6)">a) Coat of Arms</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',6)">b) Ghana flag</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',6)">c) national anthem</button>
+      </div>
+      <div class="quiz-result" id="qr6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-question" id="q7">
+      <div class="quiz-q-text">7. Dr. Ephraim Amu wrote songs in how many languages? 🌍</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',7)">a) 2</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',7)">b) 3</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',7)">c) 4</button>
+      </div>
+      <div class="quiz-result" id="qr7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-question" id="q8">
+      <div class="quiz-q-text">8. Baba Yara was also known as ___. ⚽</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',8)">a) Philip Gbeho</button>
+        <button class="quiz-opt" onclick="pickQ(this,'correct',8)">b) Osman Seidou</button>
+        <button class="quiz-opt" onclick="pickQ(this,'wrong',8)">c) Amon Kotei</button>
+      </div>
+      <div class="quiz-result" id="qr8"></div>
+    </div>
+
+    <div class="done-badge" id="act1done">⭐ Amazing, Tikky! You got them all! Star earned! ⭐</div>
+  </div>
+
+  <div class="ghana-divider"></div>
+
+  <!-- ACTIVITY 2: MATCHING -->
+  <p class="section-title">Activity 2 — <span>Match it!</span> 🔗</p>
+
+  <div class="activity-box">
+    <div class="activity-title">Match the person to what they did! 🧩</div>
+    <div class="activity-instruction">Tap a name on the left, then tap what they did on the right!</div>
+
+    <div class="match-container">
+      <div class="match-col">
+        <div class="match-col-label">👤 Person</div>
+        <div class="match-item" id="ml-1" onclick="selectMatch('left',1,'theodosia')" data-key="theodosia">Theodosia Okoh</div>
+        <div class="match-item" id="ml-2" onclick="selectMatch('left',2,'amon')"      data-key="amon">Amon Kotei</div>
+        <div class="match-item" id="ml-3" onclick="selectMatch('left',3,'philip')"    data-key="philip">Philip Gbeho</div>
+        <div class="match-item" id="ml-4" onclick="selectMatch('left',4,'babayara')"  data-key="babayara">Baba Yara</div>
+        <div class="match-item" id="ml-5" onclick="selectMatch('left',5,'dramu')"     data-key="dramu">Dr. Ephraim Amu</div>
+      </div>
+      <div class="match-col">
+        <div class="match-col-label">✅ Achievement</div>
+        <div class="match-item" id="mr-a" onclick="selectMatch('right','a','babayara')"  data-key="babayara">Great football player ⚽</div>
+        <div class="match-item" id="mr-b" onclick="selectMatch('right','b','theodosia')" data-key="theodosia">Designed the Ghana flag 🇬🇭</div>
+        <div class="match-item" id="mr-c" onclick="selectMatch('right','c','dramu')"     data-key="dramu">Wrote 200+ songs 🎶</div>
+        <div class="match-item" id="mr-d" onclick="selectMatch('right','d','amon')"      data-key="amon">Designed the Coat of Arms ⚜️</div>
+        <div class="match-item" id="mr-e" onclick="selectMatch('right','e','philip')"    data-key="philip">Wrote the national anthem 🎵</div>
+      </div>
+    </div>
+
+    <div class="done-badge" id="act2done">⭐ Superstar! All matched perfectly! Star earned! ⭐</div>
+  </div>
+
+  <div class="ghana-divider"></div>
+
+  <!-- ACTIVITY 3: PERSON OR ACHIEVEMENT? -->
+  <p class="section-title">Activity 3 — <span>Who did this?</span> 🤩</p>
+
+  <div class="activity-box">
+    <div class="activity-title">Who did this? 🏅</div>
+    <div class="activity-instruction">Read the achievement and pick the right person!</div>
+
+    <!-- A1 -->
+    <div class="quiz-question" id="a3q1">
+      <div class="quiz-q-text">1. "Designed the Ghana flag" 🇬🇭</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',1)">a) Philip Gbeho</button>
+        <button class="quiz-opt" onclick="pickA3(this,'correct',1)">b) Theodosia Okoh</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',1)">c) Baba Yara</button>
+      </div>
+      <div class="quiz-result" id="a3r1"></div>
+    </div>
+
+    <!-- A2 -->
+    <div class="quiz-question" id="a3q2">
+      <div class="quiz-q-text">2. Composed "Yen ara asase ni" 🎶</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',2)">a) Amon Kotei</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',2)">b) Philip Gbeho</button>
+        <button class="quiz-opt" onclick="pickA3(this,'correct',2)">c) Dr. Ephraim Amu</button>
+      </div>
+      <div class="quiz-result" id="a3r2"></div>
+    </div>
+
+    <!-- A3 -->
+    <div class="quiz-question" id="a3q3">
+      <div class="quiz-q-text">3. "Designed the Coat of Arms" ⚜️</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickA3(this,'correct',3)">a) Amon Kotei</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',3)">b) Theodosia Okoh</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',3)">c) Dr. Ephraim Amu</button>
+      </div>
+      <div class="quiz-result" id="a3r3"></div>
+    </div>
+
+    <!-- A4 -->
+    <div class="quiz-question" id="a3q4">
+      <div class="quiz-q-text">4. "Wrote the words of the national anthem" 🎵</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',4)">a) Baba Yara</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',4)">b) Amon Kotei</button>
+        <button class="quiz-opt" onclick="pickA3(this,'correct',4)">c) Philip Gbeho</button>
+      </div>
+      <div class="quiz-result" id="a3r4"></div>
+    </div>
+
+    <!-- A5 -->
+    <div class="quiz-question" id="a3q5">
+      <div class="quiz-q-text">5. "Was a great football player" ⚽</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',5)">a) Philip Gbeho</button>
+        <button class="quiz-opt" onclick="pickA3(this,'correct',5)">b) Baba Yara</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',5)">c) Theodosia Okoh</button>
+      </div>
+      <div class="quiz-result" id="a3r5"></div>
+    </div>
+
+    <!-- A6 -->
+    <div class="quiz-question" id="a3q6">
+      <div class="quiz-q-text">6. "Wrote songs in Ewe, Twi, Ga and English" 🌍</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',6)">a) Theodosia Okoh</button>
+        <button class="quiz-opt" onclick="pickA3(this,'wrong',6)">b) Philip Gbeho</button>
+        <button class="quiz-opt" onclick="pickA3(this,'correct',6)">c) Dr. Ephraim Amu</button>
+      </div>
+      <div class="quiz-result" id="a3r6"></div>
+    </div>
+
+    <div class="done-badge" id="act3done">⭐ Brilliant! You know all Ghana's heroes! Star earned! ⭐</div>
+  </div>
+
+  <div class="ghana-divider"></div>
+
+  <!-- ACTIVITY 4: TRUE OR FALSE -->
+  <p class="section-title">Activity 4 — <span>True or False?</span> ✅❌</p>
+
+  <div class="activity-box">
+    <div class="activity-title">True or False? 🤔</div>
+    <div class="activity-instruction">Is it true or false? Tap the right button!</div>
+
+    <div class="tf-item" id="tf1">
+      <div class="tf-statement">1. Theodosia Okoh designed the Ghana flag. 🇬🇭</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="pickTF(this,'correct',1)">✅ TRUE</button>
+        <button class="tf-btn" onclick="pickTF(this,'wrong',1)">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="tfr1"></div>
+    </div>
+
+    <div class="tf-item" id="tf2">
+      <div class="tf-statement">2. Amon Kotei wrote the national anthem. 🎵</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="pickTF(this,'wrong',2)">✅ TRUE</button>
+        <button class="tf-btn" onclick="pickTF(this,'correct',2)">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="tfr2"></div>
+    </div>
+
+    <div class="tf-item" id="tf3">
+      <div class="tf-statement">3. Philip Gbeho wrote the words of Ghana's first national anthem. 🎶</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="pickTF(this,'correct',3)">✅ TRUE</button>
+        <button class="tf-btn" onclick="pickTF(this,'wrong',3)">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="tfr3"></div>
+    </div>
+
+    <div class="tf-item" id="tf4">
+      <div class="tf-statement">4. Baba Yara was a famous swimmer. 🏊</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="pickTF(this,'wrong',4)">✅ TRUE</button>
+        <button class="tf-btn" onclick="pickTF(this,'correct',4)">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="tfr4"></div>
+    </div>
+
+    <div class="tf-item" id="tf5">
+      <div class="tf-statement">5. Dr. Ephraim Amu wrote more than 200 songs. 🎵</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="pickTF(this,'correct',5)">✅ TRUE</button>
+        <button class="tf-btn" onclick="pickTF(this,'wrong',5)">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="tfr5"></div>
+    </div>
+
+    <div class="tf-item" id="tf6">
+      <div class="tf-statement">6. Dr. Ephraim Amu only wrote songs in English. 🌍</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="pickTF(this,'wrong',6)">✅ TRUE</button>
+        <button class="tf-btn" onclick="pickTF(this,'correct',6)">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="tfr6"></div>
+    </div>
+
+    <div class="done-badge" id="act4done">⭐ Amazing work, Tikky! True or False champion! Star earned! ⭐</div>
+  </div>
+
+  <div class="ghana-divider"></div>
+
+  <!-- ACTIVITY 5: FILL IN THE BLANK -->
+  <p class="section-title">Activity 5 — <span>Fill the Blank!</span> ✍️</p>
+
+  <div class="activity-box">
+    <div class="activity-title">Fill in the blank! 📝</div>
+    <div class="activity-instruction">Tap a word from the bank, then tap the blank to fill it in!</div>
+
+    <!-- Word Bank -->
+    <div class="word-bank" id="wordBank">
+      <div class="word-chip" id="wc-flag"     onclick="selectWord('flag')">flag</div>
+      <div class="word-chip" id="wc-CoatofArms" onclick="selectWord('Coat of Arms')">Coat of Arms</div>
+      <div class="word-chip" id="wc-anthem"   onclick="selectWord('anthem')">anthem</div>
+      <div class="word-chip" id="wc-football" onclick="selectWord('football')">football</div>
+      <div class="word-chip" id="wc-songs"    onclick="selectWord('songs')">songs</div>
+      <div class="word-chip" id="wc-Theodosia" onclick="selectWord('Theodosia')">Theodosia</div>
+      <div class="word-chip" id="wc-Philip"   onclick="selectWord('Philip')">Philip</div>
+      <div class="word-chip" id="wc-Amu"      onclick="selectWord('Amu')">Amu</div>
+    </div>
+
+    <!-- Sentences -->
+    <div class="fib-item">
+      <span>1.</span>
+      <div class="fib-blank" id="fb1" onclick="fillBlank('fb1','Theodosia')">___</div>
+      <span>Okoh designed the Ghana flag.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>2. Amon Kotei designed the</span>
+      <div class="fib-blank" id="fb2" onclick="fillBlank('fb2','Coat of Arms')">___</div>
+      <span>.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>3.</span>
+      <div class="fib-blank" id="fb3" onclick="fillBlank('fb3','Philip')">___</div>
+      <span>Gbeho wrote the national anthem.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>4. Baba Yara was a great</span>
+      <div class="fib-blank" id="fb4" onclick="fillBlank('fb4','football')">___</div>
+      <span>player.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>5. Dr. Ephraim</span>
+      <div class="fib-blank" id="fb5" onclick="fillBlank('fb5','Amu')">___</div>
+      <span>wrote more than 200 songs.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>6. Dr. Ephraim Amu wrote</span>
+      <div class="fib-blank" id="fb6" onclick="fillBlank('fb6','songs')">___</div>
+      <span>in 4 languages.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>7. Theodosia Okoh designed the Ghana</span>
+      <div class="fib-blank" id="fb7" onclick="fillBlank('fb7','flag')">___</div>
+      <span>.</span>
+    </div>
+
+    <div class="fib-item">
+      <span>8. Philip Gbeho wrote the words of the national</span>
+      <div class="fib-blank" id="fb8" onclick="fillBlank('fb8','anthem')">___</div>
+      <span>.</span>
+    </div>
+
+    <div class="done-badge" id="act5done">⭐ INCREDIBLE! You filled them all right! Star earned! 🇬🇭⭐</div>
+  </div>
+
+  <!-- FINAL FOOTER -->
+  <div style="max-width:820px;margin:0 auto;text-align:center;padding:10px 0 20px;">
+    <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:#6d4c41;opacity:0.7;">
+      Great job learning about Ghana's heroes, Tikky! 🇬🇭🌟
+    </div>
+  </div>
+
+  <script>
+    /* ─────────────────────────────────────────
+       GLOBALS
+    ───────────────────────────────────────── */
+    let cheerCount = 0;
+
+    function addCheer() {
+      cheerCount++;
+      // light up progress dot
+      const dot = document.getElementById('dot' + (cheerCount - 1));
+      if (dot) { dot.classList.add('lit'); }
+      if (cheerCount >= 2) {
+        document.getElementById('cheerBanner').classList.add('show');
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       CARD FLIP
+    ───────────────────────────────────────── */
+    function flipCard(card) {
+      card.classList.toggle('flipped');
+    }
+
+    /* ─────────────────────────────────────────
+       ACTIVITY 1 — QUIZ
+    ───────────────────────────────────────── */
+    const quizDone   = {}; // qNum -> true when answered correctly
+    const quizWrong  = {}; // qNum -> count of wrong attempts
+
+    function pickQ(el, result, qNum) {
+      if (quizDone[qNum]) return;
+
+      const opts = el.closest('.quiz-options').querySelectorAll('.quiz-opt');
+      const resEl = document.getElementById('qr' + qNum);
+
+      if (result === 'correct') {
+        el.classList.add('correct');
+        opts.forEach(o => { if (o !== el) o.classList.add('locked'); });
+        resEl.textContent = '✅ Correct! Great job!';
+        resEl.style.color = '#2e7d32';
+        quizDone[qNum] = true;
+        checkAct1Done();
+      } else {
+        quizWrong[qNum] = (quizWrong[qNum] || 0) + 1;
+        el.classList.add('wrong');
+        setTimeout(() => el.classList.remove('wrong'), 500);
+        resEl.textContent = '❌ Try again!';
+        resEl.style.color = '#c62828';
+      }
+    }
+
+    function checkAct1Done() {
+      if (Object.keys(quizDone).length === 8) {
+        document.getElementById('act1done').classList.add('show');
+        addCheer();
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       ACTIVITY 2 — MATCHING
+    ───────────────────────────────────────── */
+    let matchLeft  = null; // { id, key }
+    let matchRight = null;
+    let matchedCount = 0;
+
+    function selectMatch(side, id, key) {
+      const elId = side === 'left' ? 'ml-' + id : 'mr-' + id;
+      const el   = document.getElementById(elId);
+      if (el.classList.contains('matched')) return;
+
+      if (side === 'left') {
+        // deselect previous left
+        if (matchLeft) {
+          const prev = document.getElementById('ml-' + matchLeft.id);
+          if (prev) prev.classList.remove('selected');
+        }
+        matchLeft = { id, key, el };
+        el.classList.add('selected');
+      } else {
+        matchRight = { id, key, el };
+      }
+
+      if (matchLeft && matchRight) {
+        if (matchLeft.key === matchRight.key) {
+          // correct
+          matchLeft.el.classList.remove('selected');
+          matchLeft.el.classList.add('matched');
+          matchRight.el.classList.add('matched');
+          matchedCount++;
+          matchLeft  = null;
+          matchRight = null;
+          if (matchedCount === 5) {
+            document.getElementById('act2done').classList.add('show');
+            addCheer();
+          }
+        } else {
+          // wrong — shake right
+          matchRight.el.classList.add('shaking');
+          setTimeout(() => {
+            if (matchRight) matchRight.el.classList.remove('shaking');
+            matchRight = null;
+          }, 500);
+        }
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       ACTIVITY 3 — PERSON OR ACHIEVEMENT?
+    ───────────────────────────────────────── */
+    const a3Done  = {};
+
+    function pickA3(el, result, qNum) {
+      if (a3Done[qNum]) return;
+
+      const opts  = el.closest('.quiz-options').querySelectorAll('.quiz-opt');
+      const resEl = document.getElementById('a3r' + qNum);
+
+      if (result === 'correct') {
+        el.classList.add('correct');
+        opts.forEach(o => { if (o !== el) o.classList.add('locked'); });
+        resEl.textContent = '✅ Yes! Brilliant!';
+        resEl.style.color = '#2e7d32';
+        a3Done[qNum] = true;
+        checkAct3Done();
+      } else {
+        el.classList.add('wrong');
+        setTimeout(() => el.classList.remove('wrong'), 500);
+        resEl.textContent = '❌ Not quite — try again!';
+        resEl.style.color = '#c62828';
+      }
+    }
+
+    function checkAct3Done() {
+      if (Object.keys(a3Done).length === 6) {
+        document.getElementById('act3done').classList.add('show');
+        addCheer();
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       ACTIVITY 4 — TRUE OR FALSE
+    ───────────────────────────────────────── */
+    const tfDone = {};
+
+    function pickTF(el, result, qNum) {
+      if (tfDone[qNum]) return;
+
+      const btns  = el.closest('.tf-btns').querySelectorAll('.tf-btn');
+      const resEl = document.getElementById('tfr' + qNum);
+
+      if (result === 'correct') {
+        el.classList.add('correct');
+        btns.forEach(b => { if (b !== el) b.classList.add('locked'); });
+        resEl.textContent = '✅ Correct!';
+        resEl.style.color = '#2e7d32';
+        tfDone[qNum] = true;
+        checkAct4Done();
+      } else {
+        el.classList.add('wrong');
+        setTimeout(() => el.classList.remove('wrong'), 500);
+        resEl.textContent = '❌ Try the other one!';
+        resEl.style.color = '#c62828';
+      }
+    }
+
+    function checkAct4Done() {
+      if (Object.keys(tfDone).length === 6) {
+        document.getElementById('act4done').classList.add('show');
+        addCheer();
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       ACTIVITY 5 — FILL IN THE BLANK
+    ───────────────────────────────────────── */
+    let selectedWord = null;
+    const fibDone    = {};
+    const chipIds    = {
+      'flag':        'wc-flag',
+      'Coat of Arms':'wc-CoatofArms',
+      'anthem':      'wc-anthem',
+      'football':    'wc-football',
+      'songs':       'wc-songs',
+      'Theodosia':   'wc-Theodosia',
+      'Philip':      'wc-Philip',
+      'Amu':         'wc-Amu'
+    };
+
+    function selectWord(word) {
+      // deselect all chips
+      document.querySelectorAll('.word-chip').forEach(c => c.style.background = '');
+      selectedWord = word;
+      const chipId = chipIds[word];
+      if (chipId) {
+        const chip = document.getElementById(chipId);
+        if (chip && !chip.classList.contains('used') && !chip.classList.contains('correct-word')) {
+          chip.style.background = '#d7ccc8';
+        }
+      }
+    }
+
+    function fillBlank(blankId, answer) {
+      if (fibDone[blankId]) return;
+      if (!selectedWord) {
+        // shake the blank to hint
+        const el = document.getElementById(blankId);
+        el.classList.add('filled-wrong');
+        setTimeout(() => el.classList.remove('filled-wrong'), 500);
+        return;
+      }
+
+      const blank = document.getElementById(blankId);
+
+      if (selectedWord === answer) {
+        blank.textContent = selectedWord;
+        blank.classList.add('filled-correct');
+        fibDone[blankId] = true;
+        // mark chip as used correctly
+        const chipId = chipIds[selectedWord];
+        if (chipId) {
+          const chip = document.getElementById(chipId);
+          if (chip) { chip.style.background = ''; chip.classList.add('correct-word'); }
+        }
+        selectedWord = null;
+        checkAct5Done();
+      } else {
+        blank.classList.add('filled-wrong');
+        setTimeout(() => blank.classList.remove('filled-wrong'), 500);
+        // de-highlight chip
+        document.querySelectorAll('.word-chip').forEach(c => c.style.background = '');
+        selectedWord = null;
+      }
+    }
+
+    function checkAct5Done() {
+      if (Object.keys(fibDone).length === 8) {
+        document.getElementById('act5done').classList.add('show');
+        addCheer();
+      }
+    }
+  </script>
+</body>
+</html>

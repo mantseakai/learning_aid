@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Articles Définis — le &amp; la 🇫🇷</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1565c0;
+      --blue-light: #1976d2;
+      --blue-bg: #e3f0fc;
+      --red: #c62828;
+      --red-light: #e53935;
+      --red-bg: #fdecea;
+      --white: #ffffff;
+      --gray-bg: #f5f7fa;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #e8f0fe 0%, #f5f5ff 50%, #fce4ec 100%);
+      padding: 20px 16px 100px;
+      min-height: 100vh;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: var(--blue); border: none;
+      color: #fff; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(21,101,192,0.35);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: var(--blue-light); transform: translateX(-2px); }
+
+    /* ── CHEER BANNER ── */
+    .cheer-banner {
+      display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 8888;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--red) 100%);
+      color: #fff; text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      padding: 14px 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      animation: slideDown 0.6s cubic-bezier(0.34,1.3,0.64,1);
+    }
+    .cheer-banner.show { display: block; }
+    @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+    /* ── FLAG BAR ── */
+    .flag-bar { display: flex; height: 10px; border-radius: 0 0 6px 6px; overflow: hidden; margin-bottom: 0; }
+    .flag-bar div { flex: 1; }
+    .fb-blue  { background: #002395; }
+    .fb-white { background: white; }
+    .fb-red   { background: #ED2939; }
+
+    /* ── MAX WIDTH WRAPPER ── */
+    .wrap { max-width: 820px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    .hero {
+      margin: 70px auto 32px;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(21,101,192,0.18);
+    }
+    .hero-body {
+      background: white; padding: 32px 24px; text-align: center;
+    }
+    .hero-body h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      color: var(--blue); margin-bottom: 10px;
+      text-shadow: 2px 3px 0 rgba(21,101,192,0.12);
+    }
+    .date-badge {
+      display: inline-block;
+      background: var(--blue-bg); color: var(--blue);
+      font-weight: 800; font-size: 0.95rem;
+      border-radius: 50px; padding: 6px 18px; margin-bottom: 12px;
+      border: 2px solid rgba(21,101,192,0.18);
+    }
+    .hero-subtitle {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4.5vw, 2rem);
+      color: var(--red);
+      letter-spacing: 2px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section { margin-bottom: 32px; }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      color: var(--blue);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title .tag {
+      background: var(--blue); color: white;
+      font-size: 0.75rem; border-radius: 50px;
+      padding: 3px 12px; font-family: 'Nunito', sans-serif;
+      font-weight: 800; letter-spacing: 1px;
+    }
+
+    /* ── CONCEPT CARDS (LE / LA) ── */
+    .concept-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media(max-width: 480px) { .concept-grid { grid-template-columns: 1fr; } }
+
+    .concept-card {
+      border-radius: 24px; padding: 26px 20px; text-align: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    }
+    .concept-card.blue-card {
+      background: var(--blue); color: white;
+    }
+    .concept-card.red-card {
+      background: var(--red); color: white;
+    }
+    .concept-card .big-article {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(3rem, 10vw, 5rem);
+      line-height: 1;
+      text-shadow: 3px 4px 0 rgba(0,0,0,0.2);
+      margin-bottom: 8px;
+    }
+    .concept-card .noun-type {
+      font-weight: 800; font-size: 0.95rem;
+      opacity: 0.9; margin-bottom: 14px;
+    }
+    .concept-card .person-emoji {
+      font-size: 2.8rem; margin-bottom: 14px; display: block;
+    }
+    .examples-list {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .example-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50px; padding: 8px 16px;
+      font-weight: 800; font-size: 1rem;
+      cursor: pointer; transition: all 0.2s;
+      user-select: none;
+    }
+    .example-chip:hover { background: rgba(255,255,255,0.35); transform: scale(1.05); }
+    .example-chip:active { animation: pop 0.3s; }
+
+    /* ── RULE PANEL ── */
+    .rule-panel {
+      background: white; border-radius: 20px; padding: 22px 20px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.09); margin-bottom: 20px;
+      text-align: center;
+    }
+    .rule-panel h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem; color: #444; margin-bottom: 16px;
+    }
+    .arrows-row {
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    }
+    .arrow-pair {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+    }
+    .arr-from {
+      background: #f0f0f0; border-radius: 12px;
+      padding: 8px 18px; color: #555;
+    }
+    .arr-arrow { color: #999; font-size: 1.8rem; }
+    .arr-to-blue {
+      background: var(--blue); color: white;
+      border-radius: 12px; padding: 8px 18px;
+    }
+    .arr-to-red {
+      background: var(--red); color: white;
+      border-radius: 12px; padding: 8px 18px;
+    }
+    .arr-label { font-size: 0.8rem; color: #999; font-family: 'Nunito', sans-serif; font-weight: 700; }
+
+    /* ── ACTIVITY CARD ── */
+    .activity-card {
+      background: white; border-radius: 24px; padding: 26px 22px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.1); margin-bottom: 28px;
+    }
+    .activity-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .activity-num {
+      background: var(--blue); color: white;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      color: #333;
+    }
+    .activity-subtitle {
+      font-size: 0.9rem; font-weight: 700; color: #888; margin-top: 2px;
+    }
+
+    /* ── ACTIVITY 1 — LE ou LA sort ── */
+    .sort-word-display {
+      text-align: center; margin-bottom: 20px;
+    }
+    .sort-word {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 8vw, 3rem);
+      color: #333; background: var(--gray-bg);
+      border-radius: 18px; padding: 18px 32px;
+      display: inline-block; margin-bottom: 8px;
+    }
+    .sort-counter {
+      font-weight: 800; color: #aaa; font-size: 0.95rem;
+    }
+    .sort-btns {
+      display: flex; gap: 16px; justify-content: center; margin-bottom: 20px;
+    }
+    .sort-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem; border: none; cursor: pointer;
+      border-radius: 20px; padding: 16px 38px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      transition: all 0.15s; flex: 1; max-width: 180px;
+    }
+    .sort-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.18); }
+    .sort-btn:active { transform: scale(0.95); }
+    .sort-btn.le-btn { background: var(--blue); color: white; }
+    .sort-btn.la-btn { background: var(--red);  color: white; }
+    .sort-columns {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .sort-col {
+      border-radius: 16px; padding: 14px 12px; min-height: 80px;
+    }
+    .sort-col.le-col { background: var(--blue-bg); }
+    .sort-col.la-col { background: var(--red-bg); }
+    .sort-col-title {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .sort-col.le-col .sort-col-title { color: var(--blue); }
+    .sort-col.la-col .sort-col-title { color: var(--red); }
+    .sorted-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sorted-chip {
+      font-weight: 800; font-size: 0.85rem;
+      border-radius: 50px; padding: 4px 12px;
+      animation: popIn 0.35s cubic-bezier(0.34,1.3,0.64,1);
+    }
+    .sorted-chip.le-chip { background: var(--blue); color: white; }
+    .sorted-chip.la-chip { background: var(--red);  color: white; }
+
+    /* ── ACTIVITY 2 — Pick the article quiz ── */
+    .quiz-q { margin-bottom: 20px; }
+    .quiz-q-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+      color: #333; margin-bottom: 12px;
+    }
+    .quiz-blank {
+      display: inline-block;
+      border-bottom: 3px solid #ccc;
+      min-width: 50px; text-align: center;
+    }
+    .quiz-opts {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .quiz-opt {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      border: 3px solid #e0e0e0; border-radius: 14px;
+      padding: 10px 22px; cursor: pointer; background: white;
+      transition: all 0.2s; color: #444;
+    }
+    .quiz-opt:hover:not(.done) { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #388e3c; color: #388e3c; }
+    .quiz-opt.wrong   { background: #ffebee; border-color: var(--red);  color: var(--red); animation: shake 0.45s; }
+    .quiz-opt.done    { pointer-events: none; }
+    .quiz-divider { border: none; border-top: 2px dashed #f0f0f0; margin: 16px 0; }
+
+    /* ── ACTIVITY 3 — Match the article ── */
+    .match-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .match-col-title {
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      margin-bottom: 10px; color: #666;
+    }
+    .match-items { display: flex; flex-direction: column; gap: 8px; }
+    .match-word, .match-art {
+      border-radius: 14px; padding: 12px 16px;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      cursor: pointer; transition: all 0.2s;
+      border: 3px solid transparent; text-align: center;
+    }
+    .match-word {
+      background: var(--gray-bg); color: #333;
+      border-color: #e0e0e0;
+    }
+    .match-word:hover:not(.locked) { border-color: var(--blue); color: var(--blue); }
+    .match-word.selected { border-color: var(--blue); background: var(--blue-bg); color: var(--blue); }
+    .match-word.locked   { background: #e8f5e9; border-color: #388e3c; color: #388e3c; pointer-events: none; }
+    .match-art {
+      color: white;
+    }
+    .match-art.le-art { background: var(--blue); }
+    .match-art.la-art { background: var(--red); }
+    .match-art:hover:not(.used) { opacity: 0.85; transform: scale(1.05); }
+    .match-art.used { opacity: 0.35; pointer-events: none; }
+    .match-art.shake-it { animation: shake 0.45s; }
+
+    /* ── ACTIVITY 4 — Vrai ou Faux ── */
+    .tf-item { margin-bottom: 16px; }
+    .tf-statement {
+      font-weight: 800; font-size: 1.05rem; color: #333; margin-bottom: 8px;
+    }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      border: none; border-radius: 14px; padding: 10px 22px;
+      cursor: pointer; transition: all 0.15s; flex: 1;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .tf-btn.vrai-btn { background: #e8f5e9; color: #388e3c; }
+    .tf-btn.faux-btn { background: #ffebee; color: var(--red); }
+    .tf-btn:hover:not(.done) { transform: translateY(-2px); }
+    .tf-btn.correct { outline: 3px solid #388e3c; }
+    .tf-btn.wrong   { animation: shake 0.45s; outline: 3px solid var(--red); }
+    .tf-btn.done    { pointer-events: none; }
+    .tf-divider { border: none; border-top: 2px dashed #f0f0f0; margin: 14px 0; }
+
+    /* ── ACTIVITY 5 — Fill in the blank ── */
+    .bank {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .bank-token {
+      font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+      border-radius: 50px; padding: 8px 22px;
+      cursor: pointer; border: 3px solid transparent;
+      transition: all 0.2s; user-select: none;
+    }
+    .bank-token.le-tok { background: var(--blue); color: white; }
+    .bank-token.la-tok { background: var(--red);  color: white; }
+    .bank-token:hover:not(.used) { transform: scale(1.1); opacity: 0.85; }
+    .bank-token.selected { box-shadow: 0 0 0 4px #ffd600; transform: scale(1.12); }
+    .bank-token.used { opacity: 0.25; pointer-events: none; }
+
+    .fill-sentences { display: flex; flex-direction: column; gap: 14px; }
+    .fill-sentence {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 1.1rem; color: #333;
+      flex-wrap: wrap;
+    }
+    .fill-blank {
+      display: inline-block;
+      min-width: 54px; height: 40px; line-height: 40px;
+      border-radius: 10px; border: 3px dashed #bbb;
+      text-align: center; cursor: pointer;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      transition: all 0.2s; background: var(--gray-bg);
+    }
+    .fill-blank:hover:not(.filled) { border-color: var(--blue); }
+    .fill-blank.filled-le { background: var(--blue); color: white; border-color: var(--blue); }
+    .fill-blank.filled-la { background: var(--red);  color: white; border-color: var(--red); }
+    .fill-blank.correct-glow { box-shadow: 0 0 0 4px #a5d6a7; }
+    .fill-blank.wrong-shake  { animation: shake 0.45s; background: #ffebee; border-color: var(--red); }
+
+    /* ── FEEDBACK BUBBLE ── */
+    .feedback {
+      text-align: center; font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem; margin-top: 14px; min-height: 36px;
+      transition: all 0.3s;
+    }
+    .feedback.good { color: #388e3c; }
+    .feedback.bad  { color: var(--red); }
+
+    /* ── DONE BADGE ── */
+    .done-badge {
+      display: none; text-align: center; margin-top: 18px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem; color: var(--blue);
+      animation: popIn 0.5s cubic-bezier(0.34,1.3,0.64,1);
+    }
+    .done-badge.show { display: block; }
+
+    /* ── KEYFRAMES ── */
+    @keyframes bounce {
+      0%,100%{transform:translateY(0)}
+      40%{transform:translateY(-14px)}
+      70%{transform:translateY(-6px)}
+    }
+    @keyframes popIn {
+      0%{transform:scale(0);opacity:0}
+      70%{transform:scale(1.2);opacity:1}
+      100%{transform:scale(1)}
+    }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-6px)}
+      80%{transform:translateX(6px)}
+    }
+    @keyframes pop {
+      0%{transform:scale(1)}
+      50%{transform:scale(1.3)}
+      100%{transform:scale(1)}
+    }
+    @keyframes slideRight {
+      from{transform:translateX(-30px);opacity:0}
+      to{transform:translateX(0);opacity:1}
+    }
+    @keyframes wave { 0%,100%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} }
+  </style>
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- CHEER BANNER -->
+<div class="cheer-banner" id="cheerBanner">
+  Magnifique, Tikky! Tu connais les articles! 🇫🇷⭐
+</div>
+
+<div class="wrap">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="flag-bar"><div class="fb-blue"></div><div class="fb-white"></div><div class="fb-red"></div></div>
+    <div class="hero-body">
+      <div style="font-size:3rem;animation:wave 2s ease-in-out infinite;display:inline-block;margin-bottom:10px;">🇫🇷</div>
+      <h1>Les Articles Définis 🇫🇷</h1>
+      <div class="date-badge">mardi, 11 mai 2026</div>
+      <div class="hero-subtitle">le &middot; la = THE</div>
+    </div>
+    <div class="flag-bar"><div class="fb-blue"></div><div class="fb-white"></div><div class="fb-red"></div></div>
+  </div>
+
+  <!-- ── CONCEPT SECTION ── -->
+  <div class="section">
+    <div class="section-title">
+      📚 Learn the Articles
+    </div>
+
+    <div class="concept-grid">
+      <!-- LE CARD -->
+      <div class="concept-card blue-card">
+        <div class="big-article">LE</div>
+        <div class="noun-type">Pour les noms masculins</div>
+        <span class="person-emoji">🧔</span>
+        <div class="examples-list">
+          <div class="example-chip" onclick="playPop(this)">le sac 👜</div>
+          <div class="example-chip" onclick="playPop(this)">le garçon 👦</div>
+          <div class="example-chip" onclick="playPop(this)">le tableau 🖼️</div>
+        </div>
+      </div>
+
+      <!-- LA CARD -->
+      <div class="concept-card red-card">
+        <div class="big-article">LA</div>
+        <div class="noun-type">Pour les noms féminins</div>
+        <span class="person-emoji">👩</span>
+        <div class="examples-list">
+          <div class="example-chip" onclick="playPop(this)">la chaise 🪑</div>
+          <div class="example-chip" onclick="playPop(this)">la fille 👧</div>
+          <div class="example-chip" onclick="playPop(this)">la règle 📏</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RULE PANEL -->
+    <div class="rule-panel">
+      <h3>🔄 Remember the Rule</h3>
+      <div class="arrows-row">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div class="arrow-pair">
+            <div class="arr-from">un</div>
+            <div class="arr-arrow">→</div>
+            <div class="arr-to-blue">le</div>
+          </div>
+          <div class="arr-label">masculine</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div class="arrow-pair">
+            <div class="arr-from">une</div>
+            <div class="arr-arrow">→</div>
+            <div class="arr-to-red">la</div>
+          </div>
+          <div class="arr-label">feminine</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVITY 1 — LE ou LA? Sort ── -->
+  <div class="activity-card" id="act1">
+    <div class="activity-header">
+      <div class="activity-num">1</div>
+      <div>
+        <div class="activity-title">LE ou LA? 🎯</div>
+        <div class="activity-subtitle">Tap the right article for each word!</div>
+      </div>
+    </div>
+
+    <div class="sort-word-display">
+      <div class="sort-word" id="sortWord">sac</div>
+      <div class="sort-counter" id="sortCounter">Word 1 of 10</div>
+    </div>
+    <div class="sort-btns">
+      <button class="sort-btn le-btn" onclick="sortAnswer('le')">LE</button>
+      <button class="sort-btn la-btn" onclick="sortAnswer('la')">LA</button>
+    </div>
+    <div class="sort-columns">
+      <div class="sort-col le-col">
+        <div class="sort-col-title">LE 💙</div>
+        <div class="sorted-chips" id="leChips"></div>
+      </div>
+      <div class="sort-col la-col">
+        <div class="sort-col-title">LA ❤️</div>
+        <div class="sorted-chips" id="laChips"></div>
+      </div>
+    </div>
+    <div class="feedback" id="sortFeedback"></div>
+    <div class="done-badge" id="sortDone">⭐ Parfait! All 10 words sorted! ⭐</div>
+  </div>
+
+  <!-- ── ACTIVITY 2 — Pick the article quiz ── -->
+  <div class="activity-card" id="act2">
+    <div class="activity-header">
+      <div class="activity-num">2</div>
+      <div>
+        <div class="activity-title">Pick the Right Article 🌟</div>
+        <div class="activity-subtitle">Choose the correct word!</div>
+      </div>
+    </div>
+
+    <div id="quizContainer"></div>
+    <div class="done-badge" id="quizDone">⭐ Bravo! All questions answered! ⭐</div>
+  </div>
+
+  <!-- ── ACTIVITY 3 — Match the article ── -->
+  <div class="activity-card" id="act3">
+    <div class="activity-header">
+      <div class="activity-num">3</div>
+      <div>
+        <div class="activity-title">Match the Article 🔗</div>
+        <div class="activity-subtitle">Tap a word then tap its article!</div>
+      </div>
+    </div>
+
+    <div class="match-grid">
+      <div>
+        <div class="match-col-title">French Word</div>
+        <div class="match-items" id="matchWords"></div>
+      </div>
+      <div>
+        <div class="match-col-title">Article</div>
+        <div class="match-items" id="matchArts"></div>
+      </div>
+    </div>
+    <div class="feedback" id="matchFeedback"></div>
+    <div class="done-badge" id="matchDone">⭐ Super! All 6 matched! ⭐</div>
+  </div>
+
+  <!-- ── ACTIVITY 4 — Vrai ou Faux ── -->
+  <div class="activity-card" id="act4">
+    <div class="activity-header">
+      <div class="activity-num">4</div>
+      <div>
+        <div class="activity-title">Vrai ou Faux? ✅❌</div>
+        <div class="activity-subtitle">True or False? Tap your answer!</div>
+      </div>
+    </div>
+
+    <div id="tfContainer"></div>
+    <div class="done-badge" id="tfDone">⭐ Excellent! All done! ⭐</div>
+  </div>
+
+  <!-- ── ACTIVITY 5 — Fill in the blank ── -->
+  <div class="activity-card" id="act5">
+    <div class="activity-header">
+      <div class="activity-num">5</div>
+      <div>
+        <div class="activity-title">Fill in the Blank ✏️</div>
+        <div class="activity-subtitle">Tap a word from the bank, then tap the blank!</div>
+      </div>
+    </div>
+
+    <div class="bank" id="wordBank"></div>
+    <div class="fill-sentences" id="fillSentences"></div>
+    <div class="feedback" id="fillFeedback"></div>
+    <div class="done-badge" id="fillDone">⭐ Incroyable! All blanks filled! ⭐</div>
+  </div>
+
+</div><!-- end .wrap -->
+
+<script>
+  /* ─── GLOBAL CHEER ─────────────────────────────── */
+  let cheerCount = 0;
+  function addCheer() {
+    cheerCount++;
+    if (cheerCount >= 2) {
+      document.getElementById('cheerBanner').classList.add('show');
+    }
+  }
+
+  function playPop(el) {
+    el.style.animation = 'none';
+    el.offsetHeight; // reflow
+    el.style.animation = 'pop 0.3s ease';
+  }
+
+  /* ─── ACTIVITY 1 — LE ou LA Sort ──────────────── */
+  const sortWords = [
+    {word:'sac',   art:'le', emoji:'👜'},
+    {word:'garçon',art:'le', emoji:'👦'},
+    {word:'tableau',art:'le',emoji:'🖼️'},
+    {word:'chaise',art:'la', emoji:'🪑'},
+    {word:'fille', art:'la', emoji:'👧'},
+    {word:'règle', art:'la', emoji:'📏'},
+    {word:'stylo', art:'le', emoji:'✏️'},
+    {word:'table', art:'la', emoji:'🪑'},
+    {word:'livre', art:'le', emoji:'📖'},
+    {word:'pomme', art:'la', emoji:'🍎'},
+  ];
+  let sortIdx = 0;
+  let sortDone = false;
+
+  function renderSort() {
+    const w = sortWords[sortIdx];
+    document.getElementById('sortWord').textContent = w.emoji + ' ' + w.word;
+    document.getElementById('sortCounter').textContent = 'Word ' + (sortIdx+1) + ' of ' + sortWords.length;
+    document.getElementById('sortFeedback').textContent = '';
+    document.getElementById('sortFeedback').className = 'feedback';
+  }
+
+  function sortAnswer(picked) {
+    if (sortDone) return;
+    const w = sortWords[sortIdx];
+    const fb = document.getElementById('sortFeedback');
+    const wordEl = document.getElementById('sortWord');
+
+    if (picked === w.art) {
+      // Correct
+      fb.textContent = '✅ Oui! ' + w.art + ' ' + w.word + '!';
+      fb.className = 'feedback good';
+
+      // Add to correct column
+      const chip = document.createElement('div');
+      chip.className = 'sorted-chip ' + (w.art === 'le' ? 'le-chip' : 'la-chip');
+      chip.textContent = w.art + ' ' + w.word;
+      chip.style.animation = 'slideRight 0.35s ease';
+      document.getElementById(w.art === 'le' ? 'leChips' : 'laChips').appendChild(chip);
+
+      sortIdx++;
+      if (sortIdx >= sortWords.length) {
+        sortDone = true;
+        document.getElementById('sortDone').classList.add('show');
+        document.getElementById('sortWord').textContent = '🎉';
+        document.getElementById('sortCounter').textContent = 'All done!';
+        addCheer();
+      } else {
+        setTimeout(renderSort, 500);
+      }
+    } else {
+      // Wrong
+      fb.textContent = '❌ Essaie encore! Try again!';
+      fb.className = 'feedback bad';
+      wordEl.style.animation = 'none';
+      wordEl.offsetHeight;
+      wordEl.style.animation = 'shake 0.45s';
+    }
+  }
+
+  renderSort();
+
+  /* ─── ACTIVITY 2 — Quiz ────────────────────────── */
+  const quizData = [
+    { q: '___ sac',      opts: ['la','le','les'],  ans: 'le'  },
+    { q: '___ chaise',   opts: ['la','le','un'],   ans: 'la'  },
+    { q: '___ fille',    opts: ['le','la','les'],  ans: 'la'  },
+    { q: '___ garçon',   opts: ['la','une','le'],  ans: 'le'  },
+    { q: 'Which is masculine?', opts: ['la table','la fille','le stylo'], ans: 'le stylo' },
+    { q: '"La" is used for...', opts: ['masculine','feminine','both'],    ans: 'feminine' },
+    { q: '___ tableau',  opts: ['la','le','une'],  ans: 'le'  },
+    { q: '___ règle',    opts: ['un','le','la'],   ans: 'la'  },
+  ];
+
+  let quizCorrect = 0;
+  const quizContainer = document.getElementById('quizContainer');
+
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.id = 'qq' + qi;
+
+    let qText = q.q.includes('___')
+      ? q.q.replace('___', '<span class="quiz-blank">&nbsp;&nbsp;&nbsp;&nbsp;</span>')
+      : q.q;
+
+    const optsHtml = q.opts.map(o => {
+      let col = '';
+      if (o === 'le') col = 'color:var(--blue);font-weight:900;';
+      if (o === 'la') col = 'color:var(--red);font-weight:900;';
+      return `<button class="quiz-opt" style="${col}" onclick="pickQ(this,'${o}','${q.ans}',${qi})">${o}</button>`;
+    }).join('');
+
+    div.innerHTML = `
+      <div class="quiz-q-text">${qi+1}. ${qText}</div>
+      <div class="quiz-opts">${optsHtml}</div>
+      ${qi < quizData.length-1 ? '<hr class="quiz-divider" style="margin-top:14px;">' : ''}
+    `;
+    quizContainer.appendChild(div);
+  });
+
+  function pickQ(el, picked, ans, qi) {
+    const row = document.getElementById('qq' + qi);
+    if (row.dataset.done) return;
+    row.dataset.done = '1';
+    const btns = row.querySelectorAll('.quiz-opt');
+    btns.forEach(b => b.classList.add('done'));
+
+    if (picked === ans) {
+      el.classList.add('correct');
+      quizCorrect++;
+      if (quizCorrect === quizData.length) {
+        document.getElementById('quizDone').classList.add('show');
+        addCheer();
+      }
+    } else {
+      el.classList.add('wrong');
+      // highlight correct
+      btns.forEach(b => { if (b.textContent.trim() === ans) b.classList.add('correct'); });
+    }
+  }
+
+  /* ─── ACTIVITY 3 — Match ───────────────────────── */
+  const matchPairs = [
+    {word:'sac',    art:'le'},
+    {word:'chaise', art:'la'},
+    {word:'garçon', art:'le'},
+    {word:'fille',  art:'la'},
+    {word:'livre',  art:'le'},
+    {word:'table',  art:'la'},
+  ];
+  // Shuffled articles pool (maintain same count)
+  const artsPool = ['le','la','le','la','le','la'];
+  // Shuffle artsPool
+  (function shuffle(a){ for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} })(artsPool);
+
+  let selectedWord = null; // {word, el}
+  let matchCorrect = 0;
+
+  const matchWordsEl = document.getElementById('matchWords');
+  const matchArtsEl  = document.getElementById('matchArts');
+
+  matchPairs.forEach((p, i) => {
+    const w = document.createElement('div');
+    w.className = 'match-word';
+    w.textContent = p.word;
+    w.dataset.word = p.word;
+    w.dataset.art  = p.art;
+    w.onclick = function() {
+      if (this.classList.contains('locked')) return;
+      document.querySelectorAll('.match-word').forEach(x => x.classList.remove('selected'));
+      this.classList.add('selected');
+      selectedWord = { word: p.word, art: p.art, el: this };
+    };
+    matchWordsEl.appendChild(w);
+  });
+
+  artsPool.forEach((art, i) => {
+    const a = document.createElement('div');
+    a.className = 'match-art ' + (art === 'le' ? 'le-art' : 'la-art');
+    a.textContent = art;
+    a.dataset.art = art;
+    a.dataset.idx = i;
+    a.onclick = function() {
+      if (!selectedWord) {
+        document.getElementById('matchFeedback').textContent = '👆 Tap a word first!';
+        document.getElementById('matchFeedback').className = 'feedback bad';
+        return;
+      }
+      if (this.classList.contains('used')) return;
+
+      const fb = document.getElementById('matchFeedback');
+      if (art === selectedWord.art) {
+        // Correct match
+        selectedWord.el.classList.remove('selected');
+        selectedWord.el.classList.add('locked');
+        this.classList.add('used');
+        selectedWord = null;
+        matchCorrect++;
+        fb.textContent = '✅ Correct!';
+        fb.className = 'feedback good';
+        if (matchCorrect === matchPairs.length) {
+          document.getElementById('matchDone').classList.add('show');
+          addCheer();
+        }
+      } else {
+        // Wrong
+        fb.textContent = '❌ Not quite! Try another!';
+        fb.className = 'feedback bad';
+        this.classList.add('shake-it');
+        setTimeout(() => this.classList.remove('shake-it'), 500);
+      }
+    };
+    matchArtsEl.appendChild(a);
+  });
+
+  /* ─── ACTIVITY 4 — Vrai ou Faux ───────────────── */
+  const tfData = [
+    { stmt: '"Le" is used for masculine nouns.',   key: 'vrai' },
+    { stmt: '"La sac" est correct.',                key: 'faux'  },
+    { stmt: '"La fille" is correct French.',        key: 'vrai' },
+    { stmt: '"Le chaise" is correct French.',       key: 'faux'  },
+    { stmt: '"Le garçon" means "the boy".',         key: 'vrai' },
+    { stmt: '"La" is used for masculine nouns.',    key: 'faux'  },
+  ];
+
+  let tfCorrect = 0;
+  const tfContainer = document.getElementById('tfContainer');
+
+  tfData.forEach((t, ti) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.id = 'tf' + ti;
+    div.innerHTML = `
+      <div class="tf-statement">${ti+1}. ${t.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn vrai-btn" onclick="checkTF(this,'vrai','${t.key}',${ti})">✅ VRAI</button>
+        <button class="tf-btn faux-btn" onclick="checkTF(this,'faux','${t.key}',${ti})">❌ FAUX</button>
+      </div>
+      ${ti < tfData.length-1 ? '<hr class="tf-divider">' : ''}
+    `;
+    tfContainer.appendChild(div);
+  });
+
+  function checkTF(el, picked, key, ti) {
+    const row = document.getElementById('tf' + ti);
+    if (row.dataset.done) return;
+    row.dataset.done = '1';
+    row.querySelectorAll('.tf-btn').forEach(b => b.classList.add('done'));
+
+    if (picked === key) {
+      el.classList.add('correct');
+      tfCorrect++;
+      if (tfCorrect === tfData.length) {
+        document.getElementById('tfDone').classList.add('show');
+        addCheer();
+      }
+    } else {
+      el.classList.add('wrong');
+      // Show correct
+      row.querySelectorAll('.tf-btn').forEach(b => {
+        if ((b.classList.contains('vrai-btn') && key==='vrai') ||
+            (b.classList.contains('faux-btn') && key==='faux')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+  }
+
+  /* ─── ACTIVITY 5 — Fill in the Blank ──────────── */
+  const fillSentences = [
+    { before:'', blank:'le', after:'sac est grand.',   key:'le' },
+    { before:'', blank:'la', after:'fille est belle.', key:'la' },
+    { before:'', blank:'le', after:'garçon joue.',     key:'le' },
+    { before:'', blank:'la', after:'chaise est ici.',  key:'la' },
+    { before:'', blank:'le', after:'tableau est vert.',key:'le' },
+    { before:'', blank:'la', after:'règle est longue.',key:'la' },
+  ];
+
+  const bankTokens = ['le','la','le','la','le','la'];
+  const bankEl = document.getElementById('wordBank');
+  const fillEl = document.getElementById('fillSentences');
+
+  let selectedToken = null; // { art, bankEl }
+  let fillCorrect = 0;
+
+  bankTokens.forEach((art, i) => {
+    const tok = document.createElement('div');
+    tok.className = 'bank-token ' + (art === 'le' ? 'le-tok' : 'la-tok');
+    tok.textContent = art;
+    tok.dataset.art = art;
+    tok.dataset.idx = i;
+    tok.onclick = function() {
+      if (this.classList.contains('used')) return;
+      document.querySelectorAll('.bank-token').forEach(t => t.classList.remove('selected'));
+      this.classList.add('selected');
+      selectedToken = { art: art, el: this };
+    };
+    bankEl.appendChild(tok);
+  });
+
+  fillSentences.forEach((s, si) => {
+    const row = document.createElement('div');
+    row.className = 'fill-sentence';
+    row.id = 'fs' + si;
+
+    const blank = document.createElement('span');
+    blank.className = 'fill-blank';
+    blank.id = 'fb' + si;
+    blank.textContent = '___';
+    blank.dataset.key = s.key;
+    blank.onclick = function() {
+      if (this.classList.contains('filled-le') || this.classList.contains('filled-la')) return;
+      if (!selectedToken) {
+        document.getElementById('fillFeedback').textContent = '👆 Tap a word from the bank first!';
+        document.getElementById('fillFeedback').className = 'feedback bad';
+        return;
+      }
+      const fb = document.getElementById('fillFeedback');
+      if (selectedToken.art === s.key) {
+        // Correct
+        this.textContent = selectedToken.art;
+        this.classList.add('filled-' + selectedToken.art, 'correct-glow');
+        selectedToken.el.classList.add('used');
+        selectedToken.el.classList.remove('selected');
+        selectedToken = null;
+        fb.textContent = '✅ Bien!';
+        fb.className = 'feedback good';
+        fillCorrect++;
+        if (fillCorrect === fillSentences.length) {
+          document.getElementById('fillDone').classList.add('show');
+          addCheer();
+        }
+      } else {
+        // Wrong
+        fb.textContent = '❌ Essaie encore!';
+        fb.className = 'feedback bad';
+        this.classList.add('wrong-shake');
+        setTimeout(() => this.classList.remove('wrong-shake'), 500);
+      }
+    };
+
+    row.appendChild(blank);
+    row.appendChild(document.createTextNode(' ' + s.after));
+    fillEl.appendChild(row);
+  });
+</script>
+</body>
+</html>

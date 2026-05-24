@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WH-Questions ❓ | Tikky's English</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #e91e8c;
+      --light-bg:#fff0f8;
+      --accent:  #ff6bb5;
+      --what:    #e91e8c;
+      --who:     #7c4dff;
+      --where:   #0277bd;
+      --when:    #00897b;
+      --why:     #ef6c00;
+      --how:     #c62828;
+      --dark:    #2d1040;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--light-bg);
+      background-image:
+        radial-gradient(circle at 10% 85%, rgba(233,30,140,.07) 0%, transparent 45%),
+        radial-gradient(circle at 90% 15%, rgba(255,107,181,.07) 0%, transparent 45%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,.95); border: 2px solid rgba(233,30,140,.25);
+      color: #333; font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+      text-decoration: none; box-shadow: 0 3px 12px rgba(233,30,140,.18);
+      backdrop-filter: blur(4px); transition: all .2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── Cheer Banner ── */
+    .cheer-banner {
+      display: none;
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #e91e8c, #ff6bb5);
+      color: white; font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem; padding: 16px 32px; border-radius: 50px;
+      box-shadow: 0 8px 30px rgba(233,30,140,.45);
+      z-index: 9998; text-align: center;
+      animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    /* ── Page Header ── */
+    .page-header {
+      background: linear-gradient(135deg, #6a0040 0%, #e91e8c 55%, #ff6bb5 100%);
+      padding: 64px 20px 50px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content:''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(255,255,255,.08) 0%, transparent 60%);
+    }
+    .header-icon { font-size: 72px; display: block; animation: bounce 2s ease-in-out infinite; }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+      color: rgba(255,255,255,.95); font-weight: 800; font-size: .8rem;
+      padding: 4px 16px; border-radius: 50px; margin-bottom: 12px;
+      letter-spacing: .5px; position: relative;
+    }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      color: white; text-shadow: 3px 4px rgba(0,0,0,.18);
+      position: relative; line-height: 1.1; margin-top: 8px;
+    }
+    .page-header p {
+      color: rgba(255,255,255,.88); font-size: 1.05rem; font-weight: 700;
+      margin-top: 8px; position: relative;
+    }
+
+    /* ── Content wrapper ── */
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 20px 100px; }
+
+    /* ── Section titles ── */
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.9rem; color: var(--pink);
+      margin: 48px 0 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-title span { font-size: 1.5rem; }
+
+    /* ── Definition card ── */
+    .def-card {
+      background: white; border-radius: 24px;
+      padding: 28px 32px; margin-bottom: 28px;
+      box-shadow: 0 6px 28px rgba(233,30,140,.12);
+      border-left: 6px solid var(--pink);
+    }
+    .def-card h3 {
+      font-family: 'Fredoka One', cursive; font-size: 1.25rem;
+      color: var(--pink); margin-bottom: 8px;
+    }
+    .def-card p { font-size: 1.1rem; font-weight: 700; line-height: 1.6; }
+
+    /* ── WH badge pills ── */
+    .wh-pills {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center; margin: 20px 0 10px;
+    }
+    .wh-pill {
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      padding: 10px 24px; border-radius: 50px; color: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,.18);
+      animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+      cursor: default; transition: transform .2s;
+    }
+    .wh-pill:hover { transform: scale(1.1) rotate(-2deg); }
+    .wh-pill.what  { background: var(--what);  }
+    .wh-pill.who   { background: var(--who);   }
+    .wh-pill.where { background: var(--where); }
+    .wh-pill.when  { background: var(--when);  }
+    .wh-pill.why   { background: var(--why);   }
+    .wh-pill.how   { background: var(--how);   }
+
+    /* ── WH Cards grid ── */
+    .wh-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px; margin-top: 10px;
+    }
+    .wh-card {
+      background: white; border-radius: 24px;
+      padding: 28px 20px 24px; text-align: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,.1);
+      cursor: pointer; transition: transform .25s, box-shadow .25s;
+      position: relative; overflow: hidden;
+      border-top: 6px solid currentColor;
+    }
+    .wh-card:hover { transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,0,0,.16); }
+    .wh-card.active { box-shadow: 0 0 0 4px currentColor, 0 14px 36px rgba(0,0,0,.2); }
+    .wh-card .card-word {
+      font-family: 'Fredoka One', cursive; font-size: 2.4rem;
+      display: block; margin-bottom: 6px;
+    }
+    .wh-card .card-emoji { font-size: 2.6rem; display: block; margin: 8px 0; }
+    .wh-card .card-meaning {
+      font-weight: 800; font-size: .92rem; text-transform: uppercase;
+      letter-spacing: .5px; color: #555; margin-bottom: 10px;
+    }
+    .wh-card .card-meaning strong { color: inherit; }
+    .wh-card .card-example {
+      font-style: italic; font-size: 1rem; color: #444; font-weight: 700;
+      background: var(--light-bg); border-radius: 12px; padding: 8px 12px;
+      opacity: 0; transition: opacity .3s; margin-top: 6px;
+    }
+    .wh-card.active .card-example { opacity: 1; }
+
+    .wh-card.what  { color: var(--what);  }
+    .wh-card.who   { color: var(--who);   }
+    .wh-card.where { color: var(--where); }
+    .wh-card.when  { color: var(--when);  }
+    .wh-card.why   { color: var(--why);   }
+    .wh-card.how   { color: var(--how);   }
+
+    /* ── Activity box ── */
+    .activity-box {
+      background: white; border-radius: 24px;
+      padding: 32px 28px; margin-top: 8px;
+      box-shadow: 0 6px 28px rgba(233,30,140,.1);
+    }
+    .activity-box h3 {
+      font-family: 'Fredoka One', cursive; font-size: 1.4rem;
+      color: var(--dark); margin-bottom: 20px;
+    }
+    .activity-box h3 .act-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--pink); color: white; font-size: 1rem; margin-right: 10px;
+    }
+
+    /* ── Activity 1: Match It ── */
+    .match-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-top: 8px;
+    }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-item {
+      padding: 14px 18px; border-radius: 14px; font-weight: 800;
+      font-size: 1rem; cursor: pointer; text-align: center;
+      border: 3px solid transparent; transition: all .2s;
+      background: var(--light-bg);
+    }
+    .match-item:hover { transform: scale(1.04); }
+    .match-item.selected { border-color: var(--pink); background: #ffe0f4; }
+    .match-item.correct  { background: #d4fbe6; border-color: #00c853; color: #007a33; pointer-events: none; }
+    .match-item.wrong    { background: #ffe0e0; border-color: #f44336; }
+
+    /* ── Activity 2: Quiz ── */
+    .quiz-question { margin-bottom: 28px; }
+    .quiz-question p {
+      font-size: 1.15rem; font-weight: 800; margin-bottom: 12px;
+      background: var(--light-bg); border-radius: 14px; padding: 14px 18px;
+    }
+    .quiz-choices { display: flex; gap: 10px; flex-wrap: wrap; }
+    .quiz-btn {
+      padding: 12px 22px; border-radius: 12px; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1rem; cursor: pointer; border: 3px solid transparent;
+      background: var(--light-bg); color: var(--dark); transition: all .2s;
+    }
+    .quiz-btn:hover:not(.done) { border-color: var(--accent); background: #ffe0f4; }
+    .quiz-btn.correct { background: #d4fbe6; border-color: #00c853; color: #007a33; }
+    .quiz-btn.wrong   { background: #ffe0e0; border-color: #f44336; color: #b71c1c; }
+    .quiz-btn.done    { pointer-events: none; }
+
+    /* ── Activity 3: Sort ── */
+    .sort-card {
+      background: var(--light-bg); border-radius: 18px; padding: 22px 20px;
+      text-align: center; margin-bottom: 20px;
+    }
+    .sort-card .sort-q {
+      font-size: 1.25rem; font-weight: 800; margin-bottom: 18px;
+    }
+    .sort-choices { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .sort-btn {
+      padding: 12px 22px; border-radius: 12px; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1rem; cursor: pointer; border: 3px solid transparent;
+      color: white; transition: all .2s;
+    }
+    .sort-btn:hover:not(.done) { transform: scale(1.06); }
+    .sort-btn.correct { background: #00c853 !important; border-color: #009624; }
+    .sort-btn.wrong   { background: #f44336 !important; border-color: #b71c1c; }
+    .sort-btn.done    { pointer-events: none; }
+
+    /* ── Activity 4: True/False ── */
+    .tf-item { margin-bottom: 18px; }
+    .tf-item p {
+      font-size: 1.1rem; font-weight: 800; margin-bottom: 10px;
+      background: var(--light-bg); border-radius: 14px; padding: 12px 16px;
+    }
+    .tf-buttons { display: flex; gap: 12px; }
+    .tf-btn {
+      padding: 12px 28px; border-radius: 12px; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1rem; cursor: pointer; border: 3px solid transparent;
+      transition: all .2s;
+    }
+    .tf-btn.true-btn  { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+    .tf-btn.false-btn { background: #fce4ec; color: #b71c1c; border-color: #f48fb1; }
+    .tf-btn:hover:not(.done) { transform: scale(1.06); }
+    .tf-btn.correct { background: #d4fbe6; border-color: #00c853; color: #007a33; }
+    .tf-btn.wrong   { background: #ffe0e0; border-color: #f44336; color: #b71c1c; }
+    .tf-btn.done    { pointer-events: none; }
+
+    /* ── Activity 5: Fill Blank ── */
+    .fill-sentence { margin-bottom: 18px; }
+    .fill-sentence p {
+      font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;
+    }
+    .fill-blank {
+      display: inline-block; min-width: 90px; padding: 6px 14px;
+      border-radius: 10px; border: 3px dashed var(--pink);
+      background: #ffe0f4; cursor: pointer; font-weight: 900;
+      font-size: 1.1rem; text-align: center; transition: all .2s; vertical-align: middle;
+    }
+    .fill-blank.filled { border-style: solid; background: white; }
+    .fill-blank.correct { border-color: #00c853; background: #d4fbe6; color: #007a33; cursor: default; }
+    .fill-blank.wrong   { border-color: #f44336; background: #ffe0e0; }
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 8px;
+    }
+    .bank-word {
+      padding: 10px 22px; border-radius: 50px; font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem; color: white; cursor: pointer;
+      box-shadow: 0 3px 12px rgba(0,0,0,.18); transition: all .2s;
+    }
+    .bank-word:hover:not(.used) { transform: scale(1.1) rotate(-2deg); }
+    .bank-word.used { opacity: .35; pointer-events: none; }
+
+    /* ── Score badges ── */
+    .score-badge {
+      display: none; text-align: center; margin-top: 24px;
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      color: var(--pink); animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    /* ── Keyframes ── */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0) rotate(-8deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg);  opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+    .shake { animation: shake .6s ease both; }
+    .pop   { animation: pop .35s ease both; }
+
+    /* ── Responsive ── */
+    @media (max-width: 560px) {
+      .match-grid { grid-template-columns: 1fr 1fr; }
+      .match-item { font-size: .88rem; padding: 10px 10px; }
+      .wh-cards-grid { grid-template-columns: 1fr 1fr; }
+      .activity-box { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div class="cheer-banner" id="cheerBanner">
+  🌟 Brilliant, Tikky! You're a WH-Question star! 🌟
+</div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="page-header">
+  <span class="header-icon">❓</span>
+  <div class="header-badge">Cambridge English · 18th May 2026</div>
+  <h1>WH-Questions</h1>
+  <p>What · Who · Where · When · Why · How</p>
+</header>
+
+<div class="content">
+
+  <!-- ══════════ INTRO SECTION ══════════ -->
+  <div class="section-title"><span>📖</span> What are WH-Questions?</div>
+
+  <div class="def-card">
+    <h3>Remember This!</h3>
+    <p>WH-questions usually start with a word beginning with <strong style="color:var(--pink)">"Wh"</strong>.<br>
+    <strong style="color:var(--how)">"How"</strong> is also a WH-question word! 🎉</p>
+  </div>
+
+  <div class="wh-pills">
+    <div class="wh-pill what"  style="animation-delay:.05s">What</div>
+    <div class="wh-pill who"   style="animation-delay:.15s">Who</div>
+    <div class="wh-pill where" style="animation-delay:.25s">Where</div>
+    <div class="wh-pill when"  style="animation-delay:.35s">When</div>
+    <div class="wh-pill why"   style="animation-delay:.45s">Why</div>
+    <div class="wh-pill how"   style="animation-delay:.55s">How</div>
+  </div>
+
+  <!-- ══════════ WH-WORD CARDS ══════════ -->
+  <div class="section-title"><span>🃏</span> Tap each card to learn!</div>
+
+  <div class="wh-cards-grid">
+
+    <div class="wh-card what" onclick="toggleCard(this)">
+      <span class="card-word">What</span>
+      <span class="card-emoji">🧸</span>
+      <div class="card-meaning">asks about <strong>THINGS</strong></div>
+      <div class="card-example">"What is your name?"</div>
+    </div>
+
+    <div class="wh-card who" onclick="toggleCard(this)">
+      <span class="card-word">Who</span>
+      <span class="card-emoji">👤</span>
+      <div class="card-meaning">asks about <strong>PEOPLE</strong></div>
+      <div class="card-example">"Who is your friend?"</div>
+    </div>
+
+    <div class="wh-card where" onclick="toggleCard(this)">
+      <span class="card-word">Where</span>
+      <span class="card-emoji">📍</span>
+      <div class="card-meaning">asks about <strong>PLACE</strong></div>
+      <div class="card-example">"Where do you live?"</div>
+    </div>
+
+    <div class="wh-card when" onclick="toggleCard(this)">
+      <span class="card-word">When</span>
+      <span class="card-emoji">⏰</span>
+      <div class="card-meaning">asks about <strong>TIME</strong></div>
+      <div class="card-example">"When do we eat lunch?"</div>
+    </div>
+
+    <div class="wh-card why" onclick="toggleCard(this)">
+      <span class="card-word">Why</span>
+      <span class="card-emoji">💭</span>
+      <div class="card-meaning">asks for a <strong>REASON</strong></div>
+      <div class="card-example">"Why are you sad?"</div>
+    </div>
+
+    <div class="wh-card how" onclick="toggleCard(this)">
+      <span class="card-word">How</span>
+      <span class="card-emoji">🔧</span>
+      <div class="card-meaning">asks about <strong>METHOD</strong></div>
+      <div class="card-example">"How was your exam?"</div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ ACTIVITY 1 — MATCH IT ══════════ -->
+  <div class="section-title"><span>🎯</span> Activity 1</div>
+  <div class="activity-box">
+    <h3><span class="act-num">1</span> Match It! Tap a word, then tap its meaning.</h3>
+    <div class="match-grid">
+      <div class="match-col" id="matchLeft">
+        <div class="match-item" id="mw-What"  data-word="What"  onclick="selectLeft(this)" style="color:var(--what); border-color:var(--what)20">What</div>
+        <div class="match-item" id="mw-Who"   data-word="Who"   onclick="selectLeft(this)" style="color:var(--who); border-color:var(--who)20">Who</div>
+        <div class="match-item" id="mw-Where" data-word="Where" onclick="selectLeft(this)" style="color:var(--where); border-color:var(--where)20">Where</div>
+        <div class="match-item" id="mw-When"  data-word="When"  onclick="selectLeft(this)" style="color:var(--when); border-color:var(--when)20">When</div>
+        <div class="match-item" id="mw-Why"   data-word="Why"   onclick="selectLeft(this)" style="color:var(--why); border-color:var(--why)20">Why</div>
+        <div class="match-item" id="mw-How"   data-word="How"   onclick="selectLeft(this)" style="color:var(--how); border-color:var(--how)20">How</div>
+      </div>
+      <div class="match-col" id="matchRight">
+        <!-- shuffled meanings inserted by JS -->
+      </div>
+    </div>
+    <div class="score-badge" id="match-score">🎉 All matched! Amazing Tikky!</div>
+  </div>
+
+  <!-- ══════════ ACTIVITY 2 — QUIZ ══════════ -->
+  <div class="section-title"><span>🧩</span> Activity 2</div>
+  <div class="activity-box">
+    <h3><span class="act-num">2</span> Pick the Right WH-Word!</h3>
+    <div id="quizContainer"></div>
+    <div class="score-badge" id="quiz-score">🌟 All correct! You're brilliant!</div>
+  </div>
+
+  <!-- ══════════ ACTIVITY 3 — SORT ══════════ -->
+  <div class="section-title"><span>🗂️</span> Activity 3</div>
+  <div class="activity-box">
+    <h3><span class="act-num">3</span> What does it ask about? Pick the right category!</h3>
+    <div id="sortContainer"></div>
+    <div class="score-badge" id="sort-score">🎊 Sorted them all! Super smart!</div>
+  </div>
+
+  <!-- ══════════ ACTIVITY 4 — TRUE/FALSE ══════════ -->
+  <div class="section-title"><span>✅</span> Activity 4</div>
+  <div class="activity-box">
+    <h3><span class="act-num">4</span> True or False?</h3>
+    <div id="tfContainer"></div>
+    <div class="score-badge" id="tf-score">🏆 All done! You're a star, Tikky!</div>
+  </div>
+
+  <!-- ══════════ ACTIVITY 5 — FILL BLANK ══════════ -->
+  <div class="section-title"><span>✏️</span> Activity 5</div>
+  <div class="activity-box">
+    <h3><span class="act-num">5</span> Fill in the Blank — tap a word from the bank!</h3>
+    <div class="word-bank" id="wordBank"></div>
+    <div id="fillContainer"></div>
+    <div class="score-badge" id="fill-score">🌈 Perfect! You filled them all!</div>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+/* ════════════════════════════════════════
+   GLOBAL CHEER
+═══════════════════════════════════════ */
+let cheerCount = 0;
+function cheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const banner = document.getElementById('cheerBanner');
+    banner.style.display = 'block';
+    setTimeout(() => { banner.style.display = 'none'; }, 5000);
+  }
+}
+
+/* ════════════════════════════════════════
+   WH-WORD CARDS
+═══════════════════════════════════════ */
+function toggleCard(el) {
+  const wasActive = el.classList.contains('active');
+  document.querySelectorAll('.wh-card').forEach(c => c.classList.remove('active'));
+  if (!wasActive) el.classList.add('active');
+}
+
+/* ════════════════════════════════════════
+   ACTIVITY 1 — MATCH IT
+═══════════════════════════════════════ */
+const matchData = {
+  What:  'asks about things',
+  Who:   'asks about people',
+  Where: 'asks about place',
+  When:  'asks about time',
+  Why:   'asks for reason',
+  How:   'asks about method'
+};
+const matchColors = {
+  What:'var(--what)', Who:'var(--who)', Where:'var(--where)',
+  When:'var(--when)', Why:'var(--why)',  How:'var(--how)'
+};
+
+let selectedLeft = null;
+let matchCorrect  = 0;
+
+function buildMatchRight() {
+  const container = document.getElementById('matchRight');
+  const meanings  = Object.values(matchData);
+  // shuffle
+  for (let i = meanings.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [meanings[i], meanings[j]] = [meanings[j], meanings[i]];
+  }
+  meanings.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.dataset.meaning = m;
+    div.textContent = m;
+    div.onclick = () => selectRight(div);
+    container.appendChild(div);
+  });
+}
+
+function selectLeft(el) {
+  if (el.classList.contains('correct')) return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLeft = el;
+}
+
+function selectRight(el) {
+  if (!selectedLeft) return;
+  if (el.classList.contains('correct')) return;
+  const word    = selectedLeft.dataset.word;
+  const meaning = el.dataset.meaning;
+
+  if (matchData[word] === meaning) {
+    // correct
+    selectedLeft.classList.remove('selected');
+    selectedLeft.classList.add('correct');
+    selectedLeft.style.borderColor = matchColors[word];
+    el.classList.add('correct');
+    el.style.borderColor = matchColors[word];
+    selectedLeft.style.color = matchColors[word];
+    selectedLeft.onclick = null;
+    matchCorrect++;
+    selectedLeft = null;
+    if (matchCorrect === 6) {
+      document.getElementById('match-score').style.display = 'block';
+      cheer();
+    }
+  } else {
+    // wrong — shake both
+    selectedLeft.classList.add('shake');
+    el.classList.add('shake', 'wrong');
+    setTimeout(() => {
+      selectedLeft && selectedLeft.classList.remove('shake');
+      el.classList.remove('shake', 'wrong');
+    }, 650);
+  }
+}
+
+buildMatchRight();
+
+/* ════════════════════════════════════════
+   ACTIVITY 2 — QUIZ
+═══════════════════════════════════════ */
+const quizData = [
+  { q: '"___ is your name?"',            choices:['Where','What','Why'],   answer:'What'  },
+  { q: '"___ is your best friend?"',     choices:['Who','When','Where'],   answer:'Who'   },
+  { q: '"___ do you live?"',             choices:['Why','Who','Where'],    answer:'Where' },
+  { q: '"___ do we eat lunch?"',         choices:['What','When','How'],    answer:'When'  },
+  { q: '"___ are you sad?"',             choices:['Who','Where','Why'],    answer:'Why'   },
+  { q: '"___ was your exam?"',           choices:['When','Why','How'],     answer:'How'   },
+  { q: '"___ is that bag? It\'s mine!"', choices:['Whose','How','When'],   answer:'Whose' },
+  { q: '"She asks about a place. She uses ___."', choices:['Who','Why','Where'], answer:'Where' }
+];
+
+let quizCorrect = 0;
+const quizDone  = new Array(quizData.length).fill(false);
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  quizData.forEach((item, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    const p = document.createElement('p');
+    p.innerHTML = `<strong>Q${qi + 1}:</strong> ${item.q}`;
+    div.appendChild(p);
+
+    const choicesDiv = document.createElement('div');
+    choicesDiv.className = 'quiz-choices';
+
+    item.choices.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-btn';
+      btn.textContent = ch;
+      btn.onclick = () => pickQ(btn, ch === item.answer ? 'correct' : 'wrong', qi, choicesDiv);
+      choicesDiv.appendChild(btn);
+    });
+
+    div.appendChild(choicesDiv);
+    container.appendChild(div);
+  });
+}
+
+function pickQ(el, result, qi, choicesDiv) {
+  if (quizDone[qi]) return;
+  quizDone[qi] = true;
+  // disable all choices in this question
+  choicesDiv.querySelectorAll('.quiz-btn').forEach(b => b.classList.add('done'));
+  el.classList.add(result);
+  if (result === 'wrong') {
+    el.classList.add('shake');
+    setTimeout(() => el.classList.remove('shake'), 650);
+    // reveal correct
+    choicesDiv.querySelectorAll('.quiz-btn').forEach(b => {
+      if (b.textContent === quizData[qi].answer) b.classList.add('correct');
+    });
+  } else {
+    el.classList.add('pop');
+    quizCorrect++;
+  }
+  if (quizDone.every(Boolean)) {
+    document.getElementById('quiz-score').style.display = 'block';
+    cheer();
+  }
+}
+
+buildQuiz();
+
+/* ════════════════════════════════════════
+   ACTIVITY 3 — SORT
+═══════════════════════════════════════ */
+const sortData = [
+  { q: '"What is your favourite food?"', answer: 'THINGS',  choices: ['THINGS','PEOPLE','PLACE'],   colors:['#e91e8c','#7c4dff','#0277bd'] },
+  { q: '"Who is your teacher?"',         answer: 'PEOPLE',  choices: ['THINGS','PEOPLE','TIME'],    colors:['#e91e8c','#7c4dff','#00897b'] },
+  { q: '"Where is the school?"',         answer: 'PLACE',   choices: ['REASON','PLACE','TIME'],     colors:['#ef6c00','#0277bd','#00897b'] },
+  { q: '"When is your birthday?"',       answer: 'TIME',    choices: ['TIME','PEOPLE','METHOD'],    colors:['#00897b','#7c4dff','#c62828'] },
+  { q: '"Why do you cry?"',              answer: 'REASON',  choices: ['THINGS','METHOD','REASON'],  colors:['#e91e8c','#c62828','#ef6c00'] },
+  { q: '"How do you spell cat?"',        answer: 'METHOD',  choices: ['PLACE','REASON','METHOD'],   colors:['#0277bd','#ef6c00','#c62828'] },
+];
+
+let sortDone = 0;
+
+function buildSort() {
+  const container = document.getElementById('sortContainer');
+  sortData.forEach((item, si) => {
+    const div = document.createElement('div');
+    div.className = 'sort-card';
+    const p = document.createElement('p');
+    p.className = 'sort-q';
+    p.textContent = item.q;
+    div.appendChild(p);
+
+    const choicesDiv = document.createElement('div');
+    choicesDiv.className = 'sort-choices';
+
+    item.choices.forEach((ch, ci) => {
+      const btn = document.createElement('button');
+      btn.className = 'sort-btn';
+      btn.textContent = ch;
+      btn.style.background = item.colors[ci];
+      btn.onclick = () => pickSort(btn, ch === item.answer, si, choicesDiv, item.answer, item.colors, item.choices);
+      choicesDiv.appendChild(btn);
+    });
+
+    div.appendChild(choicesDiv);
+    container.appendChild(div);
+  });
+}
+
+function pickSort(el, isCorrect, si, choicesDiv, answer, colors, choices) {
+  if (el.classList.contains('done')) return;
+  choicesDiv.querySelectorAll('.sort-btn').forEach(b => b.classList.add('done'));
+  if (isCorrect) {
+    el.classList.add('correct');
+    el.classList.add('pop');
+    sortDone++;
+  } else {
+    el.classList.add('wrong');
+    el.classList.add('shake');
+    setTimeout(() => el.classList.remove('shake'), 650);
+    // reveal correct
+    choicesDiv.querySelectorAll('.sort-btn').forEach((b, ci) => {
+      if (choices[ci] === answer) b.classList.add('correct');
+    });
+  }
+  if (sortDone === sortData.length) {
+    document.getElementById('sort-score').style.display = 'block';
+    cheer();
+  }
+}
+
+buildSort();
+
+/* ════════════════════════════════════════
+   ACTIVITY 4 — TRUE / FALSE
+═══════════════════════════════════════ */
+const tfData = [
+  { statement: '"Who" asks about things.',   answer: false },
+  { statement: '"Where" asks about place.',  answer: true  },
+  { statement: '"How" is a WH-question word.', answer: true },
+  { statement: '"When" asks for a reason.',  answer: false },
+  { statement: '"What" asks about things.',  answer: true  },
+  { statement: '"Why" asks about method.',   answer: false },
+];
+
+let tfCorrect = 0;
+const tfDoneArr = new Array(tfData.length).fill(false);
+
+function buildTF() {
+  const container = document.getElementById('tfContainer');
+  tfData.forEach((item, ti) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    const p = document.createElement('p');
+    p.textContent = item.statement;
+    div.appendChild(p);
+
+    const btns = document.createElement('div');
+    btns.className = 'tf-buttons';
+
+    const trueBtn  = document.createElement('button');
+    const falseBtn = document.createElement('button');
+    trueBtn.className  = 'tf-btn true-btn';
+    falseBtn.className = 'tf-btn false-btn';
+    trueBtn.textContent  = '✅ True';
+    falseBtn.textContent = '❌ False';
+
+    trueBtn.onclick  = () => checkTF(trueBtn,  true,  ti, trueBtn, falseBtn, item.answer);
+    falseBtn.onclick = () => checkTF(falseBtn, false, ti, trueBtn, falseBtn, item.answer);
+
+    btns.appendChild(trueBtn);
+    btns.appendChild(falseBtn);
+    div.appendChild(btns);
+    container.appendChild(div);
+  });
+}
+
+function checkTF(el, picked, ti, trueBtn, falseBtn, key) {
+  if (tfDoneArr[ti]) return;
+  tfDoneArr[ti] = true;
+  trueBtn.classList.add('done');
+  falseBtn.classList.add('done');
+
+  if (picked === key) {
+    el.classList.add('correct', 'pop');
+    tfCorrect++;
+  } else {
+    el.classList.add('wrong', 'shake');
+    setTimeout(() => el.classList.remove('shake'), 650);
+    // show the correct one
+    (key ? trueBtn : falseBtn).classList.add('correct');
+  }
+
+  if (tfDoneArr.every(Boolean)) {
+    document.getElementById('tf-score').style.display = 'block';
+    cheer();
+  }
+}
+
+buildTF();
+
+/* ════════════════════════════════════════
+   ACTIVITY 5 — FILL IN THE BLANK
+═══════════════════════════════════════ */
+const fillData = [
+  { before: '',          after: ' is your name?',    answer: 'What'  },
+  { before: '',          after: ' is your friend?',  answer: 'Who'   },
+  { before: '',          after: ' do you live?',     answer: 'Where' },
+  { before: '',          after: ' do we eat lunch?', answer: 'When'  },
+  { before: '',          after: ' are you sad?',     answer: 'Why'   },
+  { before: '',          after: ' was your exam?',   answer: 'How'   },
+];
+const bankWords = ['What','Who','Where','When','Why','How'];
+const wordColors = {
+  What:'var(--what)', Who:'var(--who)', Where:'var(--where)',
+  When:'var(--when)', Why:'var(--why)', How:'var(--how)'
+};
+
+let fillState   = {};  // { si: filledWord or null }
+let fillCorrect = 0;
+
+function buildFill() {
+  // word bank
+  const bank = document.getElementById('wordBank');
+  bankWords.forEach(w => {
+    const btn = document.createElement('button');
+    btn.className  = 'bank-word';
+    btn.id         = 'bank-' + w;
+    btn.textContent = w;
+    btn.style.background = wordColors[w];
+    btn.onclick = () => tapBankWord(w);
+    bank.appendChild(btn);
+  });
+
+  // sentences
+  const container = document.getElementById('fillContainer');
+  fillData.forEach((item, si) => {
+    fillState[si] = null;
+    const div = document.createElement('div');
+    div.className = 'fill-sentence';
+    const p = document.createElement('p');
+    const blank = document.createElement('span');
+    blank.className    = 'fill-blank';
+    blank.id           = 'blank-' + si;
+    blank.dataset.si   = si;
+    blank.textContent  = '?';
+    blank.onclick      = () => tapBlank(si);
+    p.appendChild(blank);
+    p.appendChild(document.createTextNode(item.after));
+    div.appendChild(p);
+    container.appendChild(div);
+  });
+}
+
+let selectedBankWord = null;
+
+function tapBankWord(word) {
+  if (document.getElementById('bank-' + word).classList.contains('used')) return;
+  // deselect previous
+  if (selectedBankWord) {
+    document.getElementById('bank-' + selectedBankWord).style.outline = '';
+  }
+  selectedBankWord = word;
+  document.getElementById('bank-' + word).style.outline = '3px solid white';
+  document.getElementById('bank-' + word).style.outlineOffset = '3px';
+
+  // auto-fill first empty blank
+  for (let si = 0; si < fillData.length; si++) {
+    const blank = document.getElementById('blank-' + si);
+    if (blank && !blank.classList.contains('correct') && fillState[si] === null) {
+      fillBlank(si, word);
+      return;
+    }
+  }
+}
+
+function tapBlank(si) {
+  const blank = document.getElementById('blank-' + si);
+  if (blank.classList.contains('correct')) return;
+
+  if (selectedBankWord) {
+    fillBlank(si, selectedBankWord);
+  } else if (fillState[si]) {
+    // return word to bank
+    const w = fillState[si];
+    fillState[si] = null;
+    blank.textContent = '?';
+    blank.classList.remove('filled','wrong');
+    blank.style.borderColor = '';
+    document.getElementById('bank-' + w).classList.remove('used');
+    document.getElementById('bank-' + w).style.outline = '';
+  }
+}
+
+function fillBlank(si, word) {
+  const blank = document.getElementById('blank-' + si);
+  if (blank.classList.contains('correct')) return;
+
+  // return previous fill
+  if (fillState[si]) {
+    const prev = fillState[si];
+    document.getElementById('bank-' + prev).classList.remove('used');
+  }
+
+  fillState[si] = word;
+  document.getElementById('bank-' + word).classList.add('used');
+  document.getElementById('bank-' + word).style.outline = '';
+  selectedBankWord = null;
+
+  blank.textContent = word;
+  blank.classList.add('filled');
+  blank.style.color = wordColors[word];
+
+  if (word === fillData[si].answer) {
+    blank.classList.add('correct');
+    blank.classList.add('pop');
+    blank.onclick = null;
+    fillCorrect++;
+    if (fillCorrect === fillData.length) {
+      document.getElementById('fill-score').style.display = 'block';
+      cheer();
+    }
+  } else {
+    blank.classList.add('wrong');
+    blank.classList.add('shake');
+    setTimeout(() => {
+      blank.classList.remove('shake','wrong');
+    }, 650);
+  }
+}
+
+buildFill();
+</script>
+</body>
+</html>

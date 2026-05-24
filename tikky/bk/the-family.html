@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Family 👨‍👩‍👧‍👦 — Bible Knowledge | Tikky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #558b2f;
+      --green-light: #7cb342;
+      --green-bg: #dcedc8;
+      --gold: #f9a825;
+      --gold-light: #ffd54f;
+      --gold-bg: #fff8e1;
+      --bg: #f1f8e9;
+      --white: #ffffff;
+      --text: #33691e;
+      --text-dark: #1b5e20;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      padding: 20px 16px 80px;
+      color: var(--text-dark);
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-home-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 999;
+      text-decoration: none;
+      background: var(--green);
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(85,139,47,.35);
+      transition: transform .15s, background .15s;
+    }
+    .back-home-btn:hover { background: var(--green-light); transform: scale(1.05); }
+
+    /* ── CHEER BANNER ── */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, var(--green), #33691e);
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      text-align: center;
+      padding: 20px 24px;
+      border-radius: 20px;
+      margin: 16px auto 0;
+      max-width: 700px;
+      box-shadow: 0 6px 20px rgba(85,139,47,.4);
+      animation: popIn .5s ease;
+    }
+    .cheer-banner.show { display: block; }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding-top: 64px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 36px 24px 28px;
+      background: linear-gradient(160deg, #c5e1a5, #dcedc8);
+      border-radius: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 24px rgba(85,139,47,.18);
+    }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.2rem, 8vw, 3.4rem);
+      color: var(--text-dark);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .date-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #5d4037;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 8px rgba(249,168,37,.4);
+    }
+    .definition-box {
+      background: var(--white);
+      border-left: 6px solid var(--green);
+      border-radius: 16px;
+      padding: 18px 22px;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      text-align: left;
+      box-shadow: 0 3px 12px rgba(85,139,47,.12);
+    }
+
+    /* ── SECTION CARDS ── */
+    .section-card {
+      border-radius: 24px;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.1);
+    }
+    .section-card.green {
+      background: linear-gradient(135deg, #c5e1a5, #dcedc8);
+      border: 3px solid var(--green);
+    }
+    .section-card.gold {
+      background: linear-gradient(135deg, #ffe082, #fff8e1);
+      border: 3px solid var(--gold);
+    }
+    .section-card.blue {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border: 3px solid #1976d2;
+    }
+    .section-card.purple {
+      background: linear-gradient(135deg, #ede7f6, #d1c4e9);
+      border: 3px solid #7b1fa2;
+    }
+
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      margin-bottom: 14px;
+      color: var(--text-dark);
+    }
+    .section-card.gold .section-title { color: #e65100; }
+    .section-card.blue .section-title { color: #0d47a1; }
+    .section-card.purple .section-title { color: #4a148c; }
+
+    .section-text {
+      font-size: clamp(1rem, 3vw, 1.15rem);
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .section-card.gold .section-text { color: #bf360c; }
+    .section-card.blue .section-text { color: #0d47a1; }
+    .section-card.purple .section-text { color: #4a148c; }
+
+    /* ── FAMILY ILLUSTRATION ── */
+    .family-illustration {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 16px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .family-figure {
+      text-align: center;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .family-figure:hover { transform: scale(1.15); }
+    .family-emoji { font-size: 3.5rem; display: block; }
+    .family-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: .9rem;
+      color: var(--text-dark);
+      margin-top: 4px;
+    }
+
+    /* ── MEMBER BADGES ── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .member-badge {
+      background: var(--white);
+      border: 2px solid var(--green);
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+      color: var(--text-dark);
+      box-shadow: 0 2px 8px rgba(85,139,47,.15);
+    }
+    .member-badge:hover { background: var(--green-bg); transform: scale(1.08); }
+    .section-card.gold .member-badge { border-color: var(--gold); }
+    .section-card.gold .member-badge:hover { background: var(--gold-bg); }
+
+    .extended-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .ext-badge {
+      background: var(--white);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 12px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+      box-shadow: 0 2px 8px rgba(249,168,37,.2);
+    }
+    .ext-badge:hover { transform: scale(1.08); background: #fff8e1; }
+    .ext-badge .ext-emoji { font-size: 2.2rem; display: block; }
+    .ext-badge .ext-name { font-family: 'Fredoka One', cursive; font-size: .95rem; color: #e65100; margin-top: 4px; }
+    .ext-badge .ext-desc {
+      font-size: .78rem;
+      color: #bf360c;
+      margin-top: 4px;
+      font-weight: 700;
+      display: none;
+    }
+    .ext-badge.revealed .ext-desc { display: block; }
+    .ext-badge.revealed { background: #fff3e0; border-color: #e65100; }
+
+    /* ── COMMUNITY SECTION ── */
+    .community-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+    .comm-block {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 14px 18px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,.1);
+      font-family: 'Fredoka One', cursive;
+    }
+    .comm-block .big-emoji { font-size: 2.2rem; }
+    .comm-block .comm-label { font-size: .9rem; color: #0d47a1; margin-top: 4px; }
+    .arrow-big { font-size: 2rem; color: #1976d2; }
+
+    /* ── NAMEPLATE ── */
+    .nameplate {
+      background: var(--white);
+      border: 4px solid var(--gold);
+      border-radius: 20px;
+      text-align: center;
+      padding: 20px 24px;
+      margin-top: 14px;
+      box-shadow: 0 4px 16px rgba(249,168,37,.3);
+    }
+    .nameplate .np-emoji { font-size: 2.5rem; }
+    .nameplate .np-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      color: var(--text-dark);
+      margin-top: 6px;
+    }
+    .nameplate .np-sub {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #5d4037;
+      margin-top: 4px;
+    }
+
+    /* ── ACTIVITY HEADERS ── */
+    .activity-header {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4.5vw, 1.7rem);
+      color: var(--white);
+      background: var(--green);
+      padding: 14px 22px;
+      border-radius: 18px 18px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .activity-body {
+      background: var(--white);
+      border: 3px solid var(--green);
+      border-top: none;
+      border-radius: 0 0 18px 18px;
+      padding: 24px 20px;
+      margin-bottom: 28px;
+    }
+
+    /* ── ACTIVITY 1: Sort ── */
+    .sort-stage {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sort-card {
+      display: inline-block;
+      background: #fffde7;
+      border: 3px solid var(--gold);
+      border-radius: 20px;
+      padding: 20px 30px;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      color: #5d4037;
+      box-shadow: 0 4px 14px rgba(0,0,0,.12);
+      min-width: 200px;
+    }
+    .sort-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .sort-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.05rem;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    .sort-btn.nuclear { background: var(--green); color: #fff; }
+    .sort-btn.extended { background: var(--gold); color: #5d4037; }
+    .sort-btn:hover { transform: scale(1.07); box-shadow: 0 6px 18px rgba(0,0,0,.2); }
+
+    .sort-buckets {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .sort-bucket {
+      flex: 1;
+      min-width: 140px;
+      border-radius: 16px;
+      padding: 14px 12px;
+      min-height: 80px;
+    }
+    .sort-bucket.nuc { background: var(--green-bg); border: 2px dashed var(--green); }
+    .sort-bucket.ext { background: var(--gold-bg); border: 2px dashed var(--gold); }
+    .sort-bucket h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: .95rem;
+      margin-bottom: 8px;
+    }
+    .sort-bucket.nuc h3 { color: var(--text-dark); }
+    .sort-bucket.ext h3 { color: #e65100; }
+    .sorted-chip {
+      display: inline-block;
+      background: var(--white);
+      border-radius: 50px;
+      padding: 4px 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: .88rem;
+      margin: 3px;
+    }
+    .sort-bucket.nuc .sorted-chip { border: 2px solid var(--green); color: var(--text-dark); }
+    .sort-bucket.ext .sorted-chip { border: 2px solid var(--gold); color: #e65100; }
+
+    .sort-progress {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--green);
+      text-align: center;
+      margin-top: 10px;
+    }
+    .sort-done-msg {
+      display: none;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--green);
+      background: var(--green-bg);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 16px;
+      animation: popIn .4s ease;
+    }
+    .sort-done-msg.show { display: block; }
+
+    /* ── ACTIVITY 2: Quiz ── */
+    .quiz-question {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+      color: var(--text-dark);
+      margin-bottom: 14px;
+    }
+    .quiz-qnum {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      font-size: .95rem;
+      margin-right: 8px;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .quiz-opt {
+      background: #f9f9f9;
+      border: 2px solid #c8e6c9;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: transform .15s, border-color .15s, background .15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,.07);
+    }
+    .quiz-opt:hover:not(.locked) { border-color: var(--green); background: #f1f8e9; transform: translateX(4px); }
+    .quiz-opt.correct { background: #c8e6c9; border-color: var(--green); color: var(--text-dark); }
+    .quiz-opt.wrong { background: #ffcdd2; border-color: #c62828; color: #b71c1c; }
+    .quiz-opt.locked { cursor: default; }
+    .quiz-progress {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--green);
+      margin-bottom: 18px;
+    }
+    .quiz-done-msg {
+      display: none;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--green);
+      background: var(--green-bg);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 10px;
+      animation: popIn .4s ease;
+    }
+    .quiz-done-msg.show { display: block; }
+
+    /* ── ACTIVITY 3: Match ── */
+    .match-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-col-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--green);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .match-item {
+      background: #f9f9f9;
+      border: 2px solid #c8e6c9;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: transform .15s, border-color .15s, background .15s;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .match-item:hover:not(.locked) { border-color: var(--green); background: #f1f8e9; transform: scale(1.04); }
+    .match-item.selected { border-color: var(--gold); background: #fff8e1; box-shadow: 0 0 0 3px var(--gold); }
+    .match-item.matched { background: #c8e6c9; border-color: var(--green); color: var(--text-dark); cursor: default; }
+    .match-item.locked { cursor: default; }
+    .match-progress {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--green);
+      text-align: center;
+      margin-top: 12px;
+    }
+    .match-done-msg {
+      display: none;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--green);
+      background: var(--green-bg);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 16px;
+      animation: popIn .4s ease;
+    }
+    .match-done-msg.show { display: block; }
+
+    /* ── ACTIVITY 4: True/False ── */
+    .tf-item {
+      background: #f9f9f9;
+      border: 2px solid #c8e6c9;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+    }
+    .tf-statement {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(.95rem, 3vw, 1.05rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .tf-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .tf-btn {
+      flex: 1;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.05rem;
+      padding: 10px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform .15s;
+      box-shadow: 0 3px 8px rgba(0,0,0,.12);
+    }
+    .tf-btn.true-btn { background: #a5d6a7; color: #1b5e20; }
+    .tf-btn.false-btn { background: #ef9a9a; color: #b71c1c; }
+    .tf-btn:hover:not(:disabled) { transform: scale(1.07); }
+    .tf-btn:disabled { opacity: .7; cursor: default; }
+    .tf-feedback {
+      font-family: 'Fredoka One', cursive;
+      font-size: .95rem;
+      margin-top: 8px;
+      display: none;
+    }
+    .tf-feedback.show { display: block; }
+    .tf-feedback.correct-fb { color: var(--green); }
+    .tf-feedback.wrong-fb { color: #c62828; }
+    .tf-done-msg {
+      display: none;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--green);
+      background: var(--green-bg);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 10px;
+      animation: popIn .4s ease;
+    }
+    .tf-done-msg.show { display: block; }
+
+    /* ── ACTIVITY 5: Fill in the Blank ── */
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 14px;
+      background: #f9f9f9;
+      border-radius: 16px;
+      border: 2px dashed var(--green);
+    }
+    .word-chip {
+      background: var(--white);
+      border: 2px solid var(--green);
+      border-radius: 50px;
+      padding: 7px 16px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+      color: var(--text-dark);
+      box-shadow: 0 2px 6px rgba(85,139,47,.15);
+    }
+    .word-chip:hover:not(.used) { background: var(--green-bg); transform: scale(1.08); }
+    .word-chip.used { opacity: .4; cursor: default; text-decoration: line-through; }
+
+    .fill-sentence {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(.95rem, 3vw, 1.1rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .fill-slot {
+      display: inline-block;
+      min-width: 100px;
+      border-bottom: 3px solid var(--green);
+      padding: 2px 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      text-align: center;
+      color: var(--green);
+      cursor: pointer;
+      border-radius: 8px;
+      background: transparent;
+      transition: background .15s;
+    }
+    .fill-slot:hover:not(.filled) { background: var(--green-bg); }
+    .fill-slot.filled-correct { background: #c8e6c9; border-color: var(--green); cursor: default; }
+    .fill-slot.filled-wrong { background: #ffcdd2; border-color: #c62828; animation: shake .4s ease; }
+
+    .fill-snum {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      text-align: center;
+      font-size: .85rem;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    .fill-done-msg {
+      display: none;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--green);
+      background: var(--green-bg);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 10px;
+      animation: popIn .4s ease;
+    }
+    .fill-done-msg.show { display: block; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      40% { transform: translateY(-18px); }
+      60% { transform: translateY(-10px); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(.5); opacity: 0; }
+      80% { transform: scale(1.08); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    .bounce { animation: bounce .6s ease; }
+    .pop { animation: pop .3s ease; }
+
+    /* ── DIVIDER ── */
+    .fun-divider {
+      text-align: center;
+      font-size: 1.8rem;
+      margin: 10px 0 24px;
+      opacity: .7;
+    }
+
+    /* ── TOOLTIP POPUPS ── */
+    .tooltip-popup {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 3px solid var(--green);
+      border-radius: 20px;
+      padding: 16px 24px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      z-index: 900;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      text-align: center;
+      max-width: 300px;
+      animation: popIn .3s ease;
+    }
+    .tooltip-popup.show { display: block; }
+
+    /* ── SCORE STARS ── */
+    .star-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .star { font-size: 2rem; transition: transform .3s; }
+    .star.lit { animation: pop .4s ease; }
+
+    @media (max-width: 480px) {
+      .match-container { grid-template-columns: 1fr; }
+      .sort-buckets { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div class="page-wrap">
+
+  <!-- CHEER BANNER -->
+  <div class="cheer-banner" id="cheerBanner">
+    Wonderful, Tikky! You know all about families! 👨‍👩‍👧‍👦⭐
+  </div>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <div class="hero">
+    <h1>The Family 👨‍👩‍👧‍👦</h1>
+    <div class="date-badge">📅 12th May 2026</div>
+    <div class="definition-box">
+      📖 <strong>A family is a group of people who are related by blood.</strong>
+    </div>
+  </div>
+
+  <!-- ═══════════════ NUCLEAR FAMILY ═══════════════ -->
+  <div class="section-card green">
+    <div class="section-title">🏠 Nuclear Family</div>
+    <div class="family-illustration" id="nucFamilyIllus">
+      <div class="family-figure" onclick="bounceFig(this)">
+        <span class="family-emoji">👩</span>
+        <span class="family-label">Mum</span>
+      </div>
+      <div class="family-figure" onclick="bounceFig(this)">
+        <span class="family-emoji">❤️</span>
+        <span class="family-label">&nbsp;</span>
+      </div>
+      <div class="family-figure" onclick="bounceFig(this)">
+        <span class="family-emoji">👨</span>
+        <span class="family-label">Dad</span>
+      </div>
+      <div class="family-figure" onclick="bounceFig(this)">
+        <span class="family-emoji">👧</span>
+        <span class="family-label">Sister</span>
+      </div>
+      <div class="family-figure" onclick="bounceFig(this)">
+        <span class="family-emoji">🧒</span>
+        <span class="family-label">Brother</span>
+      </div>
+    </div>
+    <div class="section-text">Your mother, father and siblings live together. They are your <strong>nuclear family</strong>!</div>
+    <div class="badge-row">
+      <div class="member-badge" onclick="popBadge(this)">👩 Mother</div>
+      <div class="member-badge" onclick="popBadge(this)">👨 Father</div>
+      <div class="member-badge" onclick="popBadge(this)">👧🧒 Siblings</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ EXTENDED FAMILY ═══════════════ -->
+  <div class="section-card gold">
+    <div class="section-title">Extended Family 🌳</div>
+    <div class="section-text">Tap each person to find out who they are!</div>
+    <div class="extended-grid">
+      <div class="ext-badge" onclick="revealExt(this)">
+        <span class="ext-emoji">👵</span>
+        <div class="ext-name">Grandma</div>
+        <div class="ext-desc">Mum or Dad's mum</div>
+      </div>
+      <div class="ext-badge" onclick="revealExt(this)">
+        <span class="ext-emoji">👴</span>
+        <div class="ext-name">Grandpa</div>
+        <div class="ext-desc">Mum or Dad's dad</div>
+      </div>
+      <div class="ext-badge" onclick="revealExt(this)">
+        <span class="ext-emoji">👩</span>
+        <div class="ext-name">Auntie</div>
+        <div class="ext-desc">Parent's sister (pibling!)</div>
+      </div>
+      <div class="ext-badge" onclick="revealExt(this)">
+        <span class="ext-emoji">👨</span>
+        <div class="ext-name">Uncle</div>
+        <div class="ext-desc">Parent's brother (pibling!)</div>
+      </div>
+      <div class="ext-badge" onclick="revealExt(this)">
+        <span class="ext-emoji">👧</span>
+        <div class="ext-name">Niece</div>
+        <div class="ext-desc">Sibling's daughter (nibling!)</div>
+      </div>
+      <div class="ext-badge" onclick="revealExt(this)">
+        <span class="ext-emoji">👦</span>
+        <div class="ext-name">Nephew</div>
+        <div class="ext-desc">Sibling's son (nibling!)</div>
+      </div>
+    </div>
+    <div class="section-text" style="margin-top:16px;">Aunties, uncles, nieces, nephews and grandparents form the <strong>extended family!</strong></div>
+    <div class="badge-row" style="margin-top:8px;">
+      <div class="member-badge" onclick="popBadge(this)" style="border-color:var(--gold);">🧡 Piblings = Uncles &amp; Aunties</div>
+      <div class="member-badge" onclick="popBadge(this)" style="border-color:var(--gold);">💛 Niblings = Nieces &amp; Nephews</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ COMMUNITY ═══════════════ -->
+  <div class="section-card blue">
+    <div class="section-title">🏘️ Our Community</div>
+    <div class="section-text">Many families come together to form a <strong>community!</strong></div>
+    <div class="community-flow">
+      <div class="comm-block">
+        <div class="big-emoji">🏠👨‍👩‍👧‍👦</div>
+        <div class="comm-label">Family 1</div>
+      </div>
+      <div class="arrow-big">+</div>
+      <div class="comm-block">
+        <div class="big-emoji">🏠👨‍👩‍👦</div>
+        <div class="comm-label">Family 2</div>
+      </div>
+      <div class="arrow-big">+</div>
+      <div class="comm-block">
+        <div class="big-emoji">🏠👩‍👧‍👦</div>
+        <div class="comm-label">Family 3</div>
+      </div>
+      <div class="arrow-big">→</div>
+      <div class="comm-block" style="background:#e3f2fd;border:3px solid #1976d2;">
+        <div class="big-emoji">🌍🏘️</div>
+        <div class="comm-label" style="font-weight:800;font-size:1rem;color:#0d47a1;">Community!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ FAMILY NAME ═══════════════ -->
+  <div class="section-card purple">
+    <div class="section-title">🏷️ Family Names</div>
+    <div class="section-text">Every family has a <strong>family name!</strong></div>
+    <div class="nameplate">
+      <div class="np-emoji">🏷️👨‍👩‍👧‍👦</div>
+      <div class="np-text">The Baffoe Family</div>
+      <div class="np-sub">A family name brings everyone together!</div>
+    </div>
+    <div class="section-text" style="margin-top:14px;color:#4a148c;">
+      Your family name is passed down from generation to generation. 💜
+    </div>
+  </div>
+
+  <div class="fun-divider">✨ 🌟 Now let's play! 🌟 ✨</div>
+
+  <!-- ═══════════════ ACTIVITY 1: Sort ═══════════════ -->
+  <div class="activity-header">🎮 Activity 1 — Who's in the family?</div>
+  <div class="activity-body">
+    <p style="font-family:'Nunito',sans-serif;font-weight:700;font-size:1rem;color:var(--text-dark);margin-bottom:16px;">
+      Tap the right button to sort each family member into the correct group!
+    </p>
+    <div id="sortStage">
+      <div class="sort-stage">
+        <div class="sort-card" id="sortCard">👩 Mother</div>
+      </div>
+      <div class="sort-progress" id="sortProgress">Card 1 of 8</div>
+      <div class="sort-buttons">
+        <button class="sort-btn nuclear" onclick="doSort('nuclear')">Nuclear Family 🏠</button>
+        <button class="sort-btn extended" onclick="doSort('extended')">Extended Family 🌳</button>
+      </div>
+    </div>
+    <div class="sort-buckets">
+      <div class="sort-bucket nuc">
+        <h3>🏠 Nuclear Family</h3>
+        <div id="nucBucket"></div>
+      </div>
+      <div class="sort-bucket ext">
+        <h3>🌳 Extended Family</h3>
+        <div id="extBucket"></div>
+      </div>
+    </div>
+    <div class="sort-done-msg" id="sortDone">
+      🎉 Amazing job, Tikky! You sorted all 8 family members perfectly! ⭐
+    </div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 2: Quiz ═══════════════ -->
+  <div class="activity-header">🧠 Activity 2 — Pick the Right Answer!</div>
+  <div class="activity-body">
+    <div class="quiz-progress" id="quizProgress">Question 1 of 8</div>
+    <div id="quizArea"></div>
+    <div class="quiz-done-msg" id="quizDone">
+      🏆 Brilliant! You answered all 8 quiz questions! You're a family expert, Tikky! 🌟
+    </div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 3: Match ═══════════════ -->
+  <div class="activity-header">🔗 Activity 3 — Match the Family Member!</div>
+  <div class="activity-body">
+    <p style="font-family:'Nunito',sans-serif;font-weight:700;font-size:1rem;color:var(--text-dark);margin-bottom:14px;">
+      Tap a name on the left, then tap their description on the right!
+    </p>
+    <div class="match-container">
+      <div>
+        <div class="match-col-label">👤 Who?</div>
+        <div class="match-col" id="matchLeft"></div>
+      </div>
+      <div>
+        <div class="match-col-label">📝 Description</div>
+        <div class="match-col" id="matchRight"></div>
+      </div>
+    </div>
+    <div class="match-progress" id="matchProgress">0 of 6 matched</div>
+    <div class="match-done-msg" id="matchDone">
+      🎊 Perfect matching, Tikky! You know every family member! 💚
+    </div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 4: True/False ═══════════════ -->
+  <div class="activity-header">✅ Activity 4 — True or False?</div>
+  <div class="activity-body">
+    <div id="tfArea"></div>
+    <div class="tf-done-msg" id="tfDone">
+      🌟 Fantastic! You got all the True or False answers! You're super smart! 👨‍👩‍👧‍👦
+    </div>
+  </div>
+
+  <!-- ═══════════════ ACTIVITY 5: Fill in the Blank ═══════════════ -->
+  <div class="activity-header">✏️ Activity 5 — Fill in the Blank!</div>
+  <div class="activity-body">
+    <p style="font-family:'Nunito',sans-serif;font-weight:700;font-size:1rem;color:var(--text-dark);margin-bottom:12px;">
+      Tap a word from the word bank, then tap the blank to fill it in!
+    </p>
+    <div class="word-bank" id="wordBank"></div>
+    <div id="fillArea"></div>
+    <div class="fill-done-msg" id="fillDone">
+      🌈 WOW, Tikky! You filled in every blank! You know so much about families! 🏡⭐
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- Tooltip popup -->
+<div class="tooltip-popup" id="tooltipPopup"></div>
+
+<script>
+  // ── GLOBAL STATE ──
+  let cheerCount = 0;
+
+  function addCheer() {
+    cheerCount++;
+    if (cheerCount >= 2) {
+      document.getElementById('cheerBanner').classList.add('show');
+      document.getElementById('cheerBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // ── HELPERS ──
+  function bounceFig(el) {
+    el.classList.remove('bounce');
+    void el.offsetWidth;
+    el.classList.add('bounce');
+  }
+  function popBadge(el) {
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+  }
+  function revealExt(el) {
+    el.classList.toggle('revealed');
+  }
+
+  function showTooltip(msg, duration = 2000) {
+    const t = document.getElementById('tooltipPopup');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // ── ACTIVITY 1: SORT ──
+  const sortData = [
+    { label: '👩 Mother',  group: 'nuclear' },
+    { label: '👨 Father',  group: 'nuclear' },
+    { label: '👧 Sister',  group: 'nuclear' },
+    { label: '🧒 Brother', group: 'nuclear' },
+    { label: '👵 Grandma', group: 'extended' },
+    { label: '👨 Uncle',   group: 'extended' },
+    { label: '👩 Auntie',  group: 'extended' },
+    { label: '👦 Nephew',  group: 'extended' },
+  ];
+  let sortIdx = 0;
+
+  function updateSortCard() {
+    if (sortIdx < sortData.length) {
+      const card = document.getElementById('sortCard');
+      card.textContent = sortData[sortIdx].label;
+      card.classList.remove('bounce');
+      void card.offsetWidth;
+      card.classList.add('bounce');
+      document.getElementById('sortProgress').textContent = `Card ${sortIdx + 1} of ${sortData.length}`;
+    }
+  }
+
+  function doSort(chosen) {
+    if (sortIdx >= sortData.length) return;
+    const correct = sortData[sortIdx].group;
+    const card = document.getElementById('sortCard');
+
+    if (chosen === correct) {
+      const chip = document.createElement('span');
+      chip.className = 'sorted-chip';
+      chip.textContent = sortData[sortIdx].label;
+      document.getElementById(chosen === 'nuclear' ? 'nucBucket' : 'extBucket').appendChild(chip);
+      sortIdx++;
+      if (sortIdx >= sortData.length) {
+        document.getElementById('sortStage').style.display = 'none';
+        document.getElementById('sortProgress').style.display = 'none';
+        const done = document.getElementById('sortDone');
+        done.classList.add('show');
+        addCheer();
+      } else {
+        updateSortCard();
+      }
+    } else {
+      card.style.animation = 'none';
+      void card.offsetWidth;
+      card.style.animation = 'shake .4s ease';
+      showTooltip('Try again! 🤔');
+    }
+  }
+
+  updateSortCard();
+
+  // ── ACTIVITY 2: QUIZ ──
+  const quizData = [
+    {
+      q: 'A family is a group of people related by ___.',
+      opts: ['school', 'money', 'blood'],
+      ans: 2
+    },
+    {
+      q: 'Mother, father and siblings form a ___.',
+      opts: ['community', 'nuclear family', 'school'],
+      ans: 1
+    },
+    {
+      q: 'Aunties, uncles and grandparents form ___.',
+      opts: ['nuclear family', 'extended family', 'community'],
+      ans: 1
+    },
+    {
+      q: 'Many families come together to form a ___.',
+      opts: ['school', 'nuclear family', 'community'],
+      ans: 2
+    },
+    {
+      q: 'Every family has a family ___.',
+      opts: ['school', 'car', 'name'],
+      ans: 2
+    },
+    {
+      q: 'Who is in a nuclear family?',
+      opts: ['Mother, father, siblings', 'Aunties, uncles', 'Grandparents'],
+      ans: 0
+    },
+    {
+      q: 'Uncles and aunties are called ___.',
+      opts: ['niblings', 'siblings', 'piblings'],
+      ans: 2
+    },
+    {
+      q: 'Nieces and nephews are called ___.',
+      opts: ['niblings', 'piblings', 'siblings'],
+      ans: 0
+    },
+  ];
+  let quizCurrent = 0;
+  let quizAnswered = 0;
+
+  function renderQuiz() {
+    const area = document.getElementById('quizArea');
+    const q = quizData[quizCurrent];
+    const qDiv = document.createElement('div');
+    qDiv.innerHTML = `
+      <div class="quiz-question">
+        <span class="quiz-qnum">${quizCurrent + 1}</span>${q.q}
+      </div>
+      <div class="quiz-options" id="quizOpts${quizCurrent}">
+        ${q.opts.map((o, i) => `<button class="quiz-opt" onclick="pickQ(this, ${i === q.ans ? "'correct'" : "'wrong'"}, ${quizCurrent})">${String.fromCharCode(65 + i)}. ${o}</button>`).join('')}
+      </div>
+    `;
+    area.innerHTML = '';
+    area.appendChild(qDiv);
+    document.getElementById('quizProgress').textContent = `Question ${quizCurrent + 1} of ${quizData.length}`;
+  }
+
+  function pickQ(el, result, qNum) {
+    const opts = document.querySelectorAll(`#quizOpts${qNum} .quiz-opt`);
+    opts.forEach(o => { o.classList.add('locked'); o.disabled = true; });
+    if (result === 'correct') {
+      el.classList.add('correct');
+      showTooltip('🎉 Correct! Well done!');
+      quizAnswered++;
+      setTimeout(() => {
+        quizCurrent++;
+        if (quizCurrent < quizData.length) {
+          renderQuiz();
+        } else {
+          document.getElementById('quizArea').innerHTML = '';
+          document.getElementById('quizProgress').style.display = 'none';
+          document.getElementById('quizDone').classList.add('show');
+          addCheer();
+        }
+      }, 1000);
+    } else {
+      el.classList.add('wrong');
+      el.style.animation = 'shake .4s ease';
+      showTooltip('Not quite! Try again! 💪');
+      setTimeout(() => {
+        opts.forEach(o => { o.classList.remove('locked'); o.disabled = false; });
+        el.classList.remove('wrong');
+        el.style.animation = '';
+      }, 1000);
+    }
+  }
+
+  renderQuiz();
+
+  // ── ACTIVITY 3: MATCH ──
+  const matchPairs = [
+    { left: 'Mother 👩',   right: 'Your mum 💕',                     id: 0 },
+    { left: 'Father 👨',   right: 'Your dad 💪',                     id: 1 },
+    { left: 'Grandma 👵',  right: "Dad's/Mum's mum 👵",              id: 2 },
+    { left: 'Uncle 👨',    right: "Dad's/Mum's brother 👨",          id: 3 },
+    { left: 'Niece 👧',    right: "Your brother's daughter 👧",       id: 4 },
+    { left: 'Nephew 👦',   right: "Your sister's son 👦",             id: 5 },
+  ];
+
+  let selectedLeft = null;
+  let matchCount = 0;
+
+  function shuffleArr(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function renderMatch() {
+    const leftCol = document.getElementById('matchLeft');
+    const rightCol = document.getElementById('matchRight');
+    const shuffled = shuffleArr(matchPairs);
+
+    matchPairs.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'match-item';
+      el.dataset.id = p.id;
+      el.dataset.side = 'left';
+      el.textContent = p.left;
+      el.onclick = () => selectLeft(el);
+      leftCol.appendChild(el);
+    });
+
+    shuffled.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'match-item';
+      el.dataset.id = p.id;
+      el.dataset.side = 'right';
+      el.textContent = p.right;
+      el.onclick = () => selectRight(el);
+      rightCol.appendChild(el);
+    });
+  }
+
+  function selectLeft(el) {
+    if (el.classList.contains('matched') || el.classList.contains('locked')) return;
+    document.querySelectorAll('#matchLeft .match-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedLeft = el;
+  }
+
+  function selectRight(el) {
+    if (!selectedLeft) { showTooltip('Tap a name on the left first! 👈'); return; }
+    if (el.classList.contains('matched') || el.classList.contains('locked')) return;
+
+    if (selectedLeft.dataset.id === el.dataset.id) {
+      selectedLeft.classList.remove('selected');
+      selectedLeft.classList.add('matched', 'locked');
+      selectedLeft.textContent += ' ✅';
+      el.classList.add('matched', 'locked');
+      el.textContent += ' ✅';
+      selectedLeft = null;
+      matchCount++;
+      document.getElementById('matchProgress').textContent = `${matchCount} of 6 matched`;
+      showTooltip('✅ Great match!');
+      if (matchCount === 6) {
+        document.getElementById('matchDone').classList.add('show');
+        addCheer();
+      }
+    } else {
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = 'shake .4s ease';
+      selectedLeft.style.animation = 'none';
+      void selectedLeft.offsetWidth;
+      selectedLeft.style.animation = 'shake .4s ease';
+      showTooltip('Not quite! Try again! 🤔');
+      setTimeout(() => {
+        el.style.animation = '';
+        if (selectedLeft) selectedLeft.style.animation = '';
+      }, 500);
+    }
+  }
+
+  renderMatch();
+
+  // ── ACTIVITY 4: TRUE/FALSE ──
+  const tfData = [
+    { stmt: 'A family is a group of people related by blood.', ans: true, feedback: 'Yes! A family is related by blood. ✅' },
+    { stmt: 'Mother, father and siblings are the extended family.', ans: false, feedback: 'No! They are the NUCLEAR family! 🏠' },
+    { stmt: 'Grandparents are part of the extended family.', ans: true, feedback: 'Yes! Grandparents are in the extended family. ✅' },
+    { stmt: 'Every family has a family name.', ans: true, feedback: 'Yes! Every family has a name. ✅' },
+    { stmt: 'Many families form a community.', ans: true, feedback: 'Yes! Many families make a community. ✅' },
+    { stmt: 'Aunties and uncles are part of the nuclear family.', ans: false, feedback: 'No! They are in the EXTENDED family! 🌳' },
+    { stmt: 'Each person comes from a family.', ans: true, feedback: 'Yes! Everyone comes from a family. ✅' },
+  ];
+  let tfAnswered = 0;
+
+  function renderTF() {
+    const area = document.getElementById('tfArea');
+    tfData.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'tf-item';
+      div.id = `tf${i}`;
+      div.innerHTML = `
+        <div class="tf-statement"><strong>${i + 1}.</strong> ${item.stmt}</div>
+        <div class="tf-buttons">
+          <button class="tf-btn true-btn" onclick="answerTF(${i}, true)">✅ TRUE</button>
+          <button class="tf-btn false-btn" onclick="answerTF(${i}, false)">❌ FALSE</button>
+        </div>
+        <div class="tf-feedback" id="tfFb${i}"></div>
+      `;
+      area.appendChild(div);
+    });
+  }
+
+  function answerTF(idx, chosen) {
+    const item = tfData[idx];
+    const fb = document.getElementById(`tfFb${idx}`);
+    const btns = document.querySelectorAll(`#tf${idx} .tf-btn`);
+    btns.forEach(b => b.disabled = true);
+
+    if (chosen === item.ans) {
+      fb.textContent = '🎉 ' + item.feedback;
+      fb.className = 'tf-feedback show correct-fb';
+      tfAnswered++;
+      if (tfAnswered === tfData.length) {
+        setTimeout(() => {
+          document.getElementById('tfDone').classList.add('show');
+          addCheer();
+        }, 600);
+      }
+    } else {
+      fb.textContent = '❌ ' + item.feedback + ' Try again!';
+      fb.className = 'tf-feedback show wrong-fb';
+      document.querySelector(`#tf${idx} .tf-item`) && null;
+      setTimeout(() => {
+        btns.forEach(b => b.disabled = false);
+        fb.className = 'tf-feedback';
+      }, 1200);
+    }
+  }
+
+  renderTF();
+
+  // ── ACTIVITY 5: FILL IN THE BLANK ──
+  const wordBankWords = ['blood', 'nuclear', 'extended', 'community', 'name', 'siblings', 'grandparents', 'family'];
+  const fillSentences = [
+    { text: 'A family is related by', blank: 'blood', after: '.' },
+    { text: 'Mother, father and siblings form the', blank: 'nuclear', after: ' family.' },
+    { text: 'Aunties and uncles form the', blank: 'extended', after: ' family.' },
+    { text: 'Many families form a', blank: 'community', after: '.' },
+    { text: 'Every family has a family', blank: 'name', after: '.' },
+    { text: 'Brothers and sisters are called', blank: 'siblings', after: '.' },
+    { text: '___ are part of the extended family.', blank: 'grandparents', after: '' },
+    { text: 'Each person comes from a', blank: 'family', after: '.' },
+  ];
+
+  let selectedWord = null;
+  let fillCorrect = 0;
+
+  function renderWordBank() {
+    const bank = document.getElementById('wordBank');
+    wordBankWords.forEach(w => {
+      const chip = document.createElement('span');
+      chip.className = 'word-chip';
+      chip.textContent = w;
+      chip.dataset.word = w;
+      chip.onclick = () => selectWord(chip);
+      bank.appendChild(chip);
+    });
+  }
+
+  function renderFill() {
+    const area = document.getElementById('fillArea');
+    fillSentences.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'fill-sentence';
+
+      const numSpan = document.createElement('span');
+      numSpan.className = 'fill-snum';
+      numSpan.textContent = i + 1;
+      div.appendChild(numSpan);
+
+      if (s.blank === 'grandparents') {
+        const slot = document.createElement('span');
+        slot.className = 'fill-slot';
+        slot.textContent = '___';
+        slot.dataset.answer = s.blank;
+        slot.dataset.idx = i;
+        slot.onclick = () => fillSlot(slot);
+        div.appendChild(slot);
+
+        const rest = document.createTextNode(' are part of the extended family.');
+        div.appendChild(rest);
+      } else {
+        const before = document.createTextNode(s.text + ' ');
+        div.appendChild(before);
+
+        const slot = document.createElement('span');
+        slot.className = 'fill-slot';
+        slot.textContent = '___';
+        slot.dataset.answer = s.blank;
+        slot.dataset.idx = i;
+        slot.onclick = () => fillSlot(slot);
+        div.appendChild(slot);
+
+        if (s.after) {
+          const after = document.createTextNode(s.after);
+          div.appendChild(after);
+        }
+      }
+
+      area.appendChild(div);
+    });
+  }
+
+  function selectWord(chip) {
+    if (chip.classList.contains('used')) return;
+    document.querySelectorAll('.word-chip').forEach(c => c.style.boxShadow = '');
+    chip.style.boxShadow = '0 0 0 3px var(--gold)';
+    selectedWord = chip;
+  }
+
+  function fillSlot(slot) {
+    if (slot.classList.contains('filled-correct')) return;
+    if (!selectedWord) { showTooltip('Tap a word from the bank first! 💬'); return; }
+
+    const chosen = selectedWord.dataset.word;
+    const answer = slot.dataset.answer;
+
+    if (chosen === answer) {
+      slot.textContent = chosen;
+      slot.classList.add('filled-correct');
+      selectedWord.classList.add('used');
+      selectedWord.style.boxShadow = '';
+      selectedWord = null;
+      fillCorrect++;
+      showTooltip('✅ Correct!');
+      if (fillCorrect === fillSentences.length) {
+        setTimeout(() => {
+          document.getElementById('fillDone').classList.add('show');
+          addCheer();
+        }, 600);
+      }
+    } else {
+      slot.classList.add('filled-wrong');
+      showTooltip('Not quite! Try another word! 🤔');
+      setTimeout(() => slot.classList.remove('filled-wrong'), 600);
+    }
+  }
+
+  renderWordBank();
+  renderFill();
+</script>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ga Wiemɔkuli — Vowel Sounds 🇬🇭</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #fff8e1 0%, #e8f5e9 50%, #fce4ec 100%);
+      padding: 20px 16px 80px;
+      min-height: 100vh;
+    }
+
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92); border: 2px solid rgba(0,0,0,0.14);
+      color: #333; font-family: sans-serif; font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15); backdrop-filter: blur(4px); transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* Hero */
+    .hero {
+      max-width: 860px; margin: 70px auto 32px;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+    }
+    .flag-bar { display: flex; height: 12px; }
+    .flag-bar .r { flex:1; background:#ce1126; }
+    .flag-bar .g { flex:1; background:#fcd116; }
+    .flag-bar .b { flex:1; background:#006b3f; }
+    .hero-body {
+      background: white; padding: 28px 24px; text-align: center;
+    }
+    .hero-body h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      color: #006b3f; margin-bottom: 8px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    }
+    .hero-emoji { font-size: 3.2rem; margin-bottom: 10px; display: inline-block; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+    .hero-body p { font-size: 1.05rem; font-weight: 800; color: #555; }
+
+    /* Section */
+    .section { max-width: 860px; margin: 0 auto 32px; }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 4.5vw, 1.9rem);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+    }
+
+    /* Vowel pattern panels */
+    .pattern-panel {
+      background: white; border-radius: 22px; padding: 22px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border-left: 8px solid var(--pc, #ce1126);
+      margin-bottom: 20px;
+    }
+    .pp-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .pp-sound {
+      font-family: 'Fredoka One', cursive; font-size: 2.2rem;
+      color: white; background: var(--pc, #ce1126);
+      border-radius: 14px; padding: 8px 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+    .pp-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--pc, #ce1126); }
+    .pp-note  { font-size: 0.88rem; font-weight: 700; color: #777; }
+
+    .word-bubbles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    .w-bubble {
+      background: var(--pbg, #fce4ec);
+      border: 3px solid var(--pc, #ce1126);
+      border-radius: 50px; padding: 8px 18px;
+      font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+      color: var(--pc, #ce1126); cursor: default; transition: transform 0.2s;
+    }
+    .w-bubble:hover { transform: scale(1.07); }
+
+    .vocab-cards { display: flex; flex-wrap: wrap; gap: 12px; }
+    .v-card {
+      background: white; border: 3px solid var(--pc, #ce1126);
+      border-radius: 16px; padding: 14px 16px; text-align: center;
+      min-width: 130px; box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      transition: transform 0.2s; cursor: default;
+    }
+    .v-card:hover { transform: translateY(-3px); }
+    .v-card .vc-emoji  { font-size: 38px; margin-bottom: 6px; }
+    .v-card .vc-ga     { font-family: 'Fredoka One', cursive; font-size: 1.15rem; color: var(--pc, #ce1126); }
+    .v-card .vc-break  { font-size: 0.8rem; font-weight: 700; color: #999; margin: 2px 0; }
+    .v-card .vc-en     { font-size: 0.88rem; font-weight: 800; color: #333; }
+
+    /* Activity box */
+    .activity-box {
+      background: white; border-radius: 22px; padding: 26px 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-bottom: 32px; max-width: 860px;
+      margin-left: auto; margin-right: auto;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem;
+      color: #1a237e; margin-bottom: 6px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .activity-sub { font-size: 0.95rem; font-weight: 700; color: #666; margin-bottom: 20px; }
+
+    /* Syllable tap game */
+    .syl-item { margin-bottom: 26px; }
+    .syl-word { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #333; margin-bottom: 6px; }
+    .syl-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
+    .syl-en { font-size: 0.88rem; font-weight: 700; color: #888; margin-bottom: 10px; }
+    .syl-bubbles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+    .syl-btn {
+      padding: 10px 20px; border-radius: 50px;
+      border: 3px solid #c5cae9; background: #f0f5ff;
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: #333;
+      cursor: pointer; transition: 0.15s; user-select: none;
+    }
+    .syl-btn:hover { border-color: #006b3f; background: #e8f5e9; }
+    .syl-btn.hit    { background: #e8f5e9; border-color: #43a047; color: #2e7d32; animation: pop 0.3s; }
+    .syl-btn.missed { background: #ffebee; border-color: #e53935; animation: shake 0.4s; }
+    @keyframes pop   { from{transform:scale(0.7)} to{transform:scale(1)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+    .syl-fb { font-size: 0.9rem; font-weight: 800; min-height: 22px; }
+    .syl-fb.good { color: #2e7d32; }
+    .syl-fb.bad  { color: #c62828; }
+
+    /* Match game */
+    .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media(max-width:480px){ .match-grid { grid-template-columns: 1fr; } }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-lbl { font-family:'Fredoka One',cursive; font-size:1rem; color:#555; margin-bottom:4px; }
+    .m-item {
+      border-radius: 14px; padding: 12px 16px;
+      font-weight: 800; font-size: 1.05rem; cursor: pointer;
+      transition: 0.2s; user-select: none; text-align: center;
+      border: 3px solid #ddd; background: #f9f9f9;
+    }
+    .m-item:hover   { border-color: #006b3f; background: #e8f5e9; }
+    .m-item.selected{ background: #e8eaf6; border-color: #5c6bc0; transform: scale(1.03); }
+    .m-item.matched { background: #e8f5e9; border-color: #43a047; cursor: default; }
+    .m-item.shake   { animation: shake 0.4s; }
+
+    /* Which pattern sort */
+    .sort-word-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+    .sort-card {
+      background: #fff9c4; border: 3px solid #f9a825;
+      border-radius: 16px; padding: 12px 18px;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      cursor: pointer; transition: 0.2s; user-select: none;
+    }
+    .sort-card:hover { transform: scale(1.05); }
+    .sort-card.placed { opacity: 0.35; cursor: default; pointer-events: none; }
+    .pattern-buckets { display: flex; flex-wrap: wrap; gap: 14px; }
+    .p-bucket {
+      flex: 1; min-width: 160px;
+      border: 4px dashed var(--bc, #ccc);
+      border-radius: 18px; padding: 14px 12px; min-height: 100px;
+      background: var(--bg, #f9f9f9);
+    }
+    .pb-label {
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      color: var(--bc, #888); text-align: center; margin-bottom: 10px;
+    }
+    .pb-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; min-height: 40px; }
+    .pb-word {
+      background: white; border: 2px solid var(--bc, #ccc);
+      border-radius: 50px; padding: 4px 14px;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      color: var(--bc, #555);
+    }
+    .pb-word.correct-w { background: #e8f5e9; border-color: #43a047; color: #2e7d32; }
+    .pb-word.wrong-w   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+
+    /* True/False */
+    .tf-item { margin-bottom: 18px; }
+    .tf-text { font-size: 1rem; font-weight: 800; color: #222; margin-bottom: 8px; line-height: 1.5; }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      padding: 10px 28px; border-radius: 50px; border: 3px solid #c5cae9;
+      background: #f0f5ff; font-family: 'Nunito',sans-serif;
+      font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.2s;
+    }
+    .tf-btn:hover { border-color: #006b3f; background: #e8f5e9; }
+    .tf-btn.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+    .tf-btn.wrong   { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+
+    /* Shared */
+    .feedback { font-size: 1rem; font-weight: 800; margin-top: 8px; min-height: 24px; }
+    .fb-good { color: #2e7d32; }
+    .fb-bad  { color: #c62828; }
+    .score-badge {
+      display: inline-block; background: #fcd116; color: #333;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      padding: 6px 18px; border-radius: 50px; margin-top: 12px;
+    }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    .check-btn, .reset-btn {
+      padding: 12px 28px; border-radius: 50px; border: none;
+      font-family: 'Fredoka One', cursive; font-size: 1rem; cursor: pointer; transition: 0.2s;
+    }
+    .check-btn { background: #006b3f; color: white; }
+    .check-btn:hover { background: #004d2b; transform: scale(1.04); }
+    .reset-btn { background: #e0e0e0; color: #555; }
+    .reset-btn:hover { background: #bdbdbd; }
+
+    /* Cheer */
+    .cheer-box {
+      display: none; max-width: 860px; margin: 0 auto 40px;
+      background: linear-gradient(135deg, #ce1126, #fcd116, #006b3f);
+      border-radius: 24px; padding: 32px 24px; text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cheer-box.show { display: block; }
+    @keyframes popIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+    .cheer-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.8rem, 6vw, 3rem); color: white;
+      text-shadow: 2px 3px 0 rgba(0,0,0,0.2); margin-bottom: 8px;
+    }
+    .cheer-box p { font-size: 1.1rem; color: rgba(255,255,255,0.95); font-weight: 800; }
+    .cheer-stars { font-size: 2.5rem; margin-bottom: 8px; }
+
+    footer { max-width: 860px; margin: 40px auto 0; text-align: center; color: #888; font-size: 0.9rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="flag-bar"><div class="r"></div><div class="g"></div><div class="b"></div></div>
+  <div class="hero-body">
+    <div class="hero-emoji">🇬🇭</div>
+    <h1>Ga Wiemɔkuli — Vowel Sounds</h1>
+    <p>Let's learn Ga words by listening to their special vowel sounds! 👂🌟</p>
+  </div>
+  <div class="flag-bar"><div class="r"></div><div class="g"></div><div class="b"></div></div>
+</div>
+
+<!-- PATTERN 1: ɔi -->
+<div class="section">
+  <div class="section-title" style="color:#ce1126;">🔊 Pattern 1 — the <em>ɔi</em> sound</div>
+  <div class="pattern-panel" style="--pc:#ce1126;--pbg:#fce4ec">
+    <div class="pp-header">
+      <div class="pp-sound" style="--pc:#ce1126">ɔi</div>
+      <div>
+        <div class="pp-title">Sounds like "oy" in "boy"!</div>
+        <div class="pp-note">👆 Tap a word to see it highlighted</div>
+      </div>
+    </div>
+    <div class="word-bubbles">
+      <span class="w-bubble" style="--pc:#ce1126;--pbg:#fce4ec">bɔi</span>
+      <span class="w-bubble" style="--pc:#ce1126;--pbg:#fce4ec">gɔi</span>
+      <span class="w-bubble" style="--pc:#ce1126;--pbg:#fce4ec">hɔi</span>
+      <span class="w-bubble" style="--pc:#ce1126;--pbg:#fce4ec">kɔi</span>
+    </div>
+    <div class="vocab-cards">
+      <div class="v-card" style="--pc:#ce1126">
+        <div class="vc-emoji">🌸</div>
+        <div class="vc-ga">fɔfɔi</div>
+        <div class="vc-break">fɔ – fɔ – i</div>
+        <div class="vc-en">flower</div>
+      </div>
+      <div class="v-card" style="--pc:#ce1126">
+        <div class="vc-emoji">🎃</div>
+        <div class="vc-ga">abɔbɔi</div>
+        <div class="vc-break">a – bɔ – bɔ – i</div>
+        <div class="vc-en">pumpkin</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATTERN 2: ɛi -->
+  <div class="section-title" style="color:#006b3f; margin-top:8px;">🔊 Pattern 2 — the <em>ɛi</em> sound</div>
+  <div class="pattern-panel" style="--pc:#006b3f;--pbg:#e8f5e9">
+    <div class="pp-header">
+      <div class="pp-sound" style="--pc:#006b3f">ɛi</div>
+      <div>
+        <div class="pp-title">Sounds like "ay" in "day"!</div>
+        <div class="pp-note">Listen for the "ɛ" then "i" sound</div>
+      </div>
+    </div>
+    <div class="word-bubbles">
+      <span class="w-bubble" style="--pc:#006b3f;--pbg:#e8f5e9">fɛi</span>
+      <span class="w-bubble" style="--pc:#006b3f;--pbg:#e8f5e9">dɛi</span>
+      <span class="w-bubble" style="--pc:#006b3f;--pbg:#e8f5e9">ɔɛi</span>
+      <span class="w-bubble" style="--pc:#006b3f;--pbg:#e8f5e9">jɛi</span>
+      <span class="w-bubble" style="--pc:#006b3f;--pbg:#e8f5e9">sɛi</span>
+    </div>
+    <div class="vocab-cards">
+      <div class="v-card" style="--pc:#006b3f">
+        <div class="vc-emoji">👅</div>
+        <div class="vc-ga">lilɛi</div>
+        <div class="vc-break">li – lɛ – i</div>
+        <div class="vc-en">tongue</div>
+      </div>
+      <div class="v-card" style="--pc:#006b3f">
+        <div class="vc-emoji">🐟</div>
+        <div class="vc-ga">didɛi</div>
+        <div class="vc-break">di – dɛ – i</div>
+        <div class="vc-en">tilapia (fish)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATTERN 3: iɔ -->
+  <div class="section-title" style="color:#e65100; margin-top:8px;">🔊 Pattern 3 — the <em>iɔ</em> sound</div>
+  <div class="pattern-panel" style="--pc:#e65100;--pbg:#fff3e0">
+    <div class="pp-header">
+      <div class="pp-sound" style="--pc:#e65100">iɔ</div>
+      <div>
+        <div class="pp-title">Sounds like "yo" — say "i" then "ɔ"!</div>
+        <div class="pp-note">Listen carefully — two vowels together</div>
+      </div>
+    </div>
+    <div class="word-bubbles">
+      <span class="w-bubble" style="--pc:#e65100;--pbg:#fff3e0">biɔ</span>
+      <span class="w-bubble" style="--pc:#e65100;--pbg:#fff3e0">diɔ</span>
+      <span class="w-bubble" style="--pc:#e65100;--pbg:#fff3e0">fiɔ</span>
+      <span class="w-bubble" style="--pc:#e65100;--pbg:#fff3e0">jɔ</span>
+    </div>
+    <div class="vocab-cards">
+      <div class="v-card" style="--pc:#e65100">
+        <div class="vc-emoji">🩳</div>
+        <div class="vc-ga">pioto</div>
+        <div class="vc-break">pi – o – to</div>
+        <div class="vc-en">shorts</div>
+      </div>
+      <div class="v-card" style="--pc:#e65100">
+        <div class="vc-emoji">🤫</div>
+        <div class="vc-ga">dioo</div>
+        <div class="vc-break">di – o – o</div>
+        <div class="vc-en">silence</div>
+      </div>
+      <div class="v-card" style="--pc:#e65100">
+        <div class="vc-emoji">🐜</div>
+        <div class="vc-ga">bibloo</div>
+        <div class="vc-break">bi – bi – o – o</div>
+        <div class="vc-en">small</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY 1: Syllable Tap -->
+<div class="activity-box">
+  <div class="activity-title">👏 Activity 1 — Tap the Syllables!</div>
+  <div class="activity-sub">Tap each syllable bubble IN ORDER to clap out the word! 👆</div>
+
+  <!-- fɔfɔi -->
+  <div class="syl-item">
+    <span class="syl-emoji">🌸</span>
+    <div class="syl-word">fɔfɔi <span style="font-size:0.85rem;color:#888;font-family:'Nunito',sans-serif;font-weight:700;">= flower</span></div>
+    <div class="syl-bubbles" id="sylb1">
+      <button class="syl-btn" onclick="tapSyl('s1',0,this)">fɔ</button>
+      <button class="syl-btn" onclick="tapSyl('s1',1,this)">fɔ</button>
+      <button class="syl-btn" onclick="tapSyl('s1',2,this)">i</button>
+    </div>
+    <div class="syl-fb" id="sylf1"></div>
+  </div>
+
+  <!-- lilɛi -->
+  <div class="syl-item">
+    <span class="syl-emoji">👅</span>
+    <div class="syl-word">lilɛi <span style="font-size:0.85rem;color:#888;font-family:'Nunito',sans-serif;font-weight:700;">= tongue</span></div>
+    <div class="syl-bubbles" id="sylb2">
+      <button class="syl-btn" onclick="tapSyl('s2',0,this)">li</button>
+      <button class="syl-btn" onclick="tapSyl('s2',1,this)">lɛ</button>
+      <button class="syl-btn" onclick="tapSyl('s2',2,this)">i</button>
+    </div>
+    <div class="syl-fb" id="sylf2"></div>
+  </div>
+
+  <!-- didɛi -->
+  <div class="syl-item">
+    <span class="syl-emoji">🐟</span>
+    <div class="syl-word">didɛi <span style="font-size:0.85rem;color:#888;font-family:'Nunito',sans-serif;font-weight:700;">= tilapia</span></div>
+    <div class="syl-bubbles" id="sylb3">
+      <button class="syl-btn" onclick="tapSyl('s3',0,this)">di</button>
+      <button class="syl-btn" onclick="tapSyl('s3',1,this)">dɛ</button>
+      <button class="syl-btn" onclick="tapSyl('s3',2,this)">i</button>
+    </div>
+    <div class="syl-fb" id="sylf3"></div>
+  </div>
+
+  <!-- pioto -->
+  <div class="syl-item">
+    <span class="syl-emoji">🩳</span>
+    <div class="syl-word">pioto <span style="font-size:0.85rem;color:#888;font-family:'Nunito',sans-serif;font-weight:700;">= shorts</span></div>
+    <div class="syl-bubbles" id="sylb4">
+      <button class="syl-btn" onclick="tapSyl('s4',0,this)">pi</button>
+      <button class="syl-btn" onclick="tapSyl('s4',1,this)">o</button>
+      <button class="syl-btn" onclick="tapSyl('s4',2,this)">to</button>
+    </div>
+    <div class="syl-fb" id="sylf4"></div>
+  </div>
+
+  <!-- bibloo -->
+  <div class="syl-item">
+    <span class="syl-emoji">🐜</span>
+    <div class="syl-word">bibloo <span style="font-size:0.85rem;color:#888;font-family:'Nunito',sans-serif;font-weight:700;">= small</span></div>
+    <div class="syl-bubbles" id="sylb5">
+      <button class="syl-btn" onclick="tapSyl('s5',0,this)">bi</button>
+      <button class="syl-btn" onclick="tapSyl('s5',1,this)">bi</button>
+      <button class="syl-btn" onclick="tapSyl('s5',2,this)">o</button>
+      <button class="syl-btn" onclick="tapSyl('s5',3,this)">o</button>
+    </div>
+    <div class="syl-fb" id="sylf5"></div>
+  </div>
+
+  <!-- abɔbɔi -->
+  <div class="syl-item">
+    <span class="syl-emoji">🎃</span>
+    <div class="syl-word">abɔbɔi <span style="font-size:0.85rem;color:#888;font-family:'Nunito',sans-serif;font-weight:700;">= pumpkin</span></div>
+    <div class="syl-bubbles" id="sylb6">
+      <button class="syl-btn" onclick="tapSyl('s6',0,this)">a</button>
+      <button class="syl-btn" onclick="tapSyl('s6',1,this)">bɔ</button>
+      <button class="syl-btn" onclick="tapSyl('s6',2,this)">bɔ</button>
+      <button class="syl-btn" onclick="tapSyl('s6',3,this)">i</button>
+    </div>
+    <div class="syl-fb" id="sylf6"></div>
+  </div>
+
+  <div id="sylScore" class="score-badge" style="display:none;margin-top:14px;"></div>
+  <div class="btn-row"><button class="reset-btn" onclick="resetSyl()">🔄 Try Again</button></div>
+</div>
+
+<!-- ACTIVITY 2: Match Ga to English -->
+<div class="activity-box">
+  <div class="activity-title">🔗 Activity 2 — Match Ga to English!</div>
+  <div class="activity-sub">Tap a Ga word on the left, then tap its English meaning on the right! 👆</div>
+  <div class="match-grid">
+    <div class="match-col">
+      <div class="match-lbl">🇬🇭 Ga Word</div>
+      <div class="m-item" id="mw1" onclick="mTap('w',1)">🌸 fɔfɔi</div>
+      <div class="m-item" id="mw2" onclick="mTap('w',2)">👅 lilɛi</div>
+      <div class="m-item" id="mw3" onclick="mTap('w',3)">🐟 didɛi</div>
+      <div class="m-item" id="mw4" onclick="mTap('w',4)">🩳 pioto</div>
+      <div class="m-item" id="mw5" onclick="mTap('w',5)">🤫 dioo</div>
+      <div class="m-item" id="mw6" onclick="mTap('w',6)">🐜 bibloo</div>
+    </div>
+    <div class="match-col">
+      <div class="match-lbl">🇬🇧 English</div>
+      <div class="m-item" id="me5" onclick="mTap('e',5)">silence</div>
+      <div class="m-item" id="me3" onclick="mTap('e',3)">tilapia 🐟</div>
+      <div class="m-item" id="me1" onclick="mTap('e',1)">flower 🌸</div>
+      <div class="m-item" id="me6" onclick="mTap('e',6)">small 🐜</div>
+      <div class="m-item" id="me2" onclick="mTap('e',2)">tongue 👅</div>
+      <div class="m-item" id="me4" onclick="mTap('e',4)">shorts 🩳</div>
+    </div>
+  </div>
+  <div id="matchFb" class="feedback" style="margin-top:12px;"></div>
+  <div id="matchScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- ACTIVITY 3: Which Pattern? -->
+<div class="activity-box">
+  <div class="activity-title">🗂️ Activity 3 — Which Pattern?</div>
+  <div class="activity-sub">Tap a word, then tap the right bucket — does it have <strong>ɔi</strong>, <strong>ɛi</strong>, or <strong>iɔ</strong>? 👆</div>
+
+  <div class="sort-word-row" id="sortWords">
+    <div class="sort-card" id="sw_fofoi"  onclick="sortSel('fofoi','oi')">fɔfɔi</div>
+    <div class="sort-card" id="sw_lilei"  onclick="sortSel('lilei','ei')">lilɛi</div>
+    <div class="sort-card" id="sw_pioto"  onclick="sortSel('pioto','io')">pioto</div>
+    <div class="sort-card" id="sw_didei"  onclick="sortSel('didei','ei')">didɛi</div>
+    <div class="sort-card" id="sw_bibloo" onclick="sortSel('bibloo','io')">bibloo</div>
+    <div class="sort-card" id="sw_aboboi" onclick="sortSel('aboboi','oi')">abɔbɔi</div>
+    <div class="sort-card" id="sw_dioo"   onclick="sortSel('dioo','io')">dioo</div>
+  </div>
+
+  <div class="pattern-buckets">
+    <div class="p-bucket" style="--bc:#ce1126;--bg:#fce4ec" id="bucket_oi" onclick="dropInto('oi')">
+      <div class="pb-label">ɔi 🌸</div>
+      <div class="pb-items" id="bi_oi"></div>
+    </div>
+    <div class="p-bucket" style="--bc:#006b3f;--bg:#e8f5e9" id="bucket_ei" onclick="dropInto('ei')">
+      <div class="pb-label">ɛi 👅</div>
+      <div class="pb-items" id="bi_ei"></div>
+    </div>
+    <div class="p-bucket" style="--bc:#e65100;--bg:#fff3e0" id="bucket_io" onclick="dropInto('io')">
+      <div class="pb-label">iɔ 🩳</div>
+      <div class="pb-items" id="bi_io"></div>
+    </div>
+  </div>
+
+  <div id="sortFb" class="feedback" style="margin-top:12px;"></div>
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkSort()">✅ Check!</button>
+    <button class="reset-btn" onclick="resetSort()">🔄 Try Again</button>
+  </div>
+  <div id="sortScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- ACTIVITY 4: True/False -->
+<div class="activity-box">
+  <div class="activity-title">✅ Activity 4 — True or False?</div>
+
+  <div class="tf-item">
+    <div class="tf-text">1. 🌸 <em>Fɔfɔi</em> means "flower" in Ga.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t1')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t1')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf1fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">2. 👅 <em>Lilɛi</em> means "tongue" in Ga.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t2')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t2')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf2fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">3. 🐟 <em>Didɛi</em> means "flower" in Ga.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t3')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t3')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf3fb"><span style="font-size:0.85rem;color:#777;">(didɛi = tilapia fish)</span></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">4. 🩳 <em>Pioto</em> has 3 syllables: pi – o – to.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t4')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t4')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf4fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">5. 🤫 <em>Dioo</em> means "silence" in Ga.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t5')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t5')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf5fb"></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">6. 🐜 <em>Bibloo</em> means "big" in Ga.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'false','t6')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'true','t6')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf6fb"><span style="font-size:0.85rem;color:#777;">(bibloo = small)</span></div>
+  </div>
+  <div class="tf-item">
+    <div class="tf-text">7. 🎃 <em>Abɔbɔi</em> has 4 syllables: a – bɔ – bɔ – i.</div>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="checkTF(this,'true','t7')">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(this,'false','t7')">❌ False</button>
+    </div>
+    <div class="feedback" id="tf7fb"></div>
+  </div>
+
+  <div class="btn-row"><button class="reset-btn" onclick="resetTF()">🔄 Try Again</button></div>
+  <div id="tfScore" class="score-badge" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- Cheer -->
+<div class="cheer-box" id="cheerBox">
+  <div class="cheer-stars">🇬🇭⭐🌸🐟🌟</div>
+  <h2>Wɔ bo, Tikky! 🎉</h2>
+  <p>You are doing amazing in Ga! fɔfɔi… lilɛi… didɛi — you know them all! 🌟</p>
+</div>
+
+<footer>Wɔ bo! Well done, Tikky! Keep learning Ga! 🇬🇭⭐</footer>
+
+<script>
+  let cheerCount = 0, cheerDone = false;
+  function cheer() {
+    cheerCount++;
+    if (cheerCount >= 2 && !cheerDone) {
+      cheerDone = true;
+      const cb = document.getElementById('cheerBox');
+      cb.classList.add('show');
+      cb.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  }
+
+  /* ===== SYLLABLE TAP ===== */
+  const sylState = {
+    s1: { next:0, total:3, fb:'sylf1' },
+    s2: { next:0, total:3, fb:'sylf2' },
+    s3: { next:0, total:3, fb:'sylf3' },
+    s4: { next:0, total:3, fb:'sylf4' },
+    s5: { next:0, total:4, fb:'sylf5' },
+    s6: { next:0, total:4, fb:'sylf6' },
+  };
+  let sylDone = {};
+
+  function tapSyl(key, idx, el) {
+    const st = sylState[key];
+    if (sylDone[key]) return;
+    if (idx === st.next) {
+      el.classList.add('hit');
+      el.disabled = true;
+      st.next++;
+      const fb = document.getElementById(st.fb);
+      if (st.next === st.total) {
+        sylDone[key] = true;
+        fb.textContent = '🎉 Great clapping!';
+        fb.className = 'syl-fb good';
+        checkSylDone();
+      } else {
+        fb.textContent = '👏 Keep going!';
+        fb.className = 'syl-fb good';
+      }
+    } else {
+      el.classList.add('missed');
+      const fb = document.getElementById(st.fb);
+      fb.textContent = '❌ Tap them in order from the start!';
+      fb.className = 'syl-fb bad';
+      setTimeout(() => {
+        el.classList.remove('missed');
+        fb.textContent = '';
+      }, 700);
+    }
+  }
+
+  function checkSylDone() {
+    if (Object.keys(sylDone).length === 6) {
+      document.getElementById('sylScore').textContent = '🌟 All words clapped! Brilliant!';
+      document.getElementById('sylScore').style.display = 'inline-block';
+      cheer();
+    }
+  }
+
+  function resetSyl() {
+    Object.keys(sylState).forEach(k => { sylState[k].next = 0; });
+    sylDone = {};
+    document.querySelectorAll('.syl-btn').forEach(b => { b.classList.remove('hit','missed'); b.disabled = false; });
+    for (let i=1;i<=6;i++) { const f=document.getElementById('sylf'+i); if(f){f.textContent='';f.className='syl-fb';} }
+    document.getElementById('sylScore').style.display='none';
+  }
+
+  /* ===== MATCH ===== */
+  let mSel = { w:null, e:null }, mDone = 0;
+  function mTap(side, id) {
+    const elId = side==='w' ? 'mw'+id : 'me'+id;
+    const el = document.getElementById(elId);
+    if (el.classList.contains('matched')) return;
+    const other = side==='w' ? 'e' : 'w';
+    if (mSel[side]!==null) {
+      const prev = document.getElementById((side==='w'?'mw':'me')+mSel[side]);
+      if(prev) prev.classList.remove('selected');
+    }
+    el.classList.add('selected');
+    mSel[side] = id;
+    if (mSel.w!==null && mSel.e!==null) {
+      const wEl = document.getElementById('mw'+mSel.w);
+      const eEl = document.getElementById('me'+mSel.e);
+      if (mSel.w===mSel.e) {
+        wEl.classList.replace('selected','matched');
+        eEl.classList.replace('selected','matched');
+        mDone++;
+        document.getElementById('matchFb').textContent='✅ Correct match!';
+        document.getElementById('matchFb').className='feedback fb-good';
+        if(mDone===6){
+          document.getElementById('matchScore').textContent='🌟 All 6 matched! Wɔ bo!';
+          document.getElementById('matchScore').style.display='inline-block';
+          cheer();
+        }
+      } else {
+        wEl.classList.add('shake'); eEl.classList.add('shake');
+        setTimeout(()=>{ wEl.classList.remove('shake','selected'); eEl.classList.remove('shake','selected'); }, 500);
+        document.getElementById('matchFb').textContent='❌ Try again!';
+        document.getElementById('matchFb').className='feedback fb-bad';
+      }
+      mSel={w:null,e:null};
+    }
+  }
+
+  /* ===== SORT ===== */
+  const sortAnswers = { fofoi:'oi', lilei:'ei', pioto:'io', didei:'ei', bibloo:'io', aboboi:'oi', dioo:'io' };
+  const sortLabels   = { fofoi:'fɔfɔi', lilei:'lilɛi', pioto:'pioto', didei:'didɛi', bibloo:'bibloo', aboboi:'abɔbɔi', dioo:'dioo' };
+  let sortSelected = null;
+  let sortPlaced = {};
+
+  function sortSel(word, pattern) {
+    if (sortPlaced[word]) return;
+    sortSelected = word;
+    document.querySelectorAll('.sort-card').forEach(c => c.style.outline='none');
+    document.getElementById('sw_'+word).style.outline = '3px solid #5c6bc0';
+  }
+
+  function dropInto(bucket) {
+    if (!sortSelected) { document.getElementById('sortFb').textContent='👆 Tap a word first!'; return; }
+    if (sortPlaced[sortSelected]) return;
+    sortPlaced[sortSelected] = bucket;
+    const label = sortLabels[sortSelected];
+    const span = document.createElement('span');
+    span.className='pb-word';
+    span.id='placed_'+sortSelected;
+    span.textContent=label;
+    document.getElementById('bi_'+bucket).appendChild(span);
+    document.getElementById('sw_'+sortSelected).classList.add('placed');
+    document.getElementById('sw_'+sortSelected).style.outline='none';
+    sortSelected = null;
+    document.getElementById('sortFb').textContent='';
+  }
+
+  function checkSort() {
+    let correct=0;
+    const total=Object.keys(sortAnswers).length;
+    Object.entries(sortPlaced).forEach(([word, bucket]) => {
+      const el=document.getElementById('placed_'+word);
+      if(sortAnswers[word]===bucket) { correct++; if(el)el.classList.add('correct-w'); }
+      else { if(el)el.classList.add('wrong-w'); }
+    });
+    const fb=document.getElementById('sortFb');
+    fb.textContent=`You got ${correct} out of ${total} right!`;
+    fb.className='feedback '+(correct>=5?'fb-good':'fb-bad');
+    document.getElementById('sortScore').textContent=`🌟 Score: ${correct}/${total}`;
+    document.getElementById('sortScore').style.display='inline-block';
+    if(correct>=5) cheer();
+  }
+
+  function resetSort() {
+    sortSelected=null; sortPlaced={};
+    document.querySelectorAll('.sort-card').forEach(c=>{ c.classList.remove('placed'); c.style.outline='none'; });
+    ['oi','ei','io'].forEach(b=>{ document.getElementById('bi_'+b).innerHTML=''; });
+    document.getElementById('sortFb').textContent='';
+    document.getElementById('sortScore').style.display='none';
+  }
+
+  /* ===== TRUE/FALSE ===== */
+  const tfAns={t1:'true',t2:'true',t3:'false',t4:'true',t5:'true',t6:'false',t7:'true'};
+  let tfDone={};
+  function checkTF(el,picked,key) {
+    if(tfDone[key]) return;
+    tfDone[key]=true;
+    const correct=tfAns[key]===picked;
+    el.classList.add(correct?'correct':'wrong');
+    el.closest('.tf-item').querySelectorAll('.tf-btn').forEach(b=>b.disabled=true);
+    const num=key.replace('t','');
+    const fb=document.getElementById('tf'+num+'fb');
+    fb.innerHTML=correct?'✅ Correct! Wɔ bo!':('❌ Not quite! '+(fb.innerHTML||''));
+    fb.className='feedback '+(correct?'fb-good':'fb-bad');
+    if(Object.keys(tfDone).length===7){
+      const sc=Object.values(tfDone).filter(Boolean).length;
+      document.getElementById('tfScore').textContent=`🌟 You got ${sc} out of 7!`;
+      document.getElementById('tfScore').style.display='inline-block';
+      if(sc>=5) cheer();
+    }
+  }
+  function resetTF(){
+    tfDone={};
+    document.querySelectorAll('.tf-btn').forEach(b=>{b.classList.remove('correct','wrong');b.disabled=false;});
+    const hints=['',' (didɛi = tilapia fish)','',' (bibloo = small)',''];
+    for(let i=1;i<=7;i++){
+      const el=document.getElementById('tf'+i+'fb');
+      if(el){ el.className='feedback'; el.innerHTML=el.querySelector('span')?el.querySelector('span').outerHTML:''; }
+    }
+    document.getElementById('tfScore').style.display='none';
+  }
+</script>
+</body>
+</html>
