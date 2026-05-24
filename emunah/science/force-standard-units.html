@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Force & Standard Units ⚡ — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:       #00897b;
+    --teal-light: #80cbc4;
+    --teal-bg:    #e0f2f1;
+    --teal-dark:  #004d40;
+    --force-blue: #0277bd;
+    --force-blue-light: #b3e5fc;
+    --force-blue-mid:   #0288d1;
+    --units-purple: #6a1b9a;
+    --units-purple-light: #e1bee7;
+    --units-purple-mid:   #8e24aa;
+    --white: #ffffff;
+    --grey-light: #f5f5f5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--teal-bg);
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(0,137,123,0.10) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(106,27,154,0.06) 0%, transparent 50%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---- BACK BUTTON ---- */
+  .back-home-btn {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 999;
+    background: var(--teal);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0,77,64,0.25);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .back-home-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  /* ---- CHEER BANNER ---- */
+  .cheer-banner {
+    display: none;
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    color: #fff;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+    padding: 18px 24px;
+    border-radius: 16px;
+    margin: 24px auto;
+    max-width: 700px;
+    box-shadow: 0 6px 24px rgba(255,111,0,0.35);
+    animation: popIn 0.5s ease;
+    letter-spacing: 0.5px;
+  }
+  .cheer-banner.show { display: block; }
+
+  /* ---- HERO ---- */
+  header {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 65%, #26a69a 100%);
+    padding: 60px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 36px;
+    background: var(--teal-bg);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    color: #fff;
+    font-size: clamp(2.2rem, 7vw, 3.8rem);
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+    animation: popIn 0.7s ease;
+    margin-bottom: 14px;
+  }
+  .date-badges {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .date-badge {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 6px 18px;
+    border-radius: 50px;
+    border: 2px solid rgba(255,255,255,0.4);
+    letter-spacing: 0.5px;
+  }
+
+  /* push-pull visual */
+  .pushpull-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 10px auto 0;
+    max-width: 480px;
+    animation: bounce 2.5s infinite;
+  }
+  .arrow-push, .arrow-pull {
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 900;
+    padding: 0 4px;
+  }
+  .arrow-push { color: #80cbc4; }
+  .arrow-pull { color: #b2dfdb; }
+  .object-box {
+    background: rgba(255,255,255,0.22);
+    border: 3px solid rgba(255,255,255,0.55);
+    border-radius: 18px;
+    padding: 16px 28px;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.1rem, 4vw, 1.7rem);
+    color: #fff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    margin: 0 12px;
+    white-space: nowrap;
+  }
+  .arrow-label {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .arrow-label span {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 700;
+    padding: 0 24px;
+  }
+
+  /* ---- MAIN CONTENT ---- */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 30px 16px 60px;
+  }
+
+  /* ---- SECTION HEADINGS ---- */
+  .section-heading {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+    margin: 40px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-heading.blue { color: var(--force-blue); }
+  .section-heading.purple { color: var(--units-purple); }
+  .section-heading.teal { color: var(--teal-dark); }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px 26px;
+    box-shadow: 0 4px 18px rgba(0,77,64,0.10);
+    margin-bottom: 20px;
+  }
+  .card.blue-card { border-left: 6px solid var(--force-blue); }
+  .card.purple-card { border-left: 6px solid var(--units-purple); }
+  .card.teal-card { border-left: 6px solid var(--teal); }
+
+  /* ---- DEFINITION BOX ---- */
+  .definition-box {
+    background: var(--force-blue-light);
+    border: 3px solid var(--force-blue);
+    border-radius: 18px;
+    padding: 20px 26px;
+    text-align: center;
+    font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+    color: #01579b;
+    font-weight: 800;
+    margin-bottom: 22px;
+    letter-spacing: 0.3px;
+  }
+  .definition-box .big-word {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3em;
+    color: var(--force-blue);
+  }
+  .definition-box.purple-def {
+    background: var(--units-purple-light);
+    border-color: var(--units-purple);
+    color: #4a148c;
+  }
+  .definition-box.purple-def .big-word { color: var(--units-purple); }
+
+  /* ---- EFFECT CARDS ---- */
+  .effect-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+  .effect-card {
+    background: #e3f2fd;
+    border: 3px solid #90caf9;
+    border-radius: 18px;
+    padding: 22px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .effect-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(2,119,189,0.2); }
+  .effect-card.tapped {
+    background: var(--force-blue);
+    border-color: var(--force-blue-mid);
+    box-shadow: 0 0 0 4px #b3e5fc, 0 6px 20px rgba(2,119,189,0.35);
+  }
+  .effect-card.tapped .effect-emoji { transform: scale(1.25); }
+  .effect-card.tapped .effect-title { color: #fff; }
+  .effect-card.tapped .effect-desc { color: #e1f5fe; }
+  .effect-emoji { font-size: 2.4rem; display: block; margin-bottom: 8px; transition: transform 0.2s; }
+  .effect-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--force-blue); margin-bottom: 4px; }
+  .effect-desc { font-size: 0.92rem; color: #37474f; font-weight: 600; line-height: 1.4; }
+
+  /* ---- PUSH PULL DIAGRAM (section 1) ---- */
+  .pushpull-section-visual {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0,77,64,0.10);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .pushpull-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .force-arrow-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+  .push-label { background: var(--force-blue); }
+  .pull-label { background: #7b1fa2; }
+  .force-arrow {
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .force-obj {
+    background: var(--teal-bg);
+    border: 3px solid var(--teal);
+    border-radius: 14px;
+    padding: 10px 22px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: var(--teal-dark);
+    white-space: nowrap;
+  }
+  .pushpull-section-visual p {
+    font-size: 0.9rem;
+    color: #546e7a;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  /* ---- NEWTON CARD ---- */
+  .newton-card {
+    background: linear-gradient(135deg, #fff8e1, #fff3e0);
+    border: 3px solid #ffb300;
+    border-radius: 22px;
+    padding: 26px 28px;
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(255,179,0,0.2);
+    margin-bottom: 20px;
+  }
+  .newton-portrait {
+    font-size: 5rem;
+    text-align: center;
+    line-height: 1;
+    flex-shrink: 0;
+    background: rgba(255,179,0,0.15);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ffb300;
+  }
+  .newton-info { flex: 1; min-width: 200px; }
+  .newton-info h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: #e65100;
+    margin-bottom: 8px;
+  }
+  .newton-info p { font-size: 1rem; color: #4e342e; font-weight: 600; line-height: 1.6; margin-bottom: 8px; }
+  .newton-fun-fact {
+    background: #fff9c4;
+    border-left: 4px solid #f9a825;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #5d4037;
+    margin-top: 10px;
+  }
+
+  /* ---- FORCEMETER CARD ---- */
+  .forcemeter-card {
+    background: #e8f5e9;
+    border: 3px solid #43a047;
+    border-radius: 20px;
+    padding: 22px 26px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(67,160,71,0.15);
+  }
+  .forcemeter-icon {
+    font-size: 4rem;
+    flex-shrink: 0;
+  }
+  .forcemeter-info { flex: 1; min-width: 180px; }
+  .forcemeter-info h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: #2e7d32;
+    margin-bottom: 6px;
+  }
+  .forcemeter-info p { font-size: 1rem; color: #1b5e20; font-weight: 600; line-height: 1.5; }
+
+  /* ---- UNITS TABLE ---- */
+  .units-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 22px;
+  }
+  .units-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(106,27,154,0.15);
+    min-width: 340px;
+  }
+  .units-table thead {
+    background: var(--units-purple);
+  }
+  .units-table thead th {
+    font-family: 'Fredoka One', cursive;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 16px 14px;
+    text-align: left;
+    letter-spacing: 0.5px;
+  }
+  .units-table tbody tr {
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 2px solid #e1bee7;
+  }
+  .units-table tbody tr:nth-child(even) { background: #f3e5f5; }
+  .units-table tbody tr:nth-child(odd) { background: #fce4ec; }
+  .units-table tbody tr:hover { background: var(--units-purple-light); }
+  .units-table td {
+    padding: 14px 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #311b92;
+  }
+  .units-table td:nth-child(2) { color: var(--units-purple); }
+  .units-table td:nth-child(3) {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: var(--units-purple-mid);
+  }
+  .units-example {
+    display: none;
+    font-size: 0.88rem;
+    color: #6a1b9a;
+    font-style: italic;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .units-table tr.revealed .units-example { display: block; }
+  .units-table tr.revealed td { background: rgba(225,190,231,0.5); }
+  .table-hint {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--units-purple-mid);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  /* ---- ACTIVITIES ---- */
+  .activity-card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 26px 24px;
+    box-shadow: 0 4px 20px rgba(0,77,64,0.12);
+    margin-bottom: 28px;
+    border-top: 6px solid var(--teal);
+  }
+  .activity-card.blue-act { border-top-color: var(--force-blue); }
+  .activity-card.purple-act { border-top-color: var(--units-purple); }
+  .activity-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.9rem;
+    color: var(--teal);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .activity-label.blue { color: var(--force-blue); }
+  .activity-label.purple { color: var(--units-purple); }
+  .activity-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    color: var(--teal-dark);
+    margin-bottom: 14px;
+  }
+
+  /* ---- ACT 1: PUSH OR PULL ---- */
+  .scenario-display {
+    background: var(--teal-bg);
+    border: 3px solid var(--teal-light);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .scenario-emoji { font-size: 3.5rem; margin-bottom: 8px; }
+  .scenario-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+    color: var(--teal-dark);
+  }
+  .scenario-count { font-size: 0.9rem; font-weight: 700; color: #546e7a; margin-top: 6px; }
+  .pushpull-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .pp-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    color: #fff;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+  .pp-btn:hover { transform: scale(1.05); }
+  .push-btn { background: var(--force-blue); }
+  .pull-btn { background: #7b1fa2; }
+  .pp-score {
+    text-align: center;
+    font-weight: 800;
+    color: var(--teal-dark);
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+  .sorted-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  .sorted-chip {
+    padding: 5px 13px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fff;
+    animation: popIn 0.3s ease;
+  }
+  .sorted-chip.push-chip { background: var(--force-blue); }
+  .sorted-chip.pull-chip { background: #7b1fa2; }
+
+  /* ---- ACT 2: QUIZ ---- */
+  .quiz-question {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.05rem, 3vw, 1.35rem);
+    color: var(--teal-dark);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+  .quiz-qnum {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #546e7a;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .quiz-opt {
+    background: #f5f5f5;
+    border: 3px solid #e0e0e0;
+    border-radius: 14px;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #37474f;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    text-align: left;
+  }
+  .quiz-opt:hover { background: #e0f7fa; border-color: var(--teal-light); }
+  .quiz-opt.correct { background: #c8e6c9; border-color: #43a047; color: #1b5e20; }
+  .quiz-opt.wrong { background: #ffcdd2; border-color: #e53935; color: #b71c1c; }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .quiz-progress { font-weight: 700; color: #546e7a; font-size: 0.9rem; }
+  .quiz-next-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    padding: 10px 28px;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: none;
+    transition: background 0.15s, transform 0.15s;
+    box-shadow: 0 3px 10px rgba(0,77,64,0.2);
+  }
+  .quiz-next-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  /* ---- ACT 3: MATCHING ---- */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .match-col-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    text-align: center;
+    padding: 8px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+  .match-col-label.left-lbl { background: var(--force-blue); }
+  .match-col-label.right-lbl { background: var(--units-purple); }
+  .match-item {
+    background: #f5f5f5;
+    border: 3px solid #e0e0e0;
+    border-radius: 14px;
+    padding: 13px 14px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.97rem;
+    color: #37474f;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    user-select: none;
+  }
+  .match-item:hover { transform: scale(1.03); }
+  .match-item.selected { background: #fff9c4; border-color: #f9a825; transform: scale(1.06); }
+  .match-item.matched { background: #c8e6c9; border-color: #43a047; color: #1b5e20; cursor: default; }
+  .match-item.matched::after { content: ' ✓'; }
+  .match-score { text-align: center; font-weight: 800; color: var(--teal-dark); margin-top: 8px; }
+
+  /* ---- ACT 4: TRUE/FALSE ---- */
+  .tf-item {
+    background: #fafafa;
+    border: 3px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .tf-statement { flex: 1; font-weight: 700; font-size: 1rem; color: #37474f; min-width: 160px; }
+  .tf-btns { display: flex; gap: 8px; flex-shrink: 0; }
+  .tf-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.95rem;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.12s, opacity 0.15s;
+  }
+  .tf-btn:hover { transform: scale(1.07); }
+  .true-btn { background: #43a047; }
+  .false-btn { background: #e53935; }
+  .tf-btn.correct { outline: 4px solid #ffd600; }
+  .tf-btn.wrong-choice { opacity: 0.45; }
+  .tf-btn:disabled { cursor: default; }
+  .tf-result { font-weight: 700; font-size: 0.9rem; margin-top: 4px; width: 100%; }
+  .tf-result.ok { color: #2e7d32; }
+  .tf-result.bad { color: #c62828; }
+  .tf-submit-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 12px 34px;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto 0;
+    box-shadow: 0 3px 12px rgba(0,77,64,0.22);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .tf-submit-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+  /* ---- ACT 5: FILL IN BLANK ---- */
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+    background: #e8f5e9;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 2px solid #a5d6a7;
+  }
+  .word-chip {
+    background: #fff;
+    border: 2px solid #43a047;
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #1b5e20;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    user-select: none;
+  }
+  .word-chip:hover { background: #e8f5e9; transform: scale(1.04); }
+  .word-chip.used { opacity: 0.35; cursor: default; pointer-events: none; text-decoration: line-through; }
+  .fill-sentence {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #37474f;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    line-height: 2;
+  }
+  .fill-blank {
+    display: inline-block;
+    min-width: 110px;
+    border-bottom: 3px solid var(--teal);
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: var(--teal-dark);
+    padding: 2px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s;
+    background: transparent;
+  }
+  .fill-blank:hover { background: #e0f7fa; }
+  .fill-blank.filled { background: #e0f2f1; border-color: var(--teal-dark); }
+  .fill-blank.correct { background: #c8e6c9; border-color: #43a047; color: #2e7d32; }
+  .fill-blank.wrong { background: #ffcdd2; border-color: #e53935; color: #b71c1c; }
+  .fill-check-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 12px 34px;
+    background: var(--force-blue);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: block;
+    margin: 14px auto 0;
+    box-shadow: 0 3px 12px rgba(2,119,189,0.22);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .fill-check-btn:hover { background: #01579b; transform: translateY(-1px); }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+  @keyframes popIn {
+    0%   { transform: scale(0.4); opacity: 0; }
+    70%  { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-8px); }
+    40%       { transform: translateX(8px); }
+    60%       { transform: translateX(-6px); }
+    80%       { transform: translateX(6px); }
+  }
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  .shake-anim { animation: shake 0.45s ease; }
+  .pop-anim  { animation: pop 0.35s ease; }
+
+  /* ---- MISC ---- */
+  .done-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #43a047, #00897b);
+    color: #fff;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    padding: 10px 24px;
+    border-radius: 50px;
+    margin: 14px auto 0;
+    display: block;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    animation: popIn 0.4s ease;
+  }
+  .progress-bar-wrap {
+    background: #e0e0e0;
+    border-radius: 50px;
+    height: 10px;
+    margin: 10px 0 18px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    background: linear-gradient(90deg, var(--teal), #26c6da);
+    height: 100%;
+    border-radius: 50px;
+    transition: width 0.4s ease;
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- CHEER BANNER -->
+<div class="cheer-banner" id="cheerBanner">
+  Excellent, Emunah! You understand force and units! ⚡⭐
+</div>
+
+<!-- ======= HERO ======= -->
+<header>
+  <div class="date-badges">
+    <span class="date-badge">📅 11th May 2026</span>
+    <span class="date-badge">📅 13th May 2026</span>
+  </div>
+  <h1>Force &amp; Standard Units ⚡</h1>
+  <div class="pushpull-visual">
+    <span class="arrow-push">←←←</span>
+    <div class="object-box">📦 Object</div>
+    <span class="arrow-pull">→→→</span>
+  </div>
+  <div class="arrow-label">
+    <span>PULL 👈</span>
+    <span>PUSH 👉</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- ======= CHEER BANNER anchor ======= -->
+  <div id="cheerAnchor"></div>
+
+  <!-- ======= SECTION 1: WHAT IS FORCE? ======= -->
+  <div class="section-heading blue">⚡ Section 1 — What Is Force?</div>
+
+  <div class="definition-box">
+    A force is a <span class="big-word">PUSH</span> or <span class="big-word">PULL</span> on an object.
+  </div>
+
+  <div class="effect-cards">
+    <div class="effect-card" onclick="tapEffect(this)">
+      <span class="effect-emoji">🚀</span>
+      <div class="effect-title">Speed Up</div>
+      <div class="effect-desc">Force can make an object go faster!</div>
+    </div>
+    <div class="effect-card" onclick="tapEffect(this)">
+      <span class="effect-emoji">🛑</span>
+      <div class="effect-title">Slow Down</div>
+      <div class="effect-desc">Force can make an object stop or slow down.</div>
+    </div>
+    <div class="effect-card" onclick="tapEffect(this)">
+      <span class="effect-emoji">🫸</span>
+      <div class="effect-title">Change Shape</div>
+      <div class="effect-desc">Force can change the shape of an object.</div>
+    </div>
+  </div>
+
+  <!-- Push vs Pull Visual -->
+  <div class="pushpull-section-visual">
+    <h3 style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#37474f;margin-bottom:4px;">Push vs Pull — Direction Matters!</h3>
+    <div class="pushpull-row">
+      <span class="force-arrow-label push-label">👉 PUSH</span>
+      <span class="force-arrow" style="color:var(--force-blue)">→→→</span>
+      <span class="force-obj">📦 Object</span>
+    </div>
+    <div class="pushpull-row">
+      <span class="force-obj">📦 Object</span>
+      <span class="force-arrow" style="color:#7b1fa2">←←←</span>
+      <span class="force-arrow-label pull-label">PULL 👈</span>
+    </div>
+    <p>A push moves an object away from you. A pull moves an object towards you.</p>
+  </div>
+
+  <!-- ======= SIR ISAAC NEWTON ======= -->
+  <div class="section-heading teal">🧑‍🔬 Sir Isaac Newton</div>
+
+  <div class="newton-card">
+    <div class="newton-portrait">🧑‍🔬</div>
+    <div class="newton-info">
+      <h3>Sir Isaac Newton</h3>
+      <p>The <strong>Newton (N)</strong> is the standard unit of force — named after him!</p>
+      <p>He lived in <strong>Great Britain</strong>, from <strong>1642 to 1727</strong>.</p>
+      <div class="newton-fun-fact">
+        🍎 Fun Fact: Newton discovered gravity when an apple fell on his head!
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= FORCEMETER ======= -->
+  <div class="section-heading teal">📏 The Forcemeter</div>
+
+  <div class="forcemeter-card">
+    <div class="forcemeter-icon">📏</div>
+    <div class="forcemeter-info">
+      <h3>Forcemeter</h3>
+      <p>A <strong>forcemeter</strong> is an instrument used to measure the <strong>strength of a force</strong>.</p>
+      <p>Force is measured in <strong>Newtons (N)</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ======= SECTION 2: STANDARD UNITS ======= -->
+  <div class="section-heading purple">📐 Section 2 — Standard Units</div>
+
+  <div class="definition-box purple-def">
+    <span class="big-word">Standard units</span> are the most commonly used units of measurement.<br>
+    <span style="font-size:0.9em;font-weight:700;color:#6a1b9a;">They are accepted around the world — so everyone gets the same results!</span>
+  </div>
+
+  <p class="table-hint">👇 Tap any row to see a real-world example!</p>
+  <div class="units-table-wrap">
+    <table class="units-table">
+      <thead>
+        <tr>
+          <th>Base Quantity</th>
+          <th>Standard Unit</th>
+          <th>Symbol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="revealExample(this)">
+          <td>
+            Length
+            <div class="units-example">📏 We measure how tall you are in metres!</div>
+          </td>
+          <td>Metres</td>
+          <td>m</td>
+        </tr>
+        <tr onclick="revealExample(this)">
+          <td>
+            Time
+            <div class="units-example">⏱️ We count seconds when timing a race!</div>
+          </td>
+          <td>Seconds</td>
+          <td>s</td>
+        </tr>
+        <tr onclick="revealExample(this)">
+          <td>
+            Mass
+            <div class="units-example">⚖️ We measure how heavy a bag of fruit is in kilograms!</div>
+          </td>
+          <td>Kilogram</td>
+          <td>kg</td>
+        </tr>
+        <tr onclick="revealExample(this)">
+          <td>
+            Force
+            <div class="units-example">🚀 We measure how hard you kick a ball in Newtons!</div>
+          </td>
+          <td>Newton</td>
+          <td>N</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======= ACTIVITY 1: PUSH OR PULL ======= -->
+  <div class="activity-card blue-act">
+    <div class="activity-label blue">Activity 1</div>
+    <div class="activity-title">👉👈 Push or Pull?</div>
+    <p style="font-weight:700;color:#546e7a;margin-bottom:16px;font-size:0.95rem;">Read the action. Tap the right button! Get all 10 correct!</p>
+
+    <div class="scenario-display" id="ppDisplay">
+      <div class="scenario-emoji" id="ppEmoji">🧩</div>
+      <div class="scenario-text" id="ppText">Get ready...</div>
+      <div class="scenario-count" id="ppCount">Question 1 of 10</div>
+    </div>
+
+    <div class="pushpull-btns">
+      <button class="pp-btn push-btn" onclick="answerPP('push')">👉 PUSH</button>
+      <button class="pp-btn pull-btn" onclick="answerPP('pull')">👈 PULL</button>
+    </div>
+
+    <div class="pp-score" id="ppScore">Score: 0 / 10</div>
+
+    <div class="sorted-list" id="ppSortedList"></div>
+    <div id="ppDone"></div>
+  </div>
+
+  <!-- ======= ACTIVITY 2: QUIZ ======= -->
+  <div class="activity-card blue-act">
+    <div class="activity-label blue">Activity 2</div>
+    <div class="activity-title">🎯 Pick the Right Answer!</div>
+
+    <div class="quiz-qnum" id="quizQNum">Question 1 of 10</div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="quizBar" style="width:10%"></div></div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-nav">
+      <span class="quiz-progress" id="quizProgressTxt">Score: 0</span>
+      <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuizQ()">Next ➡</button>
+    </div>
+    <div id="quizDone"></div>
+  </div>
+
+  <!-- ======= ACTIVITY 3: MATCHING ======= -->
+  <div class="activity-card purple-act">
+    <div class="activity-label purple">Activity 3</div>
+    <div class="activity-title">🔗 Match Quantity to Unit!</div>
+    <p style="font-weight:700;color:#546e7a;margin-bottom:14px;font-size:0.95rem;">Tap a quantity on the left, then tap its matching unit on the right!</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;">
+      <div class="match-col-label left-lbl">Quantity / Concept</div>
+      <div class="match-col-label right-lbl">Unit / Answer</div>
+    </div>
+    <div class="match-grid" id="matchGrid"></div>
+    <div class="match-score" id="matchScore">Matched: 0 / 6</div>
+    <div id="matchDone"></div>
+  </div>
+
+  <!-- ======= ACTIVITY 4: TRUE / FALSE ======= -->
+  <div class="activity-card">
+    <div class="activity-label">Activity 4</div>
+    <div class="activity-title">✅❌ True or False?</div>
+    <p style="font-weight:700;color:#546e7a;margin-bottom:16px;font-size:0.95rem;">Read each statement. Is it true or false?</p>
+
+    <div id="tfList"></div>
+    <button class="tf-submit-btn" id="tfSubmitBtn" onclick="submitTF()">Check My Answers ✅</button>
+    <div id="tfDone"></div>
+  </div>
+
+  <!-- ======= ACTIVITY 5: FILL IN BLANK ======= -->
+  <div class="activity-card purple-act">
+    <div class="activity-label purple">Activity 5</div>
+    <div class="activity-title">✏️ Fill in the Blank!</div>
+    <p style="font-weight:700;color:#546e7a;margin-bottom:12px;font-size:0.95rem;">Tap a word from the word bank, then tap the blank to fill it in!</p>
+
+    <div class="word-bank" id="wordBank"></div>
+    <div id="fillSentences"></div>
+    <button class="fill-check-btn" onclick="checkFill()">Check Answers ✅</button>
+    <div id="fillDone"></div>
+  </div>
+
+</main>
+
+<script>
+// ========== GLOBAL ==========
+let cheerCount = 0;
+
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const b = document.getElementById('cheerBanner');
+    b.classList.add('show');
+    b.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+function animEl(el, cls) {
+  el.classList.remove(cls);
+  void el.offsetWidth;
+  el.classList.add(cls);
+  el.addEventListener('animationend', () => el.classList.remove(cls), {once:true});
+}
+
+// ========== TABLE ==========
+function revealExample(row) {
+  row.classList.toggle('revealed');
+}
+
+// ========== EFFECT CARDS ==========
+function tapEffect(card) {
+  card.classList.toggle('tapped');
+  animEl(card, 'pop-anim');
+}
+
+// ========== ACTIVITY 1: PUSH OR PULL ==========
+const ppScenarios = [
+  {text: 'Kicking a ball', emoji:'⚽', answer:'push'},
+  {text: 'Pushing a door open', emoji:'🚪', answer:'push'},
+  {text: 'Pressing a button', emoji:'🔘', answer:'push'},
+  {text: 'Squeezing clay', emoji:'🧱', answer:'push'},
+  {text: 'Pushing a shopping trolley', emoji:'🛒', answer:'push'},
+  {text: 'Pulling open a drawer', emoji:'🗄️', answer:'pull'},
+  {text: 'Pulling a rope', emoji:'🪢', answer:'pull'},
+  {text: 'Pulling a door handle', emoji:'🚪', answer:'pull'},
+  {text: 'Stretching a rubber band', emoji:'🟡', answer:'pull'},
+  {text: 'Pulling up a chair', emoji:'🪑', answer:'pull'},
+];
+
+// shuffle
+(function shufflePP(){
+  for(let i=ppScenarios.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [ppScenarios[i],ppScenarios[j]]=[ppScenarios[j],ppScenarios[i]];
+  }
+})();
+
+let ppIndex = 0;
+let ppScore = 0;
+let ppAnswered = false;
+
+function renderPP() {
+  if (ppIndex >= ppScenarios.length) return;
+  const s = ppScenarios[ppIndex];
+  document.getElementById('ppEmoji').textContent = s.emoji;
+  document.getElementById('ppText').textContent = s.text;
+  document.getElementById('ppCount').textContent = `Question ${ppIndex+1} of ${ppScenarios.length}`;
+  ppAnswered = false;
+}
+
+function answerPP(choice) {
+  if (ppAnswered) return;
+  ppAnswered = true;
+  const s = ppScenarios[ppIndex];
+  const list = document.getElementById('ppSortedList');
+  const chip = document.createElement('span');
+  chip.className = 'sorted-chip ' + (s.answer === 'push' ? 'push-chip' : 'pull-chip');
+
+  if (choice === s.answer) {
+    chip.textContent = s.emoji + ' ' + (s.answer === 'push' ? 'PUSH ✓' : 'PULL ✓');
+    animEl(document.getElementById('ppDisplay'), 'pop-anim');
+    ppScore++;
+  } else {
+    chip.textContent = s.emoji + ' ✗';
+    chip.style.background = '#e53935';
+    animEl(document.getElementById('ppDisplay'), 'shake-anim');
+  }
+  list.appendChild(chip);
+  document.getElementById('ppScore').textContent = `Score: ${ppScore} / ${ppScenarios.length}`;
+  ppIndex++;
+  if (ppIndex < ppScenarios.length) {
+    setTimeout(renderPP, 450);
+  } else {
+    setTimeout(() => {
+      const d = document.getElementById('ppDone');
+      d.innerHTML = `<div class="done-badge">🎉 Done! You got ${ppScore}/10 correct!</div>`;
+      document.querySelector('.pushpull-btns').style.opacity = '0.3';
+      document.querySelector('.pushpull-btns').style.pointerEvents = 'none';
+      addCheer();
+    }, 400);
+  }
+}
+
+renderPP();
+
+// ========== ACTIVITY 2: QUIZ ==========
+const quizData = [
+  {q:"A force is a ___ or ___ on an object.", opts:["lift or drop","push or pull","spin or jump"], ans:1},
+  {q:"The standard unit of force is ___.", opts:["kilogram","metre","Newton"], ans:2},
+  {q:"Force was named after ___.", opts:["Albert Einstein","Sir Isaac Newton","Charles Darwin"], ans:1},
+  {q:"Newton lived from 1642 to ___.", opts:["1800","1900","1727"], ans:2},
+  {q:"A forcemeter measures ___.", opts:["length","mass","the strength of a force"], ans:2},
+  {q:"The standard unit for length is ___.", opts:["metre","kilogram","second"], ans:0},
+  {q:"The standard unit for time is ___.", opts:["Newton","metre","second"], ans:2},
+  {q:"Standard units are used because ___.", opts:["they look nice","results are the same worldwide","they are easy to spell"], ans:1},
+  {q:"Force can change the ___ of an object.", opts:["colour","shape","name"], ans:1},
+  {q:"The symbol for kilogram is ___.", opts:["k","g","kg"], ans:2},
+];
+
+let qIndex = 0;
+let qScore = 0;
+let qAnswered = false;
+
+function renderQuiz() {
+  if (qIndex >= quizData.length) return;
+  const q = quizData[qIndex];
+  document.getElementById('quizQNum').textContent = `Question ${qIndex+1} of ${quizData.length}`;
+  document.getElementById('quizBar').style.width = `${((qIndex)/quizData.length)*100}%`;
+  document.getElementById('quizQuestion').textContent = q.q;
+  const opts = document.getElementById('quizOptions');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = ['a) ','b) ','c) '][i] + opt;
+    btn.onclick = () => pickQuizAnswer(btn, i, q.ans);
+    opts.appendChild(btn);
+  });
+  document.getElementById('quizNextBtn').style.display = 'none';
+  qAnswered = false;
+}
+
+function pickQuizAnswer(btn, chosen, correct) {
+  if (qAnswered) return;
+  qAnswered = true;
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((b,i) => {
+    b.disabled = true;
+    if (i === correct) b.classList.add('correct');
+  });
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    animEl(btn, 'pop-anim');
+    qScore++;
+  } else {
+    btn.classList.add('wrong');
+    animEl(btn, 'shake-anim');
+  }
+  document.getElementById('quizProgressTxt').textContent = `Score: ${qScore}`;
+  document.getElementById('quizNextBtn').style.display = qIndex < quizData.length - 1 ? 'inline-block' : 'none';
+  if (qIndex >= quizData.length - 1) {
+    setTimeout(() => {
+      document.getElementById('quizDone').innerHTML = `<div class="done-badge">🎉 Quiz done! You scored ${qScore}/10!</div>`;
+      document.getElementById('quizBar').style.width = '100%';
+      addCheer();
+    }, 400);
+  }
+}
+
+function nextQuizQ() {
+  qIndex++;
+  if (qIndex < quizData.length) renderQuiz();
+}
+
+renderQuiz();
+
+// ========== ACTIVITY 3: MATCHING ==========
+const matchPairs = [
+  {left:'Length', right:'Metres (m)'},
+  {left:'Time', right:'Seconds (s)'},
+  {left:'Mass', right:'Kilogram (kg)'},
+  {left:'Force', right:'Newton (N)'},
+  {left:'Sir Isaac Newton', right:'Named the Newton unit'},
+  {left:'Forcemeter', right:'Measures force strength'},
+];
+
+const rights = matchPairs.map(p=>p.right);
+// shuffle rights
+(function sr(){for(let i=rights.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[rights[i],rights[j]]=[rights[j],rights[i]]}})();
+
+let matchSelected = null; // {side:'left'/'right', index, el}
+let matchedPairs = new Set();
+let matchScore = 0;
+
+function buildMatchGrid() {
+  const grid = document.getElementById('matchGrid');
+  grid.innerHTML = '';
+  matchPairs.forEach((pair, i) => {
+    // left
+    const lEl = document.createElement('div');
+    lEl.className = 'match-item';
+    lEl.textContent = pair.left;
+    lEl.dataset.side = 'left';
+    lEl.dataset.idx = i;
+    lEl.onclick = () => handleMatch(lEl);
+    grid.appendChild(lEl);
+    // right (shuffled)
+    const rEl = document.createElement('div');
+    rEl.className = 'match-item';
+    rEl.textContent = rights[i];
+    rEl.dataset.side = 'right';
+    rEl.dataset.ridx = i; // position in rights array
+    rEl.onclick = () => handleMatch(rEl);
+    grid.appendChild(rEl);
+  });
+}
+
+function handleMatch(el) {
+  if (el.classList.contains('matched')) return;
+  const grid = document.getElementById('matchGrid');
+
+  if (!matchSelected) {
+    matchSelected = el;
+    el.classList.add('selected');
+    return;
+  }
+
+  // same side — reselect
+  if (matchSelected.dataset.side === el.dataset.side) {
+    matchSelected.classList.remove('selected');
+    matchSelected = el;
+    el.classList.add('selected');
+    return;
+  }
+
+  // determine left & right
+  let leftEl = matchSelected.dataset.side === 'left' ? matchSelected : el;
+  let rightEl = matchSelected.dataset.side === 'right' ? matchSelected : el;
+
+  const leftIdx = parseInt(leftEl.dataset.idx);
+  const rightText = rightEl.textContent;
+  const correctRight = matchPairs[leftIdx].right;
+
+  if (rightText === correctRight) {
+    leftEl.classList.remove('selected');
+    leftEl.classList.add('matched');
+    rightEl.classList.add('matched');
+    animEl(leftEl, 'pop-anim');
+    animEl(rightEl, 'pop-anim');
+    matchScore++;
+    document.getElementById('matchScore').textContent = `Matched: ${matchScore} / ${matchPairs.length}`;
+    if (matchScore === matchPairs.length) {
+      setTimeout(() => {
+        document.getElementById('matchDone').innerHTML = `<div class="done-badge">🎉 All matched! Brilliant work!</div>`;
+        addCheer();
+      }, 400);
+    }
+  } else {
+    leftEl.classList.remove('selected');
+    animEl(leftEl, 'shake-anim');
+    animEl(rightEl, 'shake-anim');
+  }
+  matchSelected = null;
+}
+
+buildMatchGrid();
+
+// ========== ACTIVITY 4: TRUE / FALSE ==========
+const tfData = [
+  {s:"A force is a push or pull.", ans:true},
+  {s:"Force is measured in kilograms.", ans:false},
+  {s:"Force can make objects speed up.", ans:true},
+  {s:"Sir Isaac Newton lived in France.", ans:false},
+  {s:"A forcemeter measures the strength of a force.", ans:true},
+  {s:"Standard units are different in every country.", ans:false},
+  {s:"The standard unit for length is the metre.", ans:true},
+  {s:"Mass is measured in seconds.", ans:false},
+];
+
+function buildTF() {
+  const list = document.getElementById('tfList');
+  tfData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.id = `tfItem${i}`;
+    div.innerHTML = `
+      <div class="tf-statement">${i+1}. ${item.s}</div>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn" data-idx="${i}" data-val="true" onclick="selectTF(this)">✅ True</button>
+        <button class="tf-btn false-btn" data-idx="${i}" data-val="false" onclick="selectTF(this)">❌ False</button>
+      </div>
+      <div class="tf-result" id="tfRes${i}"></div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+const tfChoices = {};
+function selectTF(btn) {
+  const idx = btn.dataset.idx;
+  const val = btn.dataset.val === 'true';
+  // clear siblings
+  const btns = document.querySelectorAll(`[data-idx="${idx}"]`);
+  btns.forEach(b => b.style.outline = '');
+  btn.style.outline = '4px solid #ffd600';
+  tfChoices[idx] = val;
+}
+
+function submitTF() {
+  let correct = 0;
+  tfData.forEach((item, i) => {
+    const chosen = tfChoices[i];
+    const res = document.getElementById(`tfRes${i}`);
+    const btns = document.querySelectorAll(`[data-idx="${i}"]`);
+    btns.forEach(b => b.disabled = true);
+    if (chosen === undefined) {
+      res.textContent = '⚠️ Not answered';
+      res.className = 'tf-result bad';
+      return;
+    }
+    if (chosen === item.ans) {
+      res.textContent = '✅ Correct!';
+      res.className = 'tf-result ok';
+      correct++;
+      animEl(document.getElementById(`tfItem${i}`), 'pop-anim');
+    } else {
+      const correctWord = item.ans ? 'TRUE' : 'FALSE';
+      res.textContent = `❌ The answer is ${correctWord}.`;
+      res.className = 'tf-result bad';
+      animEl(document.getElementById(`tfItem${i}`), 'shake-anim');
+    }
+  });
+  document.getElementById('tfSubmitBtn').style.display = 'none';
+  document.getElementById('tfDone').innerHTML = `<div class="done-badge">Done! You got ${correct}/8 correct! ⭐</div>`;
+  addCheer();
+}
+
+buildTF();
+
+// ========== ACTIVITY 5: FILL IN BLANK ==========
+const wordBankWords = ['push','pull','Newton','forcemeter','metres','seconds','kilogram','shape'];
+
+const fillSentences = [
+  {text: 'A force can be a', blanks: [{answer:'push'}], after:'on an object.'},
+  {text: 'A force can also be a', blanks: [{answer:'pull'}], after:'on an object.'},
+  {text: 'The standard unit of force is the', blanks: [{answer:'Newton'}], after:'.'},
+  {text: 'A', blanks: [{answer:'forcemeter'}], after:'measures the strength of a force.'},
+  {text: 'Length is measured in', blanks: [{answer:'metres'}], after:'.'},
+  {text: 'Time is measured in', blanks: [{answer:'seconds'}], after:'.'},
+  {text: 'Mass is measured in', blanks: [{answer:'kilogram'}], after:'(or kg).'},
+  {text: 'Force can change the', blanks: [{answer:'shape'}], after:'of an object.'},
+];
+
+let selectedWord = null;
+const blankValues = {}; // blankId -> word
+const wordUsage = {}; // word -> blankId (or null)
+
+function buildWordBank() {
+  const wb = document.getElementById('wordBank');
+  wordBankWords.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.id = 'wc_' + w;
+    chip.onclick = () => selectWord(chip, w);
+    wb.appendChild(chip);
+  });
+}
+
+function selectWord(chip, word) {
+  if (chip.classList.contains('used')) return;
+  // deselect previous
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+  if (selectedWord === word) { selectedWord = null; return; }
+  selectedWord = word;
+  chip.style.outline = '3px solid #f9a825';
+}
+
+function buildFillSentences() {
+  const container = document.getElementById('fillSentences');
+  fillSentences.forEach((s, si) => {
+    const div = document.createElement('div');
+    div.className = 'fill-sentence';
+    div.innerHTML = s.text + ' ';
+    s.blanks.forEach((b, bi) => {
+      const blankId = `blank_${si}_${bi}`;
+      const span = document.createElement('span');
+      span.className = 'fill-blank';
+      span.id = blankId;
+      span.textContent = '________';
+      span.onclick = () => fillBlank(span, blankId, b.answer);
+      div.appendChild(span);
+      div.appendChild(document.createTextNode(' '));
+    });
+    div.innerHTML += '<span style="margin-left:2px">' + s.after + '</span>';
+
+    // rebuild properly — simpler approach:
+    const div2 = document.createElement('div');
+    div2.className = 'fill-sentence';
+    // text before blank
+    div2.appendChild(document.createTextNode(s.text + ' '));
+    s.blanks.forEach((b, bi) => {
+      const blankId = `blank_${si}_${bi}`;
+      const span = document.createElement('span');
+      span.className = 'fill-blank';
+      span.id = blankId;
+      span.textContent = '________';
+      span.onclick = () => fillBlank(span, blankId, b.answer);
+      div2.appendChild(span);
+      div2.appendChild(document.createTextNode(' '));
+    });
+    div2.appendChild(document.createTextNode(s.after));
+    container.appendChild(div2);
+  });
+}
+
+function fillBlank(span, blankId, correctAnswer) {
+  if (!selectedWord) {
+    animEl(span, 'shake-anim');
+    return;
+  }
+  // if blank already filled, return old word to bank
+  const oldWord = blankValues[blankId];
+  if (oldWord) {
+    const oldChip = document.getElementById('wc_' + oldWord);
+    if (oldChip) { oldChip.classList.remove('used'); oldChip.style.outline = ''; }
+    delete wordUsage[oldWord];
+  }
+  // place new word
+  blankValues[blankId] = selectedWord;
+  wordUsage[selectedWord] = blankId;
+  span.textContent = selectedWord;
+  span.classList.add('filled');
+  span.classList.remove('correct','wrong');
+
+  // mark word as used
+  const chip = document.getElementById('wc_' + selectedWord);
+  if (chip) { chip.classList.add('used'); chip.style.outline = ''; }
+  selectedWord = null;
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+}
+
+function checkFill() {
+  let correct = 0;
+  let total = 0;
+  fillSentences.forEach((s, si) => {
+    s.blanks.forEach((b, bi) => {
+      total++;
+      const blankId = `blank_${si}_${bi}`;
+      const span = document.getElementById(blankId);
+      const val = (blankValues[blankId] || '').toLowerCase().trim();
+      const ans = b.answer.toLowerCase().trim();
+      if (val === ans || (ans === 'kilogram' && val === 'kg')) {
+        span.classList.add('correct');
+        span.classList.remove('wrong');
+        animEl(span, 'pop-anim');
+        correct++;
+      } else {
+        span.classList.add('wrong');
+        span.classList.remove('correct');
+        animEl(span, 'shake-anim');
+      }
+    });
+  });
+  document.getElementById('fillDone').innerHTML = `<div class="done-badge">✏️ Done! You got ${correct}/${total} correct!</div>`;
+  addCheer();
+}
+
+buildWordBank();
+buildFillSentences();
+</script>
+</body>
+</html>
