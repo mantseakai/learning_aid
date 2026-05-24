@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life in the Stone Age 🪨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6d4c41;
+      --accent:  #a1887f;
+      --bg:      #efebe9;
+      --dark:    #3e2723;
+      --paleo:   #e65100;
+      --meso:    #455a64;
+      --neo:     #33691e;
+      --paleo-light: #fff3e0;
+      --meso-light:  #eceff1;
+      --neo-light:   #f1f8e9;
+      --white:   #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 90%, rgba(109,76,65,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 90% 10%, rgba(161,136,127,0.1) 0%, transparent 50%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92);
+      border: 2px solid rgba(109,76,65,0.3);
+      color: var(--primary); font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── Cheer Banner ── */
+    .cheer-banner {
+      display: none;
+      background: linear-gradient(135deg, #ff8f00, #f57f17);
+      color: white;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.35rem;
+      padding: 18px 24px;
+      position: sticky; top: 0; z-index: 999;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      animation: popIn 0.5s ease;
+    }
+    .cheer-banner.visible { display: block; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 60%, #8d6e63 100%);
+      color: white;
+      padding: 70px 24px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-top-stripe {
+      position: absolute; top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, var(--paleo) 33.3%, var(--meso) 33.3%, var(--meso) 66.6%, var(--neo) 66.6%);
+    }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 6vw, 3rem);
+      margin-bottom: 12px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .hero-dates {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .date-badge {
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.35);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 700;
+    }
+    .hero-def {
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 16px;
+      padding: 18px 24px;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+    .hero-def strong { color: #ffcc02; }
+
+    /* ── Timeline ── */
+    .timeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 680px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .tl-box {
+      background: rgba(255,255,255,0.15);
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 14px;
+      padding: 14px 20px;
+      text-align: center;
+      min-width: 160px;
+      transition: transform 0.2s;
+    }
+    .tl-box:hover { transform: translateY(-4px); }
+    .tl-box.paleo { border-color: var(--paleo); background: rgba(230,81,0,0.25); }
+    .tl-box.meso  { border-color: #90a4ae; background: rgba(69,90,100,0.25); }
+    .tl-box.neo   { border-color: #aed581; background: rgba(51,105,30,0.25); }
+    .tl-num { font-family: 'Fredoka One', cursive; font-size: 1.7rem; display: block; }
+    .tl-name { font-weight: 800; font-size: 0.9rem; }
+    .tl-sub { font-size: 0.75rem; opacity: 0.85; }
+    .tl-arrow {
+      font-size: 1.8rem;
+      margin: 0 4px;
+      opacity: 0.7;
+      color: white;
+    }
+
+    /* ── Page sections ── */
+    .page-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1; height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    /* ── Period cards ── */
+    .period-cards { display: flex; flex-direction: column; gap: 24px; }
+
+    .period-card {
+      border-radius: 20px;
+      padding: 28px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+    }
+    .period-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.15); }
+    .period-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0;
+      width: 8px;
+      border-radius: 20px 0 0 20px;
+    }
+
+    .period-card.paleo {
+      background: var(--paleo-light);
+      border: 2px solid #ffccbc;
+    }
+    .period-card.paleo::before { background: var(--paleo); }
+    .period-card.paleo.tapped {
+      box-shadow: 0 0 0 4px var(--paleo), 0 8px 28px rgba(230,81,0,0.3);
+    }
+
+    .period-card.meso {
+      background: var(--meso-light);
+      border: 2px solid #b0bec5;
+    }
+    .period-card.meso::before { background: var(--meso); }
+    .period-card.meso.tapped {
+      box-shadow: 0 0 0 4px var(--meso), 0 8px 28px rgba(69,90,100,0.3);
+    }
+
+    .period-card.neo {
+      background: var(--neo-light);
+      border: 2px solid #c5e1a5;
+    }
+    .period-card.neo::before { background: var(--neo); }
+    .period-card.neo.tapped {
+      box-shadow: 0 0 0 4px var(--neo), 0 8px 28px rgba(51,105,30,0.3);
+    }
+
+    .card-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .card-icon { font-size: 2.4rem; }
+    .card-title-group { flex: 1; }
+    .card-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--dark);
+    }
+    .card-subtitle { font-size: 0.9rem; color: #555; font-weight: 600; }
+    .meaning-badge {
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: white;
+      white-space: nowrap;
+    }
+    .paleo .meaning-badge { background: var(--paleo); }
+    .meso  .meaning-badge { background: var(--meso); }
+    .neo   .meaning-badge { background: var(--neo); }
+
+    .fact-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .fact-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 1rem; font-weight: 600; line-height: 1.5;
+    }
+    .fact-list li .fi { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+
+    .tap-hint {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      opacity: 0.55;
+      text-align: right;
+    }
+
+    /* ── Compare Table ── */
+    .compare-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+    }
+    table.compare {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      font-size: 0.95rem;
+    }
+    table.compare th {
+      padding: 14px 18px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: white;
+      text-align: center;
+    }
+    table.compare th:nth-child(1) { background: var(--primary); }
+    table.compare th:nth-child(2) { background: var(--paleo); }
+    table.compare th:nth-child(3) { background: var(--meso); }
+    table.compare th:nth-child(4) { background: var(--neo); }
+
+    table.compare td {
+      padding: 12px 16px;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+    table.compare td:first-child {
+      background: #f5f0ee;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      color: var(--primary);
+      cursor: default;
+    }
+    table.compare tr:nth-child(even) td { background: #fafafa; }
+    table.compare tr:nth-child(even) td:first-child { background: #ede8e5; }
+    table.compare td.paleo-cell:hover { background: #fff3e0; }
+    table.compare td.meso-cell:hover  { background: #eceff1; }
+    table.compare td.neo-cell:hover   { background: #f1f8e9; }
+    table.compare td.revealed { font-style: italic; color: #333; }
+
+    .cell-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%; transform: translateX(-50%);
+      background: var(--dark);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      white-space: nowrap;
+      z-index: 100;
+      pointer-events: none;
+    }
+    table.compare td:hover .cell-tooltip { display: block; }
+
+    /* ── Activities ── */
+    .activity-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      border: 2px solid #e8ddd8;
+      margin-bottom: 28px;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .activity-sub {
+      font-size: 0.88rem;
+      color: #777;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* ── Activity 1: Which Period? ── */
+    .sort-fact-display {
+      background: linear-gradient(135deg, #f5f0ee, #ede8e5);
+      border: 3px dashed var(--accent);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      min-height: 90px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sort-fact-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--dark);
+    }
+    .sort-buttons {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .sort-btn {
+      padding: 12px 22px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .sort-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.2); }
+    .sort-btn.paleo { background: var(--paleo); }
+    .sort-btn.meso  { background: var(--meso); }
+    .sort-btn.neo   { background: var(--neo); }
+
+    .sort-progress {
+      text-align: center;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+    .sort-result-msg {
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      min-height: 28px;
+      margin-bottom: 4px;
+    }
+    .sort-buckets {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;
+    }
+    .sort-bucket {
+      flex: 1; min-width: 140px;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .sort-bucket.paleo { background: #fff3e0; border: 2px solid var(--paleo); color: var(--paleo); }
+    .sort-bucket.meso  { background: #eceff1; border: 2px solid var(--meso); color: var(--meso); }
+    .sort-bucket.neo   { background: #f1f8e9; border: 2px solid var(--neo); color: var(--neo); }
+    .sort-bucket-title { font-family: 'Fredoka One', cursive; font-size: 0.9rem; margin-bottom: 4px; }
+    .sort-bucket-items { list-style: none; }
+    .sort-bucket-items li { padding: 2px 0; }
+
+    /* ── Activity 2: Quiz ── */
+    .quiz-question {
+      margin-bottom: 22px;
+      padding: 18px;
+      border-radius: 14px;
+      background: #faf7f5;
+      border: 2px solid #e8ddd8;
+    }
+    .quiz-q-text {
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: var(--dark);
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-opt {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      background: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .quiz-opt:hover { border-color: var(--accent); background: #fdf8f6; }
+    .quiz-opt.correct { background: #e8f5e9; border-color: #388e3c; color: #2e7d32; }
+    .quiz-opt.wrong   { background: #ffebee; border-color: #c62828; color: #c62828; }
+    .quiz-opt:disabled { cursor: default; }
+    .quiz-feedback { margin-top: 8px; font-size: 0.88rem; font-weight: 700; min-height: 22px; }
+    .quiz-score { text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--primary); margin-top: 10px; }
+
+    /* ── Activity 3: Match ── */
+    .match-area {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .match-col-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .match-items { display: flex; flex-direction: column; gap: 8px; }
+    .match-item {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      background: white;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .match-item:hover:not(.locked):not(.selected) { border-color: var(--accent); background: #fdf8f6; }
+    .match-item.selected { border-color: var(--primary); background: #efebe9; box-shadow: 0 0 0 3px rgba(109,76,65,0.3); }
+    .match-item.locked   { border-color: #388e3c; background: #e8f5e9; color: #2e7d32; cursor: default; }
+    .match-result { text-align: center; margin-top: 14px; font-family: 'Fredoka One', cursive; color: var(--primary); font-size: 1rem; }
+
+    /* ── Activity 4: True/False ── */
+    .tf-list { display: flex; flex-direction: column; gap: 12px; }
+    .tf-item {
+      display: flex; align-items: center; gap: 12px;
+      background: #faf7f5;
+      border: 2px solid #e8ddd8;
+      border-radius: 12px;
+      padding: 14px 16px;
+      flex-wrap: wrap;
+    }
+    .tf-statement { flex: 1; font-weight: 700; font-size: 0.95rem; min-width: 200px; }
+    .tf-btns { display: flex; gap: 8px; }
+    .tf-btn {
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 2px solid;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: white;
+    }
+    .tf-btn.true-btn  { border-color: #388e3c; color: #388e3c; }
+    .tf-btn.false-btn { border-color: #c62828; color: #c62828; }
+    .tf-btn.true-btn:hover  { background: #e8f5e9; }
+    .tf-btn.false-btn:hover { background: #ffebee; }
+    .tf-btn.correct { background: #e8f5e9 !important; color: #2e7d32; border-color: #388e3c; }
+    .tf-btn.wrong   { background: #ffebee !important; color: #c62828; border-color: #c62828; }
+    .tf-btn:disabled { cursor: default; opacity: 0.7; }
+    .tf-score { text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--primary); margin-top: 12px; }
+
+    /* ── Activity 5: Fill in Blank ── */
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      background: linear-gradient(135deg, #efebe9, #e8ddd8);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 22px;
+    }
+    .word-bank-title { width: 100%; font-family: 'Fredoka One', cursive; color: var(--primary); margin-bottom: 4px; }
+    .word-chip {
+      padding: 7px 16px;
+      border-radius: 50px;
+      background: white;
+      border: 2px solid var(--accent);
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .word-chip:hover { background: var(--accent); color: white; }
+    .word-chip.used { opacity: 0.3; cursor: default; text-decoration: line-through; }
+
+    .fib-list { display: flex; flex-direction: column; gap: 14px; }
+    .fib-item {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-weight: 700; font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    .fib-blank {
+      display: inline-block;
+      min-width: 110px;
+      border-bottom: 3px solid var(--primary);
+      padding: 2px 8px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--primary);
+      background: #faf7f5;
+      border-radius: 4px 4px 0 0;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-height: 28px;
+    }
+    .fib-blank:hover { background: #efebe9; }
+    .fib-blank.correct-fill { background: #e8f5e9; border-color: #388e3c; color: #2e7d32; cursor: default; }
+    .fib-blank.wrong-fill   { background: #ffebee; border-color: #c62828; color: #c62828; }
+    .fib-score { text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--primary); margin-top: 12px; }
+
+    /* ── Animations ── */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.7); opacity: 0; }
+      80%  { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+
+    .do-bounce { animation: bounce 0.6s ease; }
+    .do-shake  { animation: shake 0.5s ease; }
+    .do-pop    { animation: pop 0.35s ease; }
+    .do-popIn  { animation: popIn 0.5s ease; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 4px;
+      background: linear-gradient(90deg, var(--paleo), var(--meso), var(--neo));
+      border-radius: 2px;
+      margin: 8px 0 32px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: #888;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- Cheer Banner -->
+<div class="cheer-banner" id="cheerBanner">
+  Excellent, Emunah! You know all three Stone Age periods! 🪨⭐
+</div>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero-top-stripe"></div>
+  <h1>Life in the Stone Age 🪨</h1>
+  <div class="hero-dates">
+    <span class="date-badge">📅 5th May 2026</span>
+    <span class="date-badge">📅 7th May 2026</span>
+  </div>
+  <div class="hero-def">
+    The Stone Age is the <strong>EARLIEST</strong> period of human culture.
+    Tools were mainly made of <strong>STONE</strong>.
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline">
+    <div class="tl-box paleo">
+      <span class="tl-num">1️⃣</span>
+      <span class="tl-name">Palaeolithic</span>
+      <span class="tl-sub">Old Stone Age</span>
+    </div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-box meso">
+      <span class="tl-num">2️⃣</span>
+      <span class="tl-name">Mesolithic</span>
+      <span class="tl-sub">Middle Stone Age</span>
+    </div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-box neo">
+      <span class="tl-num">3️⃣</span>
+      <span class="tl-name">Neolithic</span>
+      <span class="tl-sub">New Stone Age</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ PERIOD CARDS ═══ -->
+<section class="page-section">
+  <h2 class="section-title">The Three Periods</h2>
+  <p style="margin-bottom:18px; font-weight:600; color:#666;">Tap each card to see it glow! 👇</p>
+
+  <div class="period-cards">
+
+    <!-- Palaeolithic -->
+    <div class="period-card paleo" onclick="tapCard(this)">
+      <div class="card-header">
+        <span class="card-icon">🟠</span>
+        <div class="card-title-group">
+          <div class="card-title">Palaeolithic Age</div>
+          <div class="card-subtitle">Old Stone Age — the very first period</div>
+        </div>
+        <span class="meaning-badge">PALAEO = OLD</span>
+      </div>
+      <ul class="fact-list">
+        <li><span class="fi">⬛</span><span>This is the <strong>earliest stage</strong> of human history</span></li>
+        <li><span class="fi">🏹</span><span>People were <strong>hunters and gatherers</strong> — they hunted animals and collected wild food</span></li>
+        <li><span class="fi">🪨</span><span>They used <strong>simple, rough stone tools</strong></span></li>
+        <li><span class="fi">🦇</span><span>People <strong>lived in caves</strong> for shelter</span></li>
+        <li><span class="fi">🔥</span><span>They <strong>discovered fire</strong></span></li>
+        <li><span class="fi">🎨</span><span>They made <strong>early art</strong> — cave paintings on the walls of their caves</span></li>
+      </ul>
+      <p class="tap-hint">Tap to glow 🟠</p>
+    </div>
+
+    <!-- Mesolithic -->
+    <div class="period-card meso" onclick="tapCard(this)">
+      <div class="card-header">
+        <span class="card-icon">⬛</span>
+        <div class="card-title-group">
+          <div class="card-title">Mesolithic Age</div>
+          <div class="card-subtitle">Middle Stone Age — the second period</div>
+        </div>
+        <span class="meaning-badge">MESO = MIDDLE</span>
+      </div>
+      <ul class="fact-list">
+        <li><span class="fi">🔪</span><span>Tools became <strong>smaller and sharper</strong> than before</span></li>
+        <li><span class="fi">🎣</span><span>People <strong>started fishing</strong></span></li>
+        <li><span class="fi">🐄</span><span>People began to <strong>keep animals</strong></span></li>
+      </ul>
+      <p class="tap-hint">Tap to glow ⬛</p>
+    </div>
+
+    <!-- Neolithic -->
+    <div class="period-card neo" onclick="tapCard(this)">
+      <div class="card-header">
+        <span class="card-icon">🟢</span>
+        <div class="card-title-group">
+          <div class="card-title">Neolithic Age</div>
+          <div class="card-subtitle">New Stone Age — the third period</div>
+        </div>
+        <span class="meaning-badge">NEO = NEW</span>
+      </div>
+      <ul class="fact-list">
+        <li><span class="fi">🌾</span><span>People <strong>started farming</strong> — growing their own food</span></li>
+        <li><span class="fi">🏘️</span><span>People <strong>lived in villages</strong> instead of caves</span></li>
+        <li><span class="fi">🪃</span><span>They used <strong>smooth, polished tools</strong> — better than rough stone!</span></li>
+      </ul>
+      <p class="tap-hint">Tap to glow 🟢</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ COMPARE TABLE ═══ -->
+<section class="page-section" style="padding-top:0">
+  <div class="divider"></div>
+  <h2 class="section-title">Compare the Periods 📊</h2>
+  <p style="margin-bottom:16px; font-weight:600; color:#666;">Tap the coloured cells for extra detail!</p>
+  <div class="compare-wrap">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>🟠 Palaeolithic</th>
+          <th>⬛ Mesolithic</th>
+          <th>🟢 Neolithic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tools</td>
+          <td class="paleo-cell" onclick="revealCell(this)" data-detail="Simple and rough — just chipped stones">Rough stone tools<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="meso-cell"  onclick="revealCell(this)" data-detail="Smaller and sharper than Palaeolithic tools">Smaller &amp; sharper<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="neo-cell"   onclick="revealCell(this)" data-detail="Carefully shaped and ground smooth — the best stone tools!">Smooth &amp; polished<span class="cell-tooltip">Tap for detail</span></td>
+        </tr>
+        <tr>
+          <td>Where they lived</td>
+          <td class="paleo-cell" onclick="revealCell(this)" data-detail="Caves gave them shelter from weather and animals">Caves<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="meso-cell"  onclick="revealCell(this)" data-detail="Still moved around, often near rivers and coasts">Moving around<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="neo-cell"   onclick="revealCell(this)" data-detail="Settled in one place — farming meant they could stay put!">Villages<span class="cell-tooltip">Tap for detail</span></td>
+        </tr>
+        <tr>
+          <td>Food</td>
+          <td class="paleo-cell" onclick="revealCell(this)" data-detail="They hunted deer, mammoths and gathered nuts, berries and roots">Hunted &amp; gathered<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="meso-cell"  onclick="revealCell(this)" data-detail="Fish from rivers and seas + wild animals + kept some animals for food">Hunted + fished<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="neo-cell"   onclick="revealCell(this)" data-detail="Grew crops like wheat and barley — could store food for winter!">Farmed crops<span class="cell-tooltip">Tap for detail</span></td>
+        </tr>
+        <tr>
+          <td>What they did</td>
+          <td class="paleo-cell" onclick="revealCell(this)" data-detail="Made fire, painted caves, chipped stone tools">Discovered fire &amp; cave art<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="meso-cell"  onclick="revealCell(this)" data-detail="Learned to fish and began taming wild animals">Started fishing &amp; keeping animals<span class="cell-tooltip">Tap for detail</span></td>
+          <td class="neo-cell"   onclick="revealCell(this)" data-detail="Settled farming life — built huts, polished tools, formed communities">Farming &amp; village life<span class="cell-tooltip">Tap for detail</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ ACTIVITIES ═══ -->
+<section class="page-section" style="padding-top:0">
+  <div class="divider"></div>
+  <h2 class="section-title">Activities 🎮</h2>
+
+  <!-- Activity 1: Which Period? -->
+  <div class="activity-card">
+    <div class="activity-title">Activity 1 — Which Period? 🎯</div>
+    <div class="activity-sub">Read the fact and tap the correct period. 12 facts to sort!</div>
+
+    <div class="sort-fact-display" id="sortFactDisplay">
+      <span class="sort-fact-text" id="sortFactText">Press Start to begin!</span>
+    </div>
+    <div class="sort-progress" id="sortProgress">Fact 0 of 12</div>
+    <div class="sort-buttons">
+      <button class="sort-btn paleo" onclick="sortAnswer('Palaeolithic')">Palaeolithic 🟠</button>
+      <button class="sort-btn meso"  onclick="sortAnswer('Mesolithic')">Mesolithic ⬛</button>
+      <button class="sort-btn neo"   onclick="sortAnswer('Neolithic')">Neolithic 🟢</button>
+    </div>
+    <div class="sort-result-msg" id="sortResultMsg"></div>
+    <button id="sortStartBtn" onclick="startSort()" style="display:block;margin:0 auto 14px;padding:12px 28px;border-radius:50px;border:none;background:var(--primary);color:white;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;">Start! 🚀</button>
+
+    <div class="sort-buckets">
+      <div class="sort-bucket paleo">
+        <div class="sort-bucket-title">🟠 Palaeolithic</div>
+        <ul class="sort-bucket-items" id="bucketPaleo"></ul>
+      </div>
+      <div class="sort-bucket meso">
+        <div class="sort-bucket-title">⬛ Mesolithic</div>
+        <ul class="sort-bucket-items" id="bucketMeso"></ul>
+      </div>
+      <div class="sort-bucket neo">
+        <div class="sort-bucket-title">🟢 Neolithic</div>
+        <ul class="sort-bucket-items" id="bucketNeo"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity 2: Quiz -->
+  <div class="activity-card">
+    <div class="activity-title">Activity 2 — Pick the Right Answer! 📝</div>
+    <div class="activity-sub">Choose the correct answer for each question. 10 questions!</div>
+    <div id="quizContainer"></div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+
+  <!-- Activity 3: Match -->
+  <div class="activity-card">
+    <div class="activity-title">Activity 3 — Match the Period! 🔗</div>
+    <div class="activity-sub">Tap a feature on the left, then tap its period on the right. Match all 9!</div>
+
+    <div style="display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:180px;">
+        <div class="match-col-title">📌 Features</div>
+        <div class="match-items" id="matchLeft"></div>
+      </div>
+      <div style="flex:1; min-width:160px;">
+        <div class="match-col-title">🏷️ Periods</div>
+        <div class="match-items" id="matchRight"></div>
+      </div>
+    </div>
+    <div class="match-result" id="matchResult"></div>
+  </div>
+
+  <!-- Activity 4: True or False -->
+  <div class="activity-card">
+    <div class="activity-title">Activity 4 — True or False? ✅❌</div>
+    <div class="activity-sub">Is each statement true or false? Tap your answer!</div>
+    <div class="tf-list" id="tfList"></div>
+    <div class="tf-score" id="tfScore"></div>
+  </div>
+
+  <!-- Activity 5: Fill in the Blank -->
+  <div class="activity-card">
+    <div class="activity-title">Activity 5 — Fill in the Blank! ✏️</div>
+    <div class="activity-sub">Tap a word from the bank, then tap the blank it belongs to!</div>
+
+    <div class="word-bank" id="wordBank">
+      <div class="word-bank-title">📦 Word Bank:</div>
+    </div>
+    <div class="fib-list" id="fibList"></div>
+    <div class="fib-score" id="fibScore"></div>
+  </div>
+
+</section>
+
+<footer>Cambridge History — Stone Age · Made for Emunah 🪨</footer>
+
+<script>
+// ══════════════════════════════════════════════
+//  CHEER SYSTEM
+// ══════════════════════════════════════════════
+let cheerCount = 0;
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const banner = document.getElementById('cheerBanner');
+    banner.classList.add('visible');
+    banner.classList.remove('do-popIn');
+    void banner.offsetWidth;
+    banner.classList.add('do-popIn');
+  }
+}
+
+// ══════════════════════════════════════════════
+//  PERIOD CARDS
+// ══════════════════════════════════════════════
+function tapCard(el) {
+  el.classList.toggle('tapped');
+  el.classList.add('do-pop');
+  el.addEventListener('animationend', () => el.classList.remove('do-pop'), { once: true });
+}
+
+// ══════════════════════════════════════════════
+//  COMPARE TABLE
+// ══════════════════════════════════════════════
+function revealCell(el) {
+  if (el.classList.contains('revealed')) {
+    el.classList.remove('revealed');
+    el.innerHTML = el.dataset.original + '<span class="cell-tooltip">Tap for detail</span>';
+    return;
+  }
+  if (!el.dataset.original) el.dataset.original = el.childNodes[0].nodeValue || el.firstChild.textContent;
+  el.classList.add('revealed', 'do-pop');
+  el.innerHTML = el.dataset.detail + '<span class="cell-tooltip">Tap to hide</span>';
+  el.addEventListener('animationend', () => el.classList.remove('do-pop'), { once: true });
+}
+
+// ══════════════════════════════════════════════
+//  ACTIVITY 1 — Which Period?
+// ══════════════════════════════════════════════
+const sortFacts = [
+  { text: "Used rough stone tools",               answer: "Palaeolithic" },
+  { text: "Lived in caves",                       answer: "Palaeolithic" },
+  { text: "Discovered fire",                      answer: "Palaeolithic" },
+  { text: "Made cave paintings",                  answer: "Palaeolithic" },
+  { text: "Started fishing",                      answer: "Mesolithic" },
+  { text: "Tools became smaller and sharper",     answer: "Mesolithic" },
+  { text: "Began to keep animals",                answer: "Mesolithic" },
+  { text: "Started farming",                      answer: "Neolithic" },
+  { text: "Lived in villages",                    answer: "Neolithic" },
+  { text: "Used smooth polished tools",           answer: "Neolithic" },
+  { text: "Hunters and gatherers",                answer: "Palaeolithic" },
+  { text: "Tools were smaller than Palaeolithic", answer: "Mesolithic" },
+];
+
+let sortIndex = 0;
+let sortCorrect = 0;
+let sortDone = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let shuffledFacts = [];
+
+function startSort() {
+  shuffledFacts = shuffle(sortFacts);
+  sortIndex = 0; sortCorrect = 0; sortDone = false;
+  document.getElementById('bucketPaleo').innerHTML = '';
+  document.getElementById('bucketMeso').innerHTML = '';
+  document.getElementById('bucketNeo').innerHTML = '';
+  document.getElementById('sortStartBtn').textContent = 'Restart 🔄';
+  document.getElementById('sortResultMsg').textContent = '';
+  showSortFact();
+}
+
+function showSortFact() {
+  if (sortIndex >= shuffledFacts.length) {
+    document.getElementById('sortFactText').textContent = '🎉 All done!';
+    document.getElementById('sortProgress').textContent = `You got ${sortCorrect} out of ${shuffledFacts.length} correct!`;
+    document.getElementById('sortResultMsg').textContent = sortCorrect === shuffledFacts.length
+      ? '⭐ Perfect! You sorted all facts correctly!' : `Great effort! You got ${sortCorrect}/${shuffledFacts.length}!`;
+    if (!sortDone) { sortDone = true; addCheer(); }
+    return;
+  }
+  const fact = shuffledFacts[sortIndex];
+  document.getElementById('sortFactText').textContent = `"${fact.text}"`;
+  document.getElementById('sortProgress').textContent = `Fact ${sortIndex + 1} of ${shuffledFacts.length}`;
+  document.getElementById('sortResultMsg').textContent = '';
+}
+
+function sortAnswer(period) {
+  if (sortIndex >= shuffledFacts.length) return;
+  const fact = shuffledFacts[sortIndex];
+  const msgEl = document.getElementById('sortResultMsg');
+  const displayEl = document.getElementById('sortFactDisplay');
+
+  if (period === fact.answer) {
+    msgEl.textContent = '✅ Correct!';
+    msgEl.style.color = '#2e7d32';
+    sortCorrect++;
+    const bucket = period === 'Palaeolithic' ? 'bucketPaleo' : period === 'Mesolithic' ? 'bucketMeso' : 'bucketNeo';
+    const li = document.createElement('li');
+    li.textContent = '✓ ' + fact.text;
+    document.getElementById(bucket).appendChild(li);
+    displayEl.classList.add('do-pop');
+    displayEl.addEventListener('animationend', () => displayEl.classList.remove('do-pop'), { once: true });
+    sortIndex++;
+    setTimeout(showSortFact, 700);
+  } else {
+    msgEl.textContent = `❌ Try again! That's not ${period}.`;
+    msgEl.style.color = '#c62828';
+    displayEl.classList.add('do-shake');
+    displayEl.addEventListener('animationend', () => displayEl.classList.remove('do-shake'), { once: true });
+  }
+}
+
+// ══════════════════════════════════════════════
+//  ACTIVITY 2 — Quiz
+// ══════════════════════════════════════════════
+const quizData = [
+  {
+    q: "The Stone Age is the ___ period of human culture.",
+    opts: ["latest", "middle", "earliest"],
+    correct: 2
+  },
+  {
+    q: "Why is it called the Stone Age?",
+    opts: ["People lived on stones", "Tools were made of stone", "Stones fell from the sky"],
+    correct: 1
+  },
+  {
+    q: "Which period is the Palaeolithic?",
+    opts: ["New Stone Age", "Middle Stone Age", "Old Stone Age"],
+    correct: 2
+  },
+  {
+    q: "Palaeolithic people lived in ___.",
+    opts: ["villages", "caves", "huts"],
+    correct: 1
+  },
+  {
+    q: "What did Mesolithic people start doing?",
+    opts: ["farming", "making cave art", "fishing"],
+    correct: 2
+  },
+  {
+    q: "Neolithic tools were ___.",
+    opts: ["rough and simple", "smooth and polished", "made of metal"],
+    correct: 1
+  },
+  {
+    q: "Palaeolithic people discovered ___.",
+    opts: ["farming", "writing", "fire"],
+    correct: 2
+  },
+  {
+    q: "Neolithic people lived in ___.",
+    opts: ["caves", "villages", "trees"],
+    correct: 1
+  },
+  {
+    q: "MESO means ___.",
+    opts: ["old", "new", "middle"],
+    correct: 2
+  },
+  {
+    q: "The correct order is ___.",
+    opts: [
+      "Mesolithic → Neolithic → Palaeolithic",
+      "Palaeolithic → Mesolithic → Neolithic",
+      "Neolithic → Palaeolithic → Mesolithic"
+    ],
+    correct: 1
+  }
+];
+
+let quizAnswered = new Array(quizData.length).fill(false);
+let quizCorrectCount = 0;
+let quizDone = false;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.id = 'qq' + qi;
+    div.innerHTML = `<div class="quiz-q-text">Q${qi + 1}. ${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((opt, oi) =>
+          `<button class="quiz-opt" onclick="pickQ(this, ${oi === q.correct ? "'correct'" : "'wrong'"}, ${qi})">
+            ${String.fromCharCode(97 + oi)}) ${opt}
+          </button>`
+        ).join('')}
+      </div>
+      <div class="quiz-feedback" id="qf${qi}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function pickQ(el, result, qNum) {
+  if (quizAnswered[qNum]) return;
+  quizAnswered[qNum] = true;
+  const feedback = document.getElementById('qf' + qNum);
+  const opts = el.closest('.quiz-options').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+
+  if (result === 'correct') {
+    el.classList.add('correct');
+    feedback.textContent = '✅ Correct! Well done!';
+    feedback.style.color = '#2e7d32';
+    quizCorrectCount++;
+  } else {
+    el.classList.add('wrong');
+    el.classList.add('do-shake');
+    el.addEventListener('animationend', () => el.classList.remove('do-shake'), { once: true });
+    // Reveal correct
+    opts.forEach((o, oi) => {
+      if (oi === quizData[qNum].correct) o.classList.add('correct');
+    });
+    feedback.textContent = '❌ Not quite — the correct answer is highlighted.';
+    feedback.style.color = '#c62828';
+  }
+
+  if (quizAnswered.every(a => a)) {
+    document.getElementById('quizScore').textContent =
+      `⭐ You scored ${quizCorrectCount} out of ${quizData.length}!`;
+    if (!quizDone) { quizDone = true; addCheer(); }
+  }
+}
+
+buildQuiz();
+
+// ══════════════════════════════════════════════
+//  ACTIVITY 3 — Match
+// ══════════════════════════════════════════════
+const matchPairs = [
+  { feature: "Rough stone tools",   period: "Palaeolithic" },
+  { feature: "Lived in caves",      period: "Palaeolithic" },
+  { feature: "Discovered fire",     period: "Palaeolithic" },
+  { feature: "Started fishing",     period: "Mesolithic" },
+  { feature: "Kept animals",        period: "Mesolithic" },
+  { feature: "Sharper tools",       period: "Mesolithic" },
+  { feature: "Started farming",     period: "Neolithic" },
+  { feature: "Lived in villages",   period: "Neolithic" },
+  { feature: "Polished tools",      period: "Neolithic" },
+];
+
+const rightItems = shuffle([
+  "Palaeolithic","Palaeolithic","Palaeolithic",
+  "Mesolithic","Mesolithic","Mesolithic",
+  "Neolithic","Neolithic","Neolithic"
+]);
+
+let selectedLeft  = null;
+let selectedRight = null;
+let matchedCount  = 0;
+let matchDone     = false;
+
+// Track which right-side items are available
+let rightAvailable = rightItems.map((period, i) => ({ period, i, locked: false }));
+
+function buildMatch() {
+  const leftEl  = document.getElementById('matchLeft');
+  const rightEl = document.getElementById('matchRight');
+  leftEl.innerHTML = '';
+  rightEl.innerHTML = '';
+
+  matchPairs.forEach((pair, i) => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.textContent = pair.feature;
+    div.dataset.index = i;
+    div.onclick = () => selectLeft(div, i);
+    leftEl.appendChild(div);
+  });
+
+  rightAvailable.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.textContent = item.period;
+    div.dataset.index = i;
+    div.onclick = () => selectRight(div, i);
+    rightEl.appendChild(div);
+  });
+}
+
+function selectLeft(el, idx) {
+  if (el.classList.contains('locked')) return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLeft = { el, idx };
+  tryMatch();
+}
+
+function selectRight(el, idx) {
+  if (el.classList.contains('locked')) return;
+  document.querySelectorAll('#matchRight .match-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRight = { el, idx };
+  tryMatch();
+}
+
+function tryMatch() {
+  if (!selectedLeft || !selectedRight) return;
+  const leftPair   = matchPairs[selectedLeft.idx];
+  const rightPeriod = rightAvailable[selectedRight.idx].period;
+
+  if (leftPair.period === rightPeriod) {
+    // Correct!
+    selectedLeft.el.classList.remove('selected');
+    selectedLeft.el.classList.add('locked');
+    selectedRight.el.classList.remove('selected');
+    selectedRight.el.classList.add('locked');
+    rightAvailable[selectedRight.idx].locked = true;
+    matchedCount++;
+
+    if (matchedCount === matchPairs.length) {
+      document.getElementById('matchResult').textContent = '🎉 Perfect! All 9 matched!';
+      if (!matchDone) { matchDone = true; addCheer(); }
+    }
+  } else {
+    // Wrong
+    selectedLeft.el.classList.add('do-shake');
+    selectedRight.el.classList.add('do-shake');
+    selectedLeft.el.addEventListener('animationend', () => {
+      selectedLeft.el.classList.remove('do-shake', 'selected');
+    }, { once: true });
+    selectedRight.el.addEventListener('animationend', () => {
+      selectedRight.el.classList.remove('do-shake', 'selected');
+    }, { once: true });
+  }
+  selectedLeft = null;
+  selectedRight = null;
+}
+
+buildMatch();
+
+// ══════════════════════════════════════════════
+//  ACTIVITY 4 — True or False
+// ══════════════════════════════════════════════
+const tfData = [
+  { statement: "The Stone Age is the latest period of human culture.",    answer: false },
+  { statement: "Palaeolithic people used rough stone tools.",             answer: true  },
+  { statement: "Neolithic people lived in caves.",                        answer: false },
+  { statement: "Mesolithic people started fishing.",                      answer: true  },
+  { statement: "Palaeolithic people discovered fire.",                    answer: true  },
+  { statement: "Neolithic tools were smooth and polished.",               answer: true  },
+  { statement: "PALAEO means new.",                                       answer: false },
+  { statement: "The Mesolithic Age came before the Palaeolithic Age.",    answer: false },
+];
+
+let tfAnswered = new Array(tfData.length).fill(false);
+let tfCorrect  = 0;
+let tfDone     = false;
+
+function buildTF() {
+  const list = document.getElementById('tfList');
+  list.innerHTML = '';
+  tfData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.id = 'tf' + i;
+    div.innerHTML = `
+      <span class="tf-statement">${i + 1}. ${item.statement}</span>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn"  onclick="answerTF(${i}, true)">TRUE</button>
+        <button class="tf-btn false-btn" onclick="answerTF(${i}, false)">FALSE</button>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+function answerTF(i, chosen) {
+  if (tfAnswered[i]) return;
+  tfAnswered[i] = true;
+  const item    = tfData[i];
+  const tfItem  = document.getElementById('tf' + i);
+  const btns    = tfItem.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const trueBtn  = tfItem.querySelector('.true-btn');
+  const falseBtn = tfItem.querySelector('.false-btn');
+
+  if (chosen === item.answer) {
+    (chosen ? trueBtn : falseBtn).classList.add('correct');
+    tfCorrect++;
+  } else {
+    (chosen ? trueBtn : falseBtn).classList.add('wrong');
+    (!chosen ? trueBtn : falseBtn).classList.add('correct');
+    tfItem.classList.add('do-shake');
+    tfItem.addEventListener('animationend', () => tfItem.classList.remove('do-shake'), { once: true });
+  }
+
+  if (tfAnswered.every(a => a)) {
+    document.getElementById('tfScore').textContent =
+      `⭐ You got ${tfCorrect} out of ${tfData.length} correct!`;
+    if (!tfDone) { tfDone = true; addCheer(); }
+  }
+}
+
+buildTF();
+
+// ══════════════════════════════════════════════
+//  ACTIVITY 5 — Fill in the Blank
+// ══════════════════════════════════════════════
+const wordBankWords = ["stone","caves","fire","fishing","farming","villages","polished","Palaeolithic","Mesolithic","Neolithic"];
+
+const fibSentences = [
+  { before: "The Stone Age is named because tools were made of", blank: "stone",        after: "." },
+  { before: "",                                                   blank: "Palaeolithic", after: " Age people lived in caves." },
+  { before: "Palaeolithic people discovered",                     blank: "fire",         after: "." },
+  { before: "The",                                                blank: "Mesolithic",   after: " Age is also called the Middle Stone Age." },
+  { before: "Mesolithic people started",                          blank: "fishing",      after: "." },
+  { before: "",                                                   blank: "Neolithic",    after: " Age people started farming." },
+  { before: "Neolithic people lived in",                          blank: "villages",     after: "." },
+  { before: "Neolithic tools were smooth and",                    blank: "polished",     after: "." },
+];
+
+let selectedWord = null;
+let fibFilled    = new Array(fibSentences.length).fill(null);
+let fibCorrect   = 0;
+let fibDone      = false;
+let usedWords    = {};
+
+function buildFIB() {
+  const bank = document.getElementById('wordBank');
+  wordBankWords.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.id = 'chip-' + w;
+    chip.onclick = () => selectWord(w, chip);
+    bank.appendChild(chip);
+  });
+
+  const fibList = document.getElementById('fibList');
+  fibList.innerHTML = '';
+  fibSentences.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'fib-item';
+    div.innerHTML =
+      (s.before ? `<span>${s.before}</span>` : '') +
+      `<span class="fib-blank" id="blank${i}" onclick="fillBlank(${i})">___</span>` +
+      (s.after ? `<span>${s.after}</span>` : '');
+    fibList.appendChild(div);
+  });
+}
+
+function selectWord(word, chipEl) {
+  if (chipEl.classList.contains('used')) return;
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+  selectedWord = word;
+  chipEl.style.outline = '3px solid var(--primary)';
+}
+
+function fillBlank(i) {
+  const blank = document.getElementById('blank' + i);
+  if (blank.classList.contains('correct-fill')) return;
+  if (!selectedWord) {
+    blank.classList.add('do-bounce');
+    blank.addEventListener('animationend', () => blank.classList.remove('do-bounce'), { once: true });
+    return;
+  }
+
+  if (selectedWord === fibSentences[i].blank) {
+    blank.textContent = selectedWord;
+    blank.classList.add('correct-fill', 'do-pop');
+    blank.addEventListener('animationend', () => blank.classList.remove('do-pop'), { once: true });
+
+    // Mark chip as used
+    const chip = document.getElementById('chip-' + selectedWord);
+    if (chip) chip.classList.add('used');
+
+    fibFilled[i] = selectedWord;
+    fibCorrect++;
+    document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+    selectedWord = null;
+
+    if (fibCorrect === fibSentences.length) {
+      document.getElementById('fibScore').textContent = '⭐ Amazing! All blanks filled correctly!';
+      if (!fibDone) { fibDone = true; addCheer(); }
+    }
+  } else {
+    blank.classList.add('wrong-fill', 'do-shake');
+    blank.textContent = selectedWord;
+    blank.addEventListener('animationend', () => {
+      blank.classList.remove('wrong-fill', 'do-shake');
+      blank.textContent = '___';
+    }, { once: true });
+  }
+}
+
+buildFIB();
+</script>
+</body>
+</html>

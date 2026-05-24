@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food & Shelter in the Stone Age 🏹🏕️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6d4c41;
+      --accent:  #a1887f;
+      --bg:      #efebe9;
+      --dark:    #3e2723;
+      --food:    #e65100;
+      --food-lt: #fff3e0;
+      --shelter: #33691e;
+      --shelter-lt: #f1f8e9;
+      --white:   #ffffff;
+      --card-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 90%, rgba(109,76,65,0.07) 0%, transparent 50%),
+        radial-gradient(circle at 90% 10%, rgba(230,81,0,0.06) 0%, transparent 50%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ── Keyframes ── */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+    @keyframes fadeSlideIn {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: var(--primary);
+      border: 2px solid var(--dark);
+      color: #fff; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: var(--dark); transform: translateX(-2px); }
+
+    /* ── Cheer banner ── */
+    .cheer-banner {
+      display: none;
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 9998;
+      background: linear-gradient(135deg, #ff8f00, #f57f17);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      padding: 16px 32px;
+      border-radius: 60px;
+      box-shadow: 0 6px 30px rgba(255,143,0,0.5);
+      text-align: center;
+      animation: popIn 0.5s ease forwards, bounce 2s 0.5s infinite;
+      white-space: nowrap;
+    }
+    .cheer-banner.show { display: block; }
+
+    /* ── Page header ── */
+    .page-header {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 60%, #8d6e63 100%);
+      color: white;
+      padding: 70px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-header .emoji-big { font-size: 56px; display: block; margin-bottom: 12px; animation: bounce 2s infinite; }
+    .page-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: 12px;
+      text-shadow: 2px 3px 8px rgba(0,0,0,0.3);
+    }
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.4);
+      padding: 5px 18px; border-radius: 40px;
+      font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .intro-card {
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(4px);
+      border-radius: 18px;
+      padding: 18px 28px;
+      max-width: 640px; margin: 0 auto;
+      font-size: 1.1rem; font-weight: 600;
+      line-height: 1.6;
+    }
+
+    /* ── Main container ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 120px;
+    }
+
+    /* ── Section headings ── */
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* ── NOMADS highlight box ── */
+    .nomads-box {
+      background: linear-gradient(135deg, #4a148c 0%, #7b1fa2 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 32px 36px;
+      margin: 32px 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(74,20,140,0.35);
+      animation: fadeSlideIn 0.7s ease;
+    }
+    .nomads-box::before {
+      content: '🚶';
+      position: absolute; right: 24px; top: 20px;
+      font-size: 72px; opacity: 0.18;
+    }
+    .nomads-box .nomads-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.25);
+      display: inline-block;
+      padding: 4px 14px; border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .nomads-box h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin-bottom: 16px;
+    }
+    .nomads-box .definition {
+      background: rgba(255,255,255,0.18);
+      border-left: 5px solid rgba(255,255,255,0.6);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 20px;
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .nomads-box .follow-note {
+      font-size: 1rem; font-weight: 600;
+      opacity: 0.9;
+    }
+
+    /* ── Food section ── */
+    .food-section {
+      background: var(--food-lt);
+      border: 3px solid var(--food);
+      border-radius: 24px;
+      padding: 28px;
+      margin: 28px 0;
+      animation: fadeSlideIn 0.6s ease;
+    }
+    .food-section .section-title { color: var(--food); }
+
+    .food-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    @media (max-width: 560px) { .food-columns { grid-template-columns: 1fr; } }
+
+    .food-sub {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+    }
+    .food-sub h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      color: var(--food);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed #ffcc80;
+    }
+
+    .tap-card {
+      display: inline-flex;
+      align-items: center; gap: 8px;
+      background: var(--food-lt);
+      border: 2px solid #ffcc80;
+      border-radius: 40px;
+      padding: 7px 16px;
+      margin: 5px 4px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .tap-card:hover { background: #ffe0b2; transform: scale(1.05); }
+    .tap-card.tapped {
+      background: var(--food);
+      color: white;
+      border-color: var(--food);
+      animation: pop 0.3s ease;
+    }
+    .tap-card .tap-hint { font-size: 0.7rem; opacity: 0.6; }
+
+    /* ── Shelter section ── */
+    .shelter-section {
+      background: var(--shelter-lt);
+      border: 3px solid var(--shelter);
+      border-radius: 24px;
+      padding: 28px;
+      margin: 28px 0;
+      animation: fadeSlideIn 0.6s ease;
+    }
+    .shelter-section .section-title { color: var(--shelter); }
+
+    .why-box {
+      background: white;
+      border-left: 5px solid var(--shelter);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 20px;
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 22px;
+      color: var(--dark);
+    }
+
+    .shelter-types {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    @media (max-width: 560px) { .shelter-types { grid-template-columns: 1fr; } }
+
+    .shelter-card {
+      background: white;
+      border: 2px solid #aed581;
+      border-radius: 18px;
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 3px 12px rgba(51,105,30,0.1);
+    }
+    .shelter-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(51,105,30,0.2); }
+    .shelter-card.tapped {
+      background: var(--shelter);
+      color: white;
+      border-color: var(--shelter);
+      animation: pop 0.3s ease;
+    }
+    .shelter-card .s-emoji { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+    .shelter-card .s-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.05rem;
+    }
+
+    .materials-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: var(--shelter);
+      margin-bottom: 14px;
+    }
+    .materials-grid {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .material-chip {
+      background: white;
+      border: 2px solid #aed581;
+      border-radius: 40px;
+      padding: 9px 18px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .material-chip:hover { background: #dcedc8; }
+    .material-chip.tapped {
+      background: var(--shelter);
+      color: white;
+      border-color: var(--shelter);
+    }
+    .material-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%);
+      background: var(--dark);
+      color: white;
+      font-size: 0.8rem; font-weight: 600;
+      padding: 7px 12px; border-radius: 10px;
+      white-space: nowrap;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .material-chip.tapped .material-tooltip { display: block; animation: popIn 0.25s ease; }
+
+    /* ── Activity wrapper ── */
+    .activity-section {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      margin: 28px 0;
+      box-shadow: var(--card-shadow);
+      animation: fadeSlideIn 0.6s ease;
+    }
+    .activity-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .activity-badge {
+      background: var(--primary);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem;
+      padding: 4px 14px; border-radius: 20px;
+    }
+    .activity-header h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: var(--dark);
+    }
+
+    /* ── Activity 1: Sort ── */
+    .sort-display {
+      text-align: center; margin-bottom: 24px;
+    }
+    .sort-item-card {
+      display: inline-block;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+      border-radius: 20px;
+      padding: 20px 40px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--dark);
+      min-width: 200px;
+      animation: popIn 0.4s ease;
+    }
+    .sort-buttons {
+      display: flex; gap: 14px; justify-content: center;
+      margin-bottom: 26px; flex-wrap: wrap;
+    }
+    .sort-btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      padding: 12px 28px; border: none;
+      border-radius: 40px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sort-btn:hover { transform: scale(1.05); }
+    .sort-btn-food {
+      background: var(--food); color: white;
+    }
+    .sort-btn-shelter {
+      background: var(--shelter); color: white;
+    }
+    .sort-buckets {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .bucket {
+      border-radius: 16px;
+      padding: 14px;
+      min-height: 70px;
+    }
+    .bucket-food { background: var(--food-lt); border: 2px dashed var(--food); }
+    .bucket-shelter { background: var(--shelter-lt); border: 2px dashed var(--shelter); }
+    .bucket h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+    .bucket-food h4 { color: var(--food); }
+    .bucket-shelter h4 { color: var(--shelter); }
+    .bucket-items { display: flex; flex-wrap: wrap; gap: 6px; }
+    .bucket-tag {
+      display: inline-block;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 0.85rem; font-weight: 700;
+      animation: popIn 0.3s ease;
+    }
+    .bucket-tag-food { background: var(--food); color: white; }
+    .bucket-tag-shelter { background: var(--shelter); color: white; }
+
+    .progress-bar-wrap {
+      background: #e0e0e0; border-radius: 20px;
+      height: 10px; margin-bottom: 18px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      height: 100%; border-radius: 20px;
+      transition: width 0.4s ease;
+    }
+    .progress-label {
+      text-align: right; font-size: 0.8rem; font-weight: 700;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .done-msg {
+      display: none;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--primary);
+      padding: 16px;
+      background: #fce4ec;
+      border-radius: 16px;
+      animation: popIn 0.4s ease;
+    }
+    .done-msg.show { display: block; }
+
+    /* ── Activity 2: Quiz ── */
+    .quiz-question {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      animation: fadeSlideIn 0.4s ease;
+    }
+    .quiz-question p {
+      font-weight: 700; font-size: 1.05rem;
+      margin-bottom: 14px;
+      color: var(--dark);
+    }
+    .quiz-q-num {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .quiz-options {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .quiz-opt {
+      background: white;
+      border: 2px solid #d7ccc8;
+      border-radius: 12px;
+      padding: 11px 18px;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .quiz-opt:hover:not(.answered) { border-color: var(--primary); background: #fafafa; }
+    .quiz-opt.correct {
+      background: #e8f5e9; border-color: #43a047; color: #1b5e20;
+      animation: pop 0.3s ease;
+    }
+    .quiz-opt.wrong {
+      background: #fce4ec; border-color: #e53935; color: #b71c1c;
+      animation: shake 0.4s ease;
+    }
+    .quiz-feedback {
+      margin-top: 10px; font-size: 0.9rem; font-weight: 700;
+      min-height: 22px;
+    }
+    .quiz-score-display {
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+
+    /* ── Activity 3: Match ── */
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 480px) { .match-grid { grid-template-columns: 1fr; } }
+
+    .match-col-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .match-items { display: flex; flex-direction: column; gap: 8px; }
+    .match-item {
+      background: white;
+      border: 2px solid #d7ccc8;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700; font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .match-item:hover:not(.locked):not(.disabled) { border-color: var(--primary); background: var(--bg); }
+    .match-item.selected-left {
+      border-color: #7b1fa2; background: #f3e5f5;
+      box-shadow: 0 0 0 3px #ce93d8;
+    }
+    .match-item.selected-right {
+      border-color: #0288d1; background: #e1f5fe;
+      box-shadow: 0 0 0 3px #81d4fa;
+    }
+    .match-item.locked {
+      background: #e8f5e9; border-color: #43a047;
+      cursor: default;
+    }
+    .match-item.wrong-shake { animation: shake 0.4s ease; }
+
+    /* ── Activity 4: True/False ── */
+    .tf-item {
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex; align-items: center;
+      gap: 14px; flex-wrap: wrap;
+      animation: fadeSlideIn 0.4s ease;
+    }
+    .tf-statement {
+      flex: 1; min-width: 180px;
+      font-weight: 700; font-size: 1rem;
+    }
+    .tf-buttons { display: flex; gap: 8px; }
+    .tf-btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.9rem;
+      padding: 8px 20px; border: none;
+      border-radius: 30px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tf-btn-true { background: #43a047; color: white; }
+    .tf-btn-false { background: #e53935; color: white; }
+    .tf-btn:hover:not(:disabled) { opacity: 0.85; transform: scale(1.05); }
+    .tf-result {
+      width: 100%; font-size: 0.88rem; font-weight: 700;
+      min-height: 18px;
+    }
+    .tf-result.ok { color: #2e7d32; }
+    .tf-result.bad { color: #c62828; }
+
+    /* ── Activity 5: Fill blank ── */
+    .word-bank {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 22px;
+      background: var(--bg); padding: 14px; border-radius: 14px;
+    }
+    .word-chip {
+      background: var(--primary); color: white;
+      font-weight: 800; font-size: 0.9rem;
+      padding: 6px 16px; border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .word-chip:hover:not(.used) { background: var(--dark); }
+    .word-chip.used { opacity: 0.35; cursor: default; pointer-events: none; }
+
+    .blank-sentence {
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      font-size: 1rem; font-weight: 700;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .blank-slot {
+      display: inline-block;
+      min-width: 120px; height: 34px;
+      border: 2.5px dashed var(--accent);
+      border-radius: 8px;
+      text-align: center;
+      line-height: 30px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--primary);
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .blank-slot.filled-correct {
+      border-color: #43a047; background: #e8f5e9;
+      color: #2e7d32; cursor: default;
+    }
+    .blank-slot.filled-wrong {
+      border-color: #e53935; background: #fce4ec;
+      color: #c62828; animation: shake 0.4s ease;
+    }
+    .blank-slot.waiting { border-color: #7b1fa2; background: #f3e5f5; }
+
+    /* ── Fun info boxes ── */
+    .fun-fact {
+      background: linear-gradient(135deg, #fff8e1, #fff3e0);
+      border: 2px solid #ffcc02;
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.95rem; font-weight: 600;
+    }
+    .fun-fact::before { content: '💡 '; font-size: 1.1rem; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Back button -->
+  <a href="../index.html" class="back-home-btn">← Back</a>
+
+  <!-- Cheer banner -->
+  <div class="cheer-banner" id="cheerBanner">
+    Well done, Emunah! You know about Stone Age life! 🪨⭐
+  </div>
+
+  <!-- ═══════ HERO ═══════ -->
+  <header class="page-header">
+    <span class="emoji-big">🪨</span>
+    <h1>Food &amp; Shelter in the Stone Age 🏹🏕️</h1>
+    <div class="date-badge">📅 7th May 2026</div>
+    <div class="intro-card">
+      Long, long before houses, supermarkets, or farms, Stone Age people had to work very hard every day to find food and stay safe. Let's discover how they did it! 🌍
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ═══════ NOMADS ═══════ -->
+    <div class="nomads-box">
+      <div class="nomads-label">Key Word</div>
+      <h2>🚶 Stone Age People Were NOMADS</h2>
+      <div class="definition">
+        A <strong>nomad</strong> is someone who moves from place to place in search of food — they do not stay in one home forever.
+      </div>
+      <div class="follow-note">🦌 They followed animals they wanted to hunt. Wherever the animals went, the people went too!</div>
+    </div>
+
+    <!-- ═══════ FOOD ═══════ -->
+    <div class="food-section">
+      <div class="section-title">🍖 Food in the Stone Age</div>
+      <p style="font-size:1rem; font-weight:600; margin-bottom:16px;">Stone Age people found food in two main ways — by <strong>hunting animals</strong> and by <strong>gathering plants</strong>. Tap each item to learn more!</p>
+
+      <div class="food-columns">
+        <!-- Hunted -->
+        <div class="food-sub">
+          <h3>🏹 Hunted Animals</h3>
+          <div>
+            <span class="tap-card" onclick="tapFood(this)">🦌 Deer</span>
+            <span class="tap-card" onclick="tapFood(this)">🐟 Fish</span>
+            <span class="tap-card" onclick="tapFood(this)">🦌 Antelope</span>
+          </div>
+          <p style="margin-top:14px; font-size:0.88rem; color:#6d4c41; font-weight:600;">Stone Age hunters used spears, bows, and arrows made from stone and wood to catch animals.</p>
+        </div>
+        <!-- Gathered -->
+        <div class="food-sub">
+          <h3>🫐 Gathered Plants</h3>
+          <div>
+            <span class="tap-card" onclick="tapFood(this)">🍎 Fruits</span>
+            <span class="tap-card" onclick="tapFood(this)">🌰 Nuts</span>
+            <span class="tap-card" onclick="tapFood(this)">🫐 Berries</span>
+            <span class="tap-card" onclick="tapFood(this)">🌿 Green Plants</span>
+            <span class="tap-card" onclick="tapFood(this)">🌱 Roots</span>
+            <span class="tap-card" onclick="tapFood(this)">🌾 Wild Grain</span>
+          </div>
+          <p style="margin-top:14px; font-size:0.88rem; color:#6d4c41; font-weight:600;">Gathering means picking food that grows wild in nature — no farms needed!</p>
+        </div>
+      </div>
+      <div class="fun-fact">Stone Age people did not have fire at first — they ate their food raw! Later they discovered fire and started cooking. 🔥</div>
+    </div>
+
+    <!-- ═══════ SHELTER ═══════ -->
+    <div class="shelter-section">
+      <div class="section-title">🏕️ Shelter in the Stone Age</div>
+      <div class="why-box">🛡️ Stone Age people needed shelter to <strong>protect themselves from the weather</strong> (rain, cold, heat) <strong>and from wild animals</strong>.</div>
+
+      <p style="font-family:'Fredoka One',cursive; font-size:1rem; color:var(--shelter); margin-bottom:14px;">Types of Shelter — tap each one!</p>
+      <div class="shelter-types">
+        <div class="shelter-card" onclick="tapShelter(this)">
+          <span class="s-emoji">🦇</span>
+          <div class="s-name">Caves</div>
+          <p style="font-size:0.8rem; margin-top:8px; color:#555;">Natural shelters found in rock — strong protection from wind and rain.</p>
+        </div>
+        <div class="shelter-card" onclick="tapShelter(this)">
+          <span class="s-emoji">🏠</span>
+          <div class="s-name">Huts</div>
+          <p style="font-size:0.8rem; margin-top:8px; color:#555;">Simple structures built from natural materials — like branches and animal skin.</p>
+        </div>
+        <div class="shelter-card" onclick="tapShelter(this)">
+          <span class="s-emoji">⛺</span>
+          <div class="s-name">Temporary Shelters</div>
+          <p style="font-size:0.8rem; margin-top:8px; color:#555;">Quick shelters built for a short time — because nomads kept moving!</p>
+        </div>
+      </div>
+
+      <div class="materials-title">🔨 Materials Used for Shelter — tap each to see how it was used!</div>
+      <div class="materials-grid">
+        <div class="material-chip" onclick="tapMaterial(this)">🪨 Stones <span class="material-tooltip">Used to build walls and weigh down shelters</span></div>
+        <div class="material-chip" onclick="tapMaterial(this)">🪵 Sticks <span class="material-tooltip">Used as frames to hold the shelter up</span></div>
+        <div class="material-chip" onclick="tapMaterial(this)">🌿 Branches <span class="material-tooltip">Used as roofing and walls to block wind</span></div>
+        <div class="material-chip" onclick="tapMaterial(this)">🐾 Animal Skin <span class="material-tooltip">Used as a covering to keep warmth inside</span></div>
+        <div class="material-chip" onclick="tapMaterial(this)">🍃 Leaves <span class="material-tooltip">Used on roofs to keep rain out</span></div>
+        <div class="material-chip" onclick="tapMaterial(this)">🌾 Grass <span class="material-tooltip">Woven together to make thick, warm walls</span></div>
+      </div>
+    </div>
+
+    <!-- ═══════ ACTIVITY 1: Sort ═══════ -->
+    <div class="activity-section">
+      <div class="activity-header">
+        <div class="activity-badge">Activity 1</div>
+        <h2>🗂️ Food or Shelter Material?</h2>
+      </div>
+      <p style="font-weight:600; margin-bottom:18px;">Look at each item below. Is it a <strong>food</strong> that Stone Age people ate, or a <strong>shelter material</strong> they used to build with? Press the right button!</p>
+
+      <div class="progress-label" id="sortProgress">0 / 12 sorted</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="sortBar" style="width:0%"></div></div>
+
+      <div class="sort-display">
+        <div class="sort-item-card" id="sortItemCard">🦌 Deer</div>
+      </div>
+      <div class="sort-buttons">
+        <button class="sort-btn sort-btn-food" onclick="sortAnswer('food')">🏹 Food</button>
+        <button class="sort-btn sort-btn-shelter" onclick="sortAnswer('shelter')">🏠 Shelter Material</button>
+      </div>
+      <div class="sort-buckets">
+        <div class="bucket bucket-food">
+          <h4>🍖 Food Items</h4>
+          <div class="bucket-items" id="foodBucket"></div>
+        </div>
+        <div class="bucket bucket-shelter">
+          <h4>🏕️ Shelter Materials</h4>
+          <div class="bucket-items" id="shelterBucket"></div>
+        </div>
+      </div>
+      <div class="done-msg" id="sort1Done">🎉 Amazing! You sorted all 12 items correctly! Well done! ⭐</div>
+    </div>
+
+    <!-- ═══════ ACTIVITY 2: Quiz ═══════ -->
+    <div class="activity-section">
+      <div class="activity-header">
+        <div class="activity-badge">Activity 2</div>
+        <h2>❓ Pick the Right Answer</h2>
+      </div>
+      <p style="font-weight:600; margin-bottom:18px;">Read each question carefully and tap the best answer. You can do it!</p>
+      <div class="quiz-score-display" id="quizScore">Score: 0 / 10</div>
+      <div id="quizContainer"></div>
+      <div class="done-msg" id="quiz2Done">🌟 Brilliant! You finished the quiz! Emunah is a Stone Age expert! 🪨</div>
+    </div>
+
+    <!-- ═══════ ACTIVITY 3: Match ═══════ -->
+    <div class="activity-section">
+      <div class="activity-header">
+        <div class="activity-badge">Activity 3</div>
+        <h2>🔗 Match Item to Category</h2>
+      </div>
+      <p style="font-weight:600; margin-bottom:18px;">Tap an item on the LEFT, then tap its matching category on the RIGHT. Match all 8 pairs!</p>
+      <div class="progress-label" id="matchProgress">0 / 8 matched</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="matchBar" style="width:0%"></div></div>
+      <div class="match-grid">
+        <div>
+          <div class="match-col-title">Items</div>
+          <div class="match-items" id="matchLeft"></div>
+        </div>
+        <div>
+          <div class="match-col-title">Categories</div>
+          <div class="match-items" id="matchRight"></div>
+        </div>
+      </div>
+      <div class="done-msg" id="match3Done">🎊 Excellent matching! You know what belongs where! ⭐</div>
+    </div>
+
+    <!-- ═══════ ACTIVITY 4: True / False ═══════ -->
+    <div class="activity-section">
+      <div class="activity-header">
+        <div class="activity-badge">Activity 4</div>
+        <h2>✅ True or False?</h2>
+      </div>
+      <p style="font-weight:600; margin-bottom:18px;">Is each statement TRUE or FALSE? Tap the right button!</p>
+      <div id="tfContainer"></div>
+      <div class="done-msg" id="tf4Done">🏆 Perfect! You really understand Stone Age life! 🪨</div>
+    </div>
+
+    <!-- ═══════ ACTIVITY 5: Fill blank ═══════ -->
+    <div class="activity-section">
+      <div class="activity-header">
+        <div class="activity-badge">Activity 5</div>
+        <h2>✏️ Fill in the Blank</h2>
+      </div>
+      <p style="font-weight:600; margin-bottom:16px;">Tap a word from the word bank, then tap the blank in the sentence where it belongs!</p>
+
+      <div class="word-bank" id="wordBank"></div>
+      <div id="fillContainer"></div>
+      <div class="done-msg" id="fill5Done">🌈 Wonderful! You filled all the blanks correctly! You're a Stone Age star! ⭐🪨</div>
+    </div>
+
+  </div><!-- /container -->
+
+<script>
+  /* ═══ Globals ═══ */
+  let cheerCount = 0;
+
+  function addCheer() {
+    cheerCount++;
+    if (cheerCount >= 2) {
+      document.getElementById('cheerBanner').classList.add('show');
+    }
+  }
+
+  /* ═══ Tap helpers ═══ */
+  function tapFood(el) {
+    el.classList.toggle('tapped');
+  }
+  function tapShelter(el) {
+    el.classList.toggle('tapped');
+  }
+  function tapMaterial(el) {
+    el.classList.toggle('tapped');
+  }
+
+  /* ══════════════════════════════════════
+     ACTIVITY 1 — Sort
+  ══════════════════════════════════════ */
+  const sortItems = [
+    { label:'🦌 Deer',         type:'food' },
+    { label:'🐟 Fish',         type:'food' },
+    { label:'🦌 Antelope',     type:'food' },
+    { label:'🫐 Berries',      type:'food' },
+    { label:'🌰 Nuts',         type:'food' },
+    { label:'🌱 Roots',        type:'food' },
+    { label:'🪨 Stones',       type:'shelter' },
+    { label:'🪵 Sticks',       type:'shelter' },
+    { label:'🌿 Branches',     type:'shelter' },
+    { label:'🐾 Animal skin',  type:'shelter' },
+    { label:'🍃 Leaves',       type:'shelter' },
+    { label:'🌾 Grass',        type:'shelter' },
+  ];
+  let sortIndex = 0;
+  let sortDone  = false;
+  let sortCount = 0;
+
+  function updateSortCard() {
+    if (sortIndex >= sortItems.length) {
+      document.getElementById('sortItemCard').textContent = '🎉 All done!';
+      document.querySelector('.sort-buttons').style.display = 'none';
+      document.getElementById('sort1Done').classList.add('show');
+      addCheer();
+      sortDone = true;
+      return;
+    }
+    const card = document.getElementById('sortItemCard');
+    card.style.animation = 'none';
+    void card.offsetWidth;
+    card.style.animation = 'popIn 0.4s ease';
+    card.textContent = sortItems[sortIndex].label;
+  }
+
+  function sortAnswer(guess) {
+    if (sortDone || sortIndex >= sortItems.length) return;
+    const item = sortItems[sortIndex];
+    const card = document.getElementById('sortItemCard');
+
+    if (guess === item.type) {
+      // correct
+      const tag = document.createElement('span');
+      tag.className = 'bucket-tag bucket-tag-' + item.type;
+      tag.textContent = item.label;
+      document.getElementById(item.type === 'food' ? 'foodBucket' : 'shelterBucket').appendChild(tag);
+      sortCount++;
+      sortIndex++;
+      const pct = Math.round(sortCount / sortItems.length * 100);
+      document.getElementById('sortBar').style.width = pct + '%';
+      document.getElementById('sortProgress').textContent = sortCount + ' / ' + sortItems.length + ' sorted';
+      updateSortCard();
+    } else {
+      // wrong
+      card.style.animation = 'none';
+      void card.offsetWidth;
+      card.style.animation = 'shake 0.4s ease';
+    }
+  }
+
+  updateSortCard();
+
+  /* ══════════════════════════════════════
+     ACTIVITY 2 — Quiz
+  ══════════════════════════════════════ */
+  const quizData = [
+    {
+      q: 'Stone Age people were nomads. This means they ___.',
+      opts: ['Stayed in one place', 'Moved from place to place', 'Lived underground'],
+      ans: 1
+    },
+    {
+      q: 'Why did Stone Age people follow animals?',
+      opts: ['For fun', 'To keep as pets', 'To hunt for food'],
+      ans: 2
+    },
+    {
+      q: 'Which is NOT a Stone Age food?',
+      opts: ['Berries', 'Deer', 'Pizza'],
+      ans: 2
+    },
+    {
+      q: 'Stone Age people needed shelter to protect from ___.',
+      opts: ['Rain only', 'Weather and wild animals', 'Sunlight'],
+      ans: 1
+    },
+    {
+      q: 'Which was a type of Stone Age shelter?',
+      opts: ['Brick house', 'Cave', 'Skyscraper'],
+      ans: 1
+    },
+    {
+      q: 'Animal skin was used ___.',
+      opts: ['To eat', 'For shoes', 'As a shelter material'],
+      ans: 2
+    },
+    {
+      q: 'Wild grain is a type of ___.',
+      opts: ['Animal', 'Plant food', 'Shelter'],
+      ans: 1
+    },
+    {
+      q: 'A nomad moves around in search of ___.',
+      opts: ['Gold', 'Food', 'Shelter only'],
+      ans: 1
+    },
+    {
+      q: 'Which material was NOT used for Stone Age shelter?',
+      opts: ['Grass', 'Branches', 'Metal'],
+      ans: 2
+    },
+    {
+      q: 'Stone Age people gathered fruits, nuts and ___.',
+      opts: ['Bread', 'Berries', 'Rice'],
+      ans: 1
+    },
+  ];
+
+  let quizScore = 0;
+  let quizAnswered = 0;
+  const quizAnsweredArr = new Array(quizData.length).fill(false);
+
+  function buildQuiz() {
+    const container = document.getElementById('quizContainer');
+    quizData.forEach((item, qi) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-question';
+      div.innerHTML = `
+        <div class="quiz-q-num">Question ${qi + 1} of ${quizData.length}</div>
+        <p>${item.q}</p>
+        <div class="quiz-options" id="qopts${qi}">
+          ${item.opts.map((o, oi) => `<button class="quiz-opt" onclick="pickQ(this, ${oi === item.ans ? "'correct'" : "'wrong'"}, ${qi}, ${oi})">${String.fromCharCode(65 + oi)}) ${o}</button>`).join('')}
+        </div>
+        <div class="quiz-feedback" id="qfb${qi}"></div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function pickQ(el, result, qNum, optIdx) {
+    if (quizAnsweredArr[qNum]) return;
+    quizAnsweredArr[qNum] = true;
+    quizAnswered++;
+
+    const opts = document.querySelectorAll(`#qopts${qNum} .quiz-opt`);
+    opts.forEach(o => o.classList.add('answered'));
+    const fb = document.getElementById('qfb' + qNum);
+
+    if (result === 'correct') {
+      el.classList.add('correct');
+      fb.textContent = '✅ Correct! Well done!';
+      fb.style.color = '#2e7d32';
+      quizScore++;
+    } else {
+      el.classList.add('wrong');
+      fb.textContent = '❌ Not quite — try to remember for next time!';
+      fb.style.color = '#c62828';
+      // show correct
+      opts[quizData[qNum].ans].classList.add('correct');
+    }
+
+    document.getElementById('quizScore').textContent = 'Score: ' + quizScore + ' / ' + quizData.length;
+
+    if (quizAnswered === quizData.length) {
+      setTimeout(() => {
+        document.getElementById('quiz2Done').classList.add('show');
+        addCheer();
+      }, 600);
+    }
+  }
+
+  buildQuiz();
+
+  /* ══════════════════════════════════════
+     ACTIVITY 3 — Match
+  ══════════════════════════════════════ */
+  const matchPairs = [
+    { item:'🦌 Deer',        cat:'Hunted food 🏹' },
+    { item:'🫐 Berries',     cat:'Gathered food 🫐' },
+    { item:'🪵 Sticks',      cat:'Shelter material 🪵' },
+    { item:'🌰 Nuts',        cat:'Gathered food 🫐' },
+    { item:'🐾 Animal skin', cat:'Shelter material 🐾' },
+    { item:'🌱 Roots',       cat:'Gathered food 🌿' },
+    { item:'🍃 Leaves',      cat:'Shelter material 🍃' },
+    { item:'🦌 Antelope',    cat:'Hunted food 🏹' },
+  ];
+
+  // Build shuffled categories
+  const shuffledCats = [...matchPairs.map(p => p.cat)].sort(() => Math.random() - 0.5);
+
+  let selectedLeft  = null;
+  let selectedRight = null;
+  let matchCount    = 0;
+
+  function buildMatch() {
+    const leftCol  = document.getElementById('matchLeft');
+    const rightCol = document.getElementById('matchRight');
+
+    matchPairs.forEach((pair, i) => {
+      const el = document.createElement('div');
+      el.className = 'match-item';
+      el.textContent = pair.item;
+      el.dataset.idx = i;
+      el.onclick = () => selectLeft(el, i);
+      leftCol.appendChild(el);
+    });
+
+    shuffledCats.forEach((cat, i) => {
+      const el = document.createElement('div');
+      el.className = 'match-item';
+      el.textContent = cat;
+      el.dataset.cat = cat;
+      el.onclick = () => selectRight(el, cat);
+      rightCol.appendChild(el);
+    });
+  }
+
+  function selectLeft(el, idx) {
+    if (el.classList.contains('locked') || el.classList.contains('disabled')) return;
+    // deselect previous
+    document.querySelectorAll('#matchLeft .match-item').forEach(e => e.classList.remove('selected-left'));
+    selectedLeft = { el, idx };
+    el.classList.add('selected-left');
+    tryMatch();
+  }
+
+  function selectRight(el, cat) {
+    if (el.classList.contains('locked') || el.classList.contains('disabled')) return;
+    document.querySelectorAll('#matchRight .match-item').forEach(e => e.classList.remove('selected-right'));
+    selectedRight = { el, cat };
+    el.classList.add('selected-right');
+    tryMatch();
+  }
+
+  function tryMatch() {
+    if (!selectedLeft || !selectedRight) return;
+
+    const correctCat = matchPairs[selectedLeft.idx].cat;
+    if (selectedRight.cat === correctCat) {
+      // Correct
+      selectedLeft.el.classList.remove('selected-left');
+      selectedLeft.el.classList.add('locked');
+      selectedLeft.el.style.borderColor = '#43a047';
+      selectedLeft.el.style.background  = '#e8f5e9';
+
+      selectedRight.el.classList.remove('selected-right');
+      selectedRight.el.classList.add('locked');
+      selectedRight.el.style.borderColor = '#43a047';
+      selectedRight.el.style.background  = '#e8f5e9';
+
+      matchCount++;
+      const pct = Math.round(matchCount / matchPairs.length * 100);
+      document.getElementById('matchBar').style.width = pct + '%';
+      document.getElementById('matchProgress').textContent = matchCount + ' / ' + matchPairs.length + ' matched';
+
+      if (matchCount === matchPairs.length) {
+        setTimeout(() => {
+          document.getElementById('match3Done').classList.add('show');
+          addCheer();
+        }, 500);
+      }
+    } else {
+      // Wrong
+      selectedLeft.el.classList.add('wrong-shake');
+      selectedRight.el.classList.add('wrong-shake');
+      setTimeout(() => {
+        selectedLeft.el.classList.remove('wrong-shake', 'selected-left');
+        selectedRight.el.classList.remove('wrong-shake', 'selected-right');
+      }, 500);
+    }
+
+    selectedLeft  = null;
+    selectedRight = null;
+  }
+
+  buildMatch();
+
+  /* ══════════════════════════════════════
+     ACTIVITY 4 — True / False
+  ══════════════════════════════════════ */
+  const tfItems = [
+    { s:'Stone Age people were nomads.',              ans: true  },
+    { s:'Nomads stay in one place forever.',          ans: false },
+    { s:'Stone Age people hunted deer and antelope.', ans: true  },
+    { s:'Stone Age people ate pizza and bread.',      ans: false },
+    { s:'Caves were used as shelter.',                ans: true  },
+    { s:'Stone Age shelters were made from metal.',   ans: false },
+    { s:'Animal skin was used as a shelter material.',ans: true  },
+    { s:'Stone Age people gathered berries and nuts.',ans: true  },
+  ];
+
+  let tfAnswered = 0;
+  let tfAnsweredArr = new Array(tfItems.length).fill(false);
+
+  function buildTF() {
+    const container = document.getElementById('tfContainer');
+    tfItems.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'tf-item';
+      div.innerHTML = `
+        <div class="tf-statement">${i + 1}. ${item.s}</div>
+        <div class="tf-buttons">
+          <button class="tf-btn tf-btn-true"  onclick="answerTF(${i}, true,  this)">TRUE ✅</button>
+          <button class="tf-btn tf-btn-false" onclick="answerTF(${i}, false, this)">FALSE ❌</button>
+        </div>
+        <div class="tf-result" id="tfr${i}"></div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function answerTF(idx, guess, btn) {
+    if (tfAnsweredArr[idx]) return;
+    tfAnsweredArr[idx] = true;
+    tfAnswered++;
+
+    const btns = btn.closest('.tf-buttons').querySelectorAll('.tf-btn');
+    btns.forEach(b => b.disabled = true);
+
+    const res = document.getElementById('tfr' + idx);
+    if (guess === tfItems[idx].ans) {
+      res.textContent = '✅ Correct!';
+      res.className   = 'tf-result ok';
+      btn.style.outline = '3px solid #2e7d32';
+    } else {
+      res.textContent = '❌ Not quite! The answer is ' + (tfItems[idx].ans ? 'TRUE' : 'FALSE') + '.';
+      res.className   = 'tf-result bad';
+    }
+
+    if (tfAnswered === tfItems.length) {
+      setTimeout(() => {
+        document.getElementById('tf4Done').classList.add('show');
+        addCheer();
+      }, 500);
+    }
+  }
+
+  buildTF();
+
+  /* ══════════════════════════════════════
+     ACTIVITY 5 — Fill in the Blank
+  ══════════════════════════════════════ */
+  const wordBank = ['nomads','food','caves','animals','weather','grass','berries','hunt'];
+
+  const fillSentences = [
+    { before:'Stone Age people were', blank:'nomads',  after:'who moved from place to place.' },
+    { before:'They followed',         blank:'animals', after:'to hunt for food.' },
+    { before:'They needed to',        blank:'hunt',    after:'for their food.' },
+    { before:'Stone Age people gathered fruits, nuts and', blank:'berries', after:'.' },
+    { before:'Shelter protected them from the',            blank:'weather', after:'and wild animals.' },
+    { before:'',                      blank:'caves',   after:'were one type of Stone Age shelter.' },
+    { before:'',                      blank:'grass',   after:'was used as a material to build shelter.' },
+    { before:'Nomads moved around in search of',           blank:'food',   after:'.' },
+  ];
+
+  let selectedWord   = null;
+  let fillCorrect    = 0;
+  const fillFilled   = new Array(fillSentences.length).fill(false);
+
+  function buildFill() {
+    // Word bank
+    const wb = document.getElementById('wordBank');
+    wordBank.forEach(w => {
+      const chip = document.createElement('span');
+      chip.className  = 'word-chip';
+      chip.textContent = w;
+      chip.dataset.word = w;
+      chip.onclick = () => selectWord(chip, w);
+      wb.appendChild(chip);
+    });
+
+    // Sentences
+    const fc = document.getElementById('fillContainer');
+    fillSentences.forEach((sent, i) => {
+      const div = document.createElement('div');
+      div.className = 'blank-sentence';
+      div.innerHTML = `
+        ${sent.before ? `<span>${sent.before}</span>` : ''}
+        <span class="blank-slot" id="slot${i}" onclick="fillSlot(${i})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span>${sent.after}</span>
+      `;
+      fc.appendChild(div);
+    });
+  }
+
+  function selectWord(chip, word) {
+    if (chip.classList.contains('used')) return;
+    // deselect previous
+    document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+    selectedWord = word;
+    chip.style.outline = '3px solid #fff';
+  }
+
+  function fillSlot(idx) {
+    if (!selectedWord || fillFilled[idx]) return;
+    const slot   = document.getElementById('slot' + idx);
+    const correct = fillSentences[idx].blank;
+
+    if (selectedWord === correct) {
+      slot.textContent = selectedWord;
+      slot.classList.add('filled-correct');
+      fillFilled[idx] = true;
+      // mark word as used
+      document.querySelectorAll('.word-chip').forEach(c => {
+        if (c.dataset.word === selectedWord && !c.classList.contains('used')) {
+          c.classList.add('used');
+          c.style.outline = '';
+        }
+      });
+      selectedWord = null;
+      fillCorrect++;
+      if (fillCorrect === fillSentences.length) {
+        setTimeout(() => {
+          document.getElementById('fill5Done').classList.add('show');
+          addCheer();
+        }, 500);
+      }
+    } else {
+      slot.classList.add('filled-wrong');
+      slot.textContent = selectedWord + '?';
+      setTimeout(() => {
+        slot.classList.remove('filled-wrong');
+        slot.innerHTML  = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+      }, 800);
+    }
+  }
+
+  buildFill();
+</script>
+</body>
+</html>

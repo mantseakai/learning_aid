@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stone Age Art & Craft 🎨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:   #6d4c41;
+      --accent:    #a1887f;
+      --bg:        #efebe9;
+      --dark:      #3e2723;
+      --cave-ochre:#e65100;
+      --cave-char: #37474f;
+      --gem-purple:#6a1b9a;
+      --gem-light: #ce93d8;
+      --green-ok:  #2e7d32;
+      --red-err:   #c62828;
+      --card-bg:   #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ── Animations ── */
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      40%      { transform: translateY(-10px); }
+      60%      { transform: translateY(-5px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.6); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+    @keyframes glow-in {
+      from { box-shadow: 0 0 0 0 rgba(230,81,0,0.6); }
+      to   { box-shadow: 0 0 0 12px rgba(230,81,0,0); }
+    }
+    @keyframes flamePulse {
+      0%,100% { opacity:0.85; transform: scaleY(1); }
+      50%     { opacity:1; transform: scaleY(1.08); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform: translateY(14px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    @keyframes cheerDrop {
+      0%   { transform: translateY(-80px) scale(0.8); opacity:0; }
+      60%  { transform: translateY(8px) scale(1.04); opacity:1; }
+      100% { transform: translateY(0) scale(1); opacity:1; }
+    }
+
+    /* ── Back button ── */
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.92);
+      border: 2px solid var(--primary);
+      color: var(--primary); font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.88rem;
+      padding: 7px 16px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+    /* ── Cheer Banner ── */
+    .cheer-banner {
+      display: none;
+      position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+      z-index: 8888;
+      background: linear-gradient(135deg, #f9a825, #ff6f00);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      padding: 14px 28px;
+      border-radius: 50px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      white-space: nowrap;
+      animation: cheerDrop 0.5s ease forwards;
+    }
+    .cheer-banner.visible { display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--dark) 0%, #5d4037 55%, var(--primary) 100%);
+      color: white;
+      padding: 72px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* cave-wall texture stripes */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        170deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px,
+        transparent 2px, transparent 24px
+      );
+      pointer-events: none;
+    }
+    /* cave painting emoji art strip */
+    .cave-art-strip {
+      font-size: 2rem;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      animation: flamePulse 3s ease-in-out infinite;
+      display: block;
+      filter: sepia(0.4);
+    }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      margin-bottom: 14px;
+      text-shadow: 2px 3px 8px rgba(0,0,0,0.4);
+    }
+    .hero p.intro {
+      font-size: 1.1rem;
+      font-weight: 600;
+      max-width: 560px;
+      margin: 0 auto 20px;
+      opacity: 0.92;
+      line-height: 1.6;
+    }
+    .date-badges {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .date-badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 30px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Page content wrapper ── */
+    .page { max-width: 820px; margin: 0 auto; padding: 32px 20px 60px; }
+
+    /* ── Section headings ── */
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.7rem;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* ── CAVE section ── */
+    .cave-section {
+      background: linear-gradient(135deg, #263238 0%, var(--cave-char) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 32px;
+      color: #f5f5f5;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+    .cave-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        135deg,
+        rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px,
+        transparent 1px, transparent 30px
+      );
+      pointer-events: none;
+    }
+    .cave-section .section-title { color: #ffb74d; }
+    .cave-section .sub-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      color: var(--cave-ochre);
+      margin: 22px 0 12px;
+    }
+
+    /* reason cards */
+    .reason-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .reason-card {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(230,81,0,0.35);
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      user-select: none;
+    }
+    .reason-card .emoji { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+    .reason-card:hover { transform: translateY(-3px); border-color: var(--cave-ochre); }
+    .reason-card.glowing {
+      background: rgba(230,81,0,0.22);
+      border-color: var(--cave-ochre);
+      box-shadow: 0 0 0 3px rgba(230,81,0,0.4);
+      animation: glow-in 0.5s ease;
+    }
+
+    /* paint ingredients */
+    .paint-intro {
+      background: rgba(230,81,0,0.12);
+      border-left: 4px solid var(--cave-ochre);
+      border-radius: 0 12px 12px 0;
+      padding: 12px 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+    .ingredient-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .ingredient-card {
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,183,77,0.3);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .ingredient-card .emoji { font-size: 1.6rem; display: block; margin-bottom: 5px; }
+    .ingredient-card:hover { transform: scale(1.04); }
+    .ingredient-card.highlighted {
+      background: rgba(255,183,77,0.2);
+      border-color: #ffb74d;
+      box-shadow: 0 0 0 3px rgba(255,183,77,0.35);
+    }
+
+    /* tools */
+    .tool-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tool-chip {
+      background: rgba(230,81,0,0.18);
+      border: 2px solid var(--cave-ochre);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #ffb74d;
+    }
+
+    /* ── JEWELLERY section ── */
+    .gem-section {
+      background: linear-gradient(135deg, #1a0030 0%, #4a148c 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 32px;
+      color: #f3e5f5;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    }
+    .gem-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(206,147,216,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .gem-section .section-title { color: var(--gem-light); }
+    .gem-section .sub-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      color: var(--gem-light);
+      margin: 22px 0 12px;
+    }
+    .jewel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .jewel-card {
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(206,147,216,0.35);
+      border-radius: 14px;
+      padding: 16px 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .jewel-card .emoji { font-size: 1.7rem; display: block; margin-bottom: 6px; }
+
+    .material-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .material-card {
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(206,147,216,0.25);
+      border-radius: 14px;
+      padding: 14px 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .material-card .emoji { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+
+    .cord-note {
+      background: rgba(255,255,255,0.08);
+      border-left: 4px solid var(--gem-light);
+      border-radius: 0 12px 12px 0;
+      padding: 12px 16px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .importance-box {
+      background: linear-gradient(135deg, rgba(106,27,154,0.55), rgba(74,20,140,0.7));
+      border: 2px solid var(--gem-light);
+      border-radius: 16px;
+      padding: 20px 20px;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.25rem;
+      color: var(--gem-light);
+      box-shadow: 0 0 20px rgba(206,147,216,0.2);
+    }
+
+    /* ── Activities ── */
+    .activity-block {
+      background: white;
+      border-radius: 20px;
+      padding: 26px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border: 2px solid var(--accent);
+    }
+    .activity-block h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .activity-block .act-desc {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    /* Activity 1 — tap all that apply */
+    .tap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .tap-item {
+      border: 2px solid #ccc;
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: all 0.2s;
+      background: #fafafa;
+      user-select: none;
+    }
+    .tap-item:hover { border-color: var(--primary); }
+    .tap-item.correct-tap {
+      background: #e8f5e9;
+      border-color: var(--green-ok);
+      color: var(--green-ok);
+    }
+    .tap-item.wrong-tap {
+      background: #ffebee;
+      border-color: var(--red-err);
+      color: var(--red-err);
+      animation: shake 0.45s ease;
+    }
+
+    /* Activity 2 — quiz */
+    .quiz-card {
+      background: #fafafa;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .quiz-card.done { opacity: 0.7; }
+    .quiz-card p { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--dark); }
+    .quiz-options { display: flex; gap: 9px; flex-wrap: wrap; }
+    .quiz-btn {
+      border: 2px solid #bcaaa4;
+      border-radius: 30px;
+      padding: 7px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      background: white;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover:not([disabled]) { border-color: var(--primary); background: var(--bg); }
+    .quiz-btn.correct-ans {
+      background: #e8f5e9; border-color: var(--green-ok); color: var(--green-ok);
+      animation: pop 0.35s ease;
+    }
+    .quiz-btn.wrong-ans {
+      background: #ffebee; border-color: var(--red-err); color: var(--red-err);
+      animation: shake 0.4s ease;
+    }
+
+    /* Activity 3 — sort */
+    .sort-stage {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .sort-item-display {
+      background: linear-gradient(135deg, var(--dark), #5d4037);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      padding: 22px 20px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      min-height: 80px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sort-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .sort-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 28px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sort-btn.cave-btn  { background: var(--cave-ochre); color: white; }
+    .sort-btn.jewel-btn { background: var(--gem-purple); color: white; }
+    .sort-btn:hover { transform: scale(1.05); }
+    .sort-btn.shake-err { animation: shake 0.4s ease; }
+    .sort-buckets {
+      display: flex; gap: 16px; margin-top: 18px; flex-wrap: wrap;
+    }
+    .sort-bucket {
+      flex: 1; min-width: 140px;
+      background: #f5f5f5;
+      border-radius: 14px;
+      padding: 12px;
+      min-height: 60px;
+    }
+    .sort-bucket h4 { font-size: 0.85rem; font-weight: 800; margin-bottom: 8px; color: var(--primary); }
+    .sort-bucket-items { display: flex; flex-wrap: wrap; gap: 6px; }
+    .bucket-chip {
+      background: white;
+      border: 2px solid;
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .bucket-chip.cave  { border-color: var(--cave-ochre); color: var(--cave-ochre); }
+    .bucket-chip.jewel { border-color: var(--gem-purple); color: var(--gem-purple); }
+    .sort-progress { font-size: 0.9rem; color: #888; text-align: center; margin-bottom: 8px; }
+
+    /* Activity 4 — True/False */
+    .tf-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 12px; padding: 12px 14px;
+      border: 2px solid #e0e0e0; border-radius: 14px;
+      background: #fafafa;
+    }
+    .tf-statement { flex: 1; font-weight: 600; font-size: 0.95rem; padding-top: 2px; }
+    .tf-btns { display: flex; gap: 8px; flex-shrink: 0; }
+    .tf-btn {
+      border: 2px solid #bcaaa4;
+      border-radius: 30px;
+      padding: 6px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: white;
+      transition: all 0.2s;
+    }
+    .tf-btn:hover:not([disabled]) { border-color: var(--primary); }
+    .tf-btn.tf-correct { background: #e8f5e9; border-color: var(--green-ok); color: var(--green-ok); }
+    .tf-btn.tf-wrong   { background: #ffebee; border-color: var(--red-err); color: var(--red-err); animation: shake 0.4s ease; }
+
+    /* Activity 5 — Fill in blank */
+    .fill-sentence {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 12px; font-weight: 700; font-size: 1rem;
+    }
+    .blank-slot {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 100px; padding: 5px 12px;
+      border: 2px dashed #bcaaa4; border-radius: 8px;
+      background: #fafafa; cursor: pointer;
+      font-weight: 800; font-size: 0.95rem;
+      color: #aaa; transition: all 0.2s;
+      min-height: 36px;
+    }
+    .blank-slot.filled-correct { border-style: solid; border-color: var(--green-ok); color: var(--green-ok); background: #e8f5e9; animation: pop 0.3s ease; }
+    .blank-slot.filled-wrong   { border-style: solid; border-color: var(--red-err); color: var(--red-err); background: #ffebee; animation: shake 0.4s ease; }
+    .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .word-chip {
+      border: 2px solid var(--accent);
+      border-radius: 30px;
+      padding: 7px 16px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: white;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .word-chip:hover { background: var(--bg); border-color: var(--primary); }
+    .word-chip.used { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+
+    /* score + done button */
+    .score-bar {
+      display: none;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-top: 14px;
+      animation: popIn 0.4s ease;
+    }
+    .done-btn {
+      display: block;
+      margin: 14px auto 0;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 11px 28px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .done-btn:hover { background: var(--dark); transform: scale(1.04); }
+
+    /* responsive tweaks */
+    @media(max-width:500px) {
+      .jewel-grid, .material-grid { grid-template-columns: repeat(2, 1fr); }
+      .ingredient-grid { grid-template-columns: repeat(2, 1fr); }
+      .sort-buckets { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div class="cheer-banner" id="cheerBanner">
+  Brilliant, Emunah! You know about Stone Age art! 🎨⭐
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <span class="cave-art-strip">🦬🦅🤚🦌🐺🪨🎨🦬🖐️🦌</span>
+  <h1>Stone Age Art &amp; Craft 🎨</h1>
+  <p class="intro">Before paper and pens existed, Stone Age people created art in amazing ways!</p>
+  <div class="date-badges">
+    <span class="date-badge">📅 12th May 2026</span>
+    <span class="date-badge">📅 19th May 2026</span>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ══════════════ SECTION 1: CAVE PAINTINGS ══════════════ -->
+  <div class="cave-section">
+    <div class="section-title">🎨 Cave Paintings</div>
+    <p style="font-size:1rem; font-weight:600; opacity:0.85; margin-bottom:18px; line-height:1.6;">
+      A long time ago, during the Stone Age, people didn't have paper or pens.
+      Instead, they used the walls of their caves as giant canvases!
+    </p>
+
+    <div class="sub-title">Why did they paint?</div>
+    <p style="font-size:0.9rem; opacity:0.7; margin-bottom:12px; font-weight:600;">Tap each card to make it glow! ✨</p>
+    <div class="reason-grid">
+      <div class="reason-card" onclick="toggleGlow(this)">
+        <span class="emoji">📖</span>Tell stories
+      </div>
+      <div class="reason-card" onclick="toggleGlow(this)">
+        <span class="emoji">🦌</span>Show animals they hunted
+      </div>
+      <div class="reason-card" onclick="toggleGlow(this)">
+        <span class="emoji">🏠</span>Decorate their caves
+      </div>
+      <div class="reason-card" onclick="toggleGlow(this)">
+        <span class="emoji">❤️</span>Show how animals were important
+      </div>
+      <div class="reason-card" onclick="toggleGlow(this)">
+        <span class="emoji">📝</span>Record important events
+      </div>
+    </div>
+
+    <div class="sub-title">How was the paint made?</div>
+    <div class="paint-intro">
+      Stone Age people used NATURAL paint — no shops existed!
+    </div>
+    <div class="ingredient-grid">
+      <div class="ingredient-card" onclick="toggleHighlight(this)">
+        <span class="emoji">🟫</span>Mud
+      </div>
+      <div class="ingredient-card" onclick="toggleHighlight(this)">
+        <span class="emoji">🪨</span>Crushed rocks
+      </div>
+      <div class="ingredient-card" onclick="toggleHighlight(this)">
+        <span class="emoji">🩸</span>Blood from animals
+      </div>
+      <div class="ingredient-card" onclick="toggleHighlight(this)">
+        <span class="emoji">🌿</span>Plants
+      </div>
+    </div>
+
+    <div class="sub-title">Tools used to paint</div>
+    <div class="tool-chips">
+      <span class="tool-chip">✋ Hands &amp; fingers</span>
+      <span class="tool-chip">🪵 Sticks</span>
+      <span class="tool-chip">🦴 Animal bones</span>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION 2: JEWELLERY ══════════════ -->
+  <div class="gem-section">
+    <div class="section-title">💎 Stone Age Jewellery</div>
+    <p style="font-size:1rem; font-weight:600; opacity:0.85; margin-bottom:18px; line-height:1.6;">
+      Stone Age people didn't just make cave art — they also made beautiful jewellery
+      to wear and to show others how important they were!
+    </p>
+
+    <div class="sub-title">Types of jewellery</div>
+    <div class="jewel-grid">
+      <div class="jewel-card">
+        <span class="emoji">📿</span>Necklaces
+      </div>
+      <div class="jewel-card">
+        <span class="emoji">⌚</span>Bracelets
+      </div>
+      <div class="jewel-card">
+        <span class="emoji">📌</span>Pins
+      </div>
+    </div>
+    <p style="font-size:0.88rem; opacity:0.7; font-weight:600; margin-bottom:16px;">
+      People attached pins to their clothes.
+    </p>
+
+    <div class="sub-title">What was it made from?</div>
+    <div class="material-grid">
+      <div class="material-card">
+        <span class="emoji">🦴</span>Small bones
+      </div>
+      <div class="material-card">
+        <span class="emoji">🦷</span>Animal teeth
+      </div>
+      <div class="material-card">
+        <span class="emoji">🐚</span>Shells
+      </div>
+    </div>
+    <div class="cord-note">
+      These were carved into special shapes and threaded onto a piece of cord.
+    </div>
+
+    <div class="sub-title">What was the cord made of?</div>
+    <div class="cord-note">
+      The cord was twisted from: <strong>animal gut</strong>, <strong>hair</strong>, or <strong>plant fibres</strong>.
+    </div>
+
+    <div class="sub-title">Why did they wear jewellery?</div>
+    <div class="importance-box">
+      👑 Wearing jewellery showed that a PERSON WAS IMPORTANT.
+    </div>
+  </div>
+
+  <!-- ══════════════ ACTIVITY 1 ══════════════ -->
+  <div class="activity-block" id="act1">
+    <h2>🎯 Activity 1 — Why did they paint?</h2>
+    <p class="act-desc">Tap ALL the correct reasons Stone Age people painted. Watch out — some are silly and wrong! 👀</p>
+    <div class="tap-grid" id="tapGrid">
+      <!-- injected by JS -->
+    </div>
+    <button class="done-btn" onclick="checkAct1()">Check my answers ✅</button>
+    <div class="score-bar" id="act1Score"></div>
+  </div>
+
+  <!-- ══════════════ ACTIVITY 2 ══════════════ -->
+  <div class="activity-block" id="act2">
+    <h2>🧠 Activity 2 — Pick the right answer</h2>
+    <p class="act-desc">Choose the best answer for each question. One click per question!</p>
+    <div id="quizContainer">
+      <!-- injected by JS -->
+    </div>
+    <div class="score-bar" id="act2Score"></div>
+  </div>
+
+  <!-- ══════════════ ACTIVITY 3 ══════════════ -->
+  <div class="activity-block" id="act3">
+    <h2>🗂️ Activity 3 — Cave Art or Jewellery?</h2>
+    <p class="act-desc">Sort each item into the right group by tapping the correct button!</p>
+    <div class="sort-stage">
+      <div class="sort-progress" id="sortProgress">Item 1 of 10</div>
+      <div class="sort-item-display" id="sortItemDisplay">Loading…</div>
+      <div class="sort-buttons">
+        <button class="sort-btn cave-btn"  onclick="sortAnswer('cave')">🎨 Cave Art</button>
+        <button class="sort-btn jewel-btn" onclick="sortAnswer('jewel')">💎 Jewellery</button>
+      </div>
+    </div>
+    <div class="sort-buckets">
+      <div class="sort-bucket">
+        <h4>🎨 Cave Art</h4>
+        <div class="sort-bucket-items" id="caveBucket"></div>
+      </div>
+      <div class="sort-bucket">
+        <h4>💎 Jewellery</h4>
+        <div class="sort-bucket-items" id="jewelBucket"></div>
+      </div>
+    </div>
+    <div class="score-bar" id="act3Score"></div>
+  </div>
+
+  <!-- ══════════════ ACTIVITY 4 ══════════════ -->
+  <div class="activity-block" id="act4">
+    <h2>✅ Activity 4 — True or False?</h2>
+    <p class="act-desc">Is each statement true or false? Tap the right button!</p>
+    <div id="tfContainer">
+      <!-- injected by JS -->
+    </div>
+    <div class="score-bar" id="act4Score"></div>
+  </div>
+
+  <!-- ══════════════ ACTIVITY 5 ══════════════ -->
+  <div class="activity-block" id="act5">
+    <h2>✏️ Activity 5 — Fill in the Blank</h2>
+    <p class="act-desc">Tap a word from the word bank, then tap the blank where it belongs!</p>
+    <div class="word-bank" id="wordBank">
+      <!-- injected by JS -->
+    </div>
+    <div id="fillSentences">
+      <!-- injected by JS -->
+    </div>
+    <div class="score-bar" id="act5Score"></div>
+  </div>
+
+</div><!-- end .page -->
+
+<script>
+/* ─────────────────── globals ─────────────────── */
+let cheerCount = 0;
+
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 2) {
+    const banner = document.getElementById('cheerBanner');
+    banner.classList.add('visible');
+    setTimeout(() => banner.classList.remove('visible'), 5000);
+  }
+}
+
+/* ─────────────────── info card toggles ─────────────────── */
+function toggleGlow(el) {
+  el.classList.toggle('glowing');
+}
+function toggleHighlight(el) {
+  el.classList.toggle('highlighted');
+}
+
+/* ═══════════════════════════════════════════════
+   ACTIVITY 1 — tap all that apply
+═══════════════════════════════════════════════ */
+const act1Items = [
+  { text: '📖 Tell stories',                     correct: true  },
+  { text: '🦌 Show animals they hunted',          correct: true  },
+  { text: '🏠 Decorate their caves',              correct: true  },
+  { text: '❤️ Show how animals were important',   correct: true  },
+  { text: '📝 Record important events',           correct: true  },
+  { text: '💰 Sell paintings for money',          correct: false },
+  { text: '🏫 Because teachers asked them to',    correct: false },
+  { text: '🏛️ Make caves look like museums',      correct: false },
+];
+
+(function buildAct1() {
+  const grid = document.getElementById('tapGrid');
+  act1Items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'tap-item';
+    div.textContent = item.text;
+    div.dataset.idx = i;
+    div.dataset.selected = 'false';
+    div.onclick = function() {
+      if (this.classList.contains('correct-tap') || this.classList.contains('wrong-tap')) return;
+      this.dataset.selected = this.dataset.selected === 'true' ? 'false' : 'true';
+      this.style.background = this.dataset.selected === 'true' ? '#fff9c4' : '';
+      this.style.borderColor = this.dataset.selected === 'true' ? '#f9a825' : '';
+    };
+    grid.appendChild(div);
+  });
+})();
+
+let act1Done = false;
+function checkAct1() {
+  if (act1Done) return;
+  const grid = document.getElementById('tapGrid');
+  const items = grid.querySelectorAll('.tap-item');
+  let correctSelected = 0;
+  let totalCorrect = act1Items.filter(x => x.correct).length;
+
+  items.forEach((el, i) => {
+    const selected = el.dataset.selected === 'true';
+    const correct  = act1Items[i].correct;
+    el.style.background = '';
+    el.style.borderColor = '';
+    if (correct) {
+      el.classList.add('correct-tap');
+      if (selected) correctSelected++;
+    } else {
+      if (selected) el.classList.add('wrong-tap');
+    }
+  });
+
+  const score = document.getElementById('act1Score');
+  score.style.display = 'block';
+  score.textContent = `You found ${correctSelected} out of ${totalCorrect} correct reasons! ${correctSelected === totalCorrect ? '🌟 Perfect!' : 'Keep trying!'}`;
+  if (correctSelected === totalCorrect) {
+    act1Done = true;
+    addCheer();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   ACTIVITY 2 — pick right answer
+═══════════════════════════════════════════════ */
+const quizData = [
+  { q: 'Stone Age people painted on ___.', opts: ['paper','cave walls','canvas'], ans: 1 },
+  { q: 'They used paint made from ___.', opts: ['shops','chemicals','mud and crushed rocks'], ans: 2 },
+  { q: 'Which was used as a painting tool?', opts: ['a pen','their fingers','a paintbrush'], ans: 1 },
+  { q: 'Cave paintings were NOT made to ___.', opts: ['tell stories','sell at markets','record events'], ans: 1 },
+  { q: 'Stone Age jewellery included ___.', opts: ['gold rings','necklaces and bracelets','diamond earrings'], ans: 1 },
+  { q: 'Jewellery was made from ___.', opts: ['plastic','metal','bones and animal teeth'], ans: 2 },
+  { q: 'The cord for jewellery was made by ___.', opts: ['sewing','twisting fibres together','melting metal'], ans: 1 },
+  { q: 'Wearing jewellery showed that a person was ___.', opts: ['important','a hunter','good at art'], ans: 0 },
+  { q: 'Blood from animals was used to make ___.', opts: ['food','tools','paint'], ans: 2 },
+  { q: 'Shells were carved into ___.', opts: ['tools','food','special shapes for jewellery'], ans: 2 },
+];
+
+let act2Correct = 0;
+let act2Total   = quizData.length;
+let act2Done    = false;
+
+(function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  quizData.forEach((item, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = `qcard${qi}`;
+    const p = document.createElement('p');
+    p.textContent = `${qi + 1}. ${item.q}`;
+    card.appendChild(p);
+    const opts = document.createElement('div');
+    opts.className = 'quiz-options';
+    item.opts.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-btn';
+      btn.textContent = `${String.fromCharCode(97+oi)}) ${opt}`;
+      btn.onclick = function() { pickQ(this, oi === item.ans ? 'correct' : 'wrong', qi); };
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    container.appendChild(card);
+  });
+})();
+
+function pickQ(el, result, qNum) {
+  const card = document.getElementById(`qcard${qNum}`);
+  if (card.classList.contains('done')) return;
+  if (result === 'correct') {
+    el.classList.add('correct-ans');
+    act2Correct++;
+  } else {
+    el.classList.add('wrong-ans');
+    setTimeout(() => el.classList.remove('wrong-ans'), 500);
+    // show correct
+    const btns = card.querySelectorAll('.quiz-btn');
+    btns[quizData[qNum].ans].classList.add('correct-ans');
+  }
+  card.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+  card.classList.add('done');
+
+  if (document.querySelectorAll('.quiz-card.done').length === act2Total && !act2Done) {
+    act2Done = true;
+    const score = document.getElementById('act2Score');
+    score.style.display = 'block';
+    score.textContent = `You got ${act2Correct} out of ${act2Total}! ${act2Correct >= 8 ? '🌟 Amazing!' : act2Correct >= 6 ? '👍 Good work!' : '📚 Keep practising!'}`;
+    addCheer();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   ACTIVITY 3 — sort items
+═══════════════════════════════════════════════ */
+const sortItems = [
+  { label: '🟫 Mud paint',             cat: 'cave'  },
+  { label: '🪨 Crushed rocks',          cat: 'cave'  },
+  { label: '🦴 Animal bones (painting)',cat: 'cave'  },
+  { label: '🧱 Cave walls',             cat: 'cave'  },
+  { label: '✋ Fingers and hands',      cat: 'cave'  },
+  { label: '📿 Necklaces',              cat: 'jewel' },
+  { label: '🦷 Animal teeth',           cat: 'jewel' },
+  { label: '🐚 Shells',                 cat: 'jewel' },
+  { label: '🧵 Cord',                   cat: 'jewel' },
+  { label: '⌚ Bracelets',              cat: 'jewel' },
+];
+
+// shuffle
+let sortQueue = [...sortItems].sort(() => Math.random() - 0.5);
+let sortIdx   = 0;
+let act3Done  = false;
+
+function renderSortItem() {
+  const display = document.getElementById('sortItemDisplay');
+  const prog    = document.getElementById('sortProgress');
+  if (sortIdx >= sortQueue.length) {
+    display.textContent = '🎉 All sorted!';
+    document.querySelectorAll('.sort-btn').forEach(b => b.disabled = true);
+    if (!act3Done) {
+      act3Done = true;
+      const score = document.getElementById('act3Score');
+      score.style.display = 'block';
+      score.textContent = '🌟 Brilliant! You sorted all 10 items correctly!';
+      addCheer();
+    }
+    return;
+  }
+  display.textContent = sortQueue[sortIdx].label;
+  prog.textContent = `Item ${sortIdx + 1} of ${sortQueue.length}`;
+}
+renderSortItem();
+
+function sortAnswer(choice) {
+  if (sortIdx >= sortQueue.length) return;
+  const item = sortQueue[sortIdx];
+  const btns = document.querySelectorAll('.sort-btn');
+  if (choice === item.cat) {
+    // correct
+    const bucket = choice === 'cave' ? document.getElementById('caveBucket') : document.getElementById('jewelBucket');
+    const chip   = document.createElement('span');
+    chip.className = `bucket-chip ${choice}`;
+    chip.textContent = item.label;
+    bucket.appendChild(chip);
+    sortIdx++;
+    renderSortItem();
+  } else {
+    // wrong — shake the wrong button
+    const wrongBtn = choice === 'cave' ? btns[0] : btns[1];
+    wrongBtn.classList.add('shake-err');
+    setTimeout(() => wrongBtn.classList.remove('shake-err'), 500);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   ACTIVITY 4 — True / False
+═══════════════════════════════════════════════ */
+const tfData = [
+  { s: 'Stone Age people had paper and pens.',              ans: false },
+  { s: 'Cave paintings told stories about their lives.',    ans: true  },
+  { s: 'Paint was made from mud and crushed rocks.',        ans: true  },
+  { s: 'Stone Age jewellery was bought from shops.',        ans: false },
+  { s: 'Necklaces and bracelets were worn in the Stone Age.',ans: true },
+  { s: 'The cord for jewellery was made of plastic.',       ans: false },
+  { s: 'Animal bones were used as painting tools.',         ans: true  },
+  { s: 'Wearing jewellery showed a person was important.',  ans: true  },
+];
+
+let tfCorrect = 0;
+let tfDone    = false;
+let tfAnswered = 0;
+
+(function buildTF() {
+  const container = document.getElementById('tfContainer');
+  tfData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.id = `tf${i}`;
+    div.innerHTML = `
+      <span class="tf-statement">${i+1}. ${item.s}</span>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="answerTF(this, true, ${i})">TRUE</button>
+        <button class="tf-btn" onclick="answerTF(this, false, ${i})">FALSE</button>
+      </div>`;
+    container.appendChild(div);
+  });
+})();
+
+function answerTF(btn, choice, idx) {
+  const row = document.getElementById(`tf${idx}`);
+  if (row.dataset.done === 'true') return;
+  row.dataset.done = 'true';
+  const correct = tfData[idx].ans;
+  const btns = row.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  if (choice === correct) {
+    btn.classList.add('tf-correct');
+    tfCorrect++;
+  } else {
+    btn.classList.add('tf-wrong');
+    // highlight correct
+    btns.forEach(b => {
+      if ((b.textContent === 'TRUE' && correct) || (b.textContent === 'FALSE' && !correct)) {
+        b.classList.add('tf-correct');
+      }
+    });
+  }
+  tfAnswered++;
+  if (tfAnswered === tfData.length && !tfDone) {
+    tfDone = true;
+    const score = document.getElementById('act4Score');
+    score.style.display = 'block';
+    score.textContent = `You got ${tfCorrect} out of ${tfData.length} correct! ${tfCorrect >= 7 ? '🌟 Fantastic!' : '👍 Keep going!'}`;
+    addCheer();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   ACTIVITY 5 — Fill in blank
+═══════════════════════════════════════════════ */
+const fillData = [
+  { before: 'Stone Age people painted on cave',   blank: 'walls',     after: '.' },
+  { before: 'They used natural',                   blank: 'paint',     after: 'made from mud and rocks.' },
+  { before: 'One ingredient for paint was',        blank: 'mud',       after: '.' },
+  { before: 'They used their hands and',           blank: 'fingers',   after: 'to paint.' },
+  { before: 'Cave paintings were used to tell',    blank: 'stories',   after: '.' },
+  { before: 'Jewellery was made from small',       blank: 'bones',     after: 'and animal teeth.' },
+  { before: '',                                    blank: 'shells',    after: 'were carved into special shapes for jewellery.' },
+  { before: 'Wearing jewellery showed a person was', blank: 'important', after: '.' },
+];
+const wordBank = ['walls','paint','mud','fingers','stories','bones','shells','important'];
+
+let selectedWord  = null;
+let act5Correct   = 0;
+let act5Done      = false;
+let act5Answered  = 0;
+
+(function buildFill() {
+  // word bank
+  const wb = document.getElementById('wordBank');
+  wordBank.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.id = `wchip-${w}`;
+    chip.onclick = function() {
+      if (this.classList.contains('used')) return;
+      document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+      selectedWord = w;
+      this.style.outline = '3px solid var(--cave-ochre)';
+    };
+    wb.appendChild(chip);
+  });
+
+  // sentences
+  const container = document.getElementById('fillSentences');
+  fillData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'fill-sentence';
+    if (item.before) {
+      const s = document.createElement('span');
+      s.textContent = item.before;
+      div.appendChild(s);
+    }
+    const slot = document.createElement('span');
+    slot.className = 'blank-slot';
+    slot.dataset.answer = item.blank;
+    slot.dataset.idx    = i;
+    slot.textContent    = '_____';
+    slot.onclick = function() { fillSlot(this); };
+    div.appendChild(slot);
+    if (item.after) {
+      const s2 = document.createElement('span');
+      s2.textContent = item.after;
+      div.appendChild(s2);
+    }
+    container.appendChild(div);
+  });
+})();
+
+function fillSlot(slot) {
+  if (slot.classList.contains('filled-correct')) return;
+  if (!selectedWord) { slot.style.animation='shake 0.4s ease'; setTimeout(()=>slot.style.animation='',500); return; }
+
+  const correct = slot.dataset.answer;
+  if (selectedWord === correct) {
+    slot.textContent = selectedWord;
+    slot.classList.add('filled-correct');
+    slot.classList.remove('filled-wrong');
+    // mark word used
+    const chip = document.getElementById(`wchip-${selectedWord}`);
+    if (chip) chip.classList.add('used');
+    act5Correct++;
+    act5Answered++;
+    selectedWord = null;
+    document.querySelectorAll('.word-chip').forEach(c => c.style.outline = '');
+  } else {
+    slot.classList.add('filled-wrong');
+    slot.textContent = selectedWord + '?';
+    setTimeout(() => {
+      slot.classList.remove('filled-wrong');
+      slot.textContent = '_____';
+    }, 800);
+  }
+
+  if (act5Correct === fillData.length && !act5Done) {
+    act5Done = true;
+    const score = document.getElementById('act5Score');
+    score.style.display = 'block';
+    score.textContent = '🌟 All blanks filled correctly! Amazing work, Emunah!';
+    addCheer();
+  }
+}
+</script>
+</body>
+</html>
