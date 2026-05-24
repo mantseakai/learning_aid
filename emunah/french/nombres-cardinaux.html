@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Nombres Cardinaux — French Numbers 0–100</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(160deg, #ffeef8 0%, #f8d7f0 40%, #e8d5f5 100%);
+  min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
+/* === BACK BUTTON === */
+.back-home-btn {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 999;
+  background: white;
+  border: 2.5px solid #e91e8c;
+  color: #e91e8c;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 7px 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(233,30,140,0.15);
+}
+.back-home-btn:hover {
+  background: #e91e8c;
+  color: white;
+}
+
+/* === PAGE HEADER === */
+.page-header {
+  text-align: center;
+  padding: 48px 20px 28px;
+}
+.page-header .subject-tag {
+  display: inline-block;
+  background: #1565c0;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 50px;
+  margin-bottom: 14px;
+}
+.page-header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  color: #1565c0;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.page-header .subtitle {
+  font-size: 1.05rem;
+  color: #5c4b7a;
+  font-weight: 600;
+}
+
+/* === CHEER BANNER === */
+#cheer {
+  display: none;
+  background: linear-gradient(135deg, #fff59d, #ffe082);
+  border: 3px solid #f9a825;
+  border-radius: 18px;
+  text-align: center;
+  padding: 18px 24px;
+  margin: 0 auto 30px;
+  max-width: 680px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #e65100;
+  box-shadow: 0 4px 18px rgba(249,168,37,0.25);
+}
+
+/* === CONTAINER === */
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* === SECTION CARD === */
+.section-card {
+  background: white;
+  border-radius: 22px;
+  padding: 28px 28px 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(21,101,192,0.09);
+}
+
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #1565c0;
+  margin-bottom: 6px;
+}
+.section-subtitle {
+  font-size: 0.92rem;
+  color: #5c6bc0;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* === TIP BOX === */
+.tip-box {
+  background: #e3f2fd;
+  border-left: 4px solid #1565c0;
+  border-radius: 0 12px 12px 0;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  color: #1a237e;
+  font-weight: 600;
+}
+.tip-box.purple {
+  background: #f3e5f5;
+  border-color: #7b1fa2;
+  color: #4a148c;
+}
+.tip-box.teal {
+  background: #e0f2f1;
+  border-color: #00796b;
+  color: #004d40;
+}
+.tip-box.orange {
+  background: #fff3e0;
+  border-color: #e65100;
+  color: #bf360c;
+}
+
+/* === NUMBER GRIDS === */
+.num-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.num-card {
+  border-radius: 14px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.num-card .digit {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  line-height: 1;
+  display: block;
+}
+.num-card .word {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 3px;
+  display: block;
+  word-break: break-word;
+}
+
+/* blue group 0-16 */
+.num-card.blue {
+  background: #e3f2fd;
+  border: 2px solid #90caf9;
+  color: #0d47a1;
+}
+.num-card.blue .digit { color: #1565c0; }
+
+/* purple group 17-19 */
+.num-card.purple {
+  background: #f3e5f5;
+  border: 2px solid #ce93d8;
+  color: #4a148c;
+}
+.num-card.purple .digit { color: #7b1fa2; }
+
+/* teal group 20-69 */
+.num-card.teal {
+  background: #e0f2f1;
+  border: 2px solid #80cbc4;
+  color: #004d40;
+}
+.num-card.teal .digit { color: #00796b; }
+
+/* orange group 70-100 */
+.num-card.orange {
+  background: #fff3e0;
+  border: 2.5px solid #ffb74d;
+  color: #bf360c;
+}
+.num-card.orange .digit { color: #e65100; }
+.num-card.orange.special {
+  background: #ffe0b2;
+  border-color: #e65100;
+}
+
+/* === STRUCTURE TABLE === */
+.struct-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+.struct-table th {
+  background: #1565c0;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-weight: 400;
+  padding: 9px 12px;
+  text-align: left;
+}
+.struct-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e3f2fd;
+  vertical-align: top;
+}
+.struct-table tr:nth-child(even) td { background: #f0f8ff; }
+.struct-table .range { font-family: 'Fredoka One', cursive; color: #1565c0; font-size: 1rem; }
+.struct-table .rule { font-weight: 700; color: #4a148c; }
+.struct-table .example { color: #00796b; font-style: italic; }
+
+/* === ACTIVITIES === */
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.act-badge {
+  background: #1565c0;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  padding: 6px 16px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+.activity-header h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.25rem;
+  color: #1565c0;
+}
+
+/* === QUIZ QUESTIONS === */
+.q-wrap {
+  border: 2px solid #e3f2fd;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  background: #fafcff;
+}
+.q-wrap .question {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #0d47a1;
+  margin-bottom: 12px;
+}
+.q-wrap .question span.num {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #1565c0;
+}
+.btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.q-btn {
+  background: white;
+  border: 2.5px solid #90caf9;
+  color: #1565c0;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.q-btn:hover:not(:disabled) {
+  background: #1565c0;
+  color: white;
+  border-color: #1565c0;
+}
+.q-btn:disabled { cursor: default; }
+.feedback {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-height: 22px;
+  color: #333;
+}
+
+/* === TRUE/FALSE === */
+.tf-wrap {
+  border: 2px solid #e3f2fd;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  background: #fafcff;
+}
+.tf-wrap .statement {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #0d47a1;
+  margin-bottom: 12px;
+}
+.tf-row {
+  display: flex;
+  gap: 10px;
+}
+.tf-btn {
+  background: white;
+  border: 2.5px solid #90caf9;
+  color: #1565c0;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  padding: 8px 22px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.tf-btn:hover:not(:disabled) {
+  background: #1565c0;
+  color: white;
+}
+.tf-btn:disabled { cursor: default; }
+
+/* === WORD BANK === */
+.wb-sentence {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0d47a1;
+}
+.wb-sentence .num-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: #1565c0;
+}
+.blank {
+  display: inline-block;
+  min-width: 130px;
+  padding: 6px 14px;
+  border: 2.5px dashed #90caf9;
+  border-radius: 50px;
+  text-align: center;
+  background: #f0f8ff;
+  font-weight: 700;
+  color: #0d47a1;
+  cursor: pointer;
+  font-size: 0.92rem;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: 'Nunito', sans-serif;
+}
+.blank:hover { border-color: #1565c0; }
+
+.token-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 8px;
+}
+.token {
+  background: #e8eaf6;
+  border: 2.5px solid #5c6bc0;
+  color: #283593;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.token:hover { background: #5c6bc0; color: white; }
+.token.selected {
+  background: #1565c0;
+  color: white;
+  border-color: #1565c0;
+  box-shadow: 0 2px 8px rgba(21,101,192,0.3);
+}
+
+/* === MATHS ACTIVITY === */
+.math-q-wrap {
+  border: 2px solid #fff3e0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  background: #fffde7;
+}
+.math-q-wrap .equation {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: #e65100;
+  margin-bottom: 12px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 520px) {
+  .section-card { padding: 20px 16px; }
+  .num-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 8px; }
+  .num-card .digit { font-size: 1.4rem; }
+  .num-card .word { font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div class="container">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="subject-tag">French · Cambridge Year 3</div>
+    <h1>Les Nombres Cardinaux</h1>
+    <p class="subtitle">Cardinal Numbers in French — 0 to 100 · For Emunah</p>
+  </div>
+
+  <!-- CHEER BANNER -->
+  <div id="cheer">
+    ⭐ Brilliant work, Emunah! You are a French numbers superstar! ⭐
+  </div>
+
+  <!-- ==================== SECTION 1: 0-16 ==================== -->
+  <div class="section-card">
+    <div class="section-title">Group 1 — Les nombres de 0 à 16</div>
+    <div class="section-subtitle">These 17 numbers are unique — you must memorise them!</div>
+
+    <div class="tip-box">
+      🔵 Numbers 0–16 have their own special words. There is no pattern — just learn them by heart. They are the building blocks for all bigger numbers!
+    </div>
+
+    <div class="num-grid">
+      <div class="num-card blue"><span class="digit">0</span><span class="word">zéro</span></div>
+      <div class="num-card blue"><span class="digit">1</span><span class="word">un</span></div>
+      <div class="num-card blue"><span class="digit">2</span><span class="word">deux</span></div>
+      <div class="num-card blue"><span class="digit">3</span><span class="word">trois</span></div>
+      <div class="num-card blue"><span class="digit">4</span><span class="word">quatre</span></div>
+      <div class="num-card blue"><span class="digit">5</span><span class="word">cinq</span></div>
+      <div class="num-card blue"><span class="digit">6</span><span class="word">six</span></div>
+      <div class="num-card blue"><span class="digit">7</span><span class="word">sept</span></div>
+      <div class="num-card blue"><span class="digit">8</span><span class="word">huit</span></div>
+      <div class="num-card blue"><span class="digit">9</span><span class="word">neuf</span></div>
+      <div class="num-card blue"><span class="digit">10</span><span class="word">dix</span></div>
+      <div class="num-card blue"><span class="digit">11</span><span class="word">onze</span></div>
+      <div class="num-card blue"><span class="digit">12</span><span class="word">douze</span></div>
+      <div class="num-card blue"><span class="digit">13</span><span class="word">treize</span></div>
+      <div class="num-card blue"><span class="digit">14</span><span class="word">quatorze</span></div>
+      <div class="num-card blue"><span class="digit">15</span><span class="word">quinze</span></div>
+      <div class="num-card blue"><span class="digit">16</span><span class="word">seize</span></div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 2: 17-19 ==================== -->
+  <div class="section-card">
+    <div class="section-title">Group 2 — Les nombres de 17 à 19</div>
+    <div class="section-subtitle">Dix (10) + the ones digit!</div>
+
+    <div class="tip-box purple">
+      🟣 17, 18 and 19 follow a simple rule: say <strong>dix</strong> (ten), then add a hyphen, then the ones number. Think of it as "ten-seven", "ten-eight", "ten-nine"!
+    </div>
+
+    <div class="num-grid">
+      <div class="num-card purple"><span class="digit">17</span><span class="word">dix-sept<br><small>(10 + 7)</small></span></div>
+      <div class="num-card purple"><span class="digit">18</span><span class="word">dix-huit<br><small>(10 + 8)</small></span></div>
+      <div class="num-card purple"><span class="digit">19</span><span class="word">dix-neuf<br><small>(10 + 9)</small></span></div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 3: 20-69 ==================== -->
+  <div class="section-card">
+    <div class="section-title">Group 3 — Les nombres de 20 à 69</div>
+    <div class="section-subtitle">Tens + ones — with a special "et" for 1s!</div>
+
+    <div class="tip-box teal">
+      🟢 <strong>Rule for the ones:</strong> When the ones digit is <strong>1</strong>, use <em>et un</em> (e.g. vingt-<strong>et</strong>-un = 21). For all other digits, just add a hyphen (e.g. vingt-deux = 22, vingt-trois = 23…).
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <strong style="color:#00796b; font-size:1rem;">The tens words to learn:</strong>
+    </div>
+    <div class="num-grid" style="margin-bottom:18px;">
+      <div class="num-card teal"><span class="digit">20</span><span class="word">vingt</span></div>
+      <div class="num-card teal"><span class="digit">30</span><span class="word">trente</span></div>
+      <div class="num-card teal"><span class="digit">40</span><span class="word">quarante</span></div>
+      <div class="num-card teal"><span class="digit">50</span><span class="word">cinquante</span></div>
+      <div class="num-card teal"><span class="digit">60</span><span class="word">soixante</span></div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <strong style="color:#00796b; font-size:1rem;">Examples with ones:</strong>
+    </div>
+    <div class="num-grid">
+      <div class="num-card teal"><span class="digit">21</span><span class="word">vingt-et-un</span></div>
+      <div class="num-card teal"><span class="digit">22</span><span class="word">vingt-deux</span></div>
+      <div class="num-card teal"><span class="digit">31</span><span class="word">trente-et-un</span></div>
+      <div class="num-card teal"><span class="digit">32</span><span class="word">trente-deux</span></div>
+      <div class="num-card teal"><span class="digit">41</span><span class="word">quarante-et-un</span></div>
+      <div class="num-card teal"><span class="digit">51</span><span class="word">cinquante-et-un</span></div>
+      <div class="num-card teal"><span class="digit">61</span><span class="word">soixante-et-un</span></div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 4: 70-100 ==================== -->
+  <div class="section-card" style="border: 3px solid #ffb74d;">
+    <div class="section-title" style="color:#e65100;">⚡ Group 4 — Les nombres de 70 à 100</div>
+    <div class="section-subtitle" style="color:#e65100;">The TRICKY zone — French does maths with numbers!</div>
+
+    <div class="tip-box orange">
+      🟠 <strong>These weren't filled in your notebook — so pay extra attention!</strong><br><br>
+      French doesn't have new words for 70, 80 or 90. Instead it uses <em>maths</em>:
+      <ul style="margin-top:8px; padding-left:18px; line-height:1.8;">
+        <li><strong>70 = soixante-dix</strong> → literally "sixty-ten" (60 + 10)</li>
+        <li><strong>80 = quatre-vingts</strong> → literally "four-twenties" (4 × 20)</li>
+        <li><strong>90 = quatre-vingt-dix</strong> → "four-twenties-ten" (4×20 + 10)</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <strong style="color:#e65100; font-size:1rem;">70s — soixante + dix, onze, douze… (60 + 10, 11, 12…)</strong>
+    </div>
+    <div class="num-grid" style="margin-bottom:18px;">
+      <div class="num-card orange special"><span class="digit">70</span><span class="word">soixante-dix<br><small>(60+10)</small></span></div>
+      <div class="num-card orange special"><span class="digit">71</span><span class="word">soixante-et-onze<br><small>(60+11)</small></span></div>
+      <div class="num-card orange"><span class="digit">72</span><span class="word">soixante-douze<br><small>(60+12)</small></span></div>
+      <div class="num-card orange"><span class="digit">73</span><span class="word">soixante-treize</span></div>
+      <div class="num-card orange"><span class="digit">74</span><span class="word">soixante-quatorze</span></div>
+      <div class="num-card orange"><span class="digit">75</span><span class="word">soixante-quinze</span></div>
+      <div class="num-card orange"><span class="digit">79</span><span class="word">soixante-dix-neuf</span></div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <strong style="color:#e65100; font-size:1rem;">80s — quatre-vingts (4×20) + un, deux…</strong>
+    </div>
+    <div class="num-grid" style="margin-bottom:18px;">
+      <div class="num-card orange special"><span class="digit">80</span><span class="word">quatre-vingts<br><small>(4×20)</small></span></div>
+      <div class="num-card orange"><span class="digit">81</span><span class="word">quatre-vingt-un</span></div>
+      <div class="num-card orange"><span class="digit">82</span><span class="word">quatre-vingt-deux</span></div>
+      <div class="num-card orange"><span class="digit">85</span><span class="word">quatre-vingt-cinq</span></div>
+      <div class="num-card orange"><span class="digit">89</span><span class="word">quatre-vingt-neuf</span></div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <strong style="color:#e65100; font-size:1rem;">90s — quatre-vingt-dix (4×20+10) + un, deux…</strong>
+    </div>
+    <div class="num-grid" style="margin-bottom:18px;">
+      <div class="num-card orange special"><span class="digit">90</span><span class="word">quatre-vingt-dix<br><small>(4×20+10)</small></span></div>
+      <div class="num-card orange special"><span class="digit">91</span><span class="word">quatre-vingt-onze</span></div>
+      <div class="num-card orange"><span class="digit">92</span><span class="word">quatre-vingt-douze</span></div>
+      <div class="num-card orange"><span class="digit">99</span><span class="word">quatre-vingt-dix-neuf</span></div>
+    </div>
+
+    <div class="num-grid">
+      <div class="num-card orange special" style="grid-column:span 2; border-color:#e65100; background:#ffe0b2;">
+        <span class="digit" style="font-size:2.2rem;">100</span>
+        <span class="word" style="font-size:1rem;">cent</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STRUCTURE SUMMARY ==================== -->
+  <div class="section-card">
+    <div class="section-title">Quick Reference — Les règles</div>
+    <div class="section-subtitle">A summary table of all the patterns</div>
+    <table class="struct-table">
+      <thead>
+        <tr><th>Range</th><th>Rule</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="range">0–16</td>
+          <td class="rule">Unique words — memorise!</td>
+          <td class="example">onze (11), quinze (15), seize (16)</td>
+        </tr>
+        <tr>
+          <td class="range">17–19</td>
+          <td class="rule">dix + hyphen + ones</td>
+          <td class="example">dix-sept (17), dix-neuf (19)</td>
+        </tr>
+        <tr>
+          <td class="range">21, 31, 41, 51, 61, 71</td>
+          <td class="rule">tens + <strong>et</strong> + un/onze</td>
+          <td class="example">vingt-et-un (21), trente-et-un (31)</td>
+        </tr>
+        <tr>
+          <td class="range">22–29, 32–39…</td>
+          <td class="rule">tens + hyphen + ones</td>
+          <td class="example">vingt-deux (22), trente-cinq (35)</td>
+        </tr>
+        <tr>
+          <td class="range">70–79</td>
+          <td class="rule">soixante + (dix to dix-neuf)</td>
+          <td class="example">soixante-dix (70), soixante-quinze (75)</td>
+        </tr>
+        <tr>
+          <td class="range">80–89</td>
+          <td class="rule">quatre-vingts + ones (no "et"!)</td>
+          <td class="example">quatre-vingt-un (81), quatre-vingt-huit (88)</td>
+        </tr>
+        <tr>
+          <td class="range">90–99</td>
+          <td class="rule">quatre-vingt-dix + ones</td>
+          <td class="example">quatre-vingt-onze (91), quatre-vingt-dix-neuf (99)</td>
+        </tr>
+        <tr>
+          <td class="range">100</td>
+          <td class="rule">cent — one word!</td>
+          <td class="example">cent (100)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==================== ACTIVITY 1 ==================== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <span class="act-badge">Activity 1</span>
+      <h2>Number to Word Quiz</h2>
+    </div>
+    <p style="color:#5c6bc0; font-weight:600; margin-bottom:18px; font-size:0.93rem;">See the number — pick the correct French word!</p>
+
+    <!-- Q1 -->
+    <div class="q-wrap">
+      <div class="question">What is <span class="num">7</span> in French?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',1)">six</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',1)">sept</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',1)">huit</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-wrap">
+      <div class="question">What is <span class="num">15</span> in French?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',2)">quatorze</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',2)">quinze</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',2)">seize</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-wrap">
+      <div class="question">What is <span class="num">22</span> in French?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',3)">vingt</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',3)">vingt-et-un</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',3)">vingt-deux</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-wrap">
+      <div class="question">What is <span class="num">40</span> in French?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',4)">trente</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',4)">quarante</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',4)">cinquante</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-wrap">
+      <div class="question">What is <span class="num">71</span> in French? <small style="color:#e65100;">(remember the tricky zone!)</small></div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',5)">soixante-dix</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',5)">soixante-et-onze</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',5)">soixante-douze</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-wrap">
+      <div class="question">What is <span class="num">81</span> in French?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',6)">quatre-vingts</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',6)">quatre-vingt-un</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',6)">quatre-vingt-deux</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ACTIVITY 2 ==================== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <span class="act-badge">Activity 2</span>
+      <h2>Word to Number Quiz</h2>
+    </div>
+    <p style="color:#5c6bc0; font-weight:600; margin-bottom:18px; font-size:0.93rem;">See the French word — pick the correct number!</p>
+
+    <!-- Q1 -->
+    <div class="q-wrap">
+      <div class="question">What number is <span class="num" style="font-size:1.2rem;">trente-deux</span>?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',7)">22</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',7)">32</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',7)">42</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-wrap">
+      <div class="question">What number is <span class="num" style="font-size:1.2rem;">soixante-dix</span>?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',8)">60</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',8)">70</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',8)">80</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-wrap">
+      <div class="question">What number is <span class="num" style="font-size:1.2rem;">quatre-vingts</span>?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'correct',9)">80</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',9)">84</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',9)">90</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-wrap">
+      <div class="question">What number is <span class="num" style="font-size:1.2rem;">onze</span>?</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',10)">10</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',10)">11</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',10)">12</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ACTIVITY 3 ==================== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <span class="act-badge">Activity 3</span>
+      <h2>Vrai ou Faux? (True or False)</h2>
+    </div>
+    <p style="color:#5c6bc0; font-weight:600; margin-bottom:18px; font-size:0.93rem;">Is the statement correct? Press Vrai (True) or Faux (False)!</p>
+
+    <div class="tf-wrap">
+      <div class="statement">vingt-et-un = 21</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="checkTF(this, true, true)">Vrai ✓</button>
+        <button class="tf-btn" onclick="checkTF(this, false, true)">Faux ✗</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="tf-wrap">
+      <div class="statement">soixante-dix = 60</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="checkTF(this, true, false)">Vrai ✓</button>
+        <button class="tf-btn" onclick="checkTF(this, false, false)">Faux ✗</button>
+      </div>
+      <div class="feedback" style="color:#e65100;"></div>
+    </div>
+
+    <div class="tf-wrap">
+      <div class="statement">quatre-vingts = 4 × 20</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="checkTF(this, true, true)">Vrai ✓</button>
+        <button class="tf-btn" onclick="checkTF(this, false, true)">Faux ✗</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="tf-wrap">
+      <div class="statement">seize = 16</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="checkTF(this, true, true)">Vrai ✓</button>
+        <button class="tf-btn" onclick="checkTF(this, false, true)">Faux ✗</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="tf-wrap">
+      <div class="statement">quatre-vingt-dix = 90</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="checkTF(this, true, true)">Vrai ✓</button>
+        <button class="tf-btn" onclick="checkTF(this, false, true)">Faux ✗</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ACTIVITY 4 ==================== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <span class="act-badge">Activity 4</span>
+      <h2>Word Bank — Fill the Tens!</h2>
+    </div>
+    <p style="color:#5c6bc0; font-weight:600; margin-bottom:6px; font-size:0.93rem;">Tap a word from the bank, then tap the blank to fill it in.</p>
+    <p style="color:#9c27b0; font-weight:600; margin-bottom:16px; font-size:0.88rem;">Tap a filled blank to return the word to the bank.</p>
+
+    <div class="token-bank" id="tokenBank">
+      <span class="token" id="tok-dix" onclick="selectToken(this)">dix</span>
+      <span class="token" id="tok-vingt" onclick="selectToken(this)">vingt</span>
+      <span class="token" id="tok-trente" onclick="selectToken(this)">trente</span>
+      <span class="token" id="tok-quarante" onclick="selectToken(this)">quarante</span>
+      <span class="token" id="tok-cinquante" onclick="selectToken(this)">cinquante</span>
+      <span class="token" id="tok-soixante" onclick="selectToken(this)">soixante</span>
+    </div>
+
+    <div id="wb-sentences">
+      <div class="wb-sentence">
+        <span class="num-label">10</span> <span>=</span>
+        <span class="blank" data-answer="dix" onclick="fillBlank(this)"></span>
+      </div>
+      <div class="wb-sentence">
+        <span class="num-label">20</span> <span>=</span>
+        <span class="blank" data-answer="vingt" onclick="fillBlank(this)"></span>
+      </div>
+      <div class="wb-sentence">
+        <span class="num-label">30</span> <span>=</span>
+        <span class="blank" data-answer="trente" onclick="fillBlank(this)"></span>
+      </div>
+      <div class="wb-sentence">
+        <span class="num-label">40</span> <span>=</span>
+        <span class="blank" data-answer="quarante" onclick="fillBlank(this)"></span>
+      </div>
+      <div class="wb-sentence">
+        <span class="num-label">50</span> <span>=</span>
+        <span class="blank" data-answer="cinquante" onclick="fillBlank(this)"></span>
+      </div>
+      <div class="wb-sentence">
+        <span class="num-label">60</span> <span>=</span>
+        <span class="blank" data-answer="soixante" onclick="fillBlank(this)"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ACTIVITY 5 ==================== -->
+  <div class="section-card">
+    <div class="activity-header">
+      <span class="act-badge">Activity 5</span>
+      <h2>Maths en Français!</h2>
+    </div>
+    <p style="color:#5c6bc0; font-weight:600; margin-bottom:18px; font-size:0.93rem;">Solve the addition — then pick the French answer!</p>
+
+    <div class="math-q-wrap">
+      <div class="equation">vingt + dix = ___</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'correct',11)">trente</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',11)">quarante</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',11)">cinquante</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="math-q-wrap">
+      <div class="equation">cinquante + vingt = ___</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'wrong',12)">soixante</button>
+        <button class="q-btn" onclick="pickQ(this,'correct',12)">soixante-dix</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',12)">quatre-vingts</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="math-q-wrap">
+      <div class="equation">quatre-vingts + dix = ___</div>
+      <div class="btn-row">
+        <button class="q-btn" onclick="pickQ(this,'correct',13)">quatre-vingt-dix</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',13)">cent</button>
+        <button class="q-btn" onclick="pickQ(this,'wrong',13)">quatre-vingts</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center; color:#9c6fba; font-size:0.82rem; font-weight:600; padding: 10px 0 20px;">
+    Emunah · French · Les Nombres Cardinaux · Cambridge Year 3
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// =============================================
+// SHARED STATE
+// =============================================
+let cheerCount = 0;
+
+function revealCheer() {
+  if (cheerCount >= 2) {
+    document.getElementById('cheer').style.display = 'block';
+    document.getElementById('cheer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// =============================================
+// ACTIVITY 1 & 2 & 5 — 3-choice quiz
+// =============================================
+function pickQ(el, result, qNum) {
+  const wrap = el.closest('.q-wrap') || el.closest('.math-q-wrap');
+  if (wrap.dataset.done) return;
+  wrap.dataset.done = '1';
+  const btns = wrap.querySelectorAll('button');
+  btns.forEach(b => b.disabled = true);
+  if (result === 'correct') {
+    el.style.background = '#4caf50';
+    el.style.color = 'white';
+    el.style.borderColor = '#388e3c';
+    wrap.querySelector('.feedback').textContent = '✅ Correct! Bien joué!';
+    wrap.querySelector('.feedback').style.color = '#2e7d32';
+    cheerCount++;
+    revealCheer();
+  } else {
+    el.style.background = '#ef5350';
+    el.style.color = 'white';
+    el.style.borderColor = '#c62828';
+    wrap.querySelector('.feedback').textContent = '❌ Try again next time!';
+    wrap.querySelector('.feedback').style.color = '#c62828';
+  }
+}
+
+// =============================================
+// ACTIVITY 3 — True / False
+// =============================================
+function checkTF(el, picked, key) {
+  const wrap = el.closest('.tf-wrap');
+  if (wrap.dataset.done) return;
+  wrap.dataset.done = '1';
+  const btns = wrap.querySelectorAll('button');
+  btns.forEach(b => b.disabled = true);
+  const fb = wrap.querySelector('.feedback');
+  if (picked === key) {
+    el.style.background = '#4caf50';
+    el.style.color = 'white';
+    el.style.borderColor = '#388e3c';
+    fb.textContent = '✅ Correct! Bravo!';
+    fb.style.color = '#2e7d32';
+    cheerCount++;
+    revealCheer();
+  } else {
+    el.style.background = '#ef5350';
+    el.style.color = 'white';
+    el.style.borderColor = '#c62828';
+    // Helpful hint for the tricky one
+    const stmt = wrap.querySelector('.statement').textContent;
+    if (stmt.includes('soixante-dix = 60')) {
+      fb.textContent = '❌ Not quite! soixante-dix = 70 (sixty-ten), not 60!';
+    } else {
+      fb.textContent = '❌ Not quite — check the reference table above!';
+    }
+    fb.style.color = '#c62828';
+  }
+}
+
+// =============================================
+// ACTIVITY 4 — Word bank tap-to-fill
+// =============================================
+let selectedToken = null;
+
+function selectToken(el) {
+  if (el.dataset.used) return;
+  if (selectedToken) selectedToken.classList.remove('selected');
+  selectedToken = el;
+  el.classList.add('selected');
+}
+
+function fillBlank(el) {
+  // If already filled — return the token
+  if (el.dataset.filled) {
+    const ans = el.dataset.filledWith;
+    if (ans) {
+      const tok = document.getElementById('tok-' + ans);
+      if (tok) {
+        tok.style.visibility = 'visible';
+        tok.style.opacity = '1';
+        delete tok.dataset.used;
+      }
+    }
+    el.textContent = '';
+    el.style.background = '#f0f8ff';
+    el.style.borderColor = '#90caf9';
+    delete el.dataset.filled;
+    delete el.dataset.filledWith;
+    return;
+  }
+
+  if (!selectedToken || selectedToken.dataset.used) return;
+
+  el.textContent = selectedToken.textContent;
+  el.dataset.filled = '1';
+  el.dataset.filledWith = selectedToken.id.replace('tok-', '');
+  el.style.background = '#e3f2fd';
+
+  // Check correctness
+  const correct = el.dataset.answer;
+  if (el.textContent.trim() === correct) {
+    el.style.borderColor = '#4caf50';
+    el.style.borderStyle = 'solid';
+    el.style.color = '#1b5e20';
+    cheerCount++;
+    revealCheer();
+  } else {
+    el.style.borderColor = '#ef5350';
+    el.style.borderStyle = 'solid';
+    el.style.color = '#b71c1c';
+  }
+
+  selectedToken.style.visibility = 'hidden';
+  selectedToken.style.opacity = '0';
+  selectedToken.dataset.used = '1';
+  selectedToken.classList.remove('selected');
+  selectedToken = null;
+}
+</script>
+</body>
+</html>

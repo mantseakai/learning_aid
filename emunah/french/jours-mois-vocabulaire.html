@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Jours, les Mois & le Vocabulaire du Temps — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:        #1565c0;
+    --blue-light:  #bbdefb;
+    --blue-mid:    #1976d2;
+    --blue-dark:   #0d47a1;
+    --pink:        #e91e8c;
+    --gold:        #fcd116;
+    --green:       #006b3f;
+    --red:         #ce1126;
+    --white:       #ffffff;
+    --body-bg:     linear-gradient(160deg, #ffeef8 0%, #f8d7f0 40%, #e8d5f5 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--body-bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: 60px;
+  }
+
+  /* ---- BACK BUTTON ---- */
+  .back-home-btn {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 999;
+    background: white;
+    color: var(--pink);
+    border: 2.5px solid var(--pink);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(233,30,140,0.15);
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .back-home-btn:hover { background: var(--pink); color: white; transform: translateY(-1px); }
+
+  /* ---- CHEER BANNER ---- */
+  #cheer {
+    display: none;
+    background: linear-gradient(135deg, #ff6ec7, #e91e8c, #1565c0);
+    color: #fff;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+    padding: 18px 24px;
+    border-radius: 16px;
+    margin: 24px auto;
+    max-width: 750px;
+    box-shadow: 0 6px 24px rgba(233,30,140,0.35);
+    animation: popIn 0.5s ease;
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ---- HERO ---- */
+  header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, #1976d2 100%);
+    padding: 70px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 38px;
+    background: linear-gradient(160deg, #ffeef8 0%, #f8d7f0 40%, #e8d5f5 100%);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    color: #fff;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    letter-spacing: 1.5px;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+    animation: popIn 0.7s ease;
+    margin-bottom: 10px;
+  }
+  header .subtitle {
+    color: #bbdefb;
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .date-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    padding: 5px 16px;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  /* ---- MAIN LAYOUT ---- */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 30px 16px 0;
+  }
+
+  /* ---- SECTION TITLES ---- */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue-dark);
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .flag { font-size: 1.4rem; }
+  .section-intro {
+    color: #444;
+    font-size: 0.97rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-left: 4px;
+  }
+
+  /* ---- VOCAB CARD GRID ---- */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .vocab-card {
+    background: white;
+    border-radius: 14px;
+    border: 2px solid var(--blue-light);
+    padding: 14px 12px 12px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(21,101,192,0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .vocab-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(21,101,192,0.18); }
+  .vocab-card .fr {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue);
+    font-size: 1.18rem;
+    margin-bottom: 4px;
+  }
+  .vocab-card .en {
+    color: #555;
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .vocab-card .example {
+    background: #e8f0fe;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    color: #1a237e;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .vocab-card .example em {
+    display: block;
+    color: #555;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  /* ---- DAYS / MONTHS PILL LIST ---- */
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .pill {
+    background: white;
+    border: 2px solid var(--blue);
+    border-radius: 50px;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(21,101,192,0.12);
+  }
+  .pill .num {
+    background: var(--blue);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.8rem;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pill .fr { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: 1rem; }
+  .pill .en { color: #666; font-size: 0.82rem; font-weight: 700; }
+
+  /* ---- RULE BOX ---- */
+  .rule-box {
+    background: linear-gradient(135deg, #fff9c4, #fff3e0);
+    border: 2.5px solid #f9a825;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .rule-box .icon { font-size: 2rem; flex-shrink: 0; }
+  .rule-box h3 {
+    font-family: 'Fredoka One', cursive;
+    color: #e65100;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+  .rule-box p { color: #444; font-size: 0.9rem; font-weight: 600; line-height: 1.5; }
+  .rule-box .compare {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .rule-box .wrong-eg, .rule-box .right-eg {
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .rule-box .wrong-eg { background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a; }
+  .rule-box .right-eg { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7; }
+
+  /* ---- MONTHS GRID ---- */
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .month-card {
+    background: white;
+    border: 2px solid var(--blue-light);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(21,101,192,0.08);
+  }
+  .month-card .num-badge {
+    background: var(--blue);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.75rem;
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 50px;
+    margin-bottom: 4px;
+  }
+  .month-card .fr {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue-dark);
+    font-size: 0.98rem;
+    display: block;
+  }
+
+  /* ---- GHANA TABLE ---- */
+  .ghana-wrapper {
+    background: white;
+    border-radius: 16px;
+    border: 2.5px solid var(--green);
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 14px rgba(0,107,63,0.12);
+  }
+  .ghana-header {
+    background: linear-gradient(135deg, var(--green), #00894f);
+    color: white;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ghana-header h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+  }
+  .ghana-header .flag-stripe {
+    display: flex;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 20px;
+    width: 40px;
+    flex-shrink: 0;
+  }
+  .ghana-header .flag-stripe span {
+    flex: 1;
+  }
+  .ghana-header .flag-stripe .r { background: var(--red); }
+  .ghana-header .flag-stripe .g { background: var(--gold); }
+  .ghana-header .flag-stripe .b { background: var(--green); }
+  table.ghana {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  table.ghana th {
+    background: #e8f5e9;
+    color: var(--green);
+    font-weight: 800;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid #c8e6c9;
+  }
+  table.ghana td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+  }
+  table.ghana tr:last-child td { border-bottom: none; }
+  table.ghana tr:nth-child(even) td { background: #f9fff9; }
+  .day-fr { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: 0.95rem; }
+  .day-en { color: #888; font-size: 0.8rem; font-weight: 700; }
+  .names-boy { color: var(--green); font-weight: 800; }
+  .names-girl { color: var(--pink); font-weight: 800; }
+
+  /* ---- ACTIVITY CARD ---- */
+  .activity-card {
+    background: white;
+    border-radius: 18px;
+    border: 2.5px solid var(--blue-light);
+    padding: 24px 22px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 16px rgba(21,101,192,0.10);
+  }
+  .activity-card h2 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue);
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .activity-card .act-intro {
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  /* ---- Q WRAP (3-choice) ---- */
+  .q-wrap {
+    background: #f5f7ff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1.5px solid #dde4ff;
+  }
+  .q-wrap .q-text {
+    font-weight: 800;
+    color: #1a237e;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+  }
+  .q-wrap .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .q-wrap .choices button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    background: white;
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    padding: 7px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, transform 0.12s;
+  }
+  .q-wrap .choices button:hover:not(:disabled) { background: var(--blue); color: white; transform: scale(1.05); }
+  .q-wrap .feedback { font-weight: 800; font-size: 0.92rem; min-height: 22px; color: #333; }
+
+  /* ---- TF WRAP ---- */
+  .tf-wrap {
+    background: #f5f7ff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1.5px solid #dde4ff;
+  }
+  .tf-wrap .tf-text {
+    font-weight: 800;
+    color: #1a237e;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+  }
+  .tf-wrap .tf-sentence {
+    background: #e8f0fe;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.92rem;
+    color: #1a237e;
+    font-style: italic;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .tf-wrap .tf-btns {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .tf-wrap .tf-btns button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 7px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 2px solid;
+    transition: 0.15s;
+  }
+  .tf-wrap .tf-btns .btn-true { background: white; border-color: #2e7d32; color: #2e7d32; }
+  .tf-wrap .tf-btns .btn-true:hover:not(:disabled) { background: #2e7d32; color: white; }
+  .tf-wrap .tf-btns .btn-false { background: white; border-color: #c62828; color: #c62828; }
+  .tf-wrap .tf-btns .btn-false:hover:not(:disabled) { background: #c62828; color: white; }
+  .tf-wrap .feedback { font-weight: 800; font-size: 0.92rem; min-height: 22px; color: #333; }
+
+  /* ---- MATCH ACTIVITY ---- */
+  .match-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .match-col { display: flex; flex-direction: column; gap: 8px; }
+  .match-col h4 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .match-item {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 2px solid var(--blue-light);
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .match-item.selected { border-color: var(--pink); background: #fce4ec; }
+  .match-item.matched-ok { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; cursor: default; }
+  .match-item.matched-err { border-color: #ef5350; background: #ffebee; color: #c62828; cursor: default; }
+  .match-score { font-weight: 800; color: var(--blue-dark); font-size: 0.9rem; margin-top: 4px; }
+
+  /* ---- WORD BANK FILL ---- */
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .wb-token {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    background: var(--blue);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s, transform 0.12s;
+  }
+  .wb-token:hover:not(.used) { transform: scale(1.07); }
+  .wb-token.used { opacity: 0.35; cursor: default; }
+  .fill-sentence {
+    background: #f5f7ff;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border: 1.5px solid #dde4ff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1a237e;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .blank {
+    display: inline-flex;
+    align-items: center;
+    min-width: 90px;
+    height: 30px;
+    border-bottom: 2.5px solid var(--blue);
+    padding: 0 8px;
+    font-family: 'Fredoka One', cursive;
+    color: var(--pink);
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 4px 4px 0 0;
+    transition: background 0.15s;
+  }
+  .blank:hover { background: #e8f0fe; }
+  .blank.filled { color: var(--blue-dark); border-bottom-color: #4caf50; }
+  .blank.wrong-fill { border-bottom-color: #ef5350; color: #ef5350; }
+  #wb-feedback {
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: #333;
+    margin-top: 8px;
+    min-height: 22px;
+  }
+  #wb-check-btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 3px 10px rgba(21,101,192,0.3);
+  }
+  #wb-check-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* ---- GHANA QUIZ ---- */
+  .ghana-q-wrap {
+    background: #f1f8f4;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1.5px solid #c8e6c9;
+  }
+  .ghana-q-wrap .q-text {
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+  }
+  .ghana-q-wrap .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .ghana-q-wrap .choices button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    background: white;
+    border: 2px solid var(--green);
+    color: var(--green);
+    padding: 7px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+  .ghana-q-wrap .choices button:hover:not(:disabled) { background: var(--green); color: white; }
+  .ghana-q-wrap .feedback { font-weight: 800; font-size: 0.92rem; min-height: 22px; color: #333; }
+
+  /* ---- DIVIDER ---- */
+  .section-divider {
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue-light), var(--pink), var(--blue-light));
+    border-radius: 4px;
+    margin: 32px 0 28px;
+    opacity: 0.5;
+  }
+
+  /* ---- SENTENCE HIGHLIGHT ---- */
+  .sentence-highlight {
+    background: #e8f0fe;
+    border-left: 4px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin: 14px 0 22px;
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: #1a237e;
+  }
+  .sentence-highlight .en {
+    color: #555;
+    font-style: italic;
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+    font-size: 0.88rem;
+  }
+
+  /* responsive */
+  @media (max-width: 500px) {
+    .match-area { grid-template-columns: 1fr; }
+    .rule-box .compare { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- HERO HEADER -->
+<header>
+  <h1>🇫🇷 Les Jours &amp; les Mois</h1>
+  <p class="subtitle">Days, Months &amp; Time Vocabulary • Cambridge French • Age 8</p>
+  <span class="date-badge">vendredi 22 mai 2026</span>
+</header>
+
+<!-- CHEER BANNER -->
+<div id="cheer">
+  🎉 Fantastique, Emunah! Tu es une star! ⭐ Keep going — tu es incroyable! 🇫🇷💙
+</div>
+
+<main>
+
+  <!-- ===================== SECTION 1: TIME VOCABULARY ===================== -->
+  <h2 class="section-title"><span class="flag">⏰</span> Section 1 — Le Vocabulaire du Temps</h2>
+  <p class="section-intro">Learn these important time words in French. Study the French word, its English meaning, and the example sentence.</p>
+
+  <div class="vocab-grid">
+    <div class="vocab-card">
+      <div class="fr">aujourd'hui</div>
+      <div class="en">today</div>
+      <div class="example">Aujourd'hui c'est lundi.<em>Today is Monday.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">hier</div>
+      <div class="en">yesterday</div>
+      <div class="example">Hier, j'ai lu un livre.<em>Yesterday, I read a book.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">demain</div>
+      <div class="en">tomorrow</div>
+      <div class="example">Demain, il y a école.<em>Tomorrow, there is school.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">avant-hier</div>
+      <div class="en">the day before yesterday</div>
+      <div class="example">Avant-hier, c'était samedi.<em>The day before yesterday was Saturday.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">premier / première</div>
+      <div class="en">first (m / f)</div>
+      <div class="example">C'est le premier jour.<em>It is the first day.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">dernier / dernière</div>
+      <div class="en">last (m / f)</div>
+      <div class="example">C'est la dernière semaine.<em>It is the last week.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">mois</div>
+      <div class="en">month</div>
+      <div class="example">Il y a douze mois dans l'année.<em>There are twelve months in the year.</em></div>
+    </div>
+    <div class="vocab-card">
+      <div class="fr">semaine</div>
+      <div class="en">week</div>
+      <div class="example">La semaine a sept jours.<em>The week has seven days.</em></div>
+    </div>
+  </div>
+
+  <div class="sentence-highlight">
+    Je suis né(e) en [mois]. &nbsp;→&nbsp; <strong>Je suis née en mai.</strong>
+    <span class="en">"I was born in [month]." → "I was born in May."</span>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================== SECTION 2: DAYS OF THE WEEK ===================== -->
+  <h2 class="section-title"><span class="flag">📅</span> Section 2 — Les Jours de la Semaine</h2>
+  <p class="section-intro">The seven days of the week in French. Notice they are all lowercase!</p>
+
+  <div class="rule-box">
+    <div class="icon">⚠️</div>
+    <div>
+      <h3>Important Capitalisation Rule!</h3>
+      <p>In French, days of the week and months of the year do <strong>NOT</strong> begin with a capital letter — EXCEPT at the very start of a sentence.</p>
+      <div class="compare">
+        <div class="wrong-eg">✗ Lundi est mon jour préféré.<br><em>Wrong — Lundi is NOT at the start? Actually it is here — but don't capitalise when mid-sentence!</em></div>
+        <div class="right-eg">✓ Mon jour préféré est lundi.<br><em>Correct — lundi is mid-sentence so it is lowercase.</em></div>
+      </div>
+      <div class="compare" style="margin-top:8px">
+        <div class="wrong-eg">✗ Je suis née en Mai.<br><em>Wrong — Mai should never be capitalised.</em></div>
+        <div class="right-eg">✓ Je suis née en mai.<br><em>Correct — mai is always lowercase.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pill-list">
+    <div class="pill"><span class="num">1</span><span class="fr">lundi</span><span class="en">Monday</span></div>
+    <div class="pill"><span class="num">2</span><span class="fr">mardi</span><span class="en">Tuesday</span></div>
+    <div class="pill"><span class="num">3</span><span class="fr">mercredi</span><span class="en">Wednesday</span></div>
+    <div class="pill"><span class="num">4</span><span class="fr">jeudi</span><span class="en">Thursday</span></div>
+    <div class="pill"><span class="num">5</span><span class="fr">vendredi</span><span class="en">Friday</span></div>
+    <div class="pill"><span class="num">6</span><span class="fr">samedi</span><span class="en">Saturday</span></div>
+    <div class="pill"><span class="num">7</span><span class="fr">dimanche</span><span class="en">Sunday</span></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================== SECTION 3: MONTHS ===================== -->
+  <h2 class="section-title"><span class="flag">🗓️</span> Section 3 — Les Mois de l'Année</h2>
+  <p class="section-intro">All twelve months in French — all lowercase (unless they start a sentence).</p>
+
+  <div class="months-grid">
+    <div class="month-card"><span class="num-badge">1</span><span class="fr">janvier</span></div>
+    <div class="month-card"><span class="num-badge">2</span><span class="fr">février</span></div>
+    <div class="month-card"><span class="num-badge">3</span><span class="fr">mars</span></div>
+    <div class="month-card"><span class="num-badge">4</span><span class="fr">avril</span></div>
+    <div class="month-card"><span class="num-badge">5</span><span class="fr">mai</span></div>
+    <div class="month-card"><span class="num-badge">6</span><span class="fr">juin</span></div>
+    <div class="month-card"><span class="num-badge">7</span><span class="fr">juillet</span></div>
+    <div class="month-card"><span class="num-badge">8</span><span class="fr">août</span></div>
+    <div class="month-card"><span class="num-badge">9</span><span class="fr">septembre</span></div>
+    <div class="month-card"><span class="num-badge">10</span><span class="fr">octobre</span></div>
+    <div class="month-card"><span class="num-badge">11</span><span class="fr">novembre</span></div>
+    <div class="month-card"><span class="num-badge">12</span><span class="fr">décembre</span></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================== SECTION 4: GHANAIAN DAY NAMES ===================== -->
+  <h2 class="section-title"><span class="flag">🇬🇭</span> Section 4 — Les Prénoms Ghanéens du Jour</h2>
+  <p class="section-intro">In Ghanaian culture, babies are given a special name based on the day of the week they were born. Can you find your day?</p>
+
+  <div class="ghana-wrapper">
+    <div class="ghana-header">
+      <div class="flag-stripe"><span class="r"></span><span class="g"></span><span class="b"></span></div>
+      <h3>Ghanaian Day Names (Noms du Jour)</h3>
+    </div>
+    <table class="ghana">
+      <thead>
+        <tr>
+          <th>Jour (French)</th>
+          <th>Day (English)</th>
+          <th>Boy's Name</th>
+          <th>Girl's Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="day-fr">lundi</span></td>
+          <td><span class="day-en">Monday</span></td>
+          <td><span class="names-boy">Kodwo / Kojo</span></td>
+          <td><span class="names-girl">Adjoa</span></td>
+        </tr>
+        <tr>
+          <td><span class="day-fr">mardi</span></td>
+          <td><span class="day-en">Tuesday</span></td>
+          <td><span class="names-boy">Kwabena / Kobbena</span></td>
+          <td><span class="names-girl">Abena</span></td>
+        </tr>
+        <tr>
+          <td><span class="day-fr">mercredi</span></td>
+          <td><span class="day-en">Wednesday</span></td>
+          <td><span class="names-boy">Kwaku</span></td>
+          <td><span class="names-girl">Akua</span></td>
+        </tr>
+        <tr>
+          <td><span class="day-fr">jeudi</span></td>
+          <td><span class="day-en">Thursday</span></td>
+          <td><span class="names-boy">Yaw</span></td>
+          <td><span class="names-girl">Yaa</span></td>
+        </tr>
+        <tr>
+          <td><span class="day-fr">vendredi</span></td>
+          <td><span class="day-en">Friday</span></td>
+          <td><span class="names-boy">Kofi</span></td>
+          <td><span class="names-girl">Afua</span></td>
+        </tr>
+        <tr>
+          <td><span class="day-fr">samedi</span></td>
+          <td><span class="day-en">Saturday</span></td>
+          <td><span class="names-boy">Kwame</span></td>
+          <td><span class="names-girl">Ama</span></td>
+        </tr>
+        <tr>
+          <td><span class="day-fr">dimanche</span></td>
+          <td><span class="day-en">Sunday</span></td>
+          <td><span class="names-boy">Kwesi / Akwesi</span></td>
+          <td><span class="names-girl">Akosua</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ===================== ACTIVITIES ===================== -->
+  <h2 class="section-title" style="margin-bottom:20px;"><span class="flag">✏️</span> Activités — Let's Practise!</h2>
+
+  <!-- ---- ACTIVITY 1: Translate the time word ---- -->
+  <div class="activity-card">
+    <h2>🕐 Activity 1 — Translate the Time Word</h2>
+    <p class="act-intro">What does each French word mean in English? Tap the correct answer.</p>
+
+    <!-- Q1 -->
+    <div class="q-wrap">
+      <div class="q-text">1. What does <strong>aujourd'hui</strong> mean?</div>
+      <div class="choices">
+        <button onclick="pickQ(this,'wrong',1)">tomorrow</button>
+        <button onclick="pickQ(this,'correct',1)">today</button>
+        <button onclick="pickQ(this,'wrong',1)">yesterday</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-wrap">
+      <div class="q-text">2. What does <strong>avant-hier</strong> mean?</div>
+      <div class="choices">
+        <button onclick="pickQ(this,'wrong',2)">tomorrow</button>
+        <button onclick="pickQ(this,'wrong',2)">last week</button>
+        <button onclick="pickQ(this,'correct',2)">the day before yesterday</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-wrap">
+      <div class="q-text">3. What does <strong>dernier / dernière</strong> mean?</div>
+      <div class="choices">
+        <button onclick="pickQ(this,'correct',3)">last</button>
+        <button onclick="pickQ(this,'wrong',3)">first</button>
+        <button onclick="pickQ(this,'wrong',3)">next</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-wrap">
+      <div class="q-text">4. What does <strong>semaine</strong> mean?</div>
+      <div class="choices">
+        <button onclick="pickQ(this,'wrong',4)">year</button>
+        <button onclick="pickQ(this,'wrong',4)">month</button>
+        <button onclick="pickQ(this,'correct',4)">week</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-wrap">
+      <div class="q-text">5. What does <strong>demain</strong> mean?</div>
+      <div class="choices">
+        <button onclick="pickQ(this,'wrong',5)">today</button>
+        <button onclick="pickQ(this,'correct',5)">tomorrow</button>
+        <button onclick="pickQ(this,'wrong',5)">yesterday</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ---- ACTIVITY 2: True or False (capitalisation) ---- -->
+  <div class="activity-card">
+    <h2>🔡 Activity 2 — True or False: Capitalisation Rule</h2>
+    <p class="act-intro">Is the capitalisation correct (True) or incorrect (False) in each sentence? Remember: days and months are <em>lowercase</em> in French unless they start the sentence!</p>
+
+    <!-- TF1 -->
+    <div class="tf-wrap">
+      <div class="tf-text">1. Is the capitalisation correct?</div>
+      <div class="tf-sentence">Lundi est un jour de la semaine.</div>
+      <div class="tf-btns">
+        <button class="btn-true" onclick="checkTF(this,'true','false')">True</button>
+        <button class="btn-false" onclick="checkTF(this,'false','false')">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- TF2 -->
+    <div class="tf-wrap">
+      <div class="tf-text">2. Is the capitalisation correct?</div>
+      <div class="tf-sentence">Mon mois préféré est mai.</div>
+      <div class="tf-btns">
+        <button class="btn-true" onclick="checkTF(this,'true','true')">True</button>
+        <button class="btn-false" onclick="checkTF(this,'false','true')">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- TF3 -->
+    <div class="tf-wrap">
+      <div class="tf-text">3. Is the capitalisation correct?</div>
+      <div class="tf-sentence">Je suis née en Février.</div>
+      <div class="tf-btns">
+        <button class="btn-true" onclick="checkTF(this,'true','false')">True</button>
+        <button class="btn-false" onclick="checkTF(this,'false','false')">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- TF4 -->
+    <div class="tf-wrap">
+      <div class="tf-text">4. Is the capitalisation correct?</div>
+      <div class="tf-sentence">Vendredi, j'ai cours de français.</div>
+      <div class="tf-btns">
+        <button class="btn-true" onclick="checkTF(this,'true','true')">True</button>
+        <button class="btn-false" onclick="checkTF(this,'false','true')">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- TF5 -->
+    <div class="tf-wrap">
+      <div class="tf-text">5. Is the capitalisation correct?</div>
+      <div class="tf-sentence">La fête est en Décembre, pas en Novembre.</div>
+      <div class="tf-btns">
+        <button class="btn-true" onclick="checkTF(this,'true','false')">True</button>
+        <button class="btn-false" onclick="checkTF(this,'false','false')">False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ---- ACTIVITY 3: Match French days to English ---- -->
+  <div class="activity-card">
+    <h2>🔗 Activity 3 — Match the Days</h2>
+    <p class="act-intro">Tap a French day on the left, then tap its English meaning on the right to make a pair!</p>
+
+    <div class="match-area">
+      <div class="match-col">
+        <h4>🇫🇷 Français</h4>
+        <div class="match-item" id="mf-lundi"     onclick="selectMatch(this,'lundi',    'left')">lundi</div>
+        <div class="match-item" id="mf-mardi"     onclick="selectMatch(this,'mardi',    'left')">mardi</div>
+        <div class="match-item" id="mf-mercredi"  onclick="selectMatch(this,'mercredi', 'left')">mercredi</div>
+        <div class="match-item" id="mf-jeudi"     onclick="selectMatch(this,'jeudi',    'left')">jeudi</div>
+        <div class="match-item" id="mf-vendredi"  onclick="selectMatch(this,'vendredi', 'left')">vendredi</div>
+        <div class="match-item" id="mf-samedi"    onclick="selectMatch(this,'samedi',   'left')">samedi</div>
+        <div class="match-item" id="mf-dimanche"  onclick="selectMatch(this,'dimanche', 'left')">dimanche</div>
+      </div>
+      <div class="match-col">
+        <h4>🇬🇧 English</h4>
+        <div class="match-item" id="me-Saturday"  onclick="selectMatch(this,'samedi',   'right')">Saturday</div>
+        <div class="match-item" id="me-Monday"    onclick="selectMatch(this,'lundi',    'right')">Monday</div>
+        <div class="match-item" id="me-Thursday"  onclick="selectMatch(this,'jeudi',    'right')">Thursday</div>
+        <div class="match-item" id="me-Wednesday" onclick="selectMatch(this,'mercredi', 'right')">Wednesday</div>
+        <div class="match-item" id="me-Sunday"    onclick="selectMatch(this,'dimanche', 'right')">Sunday</div>
+        <div class="match-item" id="me-Tuesday"   onclick="selectMatch(this,'mardi',    'right')">Tuesday</div>
+        <div class="match-item" id="me-Friday"    onclick="selectMatch(this,'vendredi', 'right')">Friday</div>
+      </div>
+    </div>
+    <div class="match-score" id="match-score"></div>
+  </div>
+
+  <!-- ---- ACTIVITY 4: Word bank fill in the blanks ---- -->
+  <div class="activity-card">
+    <h2>📝 Activity 4 — Word Bank: Fill in the Blanks</h2>
+    <p class="act-intro">Tap a word from the word bank, then tap the blank in the sentence where it belongs. Click Check when done!</p>
+
+    <div class="word-bank" id="word-bank">
+      <button class="wb-token" onclick="selectToken(this,'janvier')">janvier</button>
+      <button class="wb-token" onclick="selectToken(this,'hier')">hier</button>
+      <button class="wb-token" onclick="selectToken(this,'demain')">demain</button>
+      <button class="wb-token" onclick="selectToken(this,'semaine')">semaine</button>
+      <button class="wb-token" onclick="selectToken(this,'décembre')">décembre</button>
+      <button class="wb-token" onclick="selectToken(this,'première')">première</button>
+    </div>
+
+    <div class="fill-sentence">
+      <span id="bl1" class="blank" onclick="fillBlank(this,'janvier')" title="Tap to fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      est le premier mois de l'année.
+    </div>
+    <div class="fill-sentence">
+      Aujourd'hui c'est mercredi.
+      <span id="bl2" class="blank" onclick="fillBlank(this,'hier')" title="Tap to fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      c'était mardi.
+    </div>
+    <div class="fill-sentence">
+      Il y a sept jours dans une
+      <span id="bl3" class="blank" onclick="fillBlank(this,'semaine')" title="Tap to fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.
+    </div>
+    <div class="fill-sentence">
+      Noël est en
+      <span id="bl4" class="blank" onclick="fillBlank(this,'décembre')" title="Tap to fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.
+    </div>
+
+    <button id="wb-check-btn" onclick="checkWordBank()">Check my answers ✔</button>
+    <div id="wb-feedback"></div>
+  </div>
+
+  <!-- ---- ACTIVITY 5: Ghanaian name quiz ---- -->
+  <div class="activity-card">
+    <h2>🇬🇭 Activity 5 — Ghanaian Name Quiz</h2>
+    <p class="act-intro">A baby boy is born on this day. What is his Ghanaian name? Tap the correct answer!</p>
+
+    <!-- GQ1 -->
+    <div class="ghana-q-wrap">
+      <div class="q-text">1. A boy is born on <strong>lundi</strong> (Monday). What is his name?</div>
+      <div class="choices">
+        <button onclick="pickGhana(this,'wrong')">Kofi</button>
+        <button onclick="pickGhana(this,'correct')">Kojo</button>
+        <button onclick="pickGhana(this,'wrong')">Kwame</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- GQ2 -->
+    <div class="ghana-q-wrap">
+      <div class="q-text">2. A boy is born on <strong>vendredi</strong> (Friday). What is his name?</div>
+      <div class="choices">
+        <button onclick="pickGhana(this,'wrong')">Yaw</button>
+        <button onclick="pickGhana(this,'wrong')">Kwaku</button>
+        <button onclick="pickGhana(this,'correct')">Kofi</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- GQ3 -->
+    <div class="ghana-q-wrap">
+      <div class="q-text">3. A boy is born on <strong>samedi</strong> (Saturday). What is his name?</div>
+      <div class="choices">
+        <button onclick="pickGhana(this,'correct')">Kwame</button>
+        <button onclick="pickGhana(this,'wrong')">Kwabena</button>
+        <button onclick="pickGhana(this,'wrong')">Kwesi</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- GQ4 -->
+    <div class="ghana-q-wrap">
+      <div class="q-text">4. A boy is born on <strong>dimanche</strong> (Sunday). What is his name?</div>
+      <div class="choices">
+        <button onclick="pickGhana(this,'wrong')">Kojo</button>
+        <button onclick="pickGhana(this,'correct')">Kwesi</button>
+        <button onclick="pickGhana(this,'wrong')">Yaw</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ---- GLOBAL STATE ----
+  let cheerCount = 0;
+
+  function maybeCheer() {
+    if (cheerCount >= 2) document.getElementById('cheer').style.display = 'block';
+  }
+
+  // ---- 3-CHOICE QUIZ ----
+  function pickQ(el, result, qNum) {
+    const wrap = el.closest('.q-wrap');
+    if (wrap.dataset.done) return;
+    wrap.dataset.done = '1';
+    const btns = wrap.querySelectorAll('button');
+    btns.forEach(b => b.disabled = true);
+    if (result === 'correct') {
+      el.style.background = '#4caf50'; el.style.color = 'white';
+      wrap.querySelector('.feedback').textContent = '✅ Correct! Bien joué!';
+      cheerCount++; maybeCheer();
+    } else {
+      el.style.background = '#ef5350'; el.style.color = 'white';
+      wrap.querySelector('.feedback').textContent = '❌ Try again next time!';
+    }
+  }
+
+  // ---- TRUE / FALSE ----
+  function checkTF(el, picked, key) {
+    const wrap = el.closest('.tf-wrap');
+    if (wrap.dataset.done) return;
+    wrap.dataset.done = '1';
+    const btns = wrap.querySelectorAll('button');
+    btns.forEach(b => b.disabled = true);
+    if (picked === key) {
+      el.style.background = '#4caf50'; el.style.color = 'white';
+      wrap.querySelector('.feedback').textContent = '✅ Correct! Bravo!';
+      cheerCount++; maybeCheer();
+    } else {
+      el.style.background = '#ef5350'; el.style.color = 'white';
+      // Show correct answer hint
+      const hint = key === 'true' ? 'The capitalisation IS correct.' : 'The capitalisation is INCORRECT — days and months should be lowercase in French.';
+      wrap.querySelector('.feedback').textContent = '❌ Not quite! ' + hint;
+    }
+  }
+
+  // ---- MATCHING ACTIVITY ----
+  let matchLeft = null;  // { key, el }
+  let matchRight = null; // { key, el }
+  let matchedCount = 0;
+
+  function selectMatch(el, key, side) {
+    if (el.classList.contains('matched-ok') || el.classList.contains('matched-err')) return;
+
+    if (side === 'left') {
+      // deselect previous left
+      if (matchLeft) matchLeft.el.classList.remove('selected');
+      matchLeft = { key, el };
+      el.classList.add('selected');
+    } else {
+      if (matchRight) matchRight.el.classList.remove('selected');
+      matchRight = { key, el };
+      el.classList.add('selected');
+    }
+
+    if (matchLeft && matchRight) {
+      if (matchLeft.key === matchRight.key) {
+        matchLeft.el.classList.remove('selected');
+        matchLeft.el.classList.add('matched-ok');
+        matchRight.el.classList.remove('selected');
+        matchRight.el.classList.add('matched-ok');
+        matchLeft.el.onclick = null;
+        matchRight.el.onclick = null;
+        matchedCount++;
+        const scoreEl = document.getElementById('match-score');
+        if (matchedCount === 7) {
+          scoreEl.textContent = '🎉 Parfait! All 7 matched! Tu es fantastique!';
+          cheerCount += 2; maybeCheer();
+        } else {
+          scoreEl.textContent = matchedCount + ' / 7 matched ✅';
+          cheerCount++; maybeCheer();
+        }
+      } else {
+        // brief red flash then reset
+        matchLeft.el.classList.remove('selected');
+        matchRight.el.classList.remove('selected');
+      }
+      matchLeft = null;
+      matchRight = null;
+    }
+  }
+
+  // ---- WORD BANK FILL ----
+  let selectedToken = null;
+
+  function selectToken(btn, word) {
+    if (btn.classList.contains('used')) return;
+    // deselect any previously selected token
+    document.querySelectorAll('.wb-token').forEach(t => t.style.outline = '');
+    selectedToken = { btn, word };
+    btn.style.outline = '3px solid #e91e8c';
+  }
+
+  function fillBlank(blankEl, correctWord) {
+    if (!selectedToken) {
+      blankEl.textContent = '← pick a word first!';
+      setTimeout(() => { blankEl.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; }, 1200);
+      return;
+    }
+    blankEl.textContent = selectedToken.word;
+    blankEl.dataset.filled = selectedToken.word;
+    blankEl.classList.add('filled');
+    selectedToken.btn.classList.add('used');
+    selectedToken.btn.style.outline = '';
+    selectedToken = null;
+  }
+
+  function checkWordBank() {
+    const answers = {
+      bl1: 'janvier',
+      bl2: 'hier',
+      bl3: 'semaine',
+      bl4: 'décembre'
+    };
+    let correct = 0;
+    for (const [id, correctWord] of Object.entries(answers)) {
+      const el = document.getElementById(id);
+      const filled = el.dataset.filled || '';
+      if (filled === correctWord) {
+        el.classList.remove('wrong-fill');
+        el.classList.add('filled');
+        correct++;
+      } else {
+        el.classList.add('wrong-fill');
+        el.classList.remove('filled');
+      }
+    }
+    const fb = document.getElementById('wb-feedback');
+    if (correct === 4) {
+      fb.textContent = '✅ Parfait! All 4 correct! Excellent travail!';
+      cheerCount += 2; maybeCheer();
+    } else {
+      fb.textContent = correct + ' / 4 correct. The red blanks need fixing — check the word bank and try again!';
+    }
+  }
+
+  // ---- GHANA QUIZ ----
+  function pickGhana(el, result) {
+    const wrap = el.closest('.ghana-q-wrap');
+    if (wrap.dataset.done) return;
+    wrap.dataset.done = '1';
+    const btns = wrap.querySelectorAll('button');
+    btns.forEach(b => b.disabled = true);
+    if (result === 'correct') {
+      el.style.background = '#006b3f'; el.style.color = 'white';
+      wrap.querySelector('.feedback').textContent = '✅ Correct! Well done!';
+      cheerCount++; maybeCheer();
+    } else {
+      el.style.background = '#ef5350'; el.style.color = 'white';
+      wrap.querySelector('.feedback').textContent = '❌ Not quite — check the table above!';
+    }
+  }
+</script>
+</body>
+</html>
