@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Exam Prep 🌟 — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #e91e8c;
+  --dark: #880e4f;
+  --accent: #f48fb1;
+  --bg: #fce4ec;
+  --ink: #2d1b2e;
+  --gray: #9e7b8a;
+  --green: #4caf50;
+  --green-dark: #2e7d32;
+  --red: #ef5350;
+  --red-dark: #c62828;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(233,30,140,0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(136,14,79,0.06) 0%, transparent 45%);
+  min-height: 100vh;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  position: fixed; top: 14px; left: 14px; z-index: 1000;
+  background: var(--primary); color: #fff;
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+  padding: 8px 16px; border-radius: 50px; text-decoration: none;
+  box-shadow: 0 3px 0 var(--dark); transition: transform .15s, box-shadow .15s;
+}
+.back-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--dark); }
+
+/* CHEER BANNER */
+.cheer-banner {
+  display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  background: linear-gradient(135deg, var(--dark), var(--primary));
+  color: #fff; font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.1rem, 4vw, 1.6rem); text-align: center;
+  padding: 18px 20px; box-shadow: 0 4px 20px rgba(233,30,140,.4);
+  animation: slideDown .6s cubic-bezier(.34,1.56,.64,1);
+}
+.cheer-banner.visible { display: block; }
+@keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+/* HERO */
+.hero {
+  background: linear-gradient(160deg, var(--dark) 0%, var(--primary) 55%, #f48fb1 100%);
+  padding: 70px 20px 55px; text-align: center; position: relative; overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px;
+  background: var(--bg); clip-path: ellipse(60% 100% at 50% 100%);
+}
+.hero-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  color: #fff; text-shadow: 3px 3px 0 rgba(0,0,0,.2);
+  animation: popIn .7s cubic-bezier(.34,1.56,.64,1);
+}
+.hero-sub {
+  color: rgba(255,255,255,.9); font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 700; margin: 12px 0 0;
+}
+.topic-pills {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px;
+}
+.topic-pill {
+  background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.5);
+  color: #fff; font-weight: 800; font-size: .88rem; padding: 6px 16px;
+  border-radius: 50px; cursor: pointer; transition: background .2s;
+  text-decoration: none;
+}
+.topic-pill:hover { background: rgba(255,255,255,.35); }
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 40px 16px 80px; }
+
+/* SECTION HEADINGS */
+.section-heading {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.4rem, 5vw, 2rem); color: var(--dark);
+  margin: 56px 0 20px; display: flex; align-items: center; gap: 12px;
+}
+.section-heading::after {
+  content: ''; flex: 1; height: 3px;
+  background: linear-gradient(90deg, var(--primary), transparent); border-radius: 2px;
+}
+.section-intro {
+  background: #fff; border-left: 5px solid var(--primary); border-radius: 0 16px 16px 0;
+  padding: 16px 20px; margin-bottom: 24px; font-size: .98rem; font-weight: 600; line-height: 1.6;
+}
+.section-intro strong { color: var(--primary); }
+
+/* TEACH CARDS */
+.teach-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px;
+  margin-bottom: 28px;
+}
+.teach-card {
+  background: #fff; border-radius: 18px; padding: 20px 18px;
+  box-shadow: 0 4px 0 rgba(233,30,140,.12); border-top: 4px solid var(--accent);
+}
+.teach-card h3 {
+  font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+  color: var(--primary); margin-bottom: 8px;
+}
+.teach-card p { font-size: .9rem; font-weight: 600; line-height: 1.5; color: var(--ink); }
+.teach-card .example {
+  margin-top: 10px; background: var(--bg); border-radius: 10px;
+  padding: 8px 12px; font-style: italic; font-size: .88rem; color: var(--dark);
+}
+.teach-card.correct-card { border-top-color: var(--green); }
+.teach-card.correct-card h3 { color: var(--green-dark); }
+.teach-card.warn-card { border-top-color: #ff9800; }
+.teach-card.warn-card h3 { color: #e65100; }
+
+/* ACTIVITY CARD */
+.activity-card {
+  background: #fff; border-radius: 22px;
+  box-shadow: 0 5px 0 rgba(233,30,140,.18);
+  padding: 26px 22px; margin-bottom: 28px;
+}
+.activity-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--primary);
+  margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+}
+.activity-num {
+  background: var(--primary); color: #fff; border-radius: 50%;
+  width: 34px; height: 34px; display: flex; align-items: center;
+  justify-content: center; font-size: 1rem; flex-shrink: 0;
+}
+
+/* SCORE BAR */
+.score-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(135deg, var(--dark), var(--primary));
+  color: #fff; border-radius: 14px; padding: 12px 20px; margin-bottom: 10px;
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+}
+.score-val { font-size: 1.4rem; }
+
+/* Q ITEMS (fill-in / MCQ) */
+.q-list { display: flex; flex-direction: column; gap: 14px; }
+.q-item {
+  background: var(--bg); border-radius: 14px; padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.q-sentence { font-size: 1rem; font-weight: 700; color: var(--ink); }
+.q-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.q-btn {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .95rem;
+  border: none; border-radius: 50px; padding: 8px 20px; cursor: pointer;
+  background: #fff; color: var(--ink); box-shadow: 0 3px 0 #ccc;
+  transition: transform .15s, box-shadow .15s;
+}
+.q-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 0 #bbb; }
+.q-btn.correct { background: var(--green); color: #fff; box-shadow: 0 3px 0 var(--green-dark); }
+.q-btn.wrong   { background: var(--red);   color: #fff; box-shadow: 0 3px 0 var(--red-dark); animation: shake .4s; }
+.q-btn:disabled { cursor: default; opacity: .7; }
+.q-result { font-size: .88rem; font-weight: 700; min-height: 20px; }
+.q-result.ok  { color: var(--green-dark); }
+.q-result.err { color: var(--red-dark); }
+
+/* QUIZ OPTS */
+.quiz-list { display: flex; flex-direction: column; gap: 18px; }
+.quiz-q { background: var(--bg); border-radius: 14px; padding: 14px 16px; }
+.quiz-text { font-size: 1rem; font-weight: 700; margin-bottom: 11px; color: var(--ink); }
+.quiz-opts { display: flex; flex-wrap: wrap; gap: 9px; }
+.quiz-opt {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .92rem;
+  border: 2px solid #e0c0cc; border-radius: 50px; padding: 7px 18px;
+  cursor: pointer; background: #fff; color: var(--ink); transition: all .15s;
+}
+.quiz-opt:hover:not(:disabled) { background: var(--bg); border-color: var(--primary); }
+.quiz-opt.correct { background: var(--green); border-color: var(--green-dark); color: #fff; }
+.quiz-opt.wrong   { background: var(--red);   border-color: var(--red-dark);   color: #fff; animation: shake .4s; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-result { font-size: .85rem; font-weight: 700; margin-top: 8px; min-height: 18px; }
+.quiz-result.ok  { color: var(--green-dark); }
+.quiz-result.err { color: var(--red-dark); }
+
+/* TRUE/FALSE */
+.tf-list { display: flex; flex-direction: column; gap: 13px; }
+.tf-item { background: var(--bg); border-radius: 14px; padding: 14px 16px; }
+.tf-stmt { font-weight: 700; font-size: .98rem; margin-bottom: 10px; }
+.tf-btns { display: flex; gap: 10px; }
+.tf-btn {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .95rem;
+  border: none; border-radius: 50px; padding: 8px 22px; cursor: pointer;
+  transition: all .15s; box-shadow: 0 3px 0 #bbb;
+}
+.tf-btn.true-btn  { background: #e3f2fd; color: #1565c0; }
+.tf-btn.false-btn { background: var(--bg); color: var(--dark); }
+.tf-btn:hover:not(:disabled) { transform: translateY(-2px); }
+.tf-btn.correct { background: var(--green); color: #fff; box-shadow: 0 3px 0 var(--green-dark); }
+.tf-btn.wrong   { background: var(--red);   color: #fff; animation: shake .4s; }
+.tf-btn:disabled { cursor: default; opacity: .75; }
+.tf-result { font-size: .85rem; font-weight: 700; margin-top: 7px; min-height: 16px; }
+.tf-result.ok  { color: var(--green-dark); }
+.tf-result.err { color: var(--red-dark); }
+
+/* MATCHING */
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; align-items: start; }
+.match-col  { display: flex; flex-direction: column; gap: 10px; }
+.match-col-label { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--dark); text-align: center; margin-bottom: 4px; }
+.match-item {
+  background: var(--bg); border: 2px solid transparent; border-radius: 12px;
+  padding: 10px 14px; cursor: pointer; font-weight: 700; font-size: .92rem;
+  transition: all .2s; text-align: center; user-select: none;
+}
+.match-item:hover:not(.locked) { background: #fce4ec; border-color: var(--accent); }
+.match-item.selected { background: #f8bbd0; border-color: var(--primary); }
+.match-item.locked   { background: #e8f5e9; border-color: var(--green); color: var(--green-dark); cursor: default; }
+.match-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #ffebee; }
+
+/* WORD BANK */
+.wb-bank {
+  display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 20px;
+  min-height: 42px; background: var(--bg); border-radius: 14px; padding: 10px 14px;
+}
+.wb-token {
+  background: var(--primary); color: #fff; font-family: 'Fredoka One', cursive;
+  font-size: 1rem; padding: 6px 16px; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 3px 0 var(--dark); transition: transform .15s, opacity .15s; user-select: none;
+}
+.wb-token:hover { transform: translateY(-2px); }
+.wb-token.used  { opacity: .3; pointer-events: none; }
+.wb-sentences { display: flex; flex-direction: column; gap: 12px; }
+.wb-item { background: var(--bg); border-radius: 13px; padding: 13px 16px; display: flex; flex-direction: column; gap: 7px; }
+.wb-sent { font-weight: 700; font-size: .98rem; display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.wb-blank {
+  display: inline-block; min-width: 90px; border-bottom: 3px solid var(--primary);
+  padding: 2px 8px; font-family: 'Fredoka One', cursive; color: var(--primary);
+  font-size: 1rem; cursor: pointer; border-radius: 4px; transition: background .15s; text-align: center;
+}
+.wb-blank:hover  { background: #fce4ec; }
+.wb-blank.correct { border-color: var(--green); color: var(--green); }
+.wb-blank.wrong-flash { border-color: var(--red); color: var(--red); animation: shake .4s; }
+.wb-result { font-size: .82rem; font-weight: 700; }
+.wb-result.ok { color: var(--green-dark); }
+.wb-result.err { color: var(--red-dark); }
+
+/* DONE MSG */
+.done-msg {
+  text-align: center; background: #e8f5e9; border: 2px solid var(--green);
+  border-radius: 14px; padding: 14px; font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem; color: var(--green-dark); margin-top: 16px;
+  display: none; animation: popIn .5s;
+}
+.done-msg.show { display: block; }
+
+/* PLAYSCRIPT BOX */
+.playscript-box {
+  background: #fffde7; border: 2px solid #fbc02d; border-radius: 16px;
+  padding: 22px 24px; font-family: 'Nunito', sans-serif; line-height: 1.8;
+  font-size: .98rem; color: var(--ink); margin-bottom: 20px;
+}
+.playscript-box .ps-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; text-align: center; color: #e65100; margin-bottom: 4px; }
+.playscript-box .ps-chars { text-align: center; font-weight: 700; font-size: .88rem; color: #6d4c41; margin-bottom: 12px; }
+.playscript-box .ps-stage { font-style: italic; color: #558b2f; font-size: .9rem; margin: 6px 0; }
+.playscript-box .ps-line  { margin: 4px 0; }
+.playscript-box .ps-name  { font-family: 'Fredoka One', cursive; color: var(--primary); }
+.playscript-box .ps-label {
+  display: inline-block; background: var(--bg); border: 2px solid var(--accent);
+  border-radius: 8px; font-size: .72rem; font-weight: 800; color: var(--dark);
+  padding: 2px 8px; margin-left: 8px; vertical-align: middle;
+}
+
+/* PREP TIPS */
+.tip-box {
+  background: #e3f2fd; border-left: 5px solid #1976d2; border-radius: 0 14px 14px 0;
+  padding: 14px 18px; margin: 16px 0; font-size: .95rem; font-weight: 700; line-height: 1.5; color: #0d47a1;
+}
+
+/* PREPOSITION HIGHLIGHT */
+.prep-highlight {
+  background: #fff9c4; border: 2px solid #fbc02d; border-radius: 6px;
+  padding: 1px 6px; font-weight: 800; color: #e65100;
+}
+
+/* ANIMATIONS */
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes popIn  { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes shake  { 0%,100%{transform:translateX(0);} 20%{transform:translateX(-6px);} 40%{transform:translateX(6px);} 60%{transform:translateX(-4px);} 80%{transform:translateX(4px);} }
+
+/* RESPONSIVE */
+@media (max-width: 540px) {
+  .match-grid { grid-template-columns: 1fr; }
+  .teach-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-btn">← Back</a>
+<div class="cheer-banner" id="cheerBanner">Amazing work, Emunah! You're going to ace that exam! 🌟🎉</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1 class="hero-title">✨ English Exam Prep ✨</h1>
+  <p class="hero-sub">Year 3 · Cambridge · End of Term — Let's get ready!</p>
+  <div class="topic-pills">
+    <a class="topic-pill" href="#vocab">📖 Vocabulary</a>
+    <a class="topic-pill" href="#texttypes">📚 Text Types</a>
+    <a class="topic-pill" href="#tobe">⚙️ To-Be Verbs</a>
+    <a class="topic-pill" href="#prepositions">📍 Prepositions</a>
+    <a class="topic-pill" href="#contractions">✂️ Contractions</a>
+    <a class="topic-pill" href="#homophones">🔊 Homophones</a>
+    <a class="topic-pill" href="#playscript">🎭 Play Script</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — VOCABULARY IN CONTEXT
+══════════════════════════════════════════ -->
+<div class="section-heading" id="vocab">📖 Section 1 — Vocabulary in Context</div>
+<div class="section-intro">
+  When you see a <strong>bold word</strong> in a reading passage, you need to figure out what it means from the sentence around it — this is called understanding words <strong>in context</strong>.
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card warn-card">
+    <h3>⚠️ Watch Out!</h3>
+    <p>"Boasted" does NOT mean lowered or smiled. Think: the owl was showing off his flying skills. He was very proud and bragging!</p>
+    <div class="example">"I'm the best flyer in this forest," the first owl <strong>boasted</strong>. → He was <strong>bragging / showing off</strong>.</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ Boasted = Bragged</h3>
+    <p>To <strong>boast</strong> means to talk with too much pride about yourself. It's the same as <strong>brag</strong>.</p>
+    <div class="example">"I am the best!" → boasting / bragging</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ Squabbled = Quarrelled</h3>
+    <p>To <strong>squabble</strong> means to argue or quarrel noisily about something small.</p>
+    <div class="example">The two owls squabbled over the food → they quarrelled / argued.</div>
+  </div>
+  <div class="teach-card">
+    <h3>💡 Said Synonyms</h3>
+    <p>Good writers replace 'said' with more interesting words. The second paragraph uses <strong>hooted</strong> — the natural sound an owl makes.</p>
+    <div class="example">"Great," <strong>hooted</strong> the second owl. → The best replacement for 'said' here is <strong>hooted</strong>.</div>
+  </div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">1</div>What does the word mean? — Pick the right meaning</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s1Score">0 / 8</span></div>
+  <div class="quiz-list" id="s1List"></div>
+  <div class="done-msg" id="s1Done">🎉 Brilliant! You know your vocabulary!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">2</div>Said Synonyms — Choose the best word to replace 'said'</div>
+  <p style="font-size:.9rem;color:var(--gray);font-weight:700;margin-bottom:14px;">Pick the word that best fits HOW the character is speaking.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s2Score">0 / 6</span></div>
+  <div class="quiz-list" id="s2List"></div>
+  <div class="done-msg" id="s2Done">🎉 Superstar! You replaced 'said' perfectly!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — TEXT TYPES
+══════════════════════════════════════════ -->
+<div class="section-heading" id="texttypes">📚 Section 2 — Text Types</div>
+<div class="section-intro">
+  <strong>Question 8</strong> asked: "What type of text is 'The Three Little Owls'?" — tick TWO boxes. The answer was <strong>Fiction</strong> and <strong>Narrative</strong>, NOT Adventure or Fairy Tale. Here's how to tell them apart:
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card correct-card">
+    <h3>✅ Fiction</h3>
+    <p>A made-up story with characters and events that are <strong>not real</strong>. Owls don't really talk — so it's fiction!</p>
+    <div class="example">The Three Little Owls, Charlotte's Web, Winnie the Pooh</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ Narrative</h3>
+    <p>A story told by a narrator. It has a <strong>beginning, middle and end</strong>. It tells WHAT HAPPENED in order.</p>
+    <div class="example">"In a dark forest… → A little while later… → The third owl felt his heart glow…" — this is narrative.</div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>❌ NOT Adventure</h3>
+    <p>Adventure texts have <strong>exciting journeys, danger, or quests</strong>. The owls were just sitting on a branch — no danger or journey!</p>
+    <div class="example">Pirates finding treasure, a girl lost in the jungle — that's adventure.</div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>❌ NOT Fairy Tale</h3>
+    <p>Fairy tales have <strong>magic, wizards, kings/queens</strong>, and often start with "Once upon a time." There's no magic in this story.</p>
+    <div class="example">Cinderella, Snow White — fairy tales. Talking owls alone ≠ fairy tale.</div>
+  </div>
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card">
+    <h3>📰 Non-Fiction</h3>
+    <p>Real facts and true information. No made-up characters.</p>
+    <div class="example">A science book about how owls hunt. A news article.</div>
+  </div>
+  <div class="teach-card">
+    <h3>🎭 Play Script</h3>
+    <p>A story written as DIALOGUE for actors. Has character names, stage directions in brackets.</p>
+    <div class="example">DAD: We will take those rowing boats.<br>JOY: Good plan.</div>
+  </div>
+  <div class="teach-card">
+    <h3>📝 Poem / Recount</h3>
+    <p><strong>Recount</strong> = retelling something that actually happened (diary, report). <strong>Poem</strong> = uses rhyme, rhythm, imagery.</p>
+    <div class="example">Recount: "On Monday we went to the zoo..."</div>
+  </div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">3</div>What type of text is it? — True or False</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s3Score">0 / 8</span></div>
+  <div class="tf-list" id="s3List"></div>
+  <div class="done-msg" id="s3Done">🎉 You know your text types now!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">4</div>Match the text type to its description</div>
+  <p style="font-size:.9rem;color:var(--gray);font-weight:700;margin-bottom:14px;">Tap a text type on the left, then tap its description on the right.</p>
+  <div class="score-bar"><span>Matched:</span><span class="score-val" id="s4Score">0 / 6</span></div>
+  <div class="match-grid">
+    <div><div class="match-col-label">Text Type 📝</div><div class="match-col" id="s4Left"></div></div>
+    <div><div class="match-col-label">Description 💡</div><div class="match-col" id="s4Right"></div></div>
+  </div>
+  <div class="done-msg" id="s4Done">🎉 Perfect! You matched them all!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — TO-BE VERBS
+══════════════════════════════════════════ -->
+<div class="section-heading" id="tobe">⚙️ Section 3 — To-Be Verbs</div>
+<div class="section-intro">
+  <strong>Question 9</strong> asked you to find <strong>to-be verbs</strong> in the third paragraph. You wrote "this" and "the" — those are not verbs! To-be verbs are the forms of the verb <strong>"to be"</strong>.
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card correct-card">
+    <h3>✅ The To-Be Verbs</h3>
+    <p>Learn these 8 words — they are ALL to-be verbs:</p>
+    <div class="example" style="font-family:'Fredoka One',cursive;font-size:1.1rem;letter-spacing:2px;">
+      am · is · are · was · were · be · been · being
+    </div>
+  </div>
+  <div class="teach-card">
+    <h3>🦉 In the 3rd Paragraph</h3>
+    <p>Paragraph 3 of the story has two to-be verbs:</p>
+    <div class="example">
+      "You <strong>are</strong> the best flyer..." → <strong>are</strong><br>
+      "He <strong>was</strong> just happy to sit..." → <strong>was</strong>
+    </div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>⚠️ Tricky Ones</h3>
+    <p>Watch out for contractions that hide to-be verbs:</p>
+    <div class="example">
+      "You're" = You <strong>are</strong> ✅<br>
+      "I'm" = I <strong>am</strong> ✅<br>
+      "He's" = He <strong>is</strong> ✅<br>
+      "They're" = They <strong>are</strong> ✅
+    </div>
+  </div>
+  <div class="teach-card">
+    <h3>💡 How to Spot Them</h3>
+    <p>Ask: is this word <em>am / is / are / was / were / be / been / being</em>? If yes — it's a to-be verb!</p>
+    <div class="example">"The owl <strong>was</strong> bored." → was = to-be verb ✅<br>"The owl <strong>flew</strong> fast." → flew = action verb, NOT to-be ❌</div>
+  </div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">5</div>Spot the To-Be Verb — Click the correct one</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s5Score">0 / 10</span></div>
+  <div class="quiz-list" id="s5List"></div>
+  <div class="done-msg" id="s5Done">🎉 Well done! You found all the to-be verbs!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">6</div>Is it a to-be verb? — True or False</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s6Score">0 / 8</span></div>
+  <div class="tf-list" id="s6List"></div>
+  <div class="done-msg" id="s6Done">🎉 You're a to-be verb expert!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — PREPOSITIONS
+══════════════════════════════════════════ -->
+<div class="section-heading" id="prepositions">📍 Section 4 — Prepositions</div>
+<div class="section-intro">
+  <strong>Question 13</strong> asked you to underline the prepositions. You found <strong>beneath</strong> ✅ and <strong>into</strong> ✅ — great! But in (a) you underlined "road" and in (b) you underlined "looked". Those are not prepositions.
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card correct-card">
+    <h3>✅ What IS a Preposition?</h3>
+    <p>A preposition is a word that shows the <strong>position, direction or time</strong> of something. They usually come BEFORE a noun.</p>
+    <div class="example">
+      in · on · at · under · over · behind · through · <strong>across</strong> · <strong>into</strong> · <strong>beneath</strong> · beside · near · by · above · between
+    </div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>❌ Q13a — "across" not "road"</h3>
+    <p>"The old man was afraid to cross the busy <span style="color:var(--red)">road</span>." — Road is a NOUN.</p>
+    <p style="margin-top:8px">The preposition is <strong style="color:var(--green-dark)">across</strong> — wait, actually re-read: "to cross the busy road." The preposition is <strong>cross/across</strong>? Actually in the sentence there is no classic preposition before 'road'... The sentence uses "cross" as a VERB. So for (a) there is NO underlinable preposition — the answer expected is there may not be one, or examiners may accept none.</p>
+    <div class="example">Look for position words: <em>in, on, under, above, beside, across, into, between, through…</em></div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>❌ Q13b — "at" not "looked"</h3>
+    <p>"Their mother <span style="color:var(--red)">looked</span> <strong style="color:var(--green-dark)">at</strong> the third owl happily."</p>
+    <p style="margin-top:8px">"Looked" is a VERB. The preposition is <strong>at</strong> — it shows the direction of her gaze.</p>
+    <div class="example">She looked <strong>at</strong> him. → AT is the preposition. It tells us WHERE she was looking.</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ Q13c and Q13d</h3>
+    <p>You got these right!</p>
+    <div class="example">
+      "I can't see the letter <strong>beneath</strong> the box." → beneath ✅<br>
+      "He went <strong>into</strong> the shop." → into ✅
+    </div>
+  </div>
+</div>
+
+<div class="tip-box">
+  💡 <strong>Top Tip:</strong> To find a preposition, ask: "Is this word showing WHERE, WHEN, or IN WHAT DIRECTION?" — like <em>under the table, behind the door, across the street, at the window, into the room, beside the tree.</em>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">7</div>Find the preposition — Which word is it?</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s7Score">0 / 10</span></div>
+  <div class="quiz-list" id="s7List"></div>
+  <div class="done-msg" id="s7Done">🎉 You found all the prepositions!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">8</div>Fill in the preposition — Word bank</div>
+  <p style="font-size:.9rem;color:var(--gray);font-weight:700;margin-bottom:10px;">Tap a word from the bank, then tap the blank to place it.</p>
+  <div class="score-bar"><span>Correct:</span><span class="score-val" id="s8Score">0 / 8</span></div>
+  <div class="wb-bank" id="wbBank2"></div>
+  <div class="wb-sentences" id="wbSents2"></div>
+  <div class="done-msg" id="s8Done">🎉 Amazing! Every preposition was perfect!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — TRICKY CONTRACTIONS
+══════════════════════════════════════════ -->
+<div class="section-heading" id="contractions">✂️ Section 5 — Tricky Contractions</div>
+<div class="section-intro">
+  You got most contractions right, but <strong>shall not → shan't</strong> caught you out. You wrote "shall'nt" — close, but the apostrophe goes in a different place and the spelling changes!
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card warn-card">
+    <h3>⚠️ The Tricky One: shan't</h3>
+    <p>"shall not" → we don't just add an apostrophe, we actually DROP letters and the word changes completely:</p>
+    <div class="example">
+      shall not → <strong>shan't</strong> ✅<br>
+      ❌ shall'nt &nbsp; ❌ shalln't &nbsp; ❌ sha'nt
+    </div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ The Regular Pattern</h3>
+    <p>For most contractions, the apostrophe replaces the missing letters:</p>
+    <div class="example">
+      do not → don't<br>
+      they are → they're<br>
+      I will → I'll<br>
+      must not → mustn't<br>
+      cannot → can't<br>
+      will not → <strong>won't</strong> (also irregular!)
+    </div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>⚠️ Irregular: won't</h3>
+    <p>"will not" does NOT become "willn't" — it becomes <strong>won't</strong>. The whole word changes shape!</p>
+    <div class="example">will not → <strong>won't</strong> ✅<br>❌ willn't &nbsp; ❌ will'nt</div>
+  </div>
+  <div class="teach-card">
+    <h3>📝 Apostrophe Rule</h3>
+    <p>The apostrophe <strong>'</strong> goes where the missing letters were removed. It does NOT go between the two joined words.</p>
+    <div class="example">
+      did not → did<strong>'</strong>nt (removes the 'o')<br>
+      could not → could<strong>'</strong>nt (removes the 'o')<br>
+      they are → they<strong>'</strong>re (removes the 'a')
+    </div>
+  </div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">9</div>Write the contraction — Pick the correct form</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s9Score">0 / 10</span></div>
+  <div class="quiz-list" id="s9List"></div>
+  <div class="done-msg" id="s9Done">🎉 Contractions champion!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">10</div>Expand the contraction — What are the two words?</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s10Score">0 / 8</span></div>
+  <div class="quiz-list" id="s10List"></div>
+  <div class="done-msg" id="s10Done">🎉 Brilliant! You can expand them too!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — HOMOPHONES (GAP FOCUS)
+══════════════════════════════════════════ -->
+<div class="section-heading" id="homophones">🔊 Section 6 — Homophones (Tricky Ones)</div>
+<div class="section-intro">
+  In <strong>Question 12</strong> you missed <strong>mail/male</strong>, <strong>court/caught</strong>, and <strong>steel/steal</strong>. You also wrote "steall" — remember, <strong>steel</strong> has no double-l! Let's practise these and a few more.
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card warn-card">
+    <h3>⚠️ Missed: Male / Mail</h3>
+    <p><strong>Male</strong> = boy or man (opposite of female).<br><strong>Mail</strong> = letters and parcels sent by post.</p>
+    <div class="example">"A male lion" · "The mail arrived this morning."</div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>⚠️ Missed: Court / Caught</h3>
+    <p><strong>Court</strong> = a place where a judge works OR a sports court (tennis court).<br><strong>Caught</strong> = past tense of catch.</p>
+    <div class="example">"A tennis court" · "She caught the ball."</div>
+  </div>
+  <div class="teach-card warn-card">
+    <h3>⚠️ Missed: Steal / Steel</h3>
+    <p><strong>Steal</strong> = to take something that isn't yours (a verb).<br><strong>Steel</strong> = a very strong metal (like iron). No double-L!</p>
+    <div class="example">"Don't steal!" · "The bridge is made of steel."</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ Got Right: Reign / Rain</h3>
+    <p><strong>Reign</strong> = a king or queen's time in power.<br><strong>Rain</strong> = water falling from clouds.</p>
+    <div class="example">"The queen's reign lasted 70 years." · "It will rain today."</div>
+  </div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">11</div>Pick the right homophone — Fill in the blank</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s11Score">0 / 12</span></div>
+  <div class="q-list" id="s11List"></div>
+  <div class="done-msg" id="s11Done">🎉 Homophones mastered!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">12</div>Match the homophone pair</div>
+  <p style="font-size:.9rem;color:var(--gray);font-weight:700;margin-bottom:14px;">Tap a word on the left, then tap its homophone partner on the right.</p>
+  <div class="score-bar"><span>Matched:</span><span class="score-val" id="s12Score">0 / 8</span></div>
+  <div class="match-grid">
+    <div><div class="match-col-label">Word 📝</div><div class="match-col" id="s12Left"></div></div>
+    <div><div class="match-col-label">Sounds like... 🔊</div><div class="match-col" id="s12Right"></div></div>
+  </div>
+  <div class="done-msg" id="s12Done">🎉 All homophones matched!</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 7 — PLAY SCRIPT
+══════════════════════════════════════════ -->
+<div class="section-heading" id="playscript">🎭 Section 7 — Play Script Writing</div>
+<div class="section-intro">
+  Your play script for "Rowing Boats" was a great start — you had the title, characters, stage directions, and dialogue! But you ran out of time. The examiner looks for <strong>4 things</strong>. Let's practise each one.
+</div>
+
+<div class="teach-grid">
+  <div class="teach-card correct-card">
+    <h3>✅ 1. Title</h3>
+    <p>Write the title clearly at the top, centred, in capital letters or bold.</p>
+    <div class="example">ROWING BOATS<br>— or —<br>Rowing Boats</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ 2. Character List</h3>
+    <p>List ALL characters who appear in the story. Write "Characters:" or "Cast:" then list them.</p>
+    <div class="example">Characters: Wilf, Chip, Craige, Floppy, Dad, Joy</div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ 3. Stage Directions</h3>
+    <p>Stage directions describe what is <strong>happening on stage</strong> — actions, movement, setting. Write them in <em>italics</em> or in round brackets ( ).</p>
+    <div class="example"><em>(Wilf, Chip and Craige walk to the river. Floppy follows.)</em></div>
+  </div>
+  <div class="teach-card correct-card">
+    <h3>✅ 4. Character + Dialogue</h3>
+    <p>Write the character's name in <strong>CAPITALS</strong> or bold, followed by a colon, then their words. No speech marks needed.</p>
+    <div class="example">DAD: We will take those rowing boats.<br>JOY: Good plan.</div>
+  </div>
+</div>
+
+<div class="tip-box">
+  💡 <strong>Remember:</strong> In a play script you do NOT use "said", "asked", or "replied" — the character's name does that job. Stage directions go in brackets and describe movement or feelings: (picks up the coats) (looking confused).
+</div>
+
+<div style="background:#fff;border-radius:20px;padding:24px 22px;box-shadow:0 5px 0 rgba(233,30,140,.12);margin-bottom:28px;">
+  <div style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--dark);margin-bottom:16px;">📄 Example — Full Play Script for Rowing Boats</div>
+  <div class="playscript-box">
+    <div class="ps-title">ROWING BOATS</div>
+    <div class="ps-chars">Characters: Narrator, Wilf, Chip, Craige, Floppy, Dad, Joy</div>
+
+    <div class="ps-stage">(The river bank. Wilf, Chip, Craige and Floppy arrive at the river. Dad and Joy are already there.)</div>
+    <span class="ps-label">Stage direction ✅</span>
+
+    <div style="height:12px"></div>
+    <div class="ps-line"><span class="ps-name">NARRATOR:</span> Wilf, Chip and Craige were going out on the river. Floppy went too. <span class="ps-label">Narrator line ✅</span></div>
+    <div class="ps-line"><span class="ps-name">DAD:</span> We will take those rowing boats. <span class="ps-label">Character + dialogue ✅</span></div>
+    <div class="ps-line"><span class="ps-name">JOY:</span> Good plan.</div>
+    <div class="ps-stage">(They put the picnic things into the boats and get in.)</div>
+    <div class="ps-line"><span class="ps-name">WILF:</span> Don't forget the coats.</div>
+    <div class="ps-line"><span class="ps-name">CHIP:</span> Can I row?</div>
+    <div class="ps-line"><span class="ps-name">DAD:</span> Yes, I'll show you. You have a go, Craige — with both hands.</div>
+    <div class="ps-line"><span class="ps-name">CHIP:</span> Let's stop here for the picnic.</div>
+    <div class="ps-line"><span class="ps-name">DAD:</span> But not by those stones.</div>
+    <div class="ps-stage">(They unload the boats near the bank.)</div>
+    <div class="ps-line"><span class="ps-name">CHIP:</span> We can unload the boats.</div>
+    <div class="ps-line"><span class="ps-name">CRAIGE:</span> Hand me the coats.</div>
+    <div class="ps-line"><span class="ps-name">CRAIGE:</span> These plums taste very good.</div>
+    <div class="ps-line"><span class="ps-name">DAD:</span> Home-grown!</div>
+    <div class="ps-line"><span class="ps-name">WILF:</span> Don't be so annoying, Floppy.</div>
+    <div class="ps-line"><span class="ps-name">CHIP:</span> He wants his bone.</div>
+    <div class="ps-stage">(Suddenly there is a loud noise.)</div>
+    <div class="ps-line"><span class="ps-name">WILF:</span> What's that?</div>
+    <div class="ps-line"><span class="ps-name">CHIP:</span> I can hear voices.</div>
+    <div class="ps-stage">(The boys look up and see some boys trying to throw a rope over a big stone.)</div>
+  </div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">13</div>Play Script Quiz — True or False?</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s13Score">0 / 8</span></div>
+  <div class="tf-list" id="s13List"></div>
+  <div class="done-msg" id="s13Done">🎉 You know exactly how to write a play script!</div>
+</div>
+
+<div class="activity-card">
+  <div class="activity-title"><div class="activity-num">14</div>Play Script — Pick the correct format</div>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="s14Score">0 / 6</span></div>
+  <div class="quiz-list" id="s14List"></div>
+  <div class="done-msg" id="s14Done">🎉 Play script format mastered! 🎭</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════
+   CHEER SYSTEM
+═══════════════════════════════════ */
+let cheerCount = 0;
+function addCheer() {
+  cheerCount++;
+  if (cheerCount >= 3) document.getElementById('cheerBanner').classList.add('visible');
+}
+
+/* ═══════════════════════════════════
+   HELPERS
+═══════════════════════════════════ */
+function buildMCQ(containerId, scoreId, doneId, data, total) {
+  const list = document.getElementById(containerId);
+  let correct = 0, answered = 0;
+  data.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.innerHTML = `
+      <div class="quiz-text">${i+1}. ${q.q}</div>
+      <div class="quiz-opts">
+        ${q.opts.map((o,j) => `<button class="quiz-opt" data-val="${o}">${['a','b','c','d'][j]}) ${o}</button>`).join('')}
+      </div>
+      <div class="quiz-result" id="${containerId}r${i}"></div>`;
+    div.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        div.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        const res = document.getElementById(containerId + 'r' + i);
+        if (btn.dataset.val === q.ans) {
+          btn.classList.add('correct');
+          res.textContent = '✅ Correct!'; res.className = 'quiz-result ok';
+          correct++;
+        } else {
+          btn.classList.add('wrong');
+          res.textContent = `❌ The answer is "${q.ans}"`;
+          res.className = 'quiz-result err';
+          div.querySelectorAll('.quiz-opt').forEach(b => { if (b.dataset.val === q.ans) b.classList.add('correct'); });
+        }
+        answered++;
+        document.getElementById(scoreId).textContent = `${correct} / ${total}`;
+        if (answered === total) { document.getElementById(doneId).classList.add('show'); addCheer(); }
+      });
+    });
+    list.appendChild(div);
+  });
+}
+
+function buildFillIn(containerId, scoreId, doneId, data, total) {
+  const list = document.getElementById(containerId);
+  let correct = 0, answered = 0;
+  data.forEach((q, i) => {
+    const item = document.createElement('div');
+    item.className = 'q-item';
+    item.innerHTML = `
+      <div class="q-sentence">${i+1}. ${q.sent.replace('___','<span style="color:var(--primary);font-style:italic">___</span>')}</div>
+      <div class="q-btns">${q.opts.map(o => `<button class="q-btn" data-val="${o}">${o}</button>`).join('')}</div>
+      <div class="q-result" id="${containerId}r${i}"></div>`;
+    item.querySelectorAll('.q-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        item.querySelectorAll('.q-btn').forEach(b => b.disabled = true);
+        const res = document.getElementById(containerId + 'r' + i);
+        if (btn.dataset.val === q.ans) {
+          btn.classList.add('correct');
+          res.textContent = '✅ Correct!'; res.className = 'q-result ok';
+          correct++;
+        } else {
+          btn.classList.add('wrong');
+          res.textContent = `❌ The answer is "${q.ans}"`;
+          res.className = 'q-result err';
+          item.querySelectorAll('.q-btn').forEach(b => { if (b.dataset.val === q.ans) b.classList.add('correct'); });
+        }
+        answered++;
+        document.getElementById(scoreId).textContent = `${correct} / ${total}`;
+        if (answered === total) { document.getElementById(doneId).classList.add('show'); addCheer(); }
+      });
+    });
+    list.appendChild(item);
+  });
+}
+
+function buildTF(containerId, scoreId, doneId, data, total) {
+  const list = document.getElementById(containerId);
+  let correct = 0, answered = 0;
+  data.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.innerHTML = `
+      <div class="tf-stmt">${i+1}. ${q.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn">✅ TRUE</button>
+        <button class="tf-btn false-btn">❌ FALSE</button>
+      </div>
+      <div class="tf-result" id="${containerId}r${i}"></div>`;
+    div.querySelectorAll('.tf-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        div.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+        const res = document.getElementById(containerId + 'r' + i);
+        const chosen = btn.classList.contains('true-btn');
+        if (chosen === q.ans) {
+          btn.classList.add('correct');
+          res.textContent = '✅ Correct!'; res.className = 'tf-result ok';
+          correct++;
+        } else {
+          btn.classList.add('wrong');
+          res.textContent = `❌ The answer is ${q.ans ? 'TRUE' : 'FALSE'}`;
+          res.className = 'tf-result err';
+          div.querySelectorAll('.tf-btn').forEach(b => {
+            if (b.classList.contains('true-btn') === q.ans) b.classList.add('correct');
+          });
+        }
+        answered++;
+        document.getElementById(scoreId).textContent = `${correct} / ${total}`;
+        if (answered === total) { document.getElementById(doneId).classList.add('show'); addCheer(); }
+      });
+    });
+    list.appendChild(div);
+  });
+}
+
+function buildMatch(leftId, rightId, scoreId, doneId, pairs, total) {
+  const leftCol  = document.getElementById(leftId);
+  const rightCol = document.getElementById(rightId);
+  let matched = 0, selected = null;
+
+  pairs.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = p.word;
+    el.dataset.key = p.key;
+    el.dataset.type = 'left';
+    leftCol.appendChild(el);
+  });
+  const shuffled = [...pairs].sort(() => Math.random() - 0.5);
+  shuffled.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = p.meaning;
+    el.dataset.key = p.key;
+    el.dataset.type = 'right';
+    rightCol.appendChild(el);
+  });
+
+  function handleClick(el) {
+    if (el.classList.contains('locked')) return;
+    if (!selected) {
+      document.querySelectorAll(`#${leftId} .match-item, #${rightId} .match-item`).forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      selected = el;
+      return;
+    }
+    if (el.dataset.type === selected.dataset.type) {
+      document.querySelectorAll(`#${leftId} .match-item, #${rightId} .match-item`).forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      selected = el;
+      return;
+    }
+    if (el.dataset.key === selected.dataset.key) {
+      el.classList.remove('selected'); el.classList.add('locked');
+      selected.classList.remove('selected'); selected.classList.add('locked');
+      matched++;
+      document.getElementById(scoreId).textContent = `${matched} / ${total}`;
+      if (matched === total) { document.getElementById(doneId).classList.add('show'); addCheer(); }
+    } else {
+      el.classList.add('wrong-flash'); selected.classList.add('wrong-flash');
+      setTimeout(() => { el.classList.remove('wrong-flash','selected'); selected.classList.remove('wrong-flash','selected'); }, 500);
+    }
+    selected = null;
+  }
+
+  document.querySelectorAll(`#${leftId} .match-item, #${rightId} .match-item`).forEach(el => el.addEventListener('click', () => handleClick(el)));
+}
+
+function buildWordBank(bankId, sentsId, scoreId, doneId, words, sentences) {
+  const bankEl = document.getElementById(bankId);
+  const sentsEl = document.getElementById(sentsId);
+  let selWord = null, correct = 0;
+  const answered = new Array(sentences.length).fill(false);
+
+  words.forEach(w => {
+    const tok = document.createElement('div');
+    tok.className = 'wb-token';
+    tok.textContent = w; tok.dataset.word = w;
+    tok.addEventListener('click', () => {
+      document.querySelectorAll(`#${bankId} .wb-token`).forEach(t => t.style.outline = '');
+      if (selWord === w) { selWord = null; return; }
+      selWord = w; tok.style.outline = '3px solid var(--dark)';
+    });
+    bankEl.appendChild(tok);
+  });
+
+  sentences.forEach((s, i) => {
+    const parts = s.text.split('___');
+    const item = document.createElement('div'); item.className = 'wb-item';
+    const sentDiv = document.createElement('div'); sentDiv.className = 'wb-sent';
+    sentDiv.innerHTML = `<span>${i+1}. ${parts[0]}</span><span class="wb-blank" id="${bankId}b${i}" data-filled="">___</span><span>${parts[1] || ''}</span>`;
+    const resDiv = document.createElement('div'); resDiv.className = 'wb-result'; resDiv.id = `${bankId}r${i}`;
+    item.appendChild(sentDiv); item.appendChild(resDiv);
+    sentsEl.appendChild(item);
+
+    document.getElementById(`${bankId}b${i}`).addEventListener('click', () => {
+      const blank = document.getElementById(`${bankId}b${i}`);
+      const res = document.getElementById(`${bankId}r${i}`);
+      if (answered[i]) return;
+      if (blank.dataset.filled && !selWord) {
+        const old = blank.dataset.filled;
+        blank.textContent = '___'; blank.dataset.filled = ''; blank.className = 'wb-blank'; res.textContent = '';
+        const tok = [...document.querySelectorAll(`#${bankId} .wb-token`)].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+        return;
+      }
+      if (!selWord) return;
+      const old = blank.dataset.filled;
+      if (old) { const tok = [...document.querySelectorAll(`#${bankId} .wb-token`)].find(t => t.dataset.word === old); if (tok) tok.classList.remove('used'); }
+      blank.textContent = selWord; blank.dataset.filled = selWord; blank.className = 'wb-blank filled';
+      const usedTok = [...document.querySelectorAll(`#${bankId} .wb-token`)].find(t => t.dataset.word === selWord);
+      if (usedTok) { usedTok.classList.add('used'); usedTok.style.outline = ''; }
+      if (selWord === s.ans) {
+        blank.classList.add('correct'); res.textContent = '✅ Correct!'; res.className = 'wb-result ok';
+        answered[i] = true; correct++;
+        document.getElementById(scoreId).textContent = `${correct} / ${sentences.length}`;
+        if (correct === sentences.length) { document.getElementById(doneId).classList.add('show'); addCheer(); }
+      } else {
+        blank.classList.add('wrong-flash');
+        setTimeout(() => blank.classList.remove('wrong-flash'), 500);
+        res.textContent = '❌ Try another word!'; res.className = 'wb-result err';
+        blank.textContent = '___'; blank.dataset.filled = ''; blank.className = 'wb-blank';
+        if (usedTok) usedTok.classList.remove('used');
+      }
+      selWord = null;
+      document.querySelectorAll(`#${bankId} .wb-token`).forEach(t => t.style.outline = '');
+    });
+  });
+}
+
+/* ═══════════════════════════════════
+   SECTION 1 DATA — Vocabulary MCQ
+═══════════════════════════════════ */
+buildMCQ('s1List','s1Score','s1Done', [
+  { q: 'What does <strong>boasted</strong> mean? "I\'m the best flyer!" the owl <em>boasted</em>.',
+    opts: ['Whispered quietly','Bragged proudly','Cried sadly'], ans: 'Bragged proudly' },
+  { q: 'What does <strong>squabbled</strong> mean? The two owls <em>squabbled</em> over the food.',
+    opts: ['Argued noisily','Laughed together','Ate quickly'], ans: 'Argued noisily' },
+  { q: 'What does <strong>swooped</strong> mean? The mother <em>swooped</em> in and flopped down.',
+    opts: ['Crawled slowly','Dived down fast','Walked calmly'], ans: 'Dived down fast' },
+  { q: 'What does <strong>roosted</strong> mean? Three little owls <em>roosted</em> on a branch.',
+    opts: ['Perched and rested','Flew in circles','Sang loudly'], ans: 'Perched and rested' },
+  { q: 'What does <strong>puffing his chest out importantly</strong> suggest about the owl?',
+    opts: ['He was tired','He was showing off','He was cold'], ans: 'He was showing off' },
+  { q: '"Her voice was clear and bold, like the <strong>ringing of church bells</strong>." What is this an example of?',
+    opts: ['A rhyme','A simile','A command'], ans: 'A simile' },
+  { q: 'What does <strong>impatiently</strong> mean? The owls pushed <em>impatiently</em>.',
+    opts: ['In a calm way','In a hurry, not wanting to wait','Very quietly'], ans: 'In a hurry, not wanting to wait' },
+  { q: 'What does <strong>inky sky</strong> suggest?',
+    opts: ['A bright blue sky','A very dark sky','A rainy sky'], ans: 'A very dark sky' }
+], 8);
+
+/* ═══════════════════════════════════
+   SECTION 1 DATA — Said Synonyms MCQ
+═══════════════════════════════════ */
+buildMCQ('s2List','s2Score','s2Done', [
+  { q: '"Watch this!" _____ the first owl, showing off his flying. Which word best replaces "said"?',
+    opts: ['whispered','boasted','asked'], ans: 'boasted' },
+  { q: '"Great," _____ the second owl. (The second owl is an OWL making its natural sound.)',
+    opts: ['screamed','hooted','cried'], ans: 'hooted' },
+  { q: '"Hunting was hard tonight!" their mother _____. (She was tired and unhappy.)',
+    opts: ['laughed','boasted','sighed'], ans: 'sighed' },
+  { q: '"Come on everyone, dig in!" he _____ kindly. (He was being generous and friendly.)',
+    opts: ['commanded','expressed','grumbled'], ans: 'expressed' },
+  { q: '"What\'s that?" _____ Wilf. (Wilf was confused and surprised.)',
+    opts: ['sang','asked','boasted'], ans: 'asked' },
+  { q: '"Don\'t be so annoying, Floppy," _____ Wilf. (Wilf was a little cross.)',
+    opts: ['laughed','sang','grumbled'], ans: 'grumbled' }
+], 6);
+
+/* ═══════════════════════════════════
+   SECTION 2 DATA — Text Types TF
+═══════════════════════════════════ */
+buildTF('s3List','s3Score','s3Done', [
+  { stmt: '"The Three Little Owls" is a fiction text because the owls are made-up characters.',  ans: true  },
+  { stmt: '"The Three Little Owls" is an adventure story because the owls are flying around.',   ans: false },
+  { stmt: 'A fairy tale must have magic, kings, queens or wizards.',                             ans: true  },
+  { stmt: '"The Three Little Owls" is a narrative because it tells a story with a beginning, middle and end.', ans: true },
+  { stmt: 'A non-fiction text is a made-up story with characters.',                             ans: false },
+  { stmt: 'A play script uses speech marks around every piece of dialogue.',                     ans: false },
+  { stmt: 'A recount retells something that actually happened.',                                 ans: true  },
+  { stmt: '"The Three Little Owls" is a fairy tale because talking animals are magical.',        ans: false }
+], 8);
+
+/* ═══════════════════════════════════
+   SECTION 2 DATA — Text Types Match
+═══════════════════════════════════ */
+buildMatch('s4Left','s4Right','s4Score','s4Done', [
+  { word: 'Fiction',      key: 'fic',  meaning: 'A made-up story 🦉' },
+  { word: 'Narrative',    key: 'nar',  meaning: 'Tells events in order 📖' },
+  { word: 'Fairy Tale',   key: 'fai',  meaning: 'Has magic, kings or queens 🧙' },
+  { word: 'Play Script',  key: 'pla',  meaning: 'Written with character names + dialogue 🎭' },
+  { word: 'Non-Fiction',  key: 'non',  meaning: 'Contains real facts and true information 📰' },
+  { word: 'Recount',      key: 'rec',  meaning: 'Retells something that really happened 📅' },
+], 6);
+
+/* ═══════════════════════════════════
+   SECTION 3 DATA — To-Be Verbs MCQ
+═══════════════════════════════════ */
+buildMCQ('s5List','s5Score','s5Done', [
+  { q: 'Which word in this sentence is a to-be verb? "The owls <strong>were</strong> bored on the branch."',
+    opts: ['owls','bored','were'], ans: 'were' },
+  { q: 'Which word is a to-be verb? "I <strong>am</strong> the best flyer!"',
+    opts: ['best','flyer','am'], ans: 'am' },
+  { q: 'Which word is a to-be verb? "You <strong>are</strong> the best singer."',
+    opts: ['singer','are','best'], ans: 'are' },
+  { q: 'Which word is a to-be verb? "She <strong>was</strong> very proud of her voice."',
+    opts: ['was','proud','voice'], ans: 'was' },
+  { q: '"He <strong>was</strong> just happy to sit and listen." — what is "was"?',
+    opts: ['an action verb','a to-be verb','a noun'], ans: 'a to-be verb' },
+  { q: 'Which of these is NOT a to-be verb?',
+    opts: ['is','swooped','are'], ans: 'swooped' },
+  { q: '"You\'re right." — what is the to-be verb hidden inside "You\'re"?',
+    opts: ['you','right','are'], ans: 'are' },
+  { q: 'Which sentence contains a to-be verb?',
+    opts: ['The owl flew fast.','The owl was happy.','The owl sang loudly.'], ans: 'The owl was happy.' },
+  { q: '"The moon <strong>was</strong> barely a sliver." — "was" is a...',
+    opts: ['noun','to-be verb','adjective'], ans: 'to-be verb' },
+  { q: 'Which of these is a to-be verb?',
+    opts: ['jumped','hidden','been'], ans: 'been' }
+], 10);
+
+/* ═══════════════════════════════════
+   SECTION 3 DATA — To-Be TF
+═══════════════════════════════════ */
+buildTF('s6List','s6Score','s6Done', [
+  { stmt: '"Is" is a to-be verb.',                                               ans: true  },
+  { stmt: '"Flew" is a to-be verb.',                                             ans: false },
+  { stmt: '"Been" is a to-be verb.',                                             ans: true  },
+  { stmt: '"This" is a to-be verb.',                                             ans: false },
+  { stmt: 'The eight to-be verbs are: am, is, are, was, were, be, been, being.', ans: true  },
+  { stmt: '"Swooped" is a to-be verb.',                                          ans: false },
+  { stmt: '"You\'re" contains the to-be verb "are".',                            ans: true  },
+  { stmt: '"The" is a to-be verb.',                                              ans: false }
+], 8);
+
+/* ═══════════════════════════════════
+   SECTION 4 DATA — Prepositions MCQ
+═══════════════════════════════════ */
+buildMCQ('s7List','s7Score','s7Done', [
+  { q: 'Find the preposition: "Their mother looked <em>at</em> the third owl happily."',
+    opts: ['mother','looked','at'], ans: 'at' },
+  { q: 'Find the preposition: "I can\'t see the letter <em>beneath</em> the box."',
+    opts: ['letter','see','beneath'], ans: 'beneath' },
+  { q: 'Find the preposition: "He went <em>into</em> the shop to buy some envelopes."',
+    opts: ['shop','went','into'], ans: 'into' },
+  { q: 'Find the preposition: "The cat is hiding <em>under</em> the table."',
+    opts: ['hiding','table','under'], ans: 'under' },
+  { q: 'Find the preposition: "She sat <em>beside</em> her best friend."',
+    opts: ['sat','beside','friend'], ans: 'beside' },
+  { q: 'Find the preposition: "The bird flew <em>over</em> the tall tree."',
+    opts: ['flew','bird','over'], ans: 'over' },
+  { q: 'Find the preposition: "We put the picnic things <em>into</em> the boats."',
+    opts: ['things','boats','into'], ans: 'into' },
+  { q: 'Which of these words is NOT a preposition?',
+    opts: ['beneath','smiled','across'], ans: 'smiled' },
+  { q: 'Find the preposition: "The owls roosted <em>on</em> a branch."',
+    opts: ['roosted','owls','on'], ans: 'on' },
+  { q: 'Find the preposition: "Stars twinkled <em>above</em> them."',
+    opts: ['stars','twinkled','above'], ans: 'above' }
+], 10);
+
+/* ═══════════════════════════════════
+   SECTION 4 DATA — Prepositions Word Bank
+═══════════════════════════════════ */
+buildWordBank('wbBank2','wbSents2','s8Score','s8Done',
+  ['into','beneath','beside','over','under','at','on','across'],
+  [
+    { text: 'The cat jumped ___ the fence.', ans: 'over' },
+    { text: 'She looked ___ the window and smiled.', ans: 'at' },
+    { text: 'He went ___ the shop quickly.', ans: 'into' },
+    { text: 'The book was hidden ___ the pile of clothes.', ans: 'beneath' },
+    { text: 'The dog sat ___ the warm fire.', ans: 'beside' },
+    { text: 'They walked ___ the bridge together.', ans: 'across' },
+    { text: 'The bird perched ___ the highest branch.', ans: 'on' },
+    { text: 'The kitten was sleeping ___ the table.', ans: 'under' },
+  ]
+);
+
+/* ═══════════════════════════════════
+   SECTION 5 DATA — Contractions MCQ
+═══════════════════════════════════ */
+buildMCQ('s9List','s9Score','s9Done', [
+  { q: 'What is the correct contraction of <strong>shall not</strong>?',
+    opts: ["shall'nt","shan't","sha'nt"], ans: "shan't" },
+  { q: 'What is the correct contraction of <strong>will not</strong>?',
+    opts: ["willn't","won't","will'nt"], ans: "won't" },
+  { q: 'What is the correct contraction of <strong>they are</strong>?',
+    opts: ["they're","the'yre","they'are"], ans: "they're" },
+  { q: 'What is the correct contraction of <strong>I will</strong>?',
+    opts: ["I'will","Iwi'll","I'll"], ans: "I'll" },
+  { q: 'What is the correct contraction of <strong>must not</strong>?',
+    opts: ["must'nt","mustn't","mus'nt"], ans: "mustn't" },
+  { q: 'What is the correct contraction of <strong>could not</strong>?',
+    opts: ["could'nt","couldn't","cou'dnt"], ans: "couldn't" },
+  { q: 'What is the correct contraction of <strong>I am</strong>?',
+    opts: ["I'm","'Iam","Ia'm"], ans: "I'm" },
+  { q: 'What is the correct contraction of <strong>do not</strong>?',
+    opts: ["don't","d'ont","do'nt"], ans: "don't" },
+  { q: 'What is the correct contraction of <strong>cannot</strong>?',
+    opts: ["can'not","ca'nt","can't"], ans: "can't" },
+  { q: 'What is the correct contraction of <strong>we are</strong>?',
+    opts: ["we'ar","we're","wer'e"], ans: "we're" }
+], 10);
+
+/* ═══════════════════════════════════
+   SECTION 5 DATA — Expand contractions MCQ
+═══════════════════════════════════ */
+buildMCQ('s10List','s10Score','s10Done', [
+  { q: "What are the two words that make <strong>shan't</strong>?",
+    opts: ['shall not','should not','sha not'], ans: 'shall not' },
+  { q: "What are the two words that make <strong>won't</strong>?",
+    opts: ['would not','want not','will not'], ans: 'will not' },
+  { q: "What are the two words that make <strong>they're</strong>?",
+    opts: ['they were','they have','they are'], ans: 'they are' },
+  { q: "What are the two words that make <strong>I'll</strong>?",
+    opts: ['I will','I shall','I would'], ans: 'I will' },
+  { q: "What are the two words that make <strong>mustn't</strong>?",
+    opts: ['might not','must not','muse not'], ans: 'must not' },
+  { q: "What are the two words that make <strong>couldn't</strong>?",
+    opts: ['can not','could not','count not'], ans: 'could not' },
+  { q: "What are the two words that make <strong>haven't</strong>?",
+    opts: ['have not','has not','had not'], ans: 'have not' },
+  { q: "What are the two words that make <strong>isn't</strong>?",
+    opts: ['I not','was not','is not'], ans: 'is not' }
+], 8);
+
+/* ═══════════════════════════════════
+   SECTION 6 DATA — Homophones fill-in
+═══════════════════════════════════ */
+buildFillIn('s11List','s11Score','s11Done', [
+  { sent: 'A ___ is a strong metal used to build bridges.',  opts: ['steal','steel'],  ans: 'steel'  },
+  { sent: 'It is wrong to ___ things that belong to others.', opts: ['steel','steal'], ans: 'steal'  },
+  { sent: 'The postman delivered the ___ this morning.',    opts: ['male','mail'],   ans: 'mail'   },
+  { sent: 'A ___ deer has antlers.',                         opts: ['mail','male'],   ans: 'male'   },
+  { sent: 'The tennis ___ was wet after the rain.',          opts: ['caught','court'],ans: 'court'  },
+  { sent: 'She ___ the ball before it hit the ground.',      opts: ['court','caught'],ans: 'caught' },
+  { sent: 'The queen\'s ___ lasted many years.',             opts: ['rain','reign'],  ans: 'reign'  },
+  { sent: 'Dark clouds mean ___ is coming.',                 opts: ['reign','rain'],  ans: 'rain'   },
+  { sent: 'A knight wore armour made of ___.',               opts: ['steel','steal'], ans: 'steel'  },
+  { sent: 'He tried to ___ the crown from the king.',        opts: ['steel','steal'], ans: 'steal'  },
+  { sent: 'The letter was delivered by ___ to our house.',   opts: ['male','mail'],   ans: 'mail'   },
+  { sent: 'The ___ dog barked loudly in the garden.',        opts: ['mail','male'],   ans: 'male'   },
+], 12);
+
+/* ═══════════════════════════════════
+   SECTION 6 DATA — Homophone Match
+═══════════════════════════════════ */
+buildMatch('s12Left','s12Right','s12Score','s12Done', [
+  { word: 'steal',  key: 'stl',  meaning: 'steel 🔩' },
+  { word: 'male',   key: 'mal',  meaning: 'mail 📬' },
+  { word: 'court',  key: 'crt',  meaning: 'caught 🏏' },
+  { word: 'reign',  key: 'rgn',  meaning: 'rain 🌧️' },
+  { word: 'knot',   key: 'knt',  meaning: 'not ❌' },
+  { word: 'whole',  key: 'whl',  meaning: 'hole 🕳️' },
+  { word: 'blew',   key: 'blw',  meaning: 'blue 🟦' },
+  { word: 'bare',   key: 'bar',  meaning: 'bear 🐻' },
+], 8);
+
+/* ═══════════════════════════════════
+   SECTION 7 DATA — Play Script TF
+═══════════════════════════════════ */
+buildTF('s13List','s13Score','s13Done', [
+  { stmt: 'A play script needs a title at the top.',                                     ans: true  },
+  { stmt: 'In a play script, you put speech marks around every word a character says.', ans: false },
+  { stmt: 'Stage directions describe the actions and movements on stage.',               ans: true  },
+  { stmt: 'You write "said" or "replied" after every line of dialogue in a play script.',ans: false },
+  { stmt: 'A character list names all the people who appear in the play.',               ans: true  },
+  { stmt: 'Stage directions are usually written in italics or brackets.',                ans: true  },
+  { stmt: 'In a play script, the character\'s name comes AFTER their words.',           ans: false },
+  { stmt: 'A narrator can be one of the characters in a play script.',                  ans: true  }
+], 8);
+
+/* ═══════════════════════════════════
+   SECTION 7 DATA — Play Script Format MCQ
+═══════════════════════════════════ */
+buildMCQ('s14List','s14Score','s14Done', [
+  { q: 'Which of these is written correctly in play script format?',
+    opts: [
+      '"Good plan," said Joy.',
+      'JOY: Good plan.',
+      'Joy said: Good plan.'
+    ], ans: 'JOY: Good plan.' },
+  { q: 'How should a stage direction be written?',
+    opts: [
+      'Wilf walked to the river said the narrator.',
+      '(Wilf walks to the river.)',
+      '"Wilf walked to the river."'
+    ], ans: '(Wilf walks to the river.)' },
+  { q: 'Where does the character list go in a play script?',
+    opts: [
+      'At the very end of the script.',
+      'At the beginning, before the play starts.',
+      'In the middle of the dialogue.'
+    ], ans: 'At the beginning, before the play starts.' },
+  { q: 'What does "Characters: Wilf, Chip, Dad, Joy" tell the reader?',
+    opts: [
+      'These are the prepositions in the story.',
+      'These are all the people who appear and speak in the play.',
+      'These are the stage directions.'
+    ], ans: 'These are all the people who appear and speak in the play.' },
+  { q: 'A narrator in a play script...',
+    opts: [
+      'Only speaks when other characters are silent.',
+      'Describes what is happening to help the audience understand.',
+      'Is always the main character.'
+    ], ans: 'Describes what is happening to help the audience understand.' },
+  { q: 'Which of these is a stage direction?',
+    opts: [
+      'CHIP: Can I row?',
+      '(Chip picks up the oars and begins to row nervously.)',
+      'Characters: Chip, Wilf, Dad'
+    ], ans: '(Chip picks up the oars and begins to row nervously.)' }
+], 6);
+</script>
+</body>
+</html>

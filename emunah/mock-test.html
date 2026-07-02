@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emunah's Mock Exam 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --eng:  #e91e8c; --eng-d: #880e4f;  --eng-l: #fce4ec;
+  --fre:  #1565c0; --fre-d: #0d47a1;  --fre-l: #e3f2fd;
+  --com:  #7c4dff; --com-d: #4a148c;  --com-l: #ede7f6;
+  --sci:  #00897b; --sci-d: #004d40;  --sci-l: #e0f2f1;
+  --mat:  #f57c00; --mat-d: #e65100;  --mat-l: #fff3e0;
+  --green:#2e7d32; --gl:#e8f5e9;
+  --red:  #c62828; --rl:#ffebee;
+  --dark: #1a1a2e; --gray:#666; --bg:#f8f6ff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;overflow-x:hidden;color:var(--dark)}
+.screen{display:none}
+.screen.active{display:block}
+
+/* BACK */
+.back-btn{position:fixed;top:14px;left:14px;z-index:999;background:#fff;border:2px solid #ddd;
+  color:var(--dark);font-weight:800;font-size:.88rem;padding:7px 16px;border-radius:50px;
+  text-decoration:none;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:.2s}
+.back-btn:hover{background:var(--dark);color:#fff}
+
+/* HOME SCREEN */
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#4a148c 50%,#e91e8c 100%);
+  padding:70px 20px 50px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;
+  background:var(--bg);clip-path:ellipse(60% 100% at 50% 100%)}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2rem,6vw,3rem);color:#fff;
+  text-shadow:3px 3px 0 rgba(0,0,0,.2)}
+.hero p{color:rgba(255,255,255,.85);font-size:1rem;font-weight:700;margin-top:8px}
+.hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.hero-badge{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);
+  color:#fff;font-weight:800;font-size:.8rem;padding:5px 14px;border-radius:50px}
+
+.home-main{max-width:960px;margin:0 auto;padding:36px 18px 60px}
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;margin-bottom:28px}
+.subject-card{background:#fff;border-radius:22px;padding:24px 20px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);border-top:5px solid var(--sc);transition:.2s}
+.subject-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.sc-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sc-icon{font-size:36px}
+.sc-name{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--sc)}
+.sc-btns{display:flex;gap:10px}
+.sc-btn{flex:1;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;
+  padding:9px 0;border-radius:50px;cursor:pointer;border:2px solid var(--sc);transition:.15s}
+.sc-btn.learn{background:#fff;color:var(--sc)}
+.sc-btn.learn:hover{background:var(--sc);color:#fff}
+.sc-btn.test{background:var(--sc);color:#fff}
+.sc-btn.test:hover{filter:brightness(1.1)}
+
+.full-mock-btn{display:block;width:100%;padding:18px;font-family:'Fredoka One',cursive;
+  font-size:1.4rem;color:#fff;border:none;border-radius:20px;cursor:pointer;
+  background:linear-gradient(135deg,#1a1a2e,#4a148c,#e91e8c);
+  box-shadow:0 6px 0 rgba(0,0,0,.2);transition:.2s;text-align:center}
+.full-mock-btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 rgba(0,0,0,.2)}
+.full-mock-btn span{display:block;font-family:'Nunito',sans-serif;font-size:.95rem;
+  font-weight:700;opacity:.85;margin-top:4px}
+
+/* LEARN SCREEN */
+.learn-header{padding:60px 20px 28px;text-align:center}
+.learn-header h2{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,2.5rem);color:var(--sc,var(--dark))}
+.learn-header p{font-size:.95rem;font-weight:700;color:var(--gray);margin-top:6px}
+.learn-progress{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.lp-dot{width:12px;height:12px;border-radius:50%;background:#ddd;cursor:pointer;transition:.2s}
+.lp-dot.active{background:var(--sc,#888);transform:scale(1.3)}
+.lp-dot.done{background:var(--green)}
+
+.flashcard-area{max-width:640px;margin:0 auto;padding:0 18px 40px}
+.flashcard{background:#fff;border-radius:24px;padding:32px 28px;
+  box-shadow:0 6px 24px rgba(0,0,0,.1);min-height:280px;
+  display:flex;flex-direction:column;animation:fadeUp .3s ease}
+.fc-tag{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  color:var(--sc,#888);margin-bottom:14px}
+.fc-rule{font-family:'Fredoka One',cursive;font-size:clamp(1.2rem,4vw,1.6rem);
+  color:var(--dark);margin-bottom:16px;line-height:1.3}
+.fc-body{font-size:.95rem;font-weight:700;color:#444;line-height:1.7;flex:1}
+.fc-body .hl{font-weight:900}
+.fc-body .good{color:var(--green);font-weight:900}
+.fc-body .bad{color:var(--red);font-weight:900}
+.fc-example{margin-top:14px;background:var(--bg);border-radius:12px;padding:12px 16px;
+  font-size:.88rem;font-weight:700;color:var(--dark);border-left:4px solid var(--sc,#888)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
+.fc-nav-btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;
+  padding:9px 22px;border-radius:50px;cursor:pointer;border:2px solid;transition:.15s}
+.fc-nav-btn.prev{background:#fff;border-color:#ddd;color:#666}
+.fc-nav-btn.prev:hover{background:#f5f5f5}
+.fc-nav-btn.next{background:var(--sc,#888);color:#fff;border-color:var(--sc,#888)}
+.fc-nav-btn.next:hover{filter:brightness(1.1)}
+.fc-counter{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--gray)}
+.learn-to-test-btn{display:block;margin:0 auto;padding:14px 36px;font-family:'Fredoka One',cursive;
+  font-size:1.2rem;color:#fff;background:var(--sc,#888);border:none;border-radius:50px;
+  cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.15);transition:.2s}
+.learn-to-test-btn:hover{transform:translateY(-2px)}
+
+/* TEST SCREEN */
+.test-header{padding:50px 20px 0;max-width:700px;margin:0 auto}
+.test-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.test-subject-tag{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--sc,#888)}
+.test-qnum{font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--gray)}
+.test-timer{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--dark);
+  background:#fff;padding:6px 16px;border-radius:50px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.test-timer.warn{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.progress-bar{height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;margin-bottom:8px}
+.progress-fill{height:100%;background:var(--sc,#888);border-radius:4px;transition:width .4s ease}
+
+.test-main{max-width:700px;margin:0 auto;padding:20px 18px 60px}
+.question-card{background:#fff;border-radius:22px;padding:28px 24px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:20px;animation:fadeUp .3s ease}
+.q-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  color:var(--sc,#888);margin-bottom:12px}
+.q-text{font-size:clamp(1rem,3vw,1.15rem);font-weight:800;line-height:1.5;color:var(--dark)}
+.q-text .snippet{display:block;background:var(--bg);border-left:4px solid var(--sc,#888);
+  border-radius:0 10px 10px 0;padding:10px 14px;margin-top:10px;font-style:italic;
+  font-size:.9rem;font-weight:700;color:#444}
+
+.options{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.opt-btn{font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;
+  text-align:left;padding:13px 18px;border-radius:14px;cursor:pointer;
+  border:2px solid #e0e0e0;background:#fff;color:var(--dark);transition:.15s;
+  display:flex;align-items:center;gap:10px}
+.opt-btn:hover:not(:disabled){border-color:var(--sc,#888);background:var(--bg)}
+.opt-btn .opt-letter{width:28px;height:28px;border-radius:50%;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;font-weight:900;
+  font-size:.82rem;flex-shrink:0;color:var(--sc,#888)}
+.opt-btn.correct{background:var(--gl);border-color:var(--green);color:var(--green)}
+.opt-btn.correct .opt-letter{background:var(--green);color:#fff}
+.opt-btn.wrong{background:var(--rl);border-color:var(--red);color:var(--red)}
+.opt-btn.wrong .opt-letter{background:var(--red);color:#fff}
+.opt-btn.reveal{background:var(--gl);border-color:var(--green);color:var(--green)}
+.opt-btn.reveal .opt-letter{background:var(--green);color:#fff}
+.opt-btn:disabled{cursor:default}
+
+.explain-box{background:#fff9c4;border-left:4px solid #f9a825;border-radius:0 12px 12px 0;
+  padding:12px 16px;margin-top:14px;font-size:.88rem;font-weight:700;color:#5d4037;
+  display:none;animation:fadeUp .3s}
+.explain-box.show{display:block}
+
+.next-btn{width:100%;padding:14px;font-family:'Fredoka One',cursive;font-size:1.2rem;
+  color:#fff;background:var(--sc,#888);border:none;border-radius:50px;cursor:pointer;
+  box-shadow:0 4px 0 rgba(0,0,0,.15);transition:.2s;margin-top:8px;display:none}
+.next-btn.show{display:block}
+.next-btn:hover{transform:translateY(-2px)}
+
+/* RESULTS SCREEN */
+.results-wrap{max-width:700px;margin:0 auto;padding:40px 18px 60px}
+.results-hero{text-align:center;padding:50px 20px 30px;
+  background:linear-gradient(135deg,#1a1a2e,#4a148c,#e91e8c)}
+.results-hero h2{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,2.6rem);color:#fff}
+.results-hero .score-big{font-family:'Fredoka One',cursive;font-size:clamp(3rem,10vw,5rem);
+  color:var(--yellow,#fdd835);text-shadow:3px 3px 0 rgba(0,0,0,.2)}
+.results-hero .grade-msg{color:rgba(255,255,255,.9);font-size:1.05rem;font-weight:700;margin-top:8px}
+.results-hero::after{content:'';display:block;height:40px;background:var(--bg);
+  clip-path:ellipse(60% 100% at 50% 100%);margin-top:20px}
+
+.subject-result{background:#fff;border-radius:18px;padding:18px 20px;
+  margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.07);
+  display:flex;align-items:center;gap:16px}
+.sr-icon{font-size:28px;flex-shrink:0}
+.sr-info{flex:1}
+.sr-name{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--sc)}
+.sr-bar{height:10px;background:#e0e0e0;border-radius:5px;overflow:hidden;margin-top:6px}
+.sr-fill{height:100%;border-radius:5px;background:var(--sc);transition:width .8s ease}
+.sr-score{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--dark);white-space:nowrap}
+
+.wrong-answers{margin-top:24px}
+.wa-heading{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--dark);margin-bottom:14px}
+.wa-item{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;
+  border-left:4px solid var(--sc,var(--red));box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.wa-subj{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--sc,#888);margin-bottom:4px}
+.wa-q{font-weight:800;font-size:.9rem;margin-bottom:6px;color:var(--dark)}
+.wa-yours{font-size:.85rem;font-weight:700;color:var(--red)}
+.wa-correct{font-size:.85rem;font-weight:700;color:var(--green);margin-top:2px}
+
+.results-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.results-btn{padding:14px;font-family:'Fredoka One',cursive;font-size:1.1rem;
+  border:none;border-radius:50px;cursor:pointer;transition:.2s;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+.results-btn:hover{transform:translateY(-2px)}
+.results-btn.retry{background:linear-gradient(135deg,#4a148c,#e91e8c);color:#fff}
+.results-btn.home{background:#fff;color:var(--dark);border:2px solid #ddd}
+
+/* UTILS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.yellow{color:#f9a825;font-weight:900}
+@media(max-width:500px){.results-btns{grid-template-columns:1fr}.sc-btns{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     SCREEN: HOME
+══════════════════════════════ -->
+<div id="screen-home" class="screen active">
+  <div class="hero">
+    <h1>🌟 Emunah's Mock Exams</h1>
+    <p>Choose a subject to Learn or Test — or take the Full Mock!</p>
+    <div class="hero-badges">
+      <span class="hero-badge">📚 5 Subjects</span>
+      <span class="hero-badge">✏️ 50 Questions</span>
+      <span class="hero-badge">🎓 Cambridge Year 3</span>
+    </div>
+  </div>
+  <div class="home-main">
+    <div class="subject-grid" id="subjectGrid"></div>
+    <button class="full-mock-btn" onclick="startFullMock()">
+      🏆 Take the Full Mock Exam
+      <span>All 5 subjects · 50 questions · Timed · Results breakdown</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN: LEARN
+══════════════════════════════ -->
+<div id="screen-learn" class="screen">
+  <button class="back-btn" onclick="goHome()">← Home</button>
+  <div class="learn-header">
+    <h2 id="learnTitle"></h2>
+    <p id="learnSubtitle">Study each card, then take the practice test!</p>
+    <div class="learn-progress" id="learnDots"></div>
+  </div>
+  <div class="flashcard-area">
+    <div class="flashcard" id="flashcard"></div>
+    <div class="fc-nav">
+      <button class="fc-nav-btn prev" onclick="prevCard()">← Back</button>
+      <span class="fc-counter" id="fcCounter"></span>
+      <button class="fc-nav-btn next" onclick="nextCard()" id="fcNextBtn">Next →</button>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="learn-to-test-btn" id="learnTestBtn" onclick="startSubjectTest(currentSubject, true)">
+        ✏️ Now take the practice test →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN: TEST
+══════════════════════════════ -->
+<div id="screen-test" class="screen">
+  <button class="back-btn" onclick="confirmBack()">← Back</button>
+  <div class="test-header">
+    <div class="test-meta">
+      <span class="test-subject-tag" id="testSubjectTag"></span>
+      <span class="test-qnum" id="testQNum"></span>
+      <span class="test-timer" id="testTimer">⏱ 40:00</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="test-main">
+    <div class="question-card" id="questionCard">
+      <div class="q-label" id="qLabel"></div>
+      <div class="q-text" id="qText"></div>
+      <div class="options" id="optionsEl"></div>
+      <div class="explain-box" id="explainBox"></div>
+    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN: RESULTS
+══════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="results-hero">
+    <h2>🎉 Well done, Emunah!</h2>
+    <div class="score-big" id="resultsBig"></div>
+    <div class="grade-msg" id="gradeMsg"></div>
+  </div>
+  <div class="results-wrap">
+    <div id="subjectResults"></div>
+    <div class="wrong-answers" id="wrongAnswers"></div>
+    <div class="results-btns">
+      <button class="results-btn retry" onclick="retryTest()">🔄 Try Again</button>
+      <button class="results-btn home" onclick="goHome()">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════ */
+const SUBJECTS = {
+  english: {
+    name:'English', icon:'📚', color:'#e91e8c', dark:'#880e4f', light:'#fce4ec',
+    label:'English Language · Year 3'
+  },
+  french: {
+    name:'French', icon:'🇫🇷', color:'#1565c0', dark:'#0d47a1', light:'#e3f2fd',
+    label:'French · Year 3'
+  },
+  computing: {
+    name:'Computing', icon:'💻', color:'#7c4dff', dark:'#4a148c', light:'#ede7f6',
+    label:'Computing · Year 3'
+  },
+  science: {
+    name:'Science', icon:'🔬', color:'#00897b', dark:'#004d40', light:'#e0f2f1',
+    label:'Science · Year 3'
+  },
+  maths: {
+    name:'Maths', icon:'🔢', color:'#f57c00', dark:'#e65100', light:'#fff3e0',
+    label:'Mathematics · Year 3'
+  }
+};
+
+/* ── FLASHCARDS ── */
+const CARDS = {
+  english: [
+    {
+      tag:'Vocabulary in Context',
+      rule:'What does "boasted" mean?',
+      body:'<b>Boasted</b> = <span class="good">bragged proudly</span> — talking about yourself with too much pride.\n<span class="bad">❌ NOT lowered, NOT smiled</span>\n\n<b>Squabbled</b> = <span class="good">quarrelled noisily</span> — arguing about something small.',
+      example:'"I\'m the best flyer!" the owl boasted. → He was BRAGGING / showing off.'
+    },
+    {
+      tag:'Synonyms for "Said"',
+      rule:'Good writers replace "said" with better words',
+      body:'Match the feeling to the word:\n• Showing off → <span class="good">boasted</span>\n• Making an owl sound → <span class="good">hooted</span>\n• Tired/sad → <span class="good">sighed</span>\n• Being kind/generous → <span class="good">expressed</span>\n• Being grumpy → <span class="good">grumbled</span>',
+      example:'"Hunting was hard tonight!" their mother sighed. (She was tired → sighed ✅)'
+    },
+    {
+      tag:'Text Types',
+      rule:'Fiction + Narrative — NOT Adventure or Fairy Tale',
+      body:'<span class="good">✅ Fiction</span> = made-up story (owls don\'t really talk)\n<span class="good">✅ Narrative</span> = tells events in order (beginning → middle → end)\n<span class="bad">❌ Adventure</span> = needs danger/journey/quest\n<span class="bad">❌ Fairy Tale</span> = needs magic, kings, queens OR "once upon a time"',
+      example:'"The Three Little Owls" = Fiction ✅ + Narrative ✅'
+    },
+    {
+      tag:'To-Be Verbs',
+      rule:'The 8 to-be verbs — learn them all!',
+      body:'<span class="good">am · is · are · was · were · be · been · being</span>\n\nThey describe a STATE, not an action.\n<span class="bad">❌ "swooped", "flew", "sang"</span> = action verbs, NOT to-be verbs\n\nWatch for contractions hiding them:\nYou\'re = You <span class="good">are</span> · I\'m = I <span class="good">am</span> · He\'s = He <span class="good">is</span>',
+      example:'Paragraph 3: "You <b>are</b> the best flyer" + "He <b>was</b> just happy" → are & was ✅'
+    },
+    {
+      tag:'Prepositions',
+      rule:'Prepositions show WHERE, WHEN or DIRECTION',
+      body:'Common prepositions: <span class="good">in · on · at · under · over · into · beneath · beside · across · above · behind · through · between</span>\n\n<span class="bad">❌ "looked" is a VERB, not a preposition</span>\n<span class="bad">❌ "road" is a NOUN, not a preposition</span>',
+      example:'"She looked <b>at</b> the owl." → AT is the preposition (shows direction) ✅'
+    },
+    {
+      tag:'Tricky Contractions',
+      rule:'shan\'t and won\'t are IRREGULAR!',
+      body:'<span class="bad">❌ shall not → "shall\'nt"</span>\n<span class="good">✅ shall not → shan\'t</span> (the word changes shape!)\n\n<span class="bad">❌ will not → "willn\'t"</span>\n<span class="good">✅ will not → won\'t</span>\n\nAll others follow the pattern: remove letters, add apostrophe where they were.',
+      example:'must not → mustn\'t ✅ · they are → they\'re ✅ · I will → I\'ll ✅'
+    },
+    {
+      tag:'Homophones',
+      rule:'Words that SOUND the same but have DIFFERENT spellings',
+      body:'• <span class="good">steel</span> (strong metal) vs <span class="good">steal</span> (to take wrongly)\n• <span class="good">mail</span> (letters/post) vs <span class="good">male</span> (boy/man)\n• <span class="good">court</span> (tennis court / law court) vs <span class="good">caught</span> (past tense of catch)\n• reign (king\'s rule) vs rain (water from sky)',
+      example:'"The bridge is made of <b>steel</b>." · "Don\'t <b>steal</b>!" → same sound, different meaning ✅'
+    }
+  ],
+
+  french: [
+    {
+      tag:'Numbers 40–69',
+      rule:'quarante (40), cinquante (50), soixante (60)',
+      body:'40 = <span class="good">quarante</span>\n41 = quarante et un\n49 = <span class="good">quarante-neuf</span> <span class="bad">(NOT "quatre-neuf"!)</span>\n50 = <span class="good">cinquante</span>\n60 = <span class="good">soixante</span>',
+      example:'49 = quarante (40) + neuf (9) = quarante-neuf ✅'
+    },
+    {
+      tag:'Numbers 70–99 — The Tricky Ones!',
+      rule:'French counts in 20s from 70 onwards',
+      body:'70 = <span class="good">soixante-dix</span> (60+10)\n79 = <span class="good">soixante-dix-neuf</span> (60+10+9)\n80 = <span class="good">quatre-vingts</span> (4×20)\n90 = <span class="good">quatre-vingt-dix</span> (80+10)\n99 = <span class="good">quatre-vingt-dix-neuf</span> (80+10+9)',
+      example:'79 = soixante (60) + dix (10) + neuf (9) = soixante-dix-neuf ✅'
+    },
+    {
+      tag:'Telling the Time — L\'heure',
+      rule:'Il est [heure] heure(s) [minutes]',
+      body:'Structure: <span class="good">Il est + hour + heure(s) + minutes</span>\n\n1:00 = Il est <span class="good">une heure</span> (singular!)\n2:15 = Il est <span class="good">deux heures quinze</span>\n1:22 = Il est <span class="good">une heure vingt-deux</span>\n\n<span class="bad">❌ Never write "1:22 am" — that is English!</span>',
+      example:'1:22 → Il est UNE heure vingt-deux (not "un" — heure is feminine)'
+    },
+    {
+      tag:'Time Units',
+      rule:'Learn each French time unit with its key fact',
+      body:'⏰ <span class="good">une heure</span> = one hour (60 minutes)\n☀️ <span class="good">un jour</span> = one day (24 heures)\n📅 <span class="good">une semaine</span> = one week (7 jours)\n🗓 <span class="good">un mois</span> = one month (4 semaines)\n🎂 <span class="good">un an / une année</span> = one year (12 mois)',
+      example:'Year → 12 mois · Week → sept jours · Month → quatre semaines'
+    },
+    {
+      tag:'Days of the Week',
+      rule:'lundi → dimanche (all lowercase!)',
+      body:'1 <span class="good">lundi</span> Monday · 2 <span class="good">mardi</span> Tuesday\n3 <span class="good">mercredi</span> Wednesday · 4 <span class="good">jeudi</span> Thursday\n5 <span class="good">vendredi</span> Friday · 6 <span class="good">samedi</span> Saturday\n7 <span class="good">dimanche</span> Sunday\n\n<span class="bad">❌ Church day = vendredi? NO!</span>\n<span class="good">✅ Church day = dimanche (Sunday)</span>',
+      example:'Je vais à l\'église chaque <b>dimanche</b>. (Sunday = church day) ✅'
+    },
+    {
+      tag:'Day Logic — Hier / Aujourd\'hui / Demain',
+      rule:'Step through the days carefully!',
+      body:'<span class="good">hier</span> = yesterday\n<span class="good">aujourd\'hui</span> = today\n<span class="good">demain</span> = tomorrow\n\nIf <b>hier</b> = lundi:\n→ aujourd\'hui = <span class="good">mardi</span>\n→ demain = <span class="good">mercredi</span>\n\n<span class="bad">❌ Common mistake: jumping straight from lundi to mardi for "demain"</span>',
+      example:'"Hier était lundi, demain sera ___" → mardi is TODAY. Demain = mercredi ✅'
+    },
+    {
+      tag:'Reading Vocabulary',
+      rule:'Key verbs from La journée de Danielle',
+      body:'<span class="good">jouer</span> = to play · <span class="good">laver</span> = to wash\n<span class="good">porter</span> = to wear/carry · <span class="good">sauter</span> = to jump\n<span class="good">vider</span> = to empty · <span class="good">appeler</span> = to call\n\nla <span class="good">vaisselle</span> = the dishes · la <span class="good">poubelle</span> = the bin\nla <span class="good">marelle</span> = hopscotch',
+      example:'"Danielle <b>joue</b> à la marelle." = Danielle PLAYS hopscotch (NOT laver = washes) ✅'
+    }
+  ],
+
+  computing: [
+    {
+      tag:'Multimedia Types',
+      rule:'5 types of multimedia — digits are NOT one of them!',
+      body:'✅ <span class="good">Image</span> — photos, drawings\n✅ <span class="good">Video</span> — moving pictures\n✅ <span class="good">Audio</span> — music, sounds, voiceovers\n✅ <span class="good">Text</span> — words on screen\n✅ <span class="good">Animation</span> — moving effects\n\n<span class="bad">❌ Digits (raw numbers) are NOT multimedia!</span>',
+      example:'"Which is NOT multimedia?" → Digits ✅ Audio IS multimedia!'
+    },
+    {
+      tag:'PowerPoint Tabs',
+      rule:'Each tab does a different job — know them all',
+      body:'🏠 <span class="good">Home</span> — text formatting, bold/italic, new slide\n🖼 <span class="good">Insert</span> — add pictures, tables, videos\n🎨 <span class="good">Design</span> — change background & theme ⭐\n✨ <span class="good">Transitions</span> — effects between slides\n🌀 <span class="good">Animations</span> — effects ON a slide\n▶️ <span class="good">Slide Show</span> — start presenting',
+      example:'"Change the background?" → <b>Design</b> tab ✅ (NOT Table — that doesn\'t exist!)'
+    },
+    {
+      tag:'The CPU — Brain of the Computer',
+      rule:'The Microprocessor controls EVERYTHING',
+      body:'<span class="good">CPU = Microprocessor = Central Processing Unit</span>\n= the BRAIN of the computer\n= controls ALL activities\n\n<span class="bad">❌ Mouse = input device (not the brain!)</span>\n<span class="bad">❌ Monitor = output device (shows things)</span>\n\nInput → CPU processes → Output',
+      example:'"The ___ controls all activities." → Microprocessor ✅ (NOT Mouse)'
+    },
+    {
+      tag:'Screen Layout',
+      rule:'Taskbar = BOTTOM of the screen',
+      body:'🖥 <span class="good">Desktop</span> — background with icons\n📋 <span class="good">Taskbar</span> — at the <span class="good">BOTTOM</span> — Start button, open apps, clock\n📌 <span class="good">Title Bar</span> — TOP of each app window — shows app name\n🎀 <span class="good">Ribbon</span> — toolbar with tabs inside apps\n\n<span class="bad">❌ "At the top" → that\'s the TITLE BAR, not the taskbar!</span>',
+      example:'"Where is the taskbar?" → At the <b>bottom</b> ✅'
+    },
+    {
+      tag:'Input & Output Devices',
+      rule:'Input → INTO the computer. Output → OUT of the computer.',
+      body:'📥 <span class="good">INPUT</span>: Keyboard, Mouse, Joystick, Microphone, Camera\n📤 <span class="good">OUTPUT</span>: Monitor, Speaker, Printer\n\n<span class="good">Speaker</span> = OUTPUT for sound ✅\n<span class="bad">❌ Speaker is NOT an input device</span>',
+      example:'"Output device for sound?" → Speaker ✅ · "Input for games?" → Joystick ✅'
+    },
+    {
+      tag:'Window Controls & Keyboard',
+      rule:'Know every button and key!',
+      body:'— = <span class="good">Minimize</span> (hide the window)\n⬜ = <span class="good">Restore Down</span> (make smaller)\n✕ = <span class="good">Close</span> (shut the window)\n\n⌨️ <span class="good">Caps Lock</span> = types capitals\n<span class="good">Delete</span> = removes selected picture\n<span class="good">Ctrl+Z</span> = UNDO (not delete!)',
+      example:'"To delete a selected picture press..." → Delete ✅ (NOT Ctrl+Z — that\'s UNDO)'
+    }
+  ],
+
+  science: [
+    {
+      tag:'Friction & Surfaces',
+      rule:'Less force needed = smoother = less friction',
+      body:'Glass (5N) → <span class="good">SMOOTHEST</span> (least force)\nPaper (7N) → smooth\nWood (8N) → rougher\nConcrete (9N) → <span class="bad">ROUGHEST</span> (most force)\n\n🔑 Small force = smooth · Big force = rough\n\n<span class="bad">❌ "Glass is the smoothest" → YES not no!</span>',
+      example:'Glass needs 5N (least) → SMOOTHEST surface ✅ · Concrete 9N → ROUGHEST ✅'
+    },
+    {
+      tag:'Smooth = FASTER, Rough = SLOWER',
+      rule:'Smoother surface → LESS friction → SPEEDS UP',
+      body:'<span class="good">Smooth + Less friction = FASTER</span>\n<span class="bad">Rough + More friction = SLOWER</span>\n\nLily made runners smoother →\n→ LESS friction → sleigh <span class="good">speeds up / goes faster</span>\n\n<span class="bad">❌ "slow down" is WRONG — smoother means FASTER!</span>\n<span class="bad">❌ "there is friction" is WRONG — there is LESS friction!</span>',
+      example:'"Smoother runners → speed will ___ because there is ___ friction." → speed UP, LESS friction ✅'
+    },
+    {
+      tag:'Measuring Force',
+      rule:'Forcemeter measures force in Newtons',
+      body:'🔧 <span class="good">Forcemeter</span> = the instrument that measures force\n(also called: newton meter / spring balance)\n\n⚖️ Force is measured in <span class="good">Newtons (N)</span>\n\n<span class="bad">❌ Ruler measures LENGTH</span>\n<span class="bad">❌ Thermometer measures TEMPERATURE</span>',
+      example:'"What does Mia use to measure force?" → Forcemeter ✅'
+    },
+    {
+      tag:'Bar Charts',
+      rule:'Label BOTH axes — y-axis = Force in newtons (N)',
+      body:'📊 x-axis (bottom) = <span class="good">Surface</span>\n📊 y-axis (left side) = <span class="good">Force in newtons (N)</span>\n\nEach bar must reach the <span class="good">exact</span> number:\nPaper = 7 · Concrete = 9 · Glass = 5 · Wood = 8\n\n<span class="bad">❌ Don\'t forget to LABEL the y-axis!</span>',
+      example:'y-axis label = "Force in newtons (N)" · Concrete bar reaches 9 ✅'
+    },
+    {
+      tag:'Fossil Types',
+      rule:'4 types — know each one',
+      body:'🐾 <span class="good">Trace fossil</span> — footprint, burrow (evidence of activity)\n🦴 <span class="good">Body fossil</span> — preserved bones, shells, teeth\n🪨 <span class="good">Mould fossil</span> — hollow impression left in rock\n⚗️ <span class="good">Cast fossil</span> — minerals fill the mould, solid copy',
+      example:'"Footprint in rock?" → Trace fossil ✅ · "Fish skeleton?" → Body fossil ✅'
+    },
+    {
+      tag:'Organism vs Fossil Type',
+      rule:'"What organism?" = living thing · "What type?" = how it formed',
+      body:'<span class="good">Organism</span> = the living creature (fish, dinosaur, plant, insect)\n<span class="good">Fossil type</span> = trace / body / mould / cast\n\n<span class="bad">❌ "What organism made this fossil?" → "cast fossil" is WRONG</span>\n<span class="good">✅ Look at the fossil picture → fish skeleton → organism = FISH</span>',
+      example:'"What organism made this fish fossil?" → Fish ✅ (NOT "cast fossil" — that\'s the TYPE!)'
+    }
+  ],
+
+  maths: [
+    {
+      tag:'Telling the Time',
+      rule:'Quarter past = :15 · Half past = :30 · Quarter to = :45',
+      body:'🕐 <span class="good">Quarter PAST</span> = 15 mins AFTER → add :15\n🕑 <span class="good">Half past</span> = 30 mins after → add :30\n🕒 <span class="good">Quarter TO</span> = 15 mins BEFORE next hour → add :45\n\n<span class="bad">❌ "Quarter past six" = 06:45 is WRONG</span>\n<span class="good">✅ "Quarter past six" = 06:15</span>\n06:45 = quarter TO seven',
+      example:'"Quarter past six" → 06:15 ✅ · "Quarter to seven" → 06:45 ✅'
+    },
+    {
+      tag:'Complements to 100',
+      rule:'100 − number = missing complement',
+      body:'35 + ? = 100 → 100 − 35 = <span class="good">65</span> <span class="bad">(NOT 75 — that gives 110!)</span>\n12 + ? = 100 → 100 − 12 = <span class="good">88</span> <span class="bad">(NOT 98 — that gives 110!)</span>\n\n🔑 <span class="good">Always subtract from 100 (or 1000)</span>\n🔑 Check by adding back: 35 + 65 = 100 ✅',
+      example:'78 + ? = 100 → 100 − 78 = 22 ✅ · Check: 78 + 22 = 100 ✅'
+    },
+    {
+      tag:'Complements to 1000',
+      rule:'1000 − number = missing complement',
+      body:'270 + ? = 1000 → 1000 − 270 = <span class="good">730</span>\n690 + ? = 1000 → 1000 − 690 = <span class="good">310</span> <span class="bad">(NOT 410 — 690+410=1100!)</span>\n\n<span class="bad">❌ "80830" is obviously wrong — it\'s bigger than 1000!</span>\n\nCheck: 270 + 730 = 1000 ✅ · 690 + 310 = 1000 ✅',
+      example:'450 + ? = 1000 → 1000 − 450 = 550 ✅ · Check: 450 + 550 = 1000 ✅'
+    },
+    {
+      tag:'Unit Conversions',
+      rule:'metres → cm × 100 · km → m × 1000',
+      body:'📏 <span class="good">1 m = 100 cm</span> → to get cm, multiply by 100\n📏 <span class="good">1 km = 1000 m</span> → to get m, multiply by 1000\n\n4 m = 4 × 100 = <span class="good">400 cm</span> <span class="bad">(NOT 40!)</span>\n¾ km = ¾ × 1000 = <span class="good">750 m</span>\n200 cm = 200 ÷ 100 = <span class="good">2 m</span>',
+      example:'4 m → 4 × 100 = 400 cm ✅ (Use ×100, NOT ×10!)'
+    },
+    {
+      tag:'Multiples of 4',
+      rule:'4, 8, 12, 16, 20, 24, 28, 32, 36, 40...',
+      body:'From the list 8, 14, 4, 6, 36, 18:\n• <span class="good">8</span> ÷ 4 = 2 ✅\n• <span class="bad">14</span> ÷ 4 = 3 r2 ❌\n• <span class="good">4</span> ÷ 4 = 1 ✅\n• <span class="bad">6</span> ÷ 4 = 1 r2 ❌\n• <span class="good">36</span> ÷ 4 = 9 ✅\n• <span class="bad">18</span> ÷ 4 = 4 r2 ❌',
+      example:'Multiples of 4: <b>4, 8, 36</b> ✅ (NOT 14, 6 or 18)'
+    },
+    {
+      tag:'Column Subtraction with Borrowing',
+      rule:'Reduce the column you borrow from!',
+      body:'764 − 392:\nUnits: 4 − 2 = <span class="good">2</span>\nTens: 6 − 9 → borrow! 16 − 9 = <span class="good">7</span> (hundreds becomes 6)\nHundreds: <span class="good">6</span> − 3 = <span class="good">3</span> (use 6, NOT 7 — you borrowed!)\n\n<span class="bad">❌ Answer 572 is wrong</span>\n<span class="good">✅ Answer = 372</span>',
+      example:'764 − 392 = 372 ✅ · Key: after borrowing, 7 hundreds → 6 hundreds!'
+    },
+    {
+      tag:'Area & Perimeter',
+      rule:'Area = l × w · Perimeter = sum of all sides',
+      body:'📐 <span class="good">Area</span> = length × width (in SQUARE cm)\n📐 <span class="good">Perimeter</span> = add all sides (in cm)\n\nRectangle 12 sq cm options:\n3 × 4 = 12 ✅ · 2 × 6 = 12 ✅ · 1 × 12 = 12 ✅\n\nPerimeter of 7cm × 2cm:\n7+2+7+2 = <span class="good">18 cm</span>',
+      example:'3×4 rectangle: Area = 12 sq cm ✅ · Perimeter = 3+4+3+4 = 14 cm ✅'
+    }
+  ]
+};
+
+/* ── TEST QUESTIONS (10 per subject) ── */
+const QUESTIONS = {
+  english: [
+    {q:'What does <b>boasted</b> mean in the sentence: "I\'m the best flyer!" the owl <i>boasted</i>.',
+     opts:['Whispered quietly','Bragged proudly','Cried sadly','Lowered his head'],
+     ans:'Bragged proudly',
+     explain:'Boasted = bragged proudly. The owl was showing off — talking with too much pride.'},
+    {q:'Which word best replaces "said" here: "Great," <u>____</u> the owl, making its natural bird sound.',
+     opts:['screamed','hooted','cried','whispered'],
+     ans:'hooted',
+     explain:'Owls hoot — that\'s their natural sound. Hooted is the perfect replacement for "said" here.'},
+    {q:'"The Three Little Owls" is which TWO types of text?',
+     opts:['Adventure + Fairy Tale','Fiction + Narrative','Non-Fiction + Recount','Play Script + Poem'],
+     ans:'Fiction + Narrative',
+     explain:'It\'s made-up (Fiction) and tells events in order (Narrative). No magic = not Fairy Tale. No journey/danger = not Adventure.'},
+    {q:'Which word is a to-be verb?',
+     opts:['swooped','flew','was','hooted'],
+     ans:'was',
+     explain:'"Was" is a to-be verb (past tense of "be"). Swooped, flew and hooted are action verbs.'},
+    {q:'"Their mother looked ___ the third owl happily." Which word is the preposition?',
+     opts:['looked','mother','at','happily'],
+     ans:'at',
+     explain:'"At" shows the direction of her gaze — it is the preposition. "Looked" is a verb.'},
+    {q:'What is the correct contraction of <b>shall not</b>?',
+     opts:["shall'nt","sha'nt","shan't","shalln't"],
+     ans:"shan't",
+     explain:'"Shan\'t" is irregular — the word changes shape completely. Not "shall\'nt"!'},
+    {q:'Which word is the homophone of <b>steel</b> (the strong metal)?',
+     opts:['still','steal','stele','stall'],
+     ans:'steal',
+     explain:'Steel (metal) and steal (to take wrongly) sound exactly the same.'},
+    {q:'Which word is the homophone of <b>male</b> (boy/man)?',
+     opts:['meal','mill','mail','mile'],
+     ans:'mail',
+     explain:'Male (a boy or man) and mail (letters and parcels) sound the same.'},
+    {q:'In a play script, stage directions should be written in:',
+     opts:['speech marks','capital letters','italics or brackets','bold'],
+     ans:'italics or brackets',
+     explain:'Stage directions describe actions on stage and are written in italics or (brackets) — never in speech marks.'},
+    {q:'Which sentence uses a to-be verb correctly?',
+     opts:['The owl swooped fast.','The owl was happy.','The owl sang loudly.','The owl flew away.'],
+     ans:'The owl was happy.',
+     explain:'"Was" is the to-be verb. The other sentences use action verbs (swooped, sang, flew).'}
+  ],
+
+  french: [
+    {q:'How do you write <b>49</b> in French?',
+     opts:['quatre-neuf','quarante-neuf','cinquante-neuf','soixante-neuf'],
+     ans:'quarante-neuf',
+     explain:'49 = quarante (40) + neuf (9) = quarante-neuf. NOT "quatre-neuf" — that would mean 4-9 separately!'},
+    {q:'How do you write <b>79</b> in French?',
+     opts:['soixante-neuf','sixzonét-neuf','soixante-dix-neuf','quatre-vingt-neuf'],
+     ans:'soixante-dix-neuf',
+     explain:'79 = soixante (60) + dix (10) + neuf (9) = soixante-dix-neuf.'},
+    {q:'How do you write <b>99</b> in French?',
+     opts:['neuf-neuf','quatre-vingt-neuf','quatre-vingt-dix-neuf','nonante-neuf'],
+     ans:'quatre-vingt-dix-neuf',
+     explain:'99 = quatre-vingt (80) + dix (10) + neuf (9) = quatre-vingt-dix-neuf.'},
+    {q:'How do you say <b>1:22</b> in French?',
+     opts:['Il est un heure vingt-deux.','Il est une heure vingt-deux.','Il est deux heures vingt-deux.','1:22 am'],
+     ans:'Il est une heure vingt-deux.',
+     explain:'"Une heure" (not "un" — heure is feminine). For 1 o\'clock only, use "une" (singular).'},
+    {q:'What is <b>"Week"</b> in French?',
+     opts:['un jour','un mois','une semaine','un an'],
+     ans:'une semaine',
+     explain:'Une semaine = one week (7 jours). Un jour = day, un mois = month, un an = year.'},
+    {q:'<b>Year</b> in French is described as:',
+     opts:['sept jours','quatre semaines','12 mois','vingt-quatre heures'],
+     ans:'12 mois',
+     explain:'Un an / une année = a year = 12 mois (12 months).'},
+    {q:'Je vais à l\'église chaque ___.',
+     opts:['vendredi','samedi','dimanche','lundi'],
+     ans:'dimanche',
+     explain:'Christians go to church on Sunday = dimanche. Vendredi (Friday) is for Islamic prayer.'},
+    {q:'Hier était lundi. Demain sera ___.',
+     opts:['lundi','mardi','mercredi','jeudi'],
+     ans:'mercredi',
+     explain:'If yesterday (hier) = lundi, today = mardi, tomorrow (demain) = mercredi. Don\'t skip — step through carefully!'},
+    {q:'What does <b>jouer</b> mean?',
+     opts:['to wash','to empty','to play','to wear'],
+     ans:'to play',
+     explain:'Jouer = to play. Laver = to wash. Vider = to empty. Porter = to wear/carry.'},
+    {q:'How do you say <b>70</b> in French?',
+     opts:['soixante','soixante-dix','septante','quatre-vingts'],
+     ans:'soixante-dix',
+     explain:'70 = soixante (60) + dix (10) = soixante-dix. French counts in 20s from 60!'}
+  ],
+
+  computing: [
+    {q:'Which of the following is <b>NOT</b> a type of multimedia?',
+     opts:['Image','Video','Digits','Audio'],
+     ans:'Digits',
+     explain:'Digits are raw numbers/data — not a media type. Image, Video and Audio are all multimedia types.'},
+    {q:'Which tab do you click to <b>change the background</b> of a PowerPoint slide?',
+     opts:['Home','Insert','Table','Design'],
+     ans:'Design',
+     explain:'The Design tab controls the background, theme and colours of your slides. There is no "Table" tab for backgrounds!'},
+    {q:'The <b>Microprocessor</b> is the ___ of the computer.',
+     opts:['screen','brain — it controls all activities','keyboard','power supply'],
+     ans:'brain — it controls all activities',
+     explain:'The CPU/Microprocessor is the brain — it processes every instruction and controls all activities.'},
+    {q:'Where is the <b>taskbar</b> usually located on the Windows screen?',
+     opts:['At the top','In the middle','At the bottom','On the right side'],
+     ans:'At the bottom',
+     explain:'The taskbar (with Start button, open apps and clock) is always at the BOTTOM of the screen.'},
+    {q:'Which of these is an <b>INPUT</b> device?',
+     opts:['Monitor','Speaker','Printer','Keyboard'],
+     ans:'Keyboard',
+     explain:'The keyboard sends input INTO the computer. Monitor, Speaker and Printer are all OUTPUT devices.'},
+    {q:'Which output device brings <b>sound</b> out of a computer?',
+     opts:['Microphone','Monitor','Speaker','Printer'],
+     ans:'Speaker',
+     explain:'Speaker = output device for sound. Microphone is the INPUT device for sound.'},
+    {q:'Which key types <b>capital letters</b> continuously?',
+     opts:['Enter','Spacebar','Shift','Caps Lock'],
+     ans:'Caps Lock',
+     explain:'Caps Lock keeps all letters uppercase. Shift only capitalises while held down.'},
+    {q:'To <b>delete a selected picture</b> from a slide, you press:',
+     opts:['Ctrl + Z','Enter','Delete','Spacebar'],
+     ans:'Delete',
+     explain:'Select the picture and press Delete. Ctrl+Z is UNDO — it doesn\'t delete a selected picture.'},
+    {q:'Which tab adds a <b>picture from your computer</b>?',
+     opts:['Home','Design','Insert','Transitions'],
+     ans:'Insert',
+     explain:'Insert tab → Pictures → This Device. The Insert tab adds pictures, tables, charts and more.'},
+    {q:'What does the <b>✕ (X) button</b> do in a window?',
+     opts:['Minimizes the window','Restores the window','Closes the window','Saves the file'],
+     ans:'Closes the window',
+     explain:'X = Close. — = Minimize. ⬜ = Restore Down.'}
+  ],
+
+  science: [
+    {q:'Mia\'s results: Glass=5N, Paper=7N, Wood=8N, Concrete=9N. Which surface is <b>smoothest</b>?',
+     opts:['Concrete','Paper','Wood','Glass'],
+     ans:'Glass',
+     explain:'Glass needs the LEAST force (5N) = least friction = smoothest surface.'},
+    {q:'Mia says glass is the smoothest surface. Is she <b>correct</b>?',
+     opts:['No — concrete is smoother','No — paper is the smoothest','Yes — glass needs the least force','No — wood is the smoothest'],
+     ans:'Yes — glass needs the least force',
+     explain:'5N is the smallest value → least friction → glass IS the smoothest. The answer is YES.'},
+    {q:'Lily makes her sleigh runners <b>smoother</b>. The speed of the sleigh will:',
+     opts:['slow down','stay the same','speed up / go faster','stop completely'],
+     ans:'speed up / go faster',
+     explain:'Smoother = less friction = easier to slide = FASTER. Smooth does NOT mean slower!'},
+    {q:'Why does making the runners smoother make the sleigh go faster?',
+     opts:['Because there is more friction','Because there is less friction between the runners and the snow','Because the sleigh is heavier','Because there is no friction at all'],
+     ans:'Because there is less friction between the runners and the snow',
+     explain:'Smoother surface → less friction → less resistance → speeds up.'},
+    {q:'What instrument does Mia use to <b>measure force</b>?',
+     opts:['Ruler','Thermometer','Forcemeter','Balance'],
+     ans:'Forcemeter',
+     explain:'A forcemeter (newton meter) measures force. Ruler measures length, thermometer measures temperature.'},
+    {q:'Force is measured in:',
+     opts:['Kilograms','Centimetres','Newtons','Litres'],
+     ans:'Newtons',
+     explain:'Force is always measured in Newtons (N). Weight is in kg, length in cm, volume in litres.'},
+    {q:'A footprint pressed into rock and preserved is which type of fossil?',
+     opts:['Body fossil','Cast fossil','Mould fossil','Trace fossil'],
+     ans:'Trace fossil',
+     explain:'A footprint shows evidence of activity — that\'s a trace fossil.'},
+    {q:'The preserved skeleton of a fish found in rock is which type of fossil?',
+     opts:['Trace fossil','Body fossil','Mould fossil','Cast fossil'],
+     ans:'Body fossil',
+     explain:'Preserved body parts (bones, shells, teeth) = body fossil.'},
+    {q:'"What <b>organism</b> made this fossil?" (The fossil shows a fish skeleton)',
+     opts:['Body fossil','Cast fossil','Fish','Trace fossil'],
+     ans:'Fish',
+     explain:'Organism = the living thing. The fossil shows a FISH skeleton → organism = fish. "Body fossil" is the TYPE, not the organism!'},
+    {q:'Gravity is a force that pulls objects:',
+     opts:['Away from Earth','Sideways across the ground','Towards the centre of the Earth','Upwards into the sky'],
+     ans:'Towards the centre of the Earth',
+     explain:'Gravity always pulls towards Earth\'s centre — which is why things fall DOWN when dropped.'}
+  ],
+
+  maths: [
+    {q:'<b>"Quarter past six"</b> in digital form is:',
+     opts:['06:45','06:30','06:15','07:15'],
+     ans:'06:15',
+     explain:'Quarter PAST = 15 mins AFTER the hour = :15. Quarter past six = 06:15. 06:45 is quarter TO seven!'},
+    {q:'<b>"Quarter to nine"</b> in digital form is:',
+     opts:['09:15','09:45','08:45','08:15'],
+     ans:'08:45',
+     explain:'Quarter TO nine = 15 mins BEFORE 9 = 08:45. It\'s the hour BEFORE nine at :45.'},
+    {q:'<b>270 + ___ = 1000</b>',
+     opts:['80830','830','720','730'],
+     ans:'730',
+     explain:'1000 − 270 = 730. Check: 270 + 730 = 1000 ✅'},
+    {q:'<b>35 + ___ = 100</b>',
+     opts:['75','55','65','45'],
+     ans:'65',
+     explain:'100 − 35 = 65. Check: 35 + 65 = 100 ✅. 35 + 75 = 110 ❌'},
+    {q:'<b>4 metres = ___ centimetres</b>',
+     opts:['40 cm','4000 cm','400 cm','14 cm'],
+     ans:'400 cm',
+     explain:'1 metre = 100 cm. So 4 metres = 4 × 100 = 400 cm. NOT 40 (that would be ×10).'},
+    {q:'<b>¾ kilometre = ___ metres</b>',
+     opts:['34 m','75 m','7500 m','750 m'],
+     ans:'750 m',
+     explain:'1 km = 1000 m. ¾ × 1000 = 750 m.'},
+    {q:'From this list, which are <b>multiples of 4</b>? &nbsp; 8 &nbsp; 14 &nbsp; 4 &nbsp; 6 &nbsp; 36 &nbsp; 18',
+     opts:['8 and 36 only','14, 6 and 18','8, 4 and 36','4 and 8 only'],
+     ans:'8, 4 and 36',
+     explain:'4÷4=1✅ · 8÷4=2✅ · 36÷4=9✅. But 14÷4=3r2❌ · 6÷4=1r2❌ · 18÷4=4r2❌'},
+    {q:'<b>764 − 392 = ?</b>',
+     opts:['572','472','272','372'],
+     ans:'372',
+     explain:'Units: 4−2=2. Tens: borrow → 16−9=7 (hundreds becomes 6). Hundreds: 6−3=3. Answer: 372.'},
+    {q:'A rectangle is <b>3 cm × 4 cm</b>. What is its area?',
+     opts:['7 sq cm','14 sq cm','12 sq cm','10 sq cm'],
+     ans:'12 sq cm',
+     explain:'Area = length × width = 3 × 4 = 12 square centimetres.'},
+    {q:'<b>200 centimetres = ___ metres</b>',
+     opts:['20 m','0.2 m','2000 m','2 m'],
+     ans:'2 m',
+     explain:'200 ÷ 100 = 2 metres. To go from cm to m, divide by 100.'}
+  ]
+};
+
+/* ═══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+let currentSubject = null;
+let currentMode = null;    // 'learn' | 'practice' | 'mock'
+let currentCardIdx = 0;
+let testQuestions = [];
+let testAnswers = [];
+let currentQIdx = 0;
+let isFullMock = false;
+let timerInterval = null;
+let timeLeft = 0;
+let isPracticeMode = false; // shows explanation after each Q
+
+/* ═══════════════════════════════════════════════
+   HOME SCREEN BUILD
+═══════════════════════════════════════════════ */
+function buildHome() {
+  const grid = document.getElementById('subjectGrid');
+  Object.entries(SUBJECTS).forEach(([key, s]) => {
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.style.setProperty('--sc', s.color);
+    card.innerHTML = `
+      <div class="sc-header">
+        <span class="sc-icon">${s.icon}</span>
+        <span class="sc-name">${s.name}</span>
+      </div>
+      <div class="sc-btns">
+        <button class="sc-btn learn" style="--sc:${s.color}" onclick="startLearn('${key}')">📖 Learn</button>
+        <button class="sc-btn test"  style="--sc:${s.color};background:${s.color}" onclick="startSubjectTest('${key}',false)">✏️ Practice Test</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  stopTimer();
+  showScreen('home');
+}
+
+function confirmBack() {
+  if (currentQIdx > 0 && currentQIdx < testQuestions.length) {
+    if (!confirm('Leave the test? Your progress will be lost.')) return;
+  }
+  stopTimer();
+  goHome();
+}
+
+/* ═══════════════════════════════════════════════
+   LEARN MODE
+═══════════════════════════════════════════════ */
+function startLearn(subjectKey) {
+  currentSubject = subjectKey;
+  currentCardIdx = 0;
+  const s = SUBJECTS[subjectKey];
+  document.getElementById('learnTitle').textContent = s.icon + ' ' + s.name + ' — Study Cards';
+  document.getElementById('screen-learn').style.setProperty('--sc', s.color);
+  document.getElementById('learnTestBtn').style.background = s.color;
+  buildDots(subjectKey);
+  renderCard(subjectKey, 0);
+  showScreen('learn');
+}
+
+function buildDots(subjectKey) {
+  const dots = document.getElementById('learnDots');
+  dots.innerHTML = '';
+  CARDS[subjectKey].forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'lp-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => { currentCardIdx = i; renderCard(subjectKey, i); };
+    dots.appendChild(d);
+  });
+}
+
+function renderCard(subjectKey, idx) {
+  const cards = CARDS[subjectKey];
+  const c = cards[idx];
+  const fc = document.getElementById('flashcard');
+  const bodyHtml = c.body.replace(/\n/g, '<br>');
+  fc.innerHTML = `
+    <div class="fc-tag">${c.tag}</div>
+    <div class="fc-rule">${c.rule}</div>
+    <div class="fc-body">${bodyHtml}</div>
+    ${c.example ? `<div class="fc-example">💡 ${c.example}</div>` : ''}`;
+  document.getElementById('fcCounter').textContent = `${idx+1} / ${cards.length}`;
+  document.getElementById('fcNextBtn').textContent = idx === cards.length-1 ? 'Done ✓' : 'Next →';
+  // dots
+  document.querySelectorAll('.lp-dot').forEach((d,i) => {
+    d.classList.toggle('active', i === idx);
+    d.classList.toggle('done', i < idx);
+  });
+}
+
+function nextCard() {
+  const cards = CARDS[currentSubject];
+  if (currentCardIdx < cards.length - 1) {
+    currentCardIdx++;
+    renderCard(currentSubject, currentCardIdx);
+  }
+}
+function prevCard() {
+  if (currentCardIdx > 0) {
+    currentCardIdx--;
+    renderCard(currentSubject, currentCardIdx);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   TEST MODE
+═══════════════════════════════════════════════ */
+function startSubjectTest(subjectKey, practiceAfterLearn) {
+  currentSubject = subjectKey;
+  isFullMock = false;
+  isPracticeMode = practiceAfterLearn;
+  testQuestions = shuffle([...QUESTIONS[subjectKey]]);
+  startTest(SUBJECTS[subjectKey].name, 20 * 60); // 20 mins per subject
+}
+
+function startFullMock() {
+  isFullMock = true;
+  isPracticeMode = false;
+  currentSubject = null;
+  // Interleave 2 questions from each subject
+  const allQs = [];
+  Object.entries(QUESTIONS).forEach(([key, qs]) => {
+    shuffle([...qs]).slice(0, 10).forEach(q => allQs.push({...q, _subject: key}));
+  });
+  testQuestions = shuffle(allQs);
+  startTest('Full Mock Exam', 40 * 60);
+}
+
+function startTest(label, seconds) {
+  testAnswers = new Array(testQuestions.length).fill(null);
+  currentQIdx = 0;
+  const tagEl = document.getElementById('testSubjectTag');
+  tagEl.textContent = label;
+  // set subject colour
+  const s = isFullMock ? null : SUBJECTS[currentSubject];
+  const col = s ? s.color : '#4a148c';
+  document.getElementById('screen-test').style.setProperty('--sc', col);
+  timeLeft = seconds;
+  updateTimer();
+  stopTimer();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+    if (timeLeft <= 0) { clearInterval(timerInterval); finishTest(); }
+  }, 1000);
+  renderQuestion();
+  showScreen('test');
+}
+
+function updateTimer() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  const el = document.getElementById('testTimer');
+  el.textContent = `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.classList.toggle('warn', timeLeft <= 120);
+}
+
+function stopTimer() { clearInterval(timerInterval); }
+
+function renderQuestion() {
+  const q = testQuestions[currentQIdx];
+  const total = testQuestions.length;
+  const s = isFullMock ? (q._subject ? SUBJECTS[q._subject] : null) : SUBJECTS[currentSubject];
+  const col = s ? s.color : '#4a148c';
+  document.getElementById('screen-test').style.setProperty('--sc', col);
+
+  // subject tag
+  const subjectLabel = isFullMock && s ? `${s.icon} ${s.name}` : (s ? `${s.icon} ${s.label}` : 'Full Mock');
+  document.getElementById('testSubjectTag').textContent = subjectLabel;
+  document.getElementById('testQNum').textContent = `Q${currentQIdx+1} of ${total}`;
+
+  // progress
+  document.getElementById('progressFill').style.width = `${(currentQIdx / total) * 100}%`;
+
+  document.getElementById('qLabel').textContent = `Question ${currentQIdx+1}`;
+  document.getElementById('qText').innerHTML = q.q;
+  document.getElementById('explainBox').textContent = '';
+  document.getElementById('explainBox').classList.remove('show');
+  document.getElementById('nextBtn').classList.remove('show');
+
+  const opts = document.getElementById('optionsEl');
+  opts.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  shuffle([...q.opts]).forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span>${opt}`;
+    btn.dataset.val = opt;
+    btn.addEventListener('click', () => answerQ(opt, q, btn));
+    opts.appendChild(btn);
+  });
+}
+
+function answerQ(chosen, q, btn) {
+  // Disable all
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  const isCorrect = chosen === q.ans;
+  testAnswers[currentQIdx] = { chosen, correct: isCorrect, q };
+
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    if (b.dataset.val === q.ans) b.classList.add(isCorrect && b === btn ? 'correct' : 'reveal');
+  });
+  if (!isCorrect) btn.classList.add('wrong');
+
+  // Explanation in practice mode
+  if (isPracticeMode || isFullMock === false) {
+    const eb = document.getElementById('explainBox');
+    eb.textContent = (isCorrect ? '✅ ' : '❌ ') + q.explain;
+    eb.classList.add('show');
+  }
+
+  document.getElementById('nextBtn').classList.add('show');
+  const isLast = currentQIdx === testQuestions.length - 1;
+  document.getElementById('nextBtn').textContent = isLast ? 'See Results →' : 'Next Question →';
+}
+
+function nextQuestion() {
+  if (currentQIdx < testQuestions.length - 1) {
+    currentQIdx++;
+    renderQuestion();
+  } else {
+    finishTest();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   RESULTS
+═══════════════════════════════════════════════ */
+function finishTest() {
+  stopTimer();
+  const answered = testAnswers.filter(Boolean);
+  const correct = answered.filter(a => a.correct).length;
+  const total = testQuestions.length;
+  const pct = Math.round((correct / total) * 100);
+
+  document.getElementById('resultsBig').textContent = `${correct} / ${total}`;
+  const grade = pct >= 90 ? '🌟 Outstanding! You\'re exam-ready!' :
+                pct >= 75 ? '⭐ Great work! Nearly there!' :
+                pct >= 60 ? '👍 Good effort — keep practising!' :
+                            '💪 Keep going — practice makes perfect!';
+  document.getElementById('gradeMsg').textContent = `${pct}% — ${grade}`;
+
+  // Subject breakdown
+  const subjEl = document.getElementById('subjectResults');
+  subjEl.innerHTML = '<div style="font-family:\'Fredoka One\',cursive;font-size:1.3rem;color:var(--dark);margin-bottom:16px">📊 Your Results by Subject</div>';
+
+  if (isFullMock) {
+    // Group by subject
+    const bySubj = {};
+    testAnswers.filter(Boolean).forEach(a => {
+      const sk = a.q._subject || currentSubject;
+      if (!bySubj[sk]) bySubj[sk] = {correct:0, total:0};
+      bySubj[sk].total++;
+      if (a.correct) bySubj[sk].correct++;
+    });
+    Object.entries(SUBJECTS).forEach(([key, s]) => {
+      const r = bySubj[key] || {correct:0, total:0};
+      addSubjectResult(subjEl, s, r.correct, r.total);
+    });
+  } else {
+    const s = SUBJECTS[currentSubject];
+    addSubjectResult(subjEl, s, correct, total);
+  }
+
+  // Wrong answers
+  const wrongEl = document.getElementById('wrongAnswers');
+  const wrongs = testAnswers.filter(a => a && !a.correct);
+  wrongEl.innerHTML = '';
+  if (wrongs.length) {
+    wrongEl.innerHTML = `<div class="wa-heading">📝 Review — Questions to Work On (${wrongs.length})</div>`;
+    wrongs.forEach(a => {
+      const sk = a.q._subject || currentSubject;
+      const s = SUBJECTS[sk] || {};
+      const div = document.createElement('div');
+      div.className = 'wa-item';
+      div.style.setProperty('--sc', s.color || '#888');
+      div.innerHTML = `
+        <div class="wa-subj">${s.icon||''} ${s.name||'General'}</div>
+        <div class="wa-q">${a.q.q.replace(/<[^>]*>/g,'')}</div>
+        <div class="wa-yours">Your answer: ${a.chosen}</div>
+        <div class="wa-correct">✅ Correct: ${a.q.ans}</div>`;
+      wrongEl.appendChild(div);
+    });
+  } else {
+    wrongEl.innerHTML = '<div style="text-align:center;padding:20px;font-family:\'Fredoka One\',cursive;font-size:1.3rem;color:var(--green)">🎉 Perfect score! Amazing work!</div>';
+  }
+
+  showScreen('results');
+}
+
+function addSubjectResult(container, s, correct, total) {
+  const pct = total ? Math.round((correct/total)*100) : 0;
+  const div = document.createElement('div');
+  div.className = 'subject-result';
+  div.style.setProperty('--sc', s.color);
+  div.innerHTML = `
+    <span class="sr-icon">${s.icon}</span>
+    <div class="sr-info">
+      <div class="sr-name">${s.name}</div>
+      <div class="sr-bar"><div class="sr-fill" style="width:0%" data-w="${pct}"></div></div>
+    </div>
+    <div class="sr-score">${correct}/${total} <span style="font-size:.8rem;color:var(--gray)">(${pct}%)</span></div>`;
+  container.appendChild(div);
+  // animate bar
+  requestAnimationFrame(() => {
+    const fill = div.querySelector('.sr-fill');
+    if (fill) setTimeout(() => fill.style.width = fill.dataset.w + '%', 100);
+  });
+}
+
+function retryTest() {
+  if (isFullMock) startFullMock();
+  else startSubjectTest(currentSubject, isPracticeMode);
+}
+
+/* ═══════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════ */
+function shuffle(arr) {
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+/* ═══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+buildHome();
+</script>
+</body>
+</html>

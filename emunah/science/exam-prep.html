@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Science Exam Prep 🔬 — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:        #00897b;
+  --primary-dark:   #004d40;
+  --primary-light:  #b2dfdb;
+  --primary-bg:     #e0f2f1;
+  --gravity:        #1565c0;
+  --gravity-light:  #bbdefb;
+  --friction:       #bf360c;
+  --friction-light: #ffccbc;
+  --fossil:         #8b5e3c;
+  --fossil-light:   #f2dbb0;
+  --chart:          #6a1b9a;
+  --chart-light:    #e8d5f5;
+  --green:          #2e7d32;
+  --green-light:    #e8f5e9;
+  --red:            #c62828;
+  --red-light:      #ffebee;
+  --orange:         #e65100;
+  --ink:            #1a2e1e;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--primary-bg);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(0,137,123,.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(0,77,64,.06)  0%, transparent 45%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+}
+
+/* ── BACK BUTTON ── */
+.back-btn {
+  position: fixed; top: 14px; left: 14px; z-index: 1000;
+  background: var(--primary); color: #fff;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  padding: 8px 18px; border-radius: 30px; text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0,77,64,.3); transition: .2s;
+}
+.back-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
+
+/* ── CHEER ── */
+.cheer-banner {
+  display: none; background: linear-gradient(135deg,#f9a825,#ffd54f);
+  color: #4e342e; font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.1rem,3vw,1.55rem); text-align: center;
+  padding: 18px 30px; border-radius: 16px; margin: 24px auto; max-width: 700px;
+  box-shadow: 0 6px 20px rgba(249,168,37,.4); animation: popIn .6s ease;
+}
+.cheer-banner.show { display: block; }
+
+/* ── HERO ── */
+header {
+  background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 55%, #00bfa5 100%);
+  padding: 68px 20px 60px; text-align: center; position: relative; overflow: hidden;
+}
+header::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 2px,transparent 2px,transparent 18px);
+}
+header::after {
+  content:''; position:absolute; bottom:-1px; left:0; right:0; height:40px;
+  background: var(--primary-bg); clip-path: ellipse(60% 100% at 50% 100%);
+}
+.hero-icons { font-size: 48px; margin-bottom: 10px; position:relative; }
+header h1 {
+  font-family: 'Fredoka One', cursive; color:#fff;
+  font-size: clamp(2rem,6vw,3.2rem); text-shadow: 3px 3px 0 rgba(0,0,0,.25);
+  position:relative; line-height:1.1;
+}
+header p { color:rgba(255,255,255,.88); font-size:1rem; font-weight:700; margin-top:8px; position:relative; }
+.topic-pills {
+  display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:20px; position:relative;
+}
+.topic-pill {
+  background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.45);
+  color:#fff; font-weight:800; font-size:.82rem; padding:5px 14px;
+  border-radius:50px; text-decoration:none; transition:background .2s;
+}
+.topic-pill:hover { background:rgba(255,255,255,.3); }
+
+/* ── MAIN ── */
+.main { max-width: 900px; margin: 0 auto; padding: 40px 18px 80px; }
+
+/* ── SECTION HEADING ── */
+.section-heading {
+  font-family: 'Fredoka One', cursive; font-size: clamp(1.4rem,4vw,1.85rem);
+  display: flex; align-items: center; gap: 12px;
+  margin: 56px 0 20px; color: var(--primary-dark);
+}
+.section-heading::after {
+  content:''; flex:1; height:3px;
+  background: linear-gradient(90deg,var(--primary),transparent); border-radius:2px;
+}
+.section-heading:first-child { margin-top: 0; }
+
+/* ── TEACH / WARN BOX ── */
+.warn-box {
+  background: var(--red-light); border-left: 6px solid var(--red);
+  border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 22px;
+}
+.warn-box h3 { font-family:'Fredoka One',cursive; color:var(--red); font-size:1.05rem; margin-bottom:8px; }
+.warn-box p  { font-size:.9rem; font-weight:700; line-height:1.6; color:#5d0000; }
+.compare-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+.wrong-eg { background:#ffcdd2; color:var(--red); border-radius:10px; padding:8px 12px; font-size:.85rem; font-weight:700; }
+.right-eg  { background:#c8f7de; color:#004d20; border-radius:10px; padding:8px 12px; font-size:.85rem; font-weight:700; }
+
+.teach-box {
+  background: white; border-radius: 20px; padding: 22px 24px; margin-bottom: 24px;
+  border-left: 6px solid var(--primary); box-shadow: 0 4px 16px rgba(0,137,123,.1);
+}
+.teach-box p { font-size:.98rem; font-weight:700; line-height:1.8; color:#333; }
+.teach-box p+p { margin-top:8px; }
+.teach-box .hl-g { color:var(--green);   font-weight:900; }
+.teach-box .hl-r { color:var(--red);     font-weight:900; }
+.teach-box .hl-b { color:var(--gravity); font-weight:900; }
+.teach-box .hl-o { color:var(--orange);  font-weight:900; }
+.teach-box .hl-f { color:var(--fossil);  font-weight:900; }
+
+/* ── CONCEPT CARDS ── */
+.concept-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:16px; margin-bottom:28px; }
+.concept-card {
+  background:white; border-radius:20px; padding:20px 14px 16px; text-align:center;
+  box-shadow:0 4px 16px rgba(0,0,0,.07); border-top:4px solid var(--c,var(--primary));
+  transition:transform .18s, box-shadow .18s;
+}
+.concept-card:hover { transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.12); }
+.concept-card .c-icon { font-size:44px; display:block; margin-bottom:8px; }
+.concept-card .c-name { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--c,var(--primary)); margin-bottom:5px; }
+.concept-card .c-def  { font-size:.82rem; font-weight:700; color:#555; line-height:1.45; }
+.concept-card .c-eg   { margin-top:8px; background:var(--primary-bg); border-radius:8px; padding:5px 8px; font-size:.78rem; font-weight:700; color:var(--primary-dark); }
+
+/* ── SURFACE FRICTION ROW ── */
+.surface-row {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-bottom:24px;
+}
+.surface-card {
+  background:white; border-radius:16px; overflow:hidden;
+  box-shadow:0 4px 14px rgba(0,0,0,.08); text-align:center;
+}
+.surface-top { padding:18px 8px 10px; font-size:44px; }
+.surface-name { font-family:'Fredoka One',cursive; font-size:1rem; margin-bottom:4px; }
+.surface-force {
+  background:var(--c,var(--primary)); color:white;
+  font-family:'Fredoka One',cursive; font-size:1.1rem; padding:6px 0;
+}
+.surface-smooth { font-size:.75rem; font-weight:800; padding:5px 8px; }
+
+/* ── BAR CHART ── */
+.chart-container {
+  background:white; border-radius:20px; padding:24px; margin-bottom:28px;
+  box-shadow:0 4px 16px rgba(0,0,0,.08); overflow-x:auto;
+}
+.chart-title { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--chart); margin-bottom:18px; text-align:center; }
+.chart-area  { display:flex; gap:4px; align-items:flex-end; }
+.chart-y-axis {
+  display:flex; flex-direction:column-reverse; justify-content:space-between;
+  height:220px; padding:4px 8px 0 0; min-width:30px; border-right:2px solid #666;
+}
+.y-tick { font-size:.72rem; font-weight:800; color:#555; text-align:right; }
+.chart-bars { display:flex; align-items:flex-end; gap:14px; flex:1; min-width:240px; }
+.bar-col { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; }
+.bar-fill {
+  width:100%; border-radius:6px 6px 0 0;
+  display:flex; align-items:flex-end; justify-content:center;
+  padding-bottom:4px; transition:height .6s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+.bar-fill .bar-val {
+  font-family:'Fredoka One',cursive; font-size:.85rem; color:white;
+  position:absolute; top:6px; left:50%; transform:translateX(-50%);
+}
+.bar-label { font-size:.8rem; font-weight:800; color:#444; text-align:center; }
+.y-label {
+  writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
+  font-family:'Fredoka One',cursive; font-size:.85rem; color:var(--chart);
+  margin-right:6px; align-self:center;
+}
+.x-label { font-family:'Fredoka One',cursive; font-size:.9rem; color:var(--chart); margin-top:8px; text-align:center; }
+
+/* ── INTERACTIVE BAR CHART ── */
+.interactive-chart { background:white; border-radius:20px; padding:24px; margin-bottom:24px; box-shadow:0 4px 16px rgba(0,0,0,.08); }
+.interactive-chart h3 { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--chart); margin-bottom:16px; }
+.ibar-area { display:flex; align-items:flex-end; gap:12px; height:220px; border-left:2px solid #666; border-bottom:2px solid #666; padding:0 8px 0 0; margin:0 0 8px 36px; position:relative; }
+.y-lines { position:absolute; inset:0; pointer-events:none; }
+.y-line  { position:absolute; left:0; right:0; height:1px; background:rgba(0,0,0,.08); }
+.y-line-label { position:absolute; left:-34px; font-size:.7rem; font-weight:800; color:#888; transform:translateY(50%); }
+.ibar-col { display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end; }
+.ibar-btns { display:flex; flex-direction:column; gap:3px; margin-bottom:6px; }
+.ibar-btn  {
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.72rem;
+  background:white; border:2px solid var(--chart); color:var(--chart);
+  border-radius:50px; padding:2px 8px; cursor:pointer; transition:.15s;
+}
+.ibar-btn:hover { background:var(--chart); color:white; }
+.ibar-btn.up   { }
+.ibar-btn.down { }
+.ibar-bar { width:80%; border-radius:6px 6px 0 0; transition:height .3s ease; display:flex; align-items:flex-start; justify-content:center; padding-top:4px; min-height:4px; }
+.ibar-bar .ival { font-family:'Fredoka One',cursive; font-size:.9rem; color:white; }
+.ibar-name { font-size:.78rem; font-weight:800; color:#444; margin-top:5px; text-align:center; }
+.ibar-check { display:flex; gap:10px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+.ibar-check-btn {
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.9rem;
+  background:var(--primary); color:white; border:none; padding:8px 22px;
+  border-radius:50px; cursor:pointer; box-shadow:0 3px 0 var(--primary-dark);
+  transition:.15s;
+}
+.ibar-check-btn:hover { background:var(--primary-dark); }
+.ibar-result { font-weight:800; font-size:.9rem; }
+
+/* ── FOSSIL TYPE CARDS ── */
+.fossil-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); gap:16px; margin-bottom:28px; }
+.fossil-card {
+  background:white; border-radius:20px; padding:20px 16px; text-align:center;
+  box-shadow:0 4px 16px rgba(139,94,60,.12); border-top:4px solid var(--fossil);
+}
+.fossil-card .f-icon { font-size:48px; margin-bottom:10px; display:block; }
+.fossil-card .f-type { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--fossil); margin-bottom:6px; }
+.fossil-card .f-def  { font-size:.82rem; font-weight:700; color:#555; line-height:1.45; }
+.fossil-card .f-eg   { margin-top:8px; background:var(--fossil-light); border-radius:8px; padding:5px 8px; font-size:.78rem; font-weight:700; color:var(--fossil); }
+
+/* ── ACTIVITY BOX ── */
+.activity-box {
+  background:white; border-radius:22px; padding:26px 22px; margin-bottom:30px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+.activity-box h2 {
+  font-family:'Fredoka One',cursive; font-size:1.4rem;
+  display:flex; align-items:center; gap:8px; margin-bottom:6px; color:var(--ink);
+}
+.act-num {
+  background:var(--primary); color:white; width:34px; height:34px;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:1rem; flex-shrink:0;
+}
+.activity-box .hint { font-size:.9rem; font-weight:700; color:#888; margin-bottom:18px; }
+.score-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  color:white; border-radius:12px; padding:10px 18px; margin-bottom:14px;
+  font-family:'Fredoka One',cursive; font-size:1rem;
+}
+.score-val { font-size:1.3rem; }
+
+/* ── Q WRAP ── */
+.q-wrap { background:var(--primary-bg); border-radius:14px; padding:16px; margin-bottom:14px; border:1.5px solid var(--primary-light); }
+.q-wrap .q-text { font-weight:800; color:var(--ink); margin-bottom:10px; font-size:.95rem; line-height:1.5; }
+.q-wrap .choices { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+.q-wrap .choices button {
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:.88rem;
+  background:white; border:2px solid var(--primary); color:var(--primary-dark);
+  padding:7px 16px; border-radius:50px; cursor:pointer; transition:.15s;
+}
+.q-wrap .choices button:hover:not(:disabled) { background:var(--primary); color:white; transform:scale(1.04); }
+.q-wrap .feedback { font-weight:800; font-size:.88rem; min-height:20px; }
+
+/* ── TF WRAP ── */
+.tf-item { background:var(--primary-bg); border-radius:14px; padding:16px; margin-bottom:14px; border:1.5px solid var(--primary-light); }
+.tf-item .tf-text { font-weight:800; color:var(--ink); margin-bottom:10px; font-size:.95rem; line-height:1.5; }
+.tf-item .tf-btns { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+.tf-item .tf-btns button {
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.88rem;
+  padding:7px 20px; border-radius:50px; cursor:pointer; border:2px solid; transition:.15s;
+}
+.tf-item .btn-t { background:white; border-color:var(--green);  color:var(--green); }
+.tf-item .btn-f { background:white; border-color:var(--red);    color:var(--red); }
+.tf-item .btn-t:hover:not(:disabled) { background:var(--green); color:white; }
+.tf-item .btn-f:hover:not(:disabled) { background:var(--red);   color:white; }
+.tf-item .feedback { font-weight:800; font-size:.88rem; min-height:18px; }
+
+/* ── MATCH ── */
+.match-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; align-items:start; margin-bottom:14px; }
+.match-col  { display:flex; flex-direction:column; gap:8px; }
+.match-col-label { font-family:'Fredoka One',cursive; font-size:.95rem; color:var(--primary-dark); text-align:center; margin-bottom:4px; }
+.match-item {
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:.88rem;
+  padding:9px 14px; border-radius:10px; border:2px solid var(--primary-light);
+  background:white; cursor:pointer; text-align:center;
+  transition:all .2s; user-select:none;
+}
+.match-item:hover:not(.locked) { border-color:var(--primary); background:var(--primary-bg); }
+.match-item.selected { border-color:var(--primary-dark); background:var(--primary-light); }
+.match-item.locked   { border-color:var(--green); background:var(--green-light); color:var(--green); cursor:default; }
+.match-item.wrong-flash { animation:shake .4s; border-color:var(--red); background:var(--red-light); }
+.match-score { font-weight:800; color:var(--primary-dark); font-size:.9rem; margin-top:4px; }
+
+/* ── WORD BANK ── */
+.wb-bank { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; background:var(--primary-bg); border-radius:14px; padding:12px 14px; }
+.wb-tok {
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.88rem;
+  background:var(--primary); color:white; padding:6px 16px; border-radius:50px;
+  cursor:pointer; border:none; box-shadow:0 3px 0 var(--primary-dark); transition:opacity .2s,transform .12s; user-select:none;
+}
+.wb-tok:hover { transform:translateY(-2px); }
+.wb-tok.used  { opacity:.3; pointer-events:none; }
+.wb-tok.sel   { outline:3px solid var(--friction); outline-offset:2px; }
+.fill-sent {
+  background:var(--primary-bg); border-radius:10px; padding:12px 14px; margin-bottom:10px;
+  border:1.5px solid var(--primary-light); font-size:.95rem; font-weight:700; color:var(--ink);
+  display:flex; flex-wrap:wrap; align-items:center; gap:5px;
+}
+.blank {
+  display:inline-flex; align-items:center; min-width:110px; height:32px;
+  border-bottom:3px solid var(--primary); padding:0 8px;
+  font-family:'Fredoka One',cursive; color:var(--primary); font-size:.95rem;
+  cursor:pointer; border-radius:4px 4px 0 0; transition:background .15s;
+}
+.blank:hover { background:var(--primary-light); }
+.blank.filled  { color:var(--primary-dark); border-bottom-color:var(--green); }
+.blank.correct { border-bottom-color:var(--green); color:var(--green); }
+.blank.wrong-fill { border-bottom-color:var(--red); color:var(--red); animation:shake .4s; }
+.wb-check-btn {
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.95rem;
+  background:var(--primary); color:white; border:none; padding:10px 28px;
+  border-radius:50px; cursor:pointer; margin-top:12px;
+  box-shadow:0 3px 10px rgba(0,137,123,.3); transition:.2s;
+}
+.wb-check-btn:hover { background:var(--primary-dark); transform:translateY(-1px); }
+.wb-feedback { font-weight:800; font-size:.92rem; margin-top:10px; min-height:22px; }
+
+/* ── DONE MSG ── */
+.done-msg {
+  display:none; text-align:center; background:var(--green-light);
+  border:2px solid var(--green); border-radius:14px; padding:14px;
+  font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--green);
+  margin-top:14px; animation:popIn .5s;
+}
+.done-msg.show { display:block; }
+
+/* ── ORDERING ACTIVITY ── */
+.order-items { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; justify-content:center; }
+.order-chip {
+  background:white; border:2px solid var(--primary); border-radius:50px;
+  padding:8px 18px; font-family:'Fredoka One',cursive; font-size:.95rem;
+  color:var(--primary-dark); cursor:pointer; box-shadow:0 3px 0 var(--primary-light);
+  transition:.15s; user-select:none;
+}
+.order-chip:hover:not(.placed) { background:var(--primary-bg); transform:translateY(-2px); }
+.order-chip.placed { opacity:.3; pointer-events:none; }
+.order-slots { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; justify-content:center; }
+.order-slot {
+  background:var(--primary-bg); border:2px dashed var(--primary); border-radius:50px;
+  min-width:120px; height:42px; display:flex; align-items:center; justify-content:center;
+  font-family:'Fredoka One',cursive; font-size:.88rem; color:#aaa; cursor:pointer; transition:.15s;
+}
+.order-slot.filled { background:var(--primary); color:white; border-style:solid; cursor:pointer; }
+.order-slot.correct { background:var(--green); border-color:var(--green); color:white; cursor:default; }
+.order-slot.wrong-order { background:var(--red); border-color:var(--red); color:white; animation:shake .4s; }
+
+/* ── ANIMATIONS ── */
+@keyframes popIn  { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes shake  { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── RESPONSIVE ── */
+@media(max-width:540px){
+  .match-grid { grid-template-columns:1fr; }
+  .compare-row { grid-template-columns:1fr; }
+  .surface-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-btn">← Back</a>
+<div class="cheer-banner" id="cheer">Brilliant, Emunah! You are a science star! 🔬🌟 Keep going!</div>
+
+<!-- HERO -->
+<header>
+  <div class="hero-icons">🔬🌍🦕⚡</div>
+  <h1>Science Exam Prep ✨</h1>
+  <p>Year 3 · Cambridge · End of Term — Fix every mistake, ace the test!</p>
+  <div class="topic-pills">
+    <a class="topic-pill" href="#friction">🔥 Friction &amp; Surfaces</a>
+    <a class="topic-pill" href="#smooth">⚡ Smooth = Faster!</a>
+    <a class="topic-pill" href="#barchart">📊 Bar Charts</a>
+    <a class="topic-pill" href="#fossils">🦕 Fossil Types</a>
+    <a class="topic-pill" href="#organisms">🐟 Organism vs Type</a>
+    <a class="topic-pill" href="#gravity">🌍 Gravity</a>
+  </div>
+</header>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════
+     SECTION 1 — FRICTION & SURFACES
+═══════════════════════════════════════ -->
+<div id="friction"></div>
+<div class="section-heading">🔥 Section 1 — Friction &amp; Surfaces</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q1c Mistake — Glass IS the smoothest surface!</h3>
+  <p>Mia asked "Is glass the smoothest surface?" You ticked <strong>no</strong> ❌ — but the answer is <strong>YES</strong>!<br>
+  The table shows glass needs only <strong>5 newtons</strong> — the <em>least</em> force of all surfaces. Less force needed = less friction = smoother surface.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ Ticked NO ❌<br><em>Glass needs 5N — the smallest number. You thought more force = smoother. It's the opposite!</em></div>
+    <div class="right-eg">✓ YES — glass is the smoothest ✅<br><em>Glass = 5N (least force = least friction = smoothest). Concrete = 9N (roughest).</em></div>
+  </div>
+</div>
+
+<div class="teach-box">
+  <p>🔑 <strong>The golden rule:</strong> <span class="hl-g">More friction = more force needed to pull</span> · <span class="hl-r">Less friction = less force needed to pull</span></p>
+  <p>So: <strong class="hl-r">small force → smooth surface → less friction</strong> &nbsp;|&nbsp; <strong class="hl-g">big force → rough surface → more friction</strong></p>
+  <p>To measure force, Mia used a <strong class="hl-b">forcemeter</strong> (also called a newton meter). Force is measured in <strong class="hl-b">newtons (N)</strong>.</p>
+</div>
+
+<!-- Surface cards -->
+<div class="surface-row">
+  <div class="surface-card">
+    <div class="surface-top" style="background:#f1f8e9">🪟</div>
+    <div style="padding:8px 6px 0">
+      <div class="surface-name" style="color:#29b6f6">Glass</div>
+      <div class="surface-smooth" style="color:#29b6f6">⭐ SMOOTHEST</div>
+    </div>
+    <div class="surface-force" style="background:#29b6f6">5 N</div>
+  </div>
+  <div class="surface-card">
+    <div class="surface-top" style="background:#fff8e1">📄</div>
+    <div style="padding:8px 6px 0">
+      <div class="surface-name" style="color:#66bb6a">Paper</div>
+      <div class="surface-smooth" style="color:#888">smooth</div>
+    </div>
+    <div class="surface-force" style="background:#66bb6a">7 N</div>
+  </div>
+  <div class="surface-card">
+    <div class="surface-top" style="background:#fff3e0">🪵</div>
+    <div style="padding:8px 6px 0">
+      <div class="surface-name" style="color:#ff9800">Wood</div>
+      <div class="surface-smooth" style="color:#888">rougher</div>
+    </div>
+    <div class="surface-force" style="background:#ff9800">8 N</div>
+  </div>
+  <div class="surface-card">
+    <div class="surface-top" style="background:#fce4ec">🪨</div>
+    <div style="padding:8px 6px 0">
+      <div class="surface-name" style="color:#ef5350">Concrete</div>
+      <div class="surface-smooth" style="color:#ef5350">💪 ROUGHEST</div>
+    </div>
+    <div class="surface-force" style="background:#ef5350">9 N</div>
+  </div>
+</div>
+
+<!-- Activity 1 — Friction MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">1</div>Friction &amp; Surfaces — Pick the right answer</h2>
+  <p class="hint">Tap the correct answer. Remember: less force = less friction = smoother!</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a1score">0 / 8</span></div>
+  <div id="a1list"></div>
+  <div class="done-msg" id="a1done">🎉 Section 1 complete! You understand friction!</div>
+</div>
+
+<!-- Activity 2 — Order surfaces by friction -->
+<div class="activity-box">
+  <h2><div class="act-num">2</div>Order the surfaces — Smoothest to roughest</h2>
+  <p class="hint">Tap a surface, then tap the slot where it belongs. Slot 1 = smoothest, Slot 4 = roughest.</p>
+  <div class="order-items" id="orderItems">
+    <div class="order-chip" data-val="wood">🪵 Wood (8N)</div>
+    <div class="order-chip" data-val="paper">📄 Paper (7N)</div>
+    <div class="order-chip" data-val="concrete">🪨 Concrete (9N)</div>
+    <div class="order-chip" data-val="glass">🪟 Glass (5N)</div>
+  </div>
+  <div class="order-slots" id="orderSlots">
+    <div class="order-slot" data-pos="1" data-ans="glass">1 — Smoothest</div>
+    <div class="order-slot" data-pos="2" data-ans="paper">2</div>
+    <div class="order-slot" data-pos="3" data-ans="wood">3</div>
+    <div class="order-slot" data-pos="4" data-ans="concrete">4 — Roughest</div>
+  </div>
+  <div class="wb-feedback" id="orderFb"></div>
+</div>
+
+<!-- Activity 3 — TF friction -->
+<div class="activity-box">
+  <h2><div class="act-num">3</div>Friction — True or False?</h2>
+  <p class="hint">Is the statement correct? Tap TRUE or FALSE.</p>
+  <div id="a3list"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 2 — SMOOTH = FASTER
+═══════════════════════════════════════ -->
+<div id="smooth"></div>
+<div class="section-heading">⚡ Section 2 — Smoother Surface = Faster Speed!</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q4 Mistake — Smoother runners make the sleigh go FASTER, not slower!</h3>
+  <p>Lily made her sleigh runners <strong>smoother</strong>. You wrote: "The speed will <em>slow down</em>" and "because there is friction" — both wrong ❌</p>
+  <p style="margin-top:8px">Smoother surface → <strong>LESS friction</strong> → the sleigh slides more easily → it <strong>speeds up / goes faster</strong>.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ "slow down" / "there is friction" ❌<br><em>If something slows down, there is MORE friction — e.g. a rough surface.</em></div>
+    <div class="right-eg">✓ "speed up / go faster" ✅<br>"because there is <strong>less friction</strong> between the smooth runners and the snow" ✅</div>
+  </div>
+</div>
+
+<div class="teach-box">
+  <p>⚡ <span class="hl-g">Smoother surface → LESS friction → object moves <strong>FASTER</strong></span></p>
+  <p>🧱 <span class="hl-r">Rougher surface → MORE friction → object moves <strong>SLOWER</strong></span></p>
+  <p>Think of it like this: ice is very smooth → very little friction → hockey pucks slide very fast! Carpet is rough → lots of friction → things don't slide easily.</p>
+</div>
+
+<div class="concept-grid">
+  <div class="concept-card" style="--c:#29b6f6">
+    <span class="c-icon">🛷</span>
+    <div class="c-name">Smooth runners</div>
+    <div class="c-def">Less friction with the snow → sleigh <strong>speeds up</strong></div>
+    <div class="c-eg">Smooth surface + snow = fast!</div>
+  </div>
+  <div class="concept-card" style="--c:#bf360c">
+    <span class="c-icon">🧱</span>
+    <div class="c-name">Rough runners</div>
+    <div class="c-def">More friction with the snow → sleigh <strong>slows down</strong></div>
+    <div class="c-eg">Rough surface = harder to slide</div>
+  </div>
+  <div class="concept-card" style="--c:#2e7d32">
+    <span class="c-icon">🚗</span>
+    <div class="c-name">Car tyres</div>
+    <div class="c-def">Tyres are rough to create MORE friction → stops the car from slipping</div>
+    <div class="c-eg">More friction = safer grip</div>
+  </div>
+  <div class="concept-card" style="--c:#6a1b9a">
+    <span class="c-icon">👟</span>
+    <div class="c-name">Shoe soles</div>
+    <div class="c-def">Rough soles create friction with the ground → stops you from sliding</div>
+    <div class="c-eg">Our shoe and the tiles ✅</div>
+  </div>
+</div>
+
+<!-- Activity 4 — smooth/rough MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">4</div>Smooth or Rough? — What happens to speed?</h2>
+  <p class="hint">Think: smooth = less friction = faster. Rough = more friction = slower.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a4score">0 / 8</span></div>
+  <div id="a4list"></div>
+  <div class="done-msg" id="a4done">🎉 You know how friction affects speed!</div>
+</div>
+
+<!-- Activity 5 — word bank (sleigh sentence) -->
+<div class="activity-box">
+  <h2><div class="act-num">5</div>Complete the Sentences — Word Bank</h2>
+  <p class="hint">Tap a word, then tap the blank. Fill in the sentences about friction and speed.</p>
+  <div class="wb-bank" id="wb5bank"></div>
+  <div id="wb5sents"></div>
+  <button class="wb-check-btn" onclick="checkWB('wb5','wb5fb',wb5data)">Check ✔</button>
+  <div class="wb-feedback" id="wb5fb"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 3 — BAR CHARTS
+═══════════════════════════════════════ -->
+<div id="barchart"></div>
+<div class="section-heading">📊 Section 3 — Reading &amp; Drawing Bar Charts</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q1b Mistake — Bars wrong height &amp; y-axis not labelled</h3>
+  <p>The bar chart had two problems: (1) the y-axis needed to be labelled <strong>"Force in newtons (N)"</strong>, and (2) the bars needed to be the <em>exact</em> correct height — concrete=9, glass=5, wood=8. Your bars were not at the right heights.</p>
+</div>
+
+<div class="teach-box">
+  <p>📊 A <strong>bar chart</strong> (also called a bar graph) shows information using bars of different heights.</p>
+  <p>Always label <strong class="hl-b">both axes</strong>: the x-axis (bottom) = what you measured (surfaces), the y-axis (left side) = what you recorded (force in newtons).</p>
+  <p>Each bar must reach <strong class="hl-g">exactly</strong> the correct number on the y-axis grid.</p>
+</div>
+
+<!-- Reference bar chart (correct answer) -->
+<div class="chart-container">
+  <div class="chart-title">✅ The Correct Bar Chart — Mia's Results</div>
+  <div style="display:flex;align-items:flex-end;gap:0">
+    <div style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);font-family:'Fredoka One',cursive;font-size:.9rem;color:var(--chart);padding-right:8px;min-height:230px;display:flex;align-items:center">Force in newtons (N)</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:flex-end;gap:14px;height:220px;border-left:2px solid #666;border-bottom:2px solid #666;padding:0 16px 0 8px;position:relative">
+        <!-- y-axis ticks -->
+        <div style="position:absolute;left:-36px;height:100%;display:flex;flex-direction:column-reverse;justify-content:space-between;padding:4px 0">
+          <span style="font-size:.7rem;font-weight:800;color:#555">0</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">1</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">2</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">3</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">4</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">5</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">6</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">7</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">8</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">9</span>
+          <span style="font-size:.7rem;font-weight:800;color:#555">10</span>
+        </div>
+        <!-- horizontal grid lines -->
+        <div style="position:absolute;inset:0;pointer-events:none">
+          <div style="position:absolute;bottom:22%;left:0;right:0;height:1px;background:rgba(0,0,0,.08)"></div>
+          <div style="position:absolute;bottom:44%;left:0;right:0;height:1px;background:rgba(0,0,0,.08)"></div>
+          <div style="position:absolute;bottom:50%;left:0;right:0;height:1px;background:rgba(0,0,0,.15)"></div>
+          <div style="position:absolute;bottom:66%;left:0;right:0;height:1px;background:rgba(0,0,0,.08)"></div>
+          <div style="position:absolute;bottom:70%;left:0;right:0;height:1px;background:rgba(0,0,0,.08)"></div>
+          <div style="position:absolute;bottom:80%;left:0;right:0;height:1px;background:rgba(0,0,0,.08)"></div>
+          <div style="position:absolute;bottom:88%;left:0;right:0;height:1px;background:rgba(0,0,0,.08)"></div>
+          <div style="position:absolute;bottom:90%;left:0;right:0;height:1px;background:rgba(0,0,0,.15)"></div>
+        </div>
+        <!-- BARS: each row = 10% of height, so value/10 * 100% -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">
+          <div style="width:80%;height:70%;background:linear-gradient(180deg,#a3d977,#66bb6a);border-radius:6px 6px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:4px">
+            <span style="font-family:'Fredoka One',cursive;font-size:.9rem;color:white">7</span>
+          </div>
+          <div style="font-size:.78rem;font-weight:800;color:#444;margin-top:4px">paper</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">
+          <div style="width:80%;height:90%;background:linear-gradient(180deg,#ff7043,#ef5350);border-radius:6px 6px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:4px">
+            <span style="font-family:'Fredoka One',cursive;font-size:.9rem;color:white">9</span>
+          </div>
+          <div style="font-size:.78rem;font-weight:800;color:#444;margin-top:4px">concrete</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">
+          <div style="width:80%;height:50%;background:linear-gradient(180deg,#4dd0e1,#29b6f6);border-radius:6px 6px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:4px">
+            <span style="font-family:'Fredoka One',cursive;font-size:.9rem;color:white">5</span>
+          </div>
+          <div style="font-size:.78rem;font-weight:800;color:#444;margin-top:4px">glass</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">
+          <div style="width:80%;height:80%;background:linear-gradient(180deg,#ffcc80,#ff9800);border-radius:6px 6px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:4px">
+            <span style="font-family:'Fredoka One',cursive;font-size:.9rem;color:white">8</span>
+          </div>
+          <div style="font-size:.78rem;font-weight:800;color:#444;margin-top:4px">wood</div>
+        </div>
+      </div>
+      <div style="text-align:center;font-family:'Fredoka One',cursive;font-size:.9rem;color:var(--chart);margin-top:8px">Surface</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive bar chart -->
+<div class="interactive-chart">
+  <h3>📊 Build the Bar Chart Yourself — click ▲ ▼ to set the height of each bar, then check!</h3>
+  <div style="display:flex;align-items:flex-end;gap:0;margin-top:12px">
+    <div style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);font-family:'Fredoka One',cursive;font-size:.82rem;color:var(--chart);padding-right:8px;min-height:220px;display:flex;align-items:center">Force in newtons (N)</div>
+    <div style="flex:1">
+      <div class="ibar-area" id="ibarArea">
+        <div class="y-lines" id="yLines"></div>
+        <div class="ibar-col" id="col-paper">
+          <div class="ibar-btns">
+            <button class="ibar-btn up"   onclick="adjBar('paper',1)">▲</button>
+            <button class="ibar-btn down" onclick="adjBar('paper',-1)">▼</button>
+          </div>
+          <div class="ibar-bar" id="bar-paper" style="height:0;background:linear-gradient(180deg,#a3d977,#66bb6a)"><span class="ival" id="val-paper">0</span></div>
+          <div class="ibar-name">paper</div>
+        </div>
+        <div class="ibar-col" id="col-concrete">
+          <div class="ibar-btns">
+            <button class="ibar-btn up"   onclick="adjBar('concrete',1)">▲</button>
+            <button class="ibar-btn down" onclick="adjBar('concrete',-1)">▼</button>
+          </div>
+          <div class="ibar-bar" id="bar-concrete" style="height:0;background:linear-gradient(180deg,#ff7043,#ef5350)"><span class="ival" id="val-concrete">0</span></div>
+          <div class="ibar-name">concrete</div>
+        </div>
+        <div class="ibar-col" id="col-glass">
+          <div class="ibar-btns">
+            <button class="ibar-btn up"   onclick="adjBar('glass',1)">▲</button>
+            <button class="ibar-btn down" onclick="adjBar('glass',-1)">▼</button>
+          </div>
+          <div class="ibar-bar" id="bar-glass" style="height:0;background:linear-gradient(180deg,#4dd0e1,#29b6f6)"><span class="ival" id="val-glass">0</span></div>
+          <div class="ibar-name">glass</div>
+        </div>
+        <div class="ibar-col" id="col-wood">
+          <div class="ibar-btns">
+            <button class="ibar-btn up"   onclick="adjBar('wood',1)">▲</button>
+            <button class="ibar-btn down" onclick="adjBar('wood',-1)">▼</button>
+          </div>
+          <div class="ibar-bar" id="bar-wood" style="height:0;background:linear-gradient(180deg,#ffcc80,#ff9800)"><span class="ival" id="val-wood">0</span></div>
+          <div class="ibar-name">wood</div>
+        </div>
+      </div>
+      <div style="text-align:center;font-family:'Fredoka One',cursive;font-size:.88rem;color:var(--chart);margin-top:8px">Surface</div>
+    </div>
+  </div>
+  <div class="ibar-check">
+    <button class="ibar-check-btn" onclick="checkBars()">Check my bars ✔</button>
+    <div class="ibar-result" id="ibarResult"></div>
+  </div>
+</div>
+
+<!-- Activity 6 — bar chart MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">6</div>Reading Bar Charts — Answer questions about the chart</h2>
+  <p class="hint">Use the bar chart above to answer these questions.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a6score">0 / 8</span></div>
+  <div id="a6list"></div>
+  <div class="done-msg" id="a6done">🎉 Bar chart expert!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 4 — FOSSIL TYPES
+═══════════════════════════════════════ -->
+<div id="fossils"></div>
+<div class="section-heading">🦕 Section 4 — Types of Fossils</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q3b Mistake — "Cast fossil" is a type of fossil, NOT an organism!</h3>
+  <p>The question asked: <strong>"What type of organism made this fossil?"</strong> (showing a fish fossil)<br>
+  You wrote <strong>"cast fossil"</strong> ❌ — that is the <em>type of fossil</em>, not the organism (living thing) that made it!<br>
+  The correct answer is simply <strong>"fish"</strong> — because the fossil shows the shape of a fish.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ "cast fossil" ❌<br><em>"Cast fossil" describes HOW the fossil was made — it is not a living thing.</em></div>
+    <div class="right-eg">✓ "fish" ✅<br><em>The organism (living thing) is a FISH. The type of fossil is separate.</em></div>
+  </div>
+</div>
+
+<div class="teach-box">
+  <p>🦕 A <strong>fossil</strong> is the preserved remains or impression of a living thing (plant or animal) that lived millions of years ago, usually found in rock or mud.</p>
+  <p>There are two separate things to know: (1) the <strong class="hl-f">TYPE of fossil</strong> (how it was preserved), and (2) the <strong class="hl-b">ORGANISM</strong> (what living thing made it — fish, dinosaur, plant, etc.)</p>
+</div>
+
+<div class="fossil-grid">
+  <div class="fossil-card">
+    <span class="f-icon">🐾</span>
+    <div class="f-type">Trace Fossil</div>
+    <div class="f-def">Preserved <strong>evidence</strong> of an animal's activity — footprints, burrows, bite marks. The animal itself is NOT preserved.</div>
+    <div class="f-eg">🌕 Astronaut footprint on Moon = trace fossil</div>
+  </div>
+  <div class="fossil-card">
+    <span class="f-icon">🐟</span>
+    <div class="f-type">Body Fossil</div>
+    <div class="f-def">The actual <strong>body parts</strong> of an organism are preserved — bones, shells, teeth, leaves, wood.</div>
+    <div class="f-eg">🐟 Fish skeleton preserved in rock</div>
+  </div>
+  <div class="fossil-card">
+    <span class="f-icon">🪨</span>
+    <div class="f-type">Mould Fossil</div>
+    <div class="f-def">The organism dissolves and leaves a <strong>hollow impression</strong> (like a mould) in the rock. The shape remains but not the animal.</div>
+    <div class="f-eg">Shape left in rock after shell dissolves</div>
+  </div>
+  <div class="fossil-card">
+    <span class="f-icon">⚗️</span>
+    <div class="f-type">Cast Fossil</div>
+    <div class="f-def">Minerals fill a mould fossil to create a <strong>solid copy</strong> of the original organism. Like making a plaster cast.</div>
+    <div class="f-eg">Solid rock copy of a shell or bone</div>
+  </div>
+</div>
+
+<div class="teach-box" style="border-left-color:var(--fossil)">
+  <p>💡 <strong>Key trick:</strong> When a question asks "what type of <em>organism</em>?" it wants the <strong class="hl-f">LIVING THING</strong> — e.g. fish, dinosaur, plant, insect, bird.<br>
+  When a question asks "what type of <em>fossil</em>?" it wants the <strong class="hl-b">FOSSIL TYPE</strong> — trace, body, mould, cast.</p>
+</div>
+
+<!-- Activity 7 — fossil MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">7</div>Fossil Types — Pick the right answer</h2>
+  <p class="hint">Read each question carefully — is it asking about the organism OR the type of fossil?</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a7score">0 / 10</span></div>
+  <div id="a7list"></div>
+  <div class="done-msg" id="a7done">🎉 Fossil expert! You know your types!</div>
+</div>
+
+<!-- Activity 8 — fossil match -->
+<div class="activity-box">
+  <h2><div class="act-num">8</div>Match Fossil to Type — Tap left then right</h2>
+  <p class="hint">Tap a description on the left, then tap the matching fossil type on the right.</p>
+  <div class="score-bar"><span>Matched:</span><span class="score-val" id="a8score">0 / 5</span></div>
+  <div class="match-grid" id="a8grid">
+    <div class="match-col">
+      <div class="match-col-label">📝 Description</div>
+      <div class="match-item" data-key="trace" data-side="L">🐾 A footprint left by a dinosaur in mud, now turned to rock</div>
+      <div class="match-item" data-key="body"  data-side="L">🐟 The bones of a fish preserved inside a rock for millions of years</div>
+      <div class="match-item" data-key="mould" data-side="L">🪨 A hollow shell-shaped hole left in rock after the shell dissolved</div>
+      <div class="match-item" data-key="cast"  data-side="L">⚗️ Minerals filled a hollow space to make a solid rock copy of a shell</div>
+      <div class="match-item" data-key="imp"   data-side="L">🌿 The pattern of a leaf pressed into mud, showing its shape</div>
+    </div>
+    <div class="match-col">
+      <div class="match-col-label">🦕 Fossil Type</div>
+      <div class="match-item" data-key="mould" data-side="R">Mould Fossil</div>
+      <div class="match-item" data-key="trace" data-side="R">Trace Fossil</div>
+      <div class="match-item" data-key="imp"   data-side="R">Impression Fossil</div>
+      <div class="match-item" data-key="cast"  data-side="R">Cast Fossil</div>
+      <div class="match-item" data-key="body"  data-side="R">Body Fossil</div>
+    </div>
+  </div>
+  <div class="match-score" id="a8score-txt"></div>
+</div>
+
+<!-- Activity 9 — TF fossils -->
+<div class="activity-box">
+  <h2><div class="act-num">9</div>Fossils — True or False?</h2>
+  <p class="hint">Is the statement about fossils correct?</p>
+  <div id="a9list"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 5 — ORGANISM vs FOSSIL TYPE
+═══════════════════════════════════════ -->
+<div id="organisms"></div>
+<div class="section-heading">🐟 Section 5 — Organism vs Fossil Type</div>
+
+<div class="teach-box" style="border-left-color:var(--fossil)">
+  <p><strong class="hl-f">Organism</strong> = the LIVING THING that made the fossil. Ask yourself: <em>"What creature was this when it was alive?"</em></p>
+  <p><strong class="hl-b">Fossil type</strong> = HOW the fossil was preserved. Ask yourself: <em>"How did this fossil form?"</em></p>
+</div>
+
+<!-- Activity 10 — organism vs type MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">10</div>Organism OR Fossil Type? — The KEY difference</h2>
+  <p class="hint">Each question uses a different picture of a fossil. Is it asking for the organism or the type? Read carefully!</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a10score">0 / 8</span></div>
+  <div id="a10list"></div>
+  <div class="done-msg" id="a10done">🎉 You know the difference between organism and fossil type!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 6 — GRAVITY & FORCES
+═══════════════════════════════════════ -->
+<div id="gravity"></div>
+<div class="section-heading">🌍 Section 6 — Gravity &amp; Forces</div>
+
+<div class="teach-box" style="border-left-color:var(--gravity)">
+  <p>🌍 <strong class="hl-b">Gravity</strong> is a force that <strong>pulls objects towards the centre of the Earth</strong>. It is why things fall down when you drop them.</p>
+  <p>⚡ <strong>Force</strong> is a push or a pull. Force is measured in <strong class="hl-b">newtons (N)</strong> using a <strong class="hl-b">forcemeter</strong> (also called a newton meter or spring balance).</p>
+  <p>🔥 <strong class="hl-r">Friction</strong> is a force that acts between two surfaces in contact. It slows things down or stops them from moving. Rough surfaces have MORE friction. Smooth surfaces have LESS friction.</p>
+</div>
+
+<div class="concept-grid">
+  <div class="concept-card" style="--c:#1565c0">
+    <span class="c-icon">🌍</span>
+    <div class="c-name">Gravity</div>
+    <div class="c-def">Pulls everything towards Earth's centre. This is why things fall down.</div>
+    <div class="c-eg">Unit: Newtons (N)</div>
+  </div>
+  <div class="concept-card" style="--c:#bf360c">
+    <span class="c-icon">🔥</span>
+    <div class="c-name">Friction</div>
+    <div class="c-def">A force between two touching surfaces. Opposes movement. Rough = more friction.</div>
+    <div class="c-eg">Shoe on tiles ✅</div>
+  </div>
+  <div class="concept-card" style="--c:#6a1b9a">
+    <span class="c-icon">🔧</span>
+    <div class="c-name">Forcemeter</div>
+    <div class="c-def">The tool used to MEASURE force. Also called a newton meter or spring balance.</div>
+    <div class="c-eg">Measures in newtons</div>
+  </div>
+  <div class="concept-card" style="--c:#2e7d32">
+    <span class="c-icon">💪</span>
+    <div class="c-name">Force</div>
+    <div class="c-def">A push OR a pull. Forces can make things start moving, stop moving, or change direction.</div>
+    <div class="c-eg">Measured in newtons (N)</div>
+  </div>
+</div>
+
+<!-- Activity 11 — gravity/forces MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">11</div>Gravity &amp; Forces — Final Quiz!</h2>
+  <p class="hint">Everything from all sections — tap the correct answer!</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a11score">0 / 10</span></div>
+  <div id="a11list"></div>
+  <div class="done-msg" id="a11done">🎉 Amazing! Science exam prep complete! You're ready! 🔬🌟</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════
+   CHEER
+═══════════════════════════════════ */
+let cheerCount = 0;
+function addCheer(n) {
+  cheerCount += (n || 1);
+  if (cheerCount >= 4) document.getElementById('cheer').classList.add('show');
+}
+
+/* ═══════════════════════════════════
+   GENERIC MCQ BUILDER
+═══════════════════════════════════ */
+function buildMCQ(listId, scoreId, doneId, data) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  let correct = 0, answered = 0;
+  const total = data.length;
+  data.forEach((q, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'q-wrap';
+    wrap.innerHTML = `<div class="q-text">${i+1}. ${q.q}</div>
+      <div class="choices">${q.opts.map(o => `<button data-val="${o}">${o}</button>`).join('')}</div>
+      <div class="feedback"></div>`;
+    wrap.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (wrap.dataset.done) return;
+        wrap.dataset.done = '1';
+        wrap.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = wrap.querySelector('.feedback');
+        if (btn.dataset.val === q.ans) {
+          btn.style.cssText = 'background:#2e7d32;color:white;border-color:#1b5e20';
+          fb.textContent = '✅ Correct! Well done!'; fb.style.color = '#2e7d32';
+          correct++; addCheer();
+        } else {
+          btn.style.cssText = 'background:#c62828;color:white;border-color:#8b0000';
+          fb.textContent = `❌ Answer: "${q.ans}"${q.hint ? ' — ' + q.hint : ''}`;
+          fb.style.color = '#c62828';
+          wrap.querySelectorAll('button').forEach(b => {
+            if (b.dataset.val === q.ans) b.style.cssText = 'background:#c8f7de;color:#004d20;border-color:#2e7d32';
+          });
+        }
+        answered++;
+        if (scoreId) document.getElementById(scoreId).textContent = `${correct} / ${total}`;
+        if (answered === total && doneId) {
+          document.getElementById(doneId).classList.add('show'); addCheer(2);
+        }
+      });
+    });
+    list.appendChild(wrap);
+  });
+}
+
+/* ═══════════════════════════════════
+   GENERIC TF BUILDER
+═══════════════════════════════════ */
+function buildTF(listId, data) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  data.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.innerHTML = `<div class="tf-text">${i+1}. ${q.stmt}</div>
+      <div class="tf-btns"><button class="btn-t">✅ TRUE</button><button class="btn-f">❌ FALSE</button></div>
+      <div class="feedback"></div>`;
+    div.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (div.dataset.done) return;
+        div.dataset.done = '1';
+        div.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = div.querySelector('.feedback');
+        const chose = btn.classList.contains('btn-t');
+        if (chose === q.ans) {
+          btn.style.cssText = 'background:#2e7d32;color:white;border-color:#1b5e20';
+          fb.textContent = '✅ Correct!'; fb.style.color = '#2e7d32';
+          addCheer();
+        } else {
+          btn.style.cssText = 'background:#c62828;color:white;border-color:#8b0000';
+          fb.textContent = `❌ ${q.hint}`; fb.style.color = '#c62828';
+          div.querySelectorAll('button').forEach(b => {
+            if (b.classList.contains('btn-t') === q.ans)
+              b.style.cssText = 'background:#c8f7de;color:#004d20;border-color:#2e7d32';
+          });
+        }
+      });
+    });
+    list.appendChild(div);
+  });
+}
+
+/* ═══════════════════════════════════
+   WORD BANK BUILDER
+═══════════════════════════════════ */
+function buildWB(bankId, sentsId, words, sentences) {
+  const bankEl = document.getElementById(bankId + 'bank');
+  const sentsEl = document.getElementById(bankId + 'sents');
+  let selWord = null;
+  const answered = new Array(sentences.length).fill(false);
+  words.forEach(w => {
+    const tok = document.createElement('button');
+    tok.className = 'wb-tok'; tok.textContent = w; tok.dataset.word = w;
+    tok.addEventListener('click', () => {
+      if (tok.classList.contains('used')) return;
+      document.querySelectorAll(`#${bankId}bank .wb-tok`).forEach(t => t.classList.remove('sel'));
+      if (selWord === w) { selWord = null; return; }
+      selWord = w; tok.classList.add('sel');
+    });
+    bankEl.appendChild(tok);
+  });
+  sentences.forEach((s, i) => {
+    const parts = s.text.split('___');
+    const item = document.createElement('div'); item.className = 'fill-sent';
+    const bid = `${bankId}b${i}`;
+    item.innerHTML = `<span>${i+1}. ${parts[0]}</span><span class="blank" id="${bid}" data-filled="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>${parts[1]||''}</span>`;
+    sentsEl.appendChild(item);
+    document.getElementById(bid).addEventListener('click', () => {
+      if (answered[i]) return;
+      const blank = document.getElementById(bid);
+      if (!selWord && blank.dataset.filled) {
+        const old = blank.dataset.filled;
+        blank.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        blank.dataset.filled = ''; blank.className = 'blank';
+        const tok = [...document.querySelectorAll(`#${bankId}bank .wb-tok`)].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+        return;
+      }
+      if (!selWord) return;
+      const old = blank.dataset.filled;
+      if (old) {
+        const tok = [...document.querySelectorAll(`#${bankId}bank .wb-tok`)].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+      }
+      blank.textContent = selWord; blank.dataset.filled = selWord; blank.className = 'blank filled';
+      const usedTok = [...document.querySelectorAll(`#${bankId}bank .wb-tok`)].find(t => t.dataset.word === selWord);
+      if (usedTok) { usedTok.classList.add('used'); usedTok.classList.remove('sel'); }
+      selWord = null;
+      document.querySelectorAll(`#${bankId}bank .wb-tok`).forEach(t => t.classList.remove('sel'));
+    });
+  });
+}
+
+function checkWB(bankId, fbId, sentences) {
+  let correct = 0;
+  sentences.forEach((s, i) => {
+    const blank = document.getElementById(`${bankId}b${i}`);
+    if (!blank) return;
+    if (blank.dataset.filled === s.ans) {
+      blank.className = 'blank correct'; correct++;
+    } else { blank.classList.add('wrong-fill'); }
+  });
+  const fb = document.getElementById(fbId);
+  if (correct === sentences.length) {
+    fb.textContent = `✅ Perfect! All ${sentences.length} correct!`; fb.style.color = '#2e7d32'; addCheer(2);
+  } else {
+    fb.textContent = `${correct} / ${sentences.length} correct — check the red blanks!`; fb.style.color = '#c62828';
+  }
+}
+
+/* ═══════════════════════════════════
+   MATCH BUILDER
+═══════════════════════════════════ */
+function initMatch(gridId, scoreTxtId, total) {
+  let sel = null, matched = 0;
+  document.querySelectorAll(`#${gridId} .match-item`).forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('locked')) return;
+      if (!sel) {
+        document.querySelectorAll(`#${gridId} .match-item.selected`).forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel = el; return;
+      }
+      if (el.dataset.side === sel.dataset.side) {
+        document.querySelectorAll(`#${gridId} .match-item.selected`).forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel = el; return;
+      }
+      if (el.dataset.key === sel.dataset.key) {
+        sel.classList.remove('selected'); sel.classList.add('locked');
+        el.classList.remove('selected');  el.classList.add('locked');
+        matched++;
+        if (scoreTxtId) {
+          const sc = document.getElementById(scoreTxtId);
+          const sv = document.getElementById(gridId.replace('grid','score'));
+          if (sv) sv.textContent = `${matched} / ${total}`;
+          if (sc) sc.textContent = matched === total ? `🎉 All ${total} matched!` : `${matched} / ${total} matched ✅`;
+        }
+        if (matched === total) addCheer(2);
+      } else {
+        const s = sel;
+        s.classList.remove('selected'); el.classList.remove('selected');
+        [s,el].forEach(e => {
+          e.classList.add('wrong-flash');
+          setTimeout(() => e.classList.remove('wrong-flash'), 500);
+        });
+      }
+      sel = null;
+    });
+  });
+}
+
+/* ═══════════════════════════════════
+   ORDERING ACTIVITY
+═══════════════════════════════════ */
+let orderSel = null;
+document.querySelectorAll('.order-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    if (chip.classList.contains('placed')) return;
+    document.querySelectorAll('.order-chip').forEach(c => c.style.outline = '');
+    if (orderSel === chip) { orderSel = null; return; }
+    orderSel = chip; chip.style.outline = '3px solid var(--friction)';
+  });
+});
+document.querySelectorAll('.order-slot').forEach(slot => {
+  slot.addEventListener('click', () => {
+    if (slot.classList.contains('correct')) return;
+    if (slot.classList.contains('filled') && !orderSel) {
+      const val = slot.dataset.current;
+      slot.textContent = slot.dataset.pos === '1' ? '1 — Smoothest' :
+                         slot.dataset.pos === '4' ? '4 — Roughest' : slot.dataset.pos;
+      slot.className = 'order-slot'; slot.dataset.current = '';
+      const chip = [...document.querySelectorAll('.order-chip')].find(c => c.dataset.val === val);
+      if (chip) { chip.classList.remove('placed'); }
+      return;
+    }
+    if (!orderSel) return;
+    if (slot.dataset.current) {
+      const old = slot.dataset.current;
+      const chip = [...document.querySelectorAll('.order-chip')].find(c => c.dataset.val === old);
+      if (chip) chip.classList.remove('placed');
+    }
+    slot.textContent = orderSel.textContent;
+    slot.classList.add('filled'); slot.dataset.current = orderSel.dataset.val;
+    orderSel.classList.add('placed'); orderSel.style.outline = '';
+    orderSel = null;
+  });
+});
+document.getElementById('orderFb') && (function() {
+  // auto-check when all slots filled
+  const check = () => {
+    const slots = document.querySelectorAll('.order-slot');
+    const allFilled = [...slots].every(s => s.dataset.current);
+    if (!allFilled) return;
+    let correct = 0;
+    slots.forEach(s => {
+      if (s.dataset.current === s.dataset.ans) {
+        s.classList.add('correct'); correct++;
+      } else {
+        s.classList.add('wrong-order');
+        setTimeout(() => { s.classList.remove('wrong-order'); }, 600);
+      }
+    });
+    const fb = document.getElementById('orderFb');
+    if (correct === 4) {
+      fb.textContent = '✅ Perfect! Smoothest → roughest: Glass (5N) → Paper (7N) → Wood (8N) → Concrete (9N)';
+      fb.style.color = '#2e7d32'; addCheer(2);
+    } else {
+      fb.textContent = `${correct}/4 correct — try again! Hint: look at the newtons.`;
+      fb.style.color = '#c62828';
+      setTimeout(() => {
+        slots.forEach(s => { s.classList.remove('correct'); s.textContent = s.dataset.pos === '1' ? '1 — Smoothest' : s.dataset.pos === '4' ? '4 — Roughest' : s.dataset.pos; s.className='order-slot'; s.dataset.current=''; });
+        document.querySelectorAll('.order-chip').forEach(c => c.classList.remove('placed'));
+      }, 1200);
+    }
+  };
+  const observer = new MutationObserver(() => {
+    const slots = document.querySelectorAll('.order-slot');
+    if ([...slots].every(s => s.dataset.current)) check();
+  });
+  document.querySelectorAll('.order-slot').forEach(s => observer.observe(s, {attributes:true, attributeFilter:['data-current']}));
+})();
+
+/* ═══════════════════════════════════
+   INTERACTIVE BAR CHART
+═══════════════════════════════════ */
+const barVals = { paper: 0, concrete: 0, glass: 0, wood: 0 };
+const barCorrect = { paper: 7, concrete: 9, glass: 5, wood: 8 };
+const maxH = 200; // px for 10 units
+
+function adjBar(name, delta) {
+  barVals[name] = Math.max(0, Math.min(10, barVals[name] + delta));
+  const bar = document.getElementById('bar-' + name);
+  const val = document.getElementById('val-' + name);
+  bar.style.height = (barVals[name] / 10 * maxH) + 'px';
+  val.textContent = barVals[name];
+}
+
+function checkBars() {
+  let correct = 0;
+  const res = document.getElementById('ibarResult');
+  Object.entries(barCorrect).forEach(([name, target]) => {
+    const bar = document.getElementById('bar-' + name);
+    if (barVals[name] === target) {
+      bar.style.filter = 'brightness(1.15)';
+      bar.style.outline = '3px solid var(--green)';
+      correct++;
+    } else {
+      bar.style.outline = '3px solid var(--red)';
+      bar.style.animation = 'shake .4s';
+      setTimeout(() => bar.style.animation = '', 500);
+    }
+  });
+  if (correct === 4) {
+    res.textContent = '✅ Perfect! All 4 bars are at the correct height!'; res.style.color = '#2e7d32'; addCheer(2);
+  } else {
+    res.textContent = `${correct}/4 correct — check: paper=7, concrete=9, glass=5, wood=8`; res.style.color = '#c62828';
+  }
+}
+
+/* ═══════════════════════════════════
+   WORD BANK DATA
+═══════════════════════════════════ */
+const wb5data = [
+  { text:'Lily makes the runners of her sleigh ___.',                           ans:'smoother'     },
+  { text:'The speed of the sleigh will ___ because there is less friction.',    ans:'increase'     },
+  { text:'A smooth surface has ___ friction than a rough surface.',             ans:'less'         },
+  { text:'A rough surface has ___ friction than a smooth surface.',             ans:'more'         },
+  { text:'Friction is a ___ that slows objects down.',                          ans:'force'        },
+  { text:'Force is measured in ___ using a forcemeter.',                        ans:'newtons'      },
+];
+buildWB('wb5', 'wb5', ['smoother','increase','less','more','force','newtons'], wb5data);
+
+/* ═══════════════════════════════════
+   ACTIVITY DATA
+═══════════════════════════════════ */
+
+// Activity 1 — Friction MCQ
+buildMCQ('a1list','a1score','a1done', [
+  { q:'Glass needs only <strong>5 newtons</strong> to pull across it. What does this tell us?',
+    opts:['Glass is very rough','Glass is the smoothest surface','Glass is the hardest surface'],
+    ans:'Glass is the smoothest surface', hint:'Least force = least friction = smoothest.' },
+  { q:'Concrete needs <strong>9 newtons</strong> to pull across it. Which surface needs more force — concrete or paper?',
+    opts:['Paper (7N)','Concrete (9N)','They are the same'],
+    ans:'Concrete (9N)', hint:'9 > 7, so concrete needs more force.' },
+  { q:'Which surface is the ROUGHEST in Mia\'s experiment?',
+    opts:['Glass','Paper','Concrete'],
+    ans:'Concrete', hint:'Concrete needs 9N — the most force = most friction = roughest.' },
+  { q:'What instrument does Mia use to measure force?',
+    opts:['Ruler','Thermometer','Forcemeter'],
+    ans:'Forcemeter', hint:'A forcemeter (newton meter) measures force in newtons.' },
+  { q:'Force is measured in:',
+    opts:['Kilograms','Newtons','Centimetres'],
+    ans:'Newtons', hint:'Force is always measured in Newtons (N).' },
+  { q:'If a surface needs MORE force to pull a block across it, what does that tell us?',
+    opts:['The surface is smooth','The surface has more friction','The surface is wet'],
+    ans:'The surface has more friction', hint:'More force needed = more friction = rougher surface.' },
+  { q:'Which surface is SMOOTHEST: one that needs 3N, 8N or 12N to pull across?',
+    opts:['8N surface','12N surface','3N surface'],
+    ans:'3N surface', hint:'Least force = least friction = smoothest.' },
+  { q:'Mia says glass is the smoothest surface. Is she correct?',
+    opts:['No — glass is the roughest','No — paper is the smoothest','Yes — glass needs the least force'],
+    ans:'Yes — glass needs the least force', hint:'5N is the smallest number in the table.' },
+]);
+
+// Activity 3 — TF friction
+buildTF('a3list', [
+  { stmt:'A surface that needs <strong>more force</strong> to pull across has <strong>more friction</strong>.',
+    ans:true,  hint:'Correct! More force = more friction. The two go together.' },
+  { stmt:'Glass is the roughest surface because it needs only 5 newtons.',
+    ans:false, hint:'Wrong — 5N is the LEAST force, so glass is the SMOOTHEST, not roughest.' },
+  { stmt:'Concrete is the roughest surface in Mia\'s experiment.',
+    ans:true,  hint:'Correct! Concrete = 9N (most force = most friction = roughest).' },
+  { stmt:'A forcemeter measures temperature.',
+    ans:false, hint:'A forcemeter measures FORCE. A thermometer measures temperature.' },
+  { stmt:'Smooth surfaces have less friction than rough surfaces.',
+    ans:true,  hint:'Correct! Smooth = less friction. Rough = more friction.' },
+  { stmt:'Friction is a force that makes objects move faster.',
+    ans:false, hint:'Friction OPPOSES movement — it slows things down or stops them.' },
+]);
+
+// Activity 4 — smooth/rough MCQ
+buildMCQ('a4list','a4score','a4done', [
+  { q:'Lily makes the runners of her sleigh <strong>smoother</strong>. What happens to the speed of the sleigh?',
+    opts:['It slows down','It stays the same','It speeds up / goes faster'],
+    ans:'It speeds up / goes faster', hint:'Smoother = less friction = faster movement.' },
+  { q:'Why does making the runners smoother make the sleigh go faster?',
+    opts:['Because there is more friction','Because there is less friction between the runners and the snow','Because the sleigh becomes heavier'],
+    ans:'Because there is less friction between the runners and the snow', hint:'Smoother surface = less friction = easier to slide.' },
+  { q:'A skateboard wheel is made ROUGHER. What happens?',
+    opts:['The skateboard goes faster','The skateboard slows down or grips more','Nothing changes'],
+    ans:'The skateboard slows down or grips more', hint:'Rougher = more friction = slower or more grip.' },
+  { q:'Car tyres have <strong>rough treads</strong>. Why?',
+    opts:['To make the car go faster','To reduce friction','To create more friction and grip the road safely'],
+    ans:'To create more friction and grip the road safely', hint:'More friction = better grip = safer driving.' },
+  { q:'A child slides down a water slide. The slide is made smoother with water. What happens?',
+    opts:['The child slides more slowly','The child slides faster','The child stops moving'],
+    ans:'The child slides faster', hint:'Smoother/wet surface = less friction = faster sliding.' },
+  { q:'Complete: "The speed of the sleigh will ___ because there is less friction."',
+    opts:['slow down','stay the same','speed up / increase'],
+    ans:'speed up / increase', hint:'Less friction = less resistance = speeds up.' },
+  { q:'Ice is very smooth. What does this mean for objects sliding on ice?',
+    opts:['There is a lot of friction — objects stop quickly','There is very little friction — objects slide easily and fast','Ice creates the most friction of any surface'],
+    ans:'There is very little friction — objects slide easily and fast', hint:'Smooth ice = very little friction = fast sliding.' },
+  { q:'Which of these is an example of friction being USEFUL in everyday life?',
+    opts:['Sliding on ice is dangerous','Shoe soles gripping the floor so you don\'t slip','A sleigh going fast on snow'],
+    ans:'Shoe soles gripping the floor so you don\'t slip', hint:'Friction between shoe and floor stops you from slipping — it is useful here.' },
+]);
+
+// Activity 6 — bar chart MCQ
+buildMCQ('a6list','a6score','a6done', [
+  { q:'What should the y-axis of Mia\'s bar chart be labelled?',
+    opts:['Surface','Experiment','Force in newtons (N)'],
+    ans:'Force in newtons (N)', hint:'The y-axis shows what was measured — the force in newtons.' },
+  { q:'What should the x-axis of the bar chart be labelled?',
+    opts:['Force in newtons','Surface','Time in seconds'],
+    ans:'Surface', hint:'The x-axis shows the different surfaces being compared.' },
+  { q:'Which surface bar should be the TALLEST?',
+    opts:['Glass','Paper','Concrete'],
+    ans:'Concrete', hint:'Concrete = 9N — the largest value, so the tallest bar.' },
+  { q:'Which surface bar should be the SHORTEST?',
+    opts:['Wood','Glass','Paper'],
+    ans:'Glass', hint:'Glass = 5N — the smallest value, so the shortest bar.' },
+  { q:'How high should the bar for WOOD reach on the y-axis?',
+    opts:['5','7','8'],
+    ans:'8', hint:'Wood = 8 newtons, so the bar reaches 8 on the y-axis.' },
+  { q:'How high should the bar for CONCRETE reach on the y-axis?',
+    opts:['7','9','5'],
+    ans:'9', hint:'Concrete = 9 newtons, so the bar reaches 9 on the y-axis.' },
+  { q:'How high should the bar for PAPER reach on the y-axis?',
+    opts:['5','8','7'],
+    ans:'7', hint:'Paper = 7 newtons, so the bar reaches 7 on the y-axis.' },
+  { q:'Which two bars are closest in height?',
+    opts:['Glass and paper','Wood and concrete','Paper and wood'],
+    ans:'Paper and wood', hint:'Paper=7 and Wood=8 are only 1 newton apart — closest in the chart.' },
+]);
+
+// Activity 7 — fossils MCQ
+buildMCQ('a7list','a7score','a7done', [
+  { q:'A fossil shows the skeleton of a fish pressed in rock. What was the <strong>organism</strong>?',
+    opts:['Cast fossil','Trace fossil','Fish'],
+    ans:'Fish', hint:'The organism (living thing) is a FISH — that\'s what was alive.' },
+  { q:'What TYPE of fossil is a preserved footprint?',
+    opts:['Body fossil','Trace fossil','Cast fossil'],
+    ans:'Trace fossil', hint:'A footprint is evidence of an animal\'s activity = trace fossil.' },
+  { q:'An astronaut leaves a footprint on the Moon. This is most like which type of fossil?',
+    opts:['Body fossil','Mould fossil','Trace fossil'],
+    ans:'Trace fossil', hint:'A footprint shows evidence of activity — that\'s a trace.' },
+  { q:'What is the best word to describe a footprint fossil?',
+    opts:['Solid','Mineral','Impression'],
+    ans:'Impression', hint:'A footprint leaves an impression (a shape pressed into material).' },
+  { q:'What type of fossil forms when a shell dissolves and leaves a hollow space?',
+    opts:['Trace fossil','Cast fossil','Mould fossil'],
+    ans:'Mould fossil', hint:'A hollow impression left behind = mould fossil.' },
+  { q:'What type of fossil forms when minerals fill a mould to make a solid copy?',
+    opts:['Cast fossil','Trace fossil','Body fossil'],
+    ans:'Cast fossil', hint:'Minerals filling a mould to make a solid copy = cast fossil.' },
+  { q:'A dinosaur bone is preserved in rock for millions of years. This is a:',
+    opts:['Trace fossil','Body fossil','Impression fossil'],
+    ans:'Body fossil', hint:'Actual body parts preserved = body fossil.' },
+  { q:'What is a fossil?',
+    opts:['A rock found in a river','The preserved remains or impression of a once-living thing found in rock','A drawing of an ancient animal'],
+    ans:'The preserved remains or impression of a once-living thing found in rock',
+    hint:'Fossils are preserved remains or impressions of organisms from millions of years ago.' },
+  { q:'The fossil in the rock shows a fish skeleton. What is the <strong>type of fossil</strong>?',
+    opts:['Fish','Body fossil','Impression fossil'],
+    ans:'Body fossil', hint:'Preserved body parts (skeleton) = body fossil. "Fish" is the organism, not the type.' },
+  { q:'The fossil shows a <strong>footprint</strong>. What <strong>organism</strong> could have made it?',
+    opts:['Cast fossil','Trace fossil','A dinosaur or large animal'],
+    ans:'A dinosaur or large animal', hint:'The organism is the living thing — dinosaur, bird, mammal. "Trace fossil" is the type, not the organism.' },
+]);
+
+// Activity 9 — TF fossils
+buildTF('a9list', [
+  { stmt:'"Cast fossil" is the answer to "What organism made this fossil?"',
+    ans:false, hint:'"Cast fossil" is a TYPE of fossil, not an organism. The organism would be fish, dinosaur, plant, etc.' },
+  { stmt:'A trace fossil shows evidence of an animal\'s <strong>activity</strong> (footprint, burrow), not the animal itself.',
+    ans:true, hint:'Correct! Trace fossils show evidence of activity — they don\'t preserve the body.' },
+  { stmt:'A footprint left on the Moon is an example of a body fossil.',
+    ans:false, hint:'A footprint shows activity — that makes it a TRACE fossil, not a body fossil.' },
+  { stmt:'The word "impression" best describes a footprint fossil.',
+    ans:true, hint:'Correct! An impression is a shape pressed into a surface — exactly what a footprint is.' },
+  { stmt:'A cast fossil is a hollow empty space left in rock.',
+    ans:false, hint:'A cast fossil is SOLID — minerals filled the hollow (mould) to make a solid copy. A mould fossil is the hollow one.' },
+  { stmt:'Body fossils include preserved bones, shells, teeth and leaves.',
+    ans:true, hint:'Correct! Body fossils preserve the actual body parts of organisms.' },
+]);
+
+// Activity 10 — organism vs type MCQ
+buildMCQ('a10list','a10score','a10done', [
+  { q:'A rock contains a <strong>fish skeleton</strong>. <br>"What type of <strong>organism</strong> made this fossil?"',
+    opts:['Body fossil','Cast fossil','Fish'],
+    ans:'Fish', hint:'Organism = living thing = fish.' },
+  { q:'A rock contains a <strong>fish skeleton</strong>. <br>"What type of <strong>fossil</strong> is this?"',
+    opts:['Fish','Trace fossil','Body fossil'],
+    ans:'Body fossil', hint:'Preserved body parts = body fossil.' },
+  { q:'A rock shows a <strong>dinosaur footprint</strong>. <br>"What type of <strong>fossil</strong> is this?"',
+    opts:['Dinosaur','Body fossil','Trace fossil'],
+    ans:'Trace fossil', hint:'Footprint = evidence of activity = trace fossil.' },
+  { q:'A rock shows a <strong>dinosaur footprint</strong>. <br>"What type of <strong>organism</strong> made this?"',
+    opts:['Trace fossil','Body fossil','Dinosaur'],
+    ans:'Dinosaur', hint:'The organism (living thing) is the dinosaur.' },
+  { q:'A rock has a <strong>hollow shell shape</strong> in it. <br>"What type of <strong>fossil</strong> is this?"',
+    opts:['Mollusc','Trace fossil','Mould fossil'],
+    ans:'Mould fossil', hint:'Hollow impression left behind = mould fossil.' },
+  { q:'A rock has a <strong>solid mineral copy</strong> of a shell. <br>"What type of <strong>fossil</strong> is this?"',
+    opts:['Shell','Cast fossil','Body fossil'],
+    ans:'Cast fossil', hint:'Minerals filled the mould to make a solid copy = cast fossil.' },
+  { q:'You find a fossil of a <strong>leaf</strong> pressed flat in rock. <br>"What type of <strong>organism</strong> was it?"',
+    opts:['Impression fossil','Plant','Body fossil'],
+    ans:'Plant', hint:'The organism is a plant (the leaf came from a plant).' },
+  { q:'Which answer correctly names an <strong>organism</strong> (living thing)?',
+    opts:['Trace fossil','Mould fossil','Trilobite (ancient sea creature)'],
+    ans:'Trilobite (ancient sea creature)', hint:'Trilobite is a living organism. Trace fossil and Mould fossil are types of fossils.' },
+]);
+
+// Activity 11 — gravity/forces MCQ
+buildMCQ('a11list','a11score','a11done', [
+  { q:'In your own words, describe <strong>gravity</strong>.',
+    opts:['A force that pushes objects away from Earth','A force that pulls objects towards the centre of the Earth','A force that makes objects float'],
+    ans:'A force that pulls objects towards the centre of the Earth', hint:'Gravity pulls everything down towards Earth\'s centre.' },
+  { q:'What instrument is used to measure force?',
+    opts:['Ruler','Thermometer','Forcemeter'],
+    ans:'Forcemeter', hint:'A forcemeter (newton meter) measures force in newtons.' },
+  { q:'Force is measured in:',
+    opts:['Metres','Newtons','Grams'],
+    ans:'Newtons', hint:'Force is measured in Newtons (N).' },
+  { q:'Friction is the name of the force Mia is investigating. What does friction do?',
+    opts:['Pulls objects down','Acts between surfaces to oppose movement','Pushes objects upward'],
+    ans:'Acts between surfaces to oppose movement', hint:'Friction acts between two surfaces in contact and resists movement.' },
+  { q:'A ball rolls along a rough carpet and stops. What force stopped it?',
+    opts:['Gravity','Magnetism','Friction'],
+    ans:'Friction', hint:'The rough carpet creates friction which slows and stops the ball.' },
+  { q:'Which surface in Mia\'s experiment has the LEAST friction?',
+    opts:['Concrete (9N)','Paper (7N)','Glass (5N)'],
+    ans:'Glass (5N)', hint:'5N = least force = least friction = smoothest surface.' },
+  { q:'Why does gravity make things fall down and not up?',
+    opts:['Because the sky is heavy','Because gravity pulls toward the centre of the Earth, which is below us','Because wind pushes things down'],
+    ans:'Because gravity pulls toward the centre of the Earth, which is below us', hint:'Gravity always pulls toward Earth\'s centre — which is "below" us.' },
+  { q:'Write one application (use) of friction in daily life.',
+    opts:['Ice skating on a smooth rink','Car tyres gripping the road','A ball flying through the air'],
+    ans:'Car tyres gripping the road', hint:'Tyre friction is a real-life application. Ice skating actually REDUCES friction.' },
+  { q:'What happens to gravity on the Moon compared to Earth?',
+    opts:['Gravity is stronger on the Moon','There is no difference','Gravity is weaker on the Moon — things weigh less'],
+    ans:'Gravity is weaker on the Moon — things weigh less', hint:'The Moon has less mass so its gravity is weaker — astronauts can jump very high!' },
+  { q:'Glass needs 5N and concrete needs 9N. Which statement is TRUE?',
+    opts:['Concrete has less friction than glass','Glass and concrete have the same friction','Concrete has more friction than glass'],
+    ans:'Concrete has more friction than glass', hint:'More force (9N) = more friction. Less force (5N) = less friction.' },
+]);
+
+/* ═══════════════════════════════════
+   INIT MATCHES
+═══════════════════════════════════ */
+initMatch('a8grid', 'a8score-txt', 5);
+</script>
+</body>
+</html>

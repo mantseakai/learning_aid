@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths Exam Prep ⭐ — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:       #1a73e8;
+  --blue-light: #e8f0fe;
+  --blue-dark:  #0d47a1;
+  --red:        #e53935;
+  --red-light:  #ffebee;
+  --green:      #2e7d32;
+  --green-light:#e8f5e9;
+  --orange:     #f57c00;
+  --orange-light:#fff3e0;
+  --yellow:     #fdd835;
+  --purple:     #6a1b9a;
+  --purple-light:#f3e5f5;
+  --teal:       #00695c;
+  --teal-light: #e0f2f1;
+  --pink:       #c2185b;
+  --pink-light: #fce4ec;
+  --bg:         #f0f4ff;
+  --white:      #ffffff;
+  --dark:       #1a1a2e;
+  --gray:       #546e7a;
+  --ruler:      repeating-linear-gradient(90deg,#fdd835 0,#fdd835 30px,#1a73e8 30px,#1a73e8 60px);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); min-height:100vh; overflow-x:hidden; color:var(--dark); }
+
+/* BACK */
+.back-btn {
+  position:fixed; top:14px; left:14px; z-index:9999;
+  background:var(--yellow); color:var(--dark); font-family:'Baloo 2',cursive;
+  font-weight:800; font-size:.9rem; padding:7px 18px; border-radius:50px;
+  text-decoration:none; box-shadow:0 3px 0 rgba(0,0,0,.2); transition:.2s;
+}
+.back-btn:hover { transform:translateY(-2px); box-shadow:0 5px 0 rgba(0,0,0,.2); }
+
+/* CHEER */
+.cheer-banner {
+  display:none; background:linear-gradient(135deg,#ff6f00,#fdd835);
+  color:var(--dark); font-family:'Baloo 2',cursive; font-weight:800;
+  font-size:clamp(1.1rem,3.5vw,1.55rem); text-align:center;
+  padding:16px 28px; border-radius:16px; margin:24px auto; max-width:700px;
+  box-shadow:0 6px 20px rgba(253,216,53,.5); animation:popIn .6s ease;
+}
+.cheer-banner.show { display:block; }
+
+/* HEADER */
+header { background:var(--dark); position:relative; overflow:hidden; }
+.ruler-stripe { height:18px; background:var(--ruler); }
+.ruler-stripe-b { height:18px; background:var(--ruler); transform:scaleX(-1); }
+.header-inner {
+  padding:36px 20px 44px; text-align:center; position:relative; z-index:1;
+}
+header h1 {
+  font-family:'Baloo 2',cursive; font-size:clamp(2rem,6vw,3.2rem);
+  font-weight:800; color:var(--yellow); text-shadow:3px 3px 0 rgba(253,216,53,.2);
+  animation:popIn .6s ease;
+}
+header p { color:#90caf9; font-size:1rem; margin-top:6px; }
+.topic-pills {
+  display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin-top:18px;
+}
+.topic-pill {
+  background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.3);
+  color:#fff; font-weight:700; font-size:.8rem; padding:5px 14px;
+  border-radius:50px; text-decoration:none; transition:background .2s;
+}
+.topic-pill:hover { background:rgba(255,255,255,.25); }
+
+/* MAIN */
+.main { max-width:900px; margin:0 auto; padding:40px 18px 80px; }
+
+/* SECTION HEADING */
+.sec-heading {
+  font-family:'Baloo 2',cursive; font-size:clamp(1.35rem,4vw,1.8rem);
+  font-weight:800; color:var(--dark); display:flex; align-items:center; gap:12px;
+  margin:56px 0 20px;
+}
+.sec-heading::after {
+  content:''; flex:1; height:3px; border-radius:2px;
+  background:linear-gradient(90deg,var(--c,var(--blue)),transparent);
+}
+.sec-heading:first-child { margin-top:0; }
+
+/* WARN BOX */
+.warn-box {
+  background:var(--red-light); border-left:6px solid var(--red);
+  border-radius:0 16px 16px 0; padding:16px 20px; margin-bottom:20px;
+}
+.warn-box h3 { font-family:'Baloo 2',cursive; color:var(--red); font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+.warn-box p  { font-size:.9rem; font-weight:600; line-height:1.6; color:#5d0000; }
+.compare { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+.wrong-eg { background:#ffcdd2; color:var(--red); border-radius:10px; padding:8px 12px; font-size:.85rem; font-weight:700; }
+.right-eg  { background:#c8f7de; color:#004d20; border-radius:10px; padding:8px 12px; font-size:.85rem; font-weight:700; }
+
+/* TEACH BOX */
+.teach-box {
+  background:var(--white); border-radius:20px; padding:22px 24px; margin-bottom:24px;
+  border-left:6px solid var(--c,var(--blue)); box-shadow:0 4px 16px rgba(0,0,0,.07);
+}
+.teach-box p { font-size:.95rem; font-weight:600; line-height:1.8; color:#333; }
+.teach-box p+p { margin-top:8px; }
+.hl { font-weight:800; }
+.hl-b { color:var(--blue);   font-weight:800; }
+.hl-r { color:var(--red);    font-weight:800; }
+.hl-g { color:var(--green);  font-weight:800; }
+.hl-o { color:var(--orange); font-weight:800; }
+.hl-p { color:var(--purple); font-weight:800; }
+
+/* CLOCK CARDS */
+.clock-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:16px; margin-bottom:24px; }
+.clock-card {
+  background:var(--white); border-radius:18px; padding:18px 12px; text-align:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.08); border-top:4px solid var(--c,var(--blue));
+}
+.clock-face {
+  width:90px; height:90px; border-radius:50%; border:5px solid var(--c,var(--blue));
+  margin:0 auto 12px; background:#f8f9ff; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.clock-face .hand-h {
+  position:absolute; bottom:50%; left:50%; transform-origin:bottom center;
+  width:4px; background:var(--dark); border-radius:4px; margin-left:-2px;
+}
+.clock-face .hand-m {
+  position:absolute; bottom:50%; left:50%; transform-origin:bottom center;
+  width:3px; background:var(--red); border-radius:3px; margin-left:-1.5px;
+}
+.clock-center { position:absolute; width:8px; height:8px; background:var(--dark); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; }
+.clock-time-txt { font-family:'Baloo 2',cursive; font-size:1.35rem; font-weight:800; color:var(--c,var(--blue)); margin-bottom:4px; }
+.clock-name { font-size:.82rem; font-weight:700; color:#555; margin-bottom:6px; }
+.digital-box {
+  background:var(--dark); color:var(--yellow); font-family:'Baloo 2',cursive;
+  font-size:1.3rem; font-weight:800; border-radius:8px; padding:6px 16px;
+  display:inline-block; letter-spacing:2px; box-shadow:inset 0 2px 6px rgba(0,0,0,.4);
+}
+
+/* GRID SQUARES */
+.grid-canvas {
+  display:grid; gap:1px; background:#999;
+  border:2px solid #555; margin:0 auto 8px;
+  width:fit-content;
+}
+.grid-cell {
+  width:28px; height:28px; background:var(--white);
+  transition:background .15s; cursor:pointer; position:relative;
+}
+.grid-cell.filled { background:var(--c,#64b5f6); }
+.grid-cell.locked { background:#b3e5fc; cursor:default; }
+
+/* COLUMN SUBTRACTION VISUAL */
+.col-sub {
+  background:var(--white); border-radius:16px; padding:20px 24px;
+  margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.07); max-width:340px;
+  font-family:'Baloo 2',cursive; font-size:1.5rem; font-weight:800;
+}
+.col-sub .row { display:flex; justify-content:flex-end; gap:4px; margin-bottom:4px; }
+.col-sub .digit-box {
+  width:44px; height:48px; background:#f5f5f5; border:2px solid #ddd;
+  border-radius:8px; display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem; font-weight:800; color:var(--dark); transition:.2s;
+}
+.col-sub .digit-box.borrow { background:#fff3e0; border-color:var(--orange); color:var(--orange); }
+.col-sub .digit-box.ans    { background:var(--green-light); border-color:var(--green); color:var(--green); }
+.col-sub .minus-sign { font-size:1.6rem; align-self:center; color:var(--red); margin-right:4px; }
+.col-sub .divider { border-top:3px solid var(--dark); margin:6px 0; }
+.col-sub .op-label { font-size:.78rem; font-weight:700; color:#888; text-align:right; margin-bottom:8px; }
+
+/* VENN DIAGRAM */
+.venn-wrap { position:relative; width:340px; height:200px; margin:0 auto 24px; }
+.venn-circle {
+  position:absolute; width:200px; height:180px; border-radius:50%;
+  border:3px solid; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.5); top:10px;
+}
+.venn-label { position:absolute; font-family:'Baloo 2',cursive; font-size:.82rem; font-weight:800; top:8px; }
+.venn-number {
+  font-family:'Baloo 2',cursive; font-size:1.1rem; font-weight:800;
+  cursor:pointer; user-select:none;
+}
+
+/* ACTIVITY BOX */
+.act-box {
+  background:var(--white); border-radius:22px; padding:26px 22px;
+  margin-bottom:30px; box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+.act-box h2 {
+  font-family:'Baloo 2',cursive; font-size:1.35rem; font-weight:800;
+  display:flex; align-items:center; gap:8px; margin-bottom:6px; color:var(--dark);
+}
+.act-num {
+  background:var(--c,var(--blue)); color:var(--white); width:34px; height:34px;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:1rem; flex-shrink:0;
+}
+.act-box .hint { font-size:.88rem; font-weight:600; color:#888; margin-bottom:18px; }
+
+/* SCORE BAR */
+.score-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+  color:var(--white); border-radius:12px; padding:10px 18px; margin-bottom:14px;
+  font-family:'Baloo 2',cursive; font-size:1rem; font-weight:800;
+}
+.score-val { font-size:1.3rem; }
+
+/* Q WRAP */
+.q-wrap { background:var(--blue-light); border-radius:14px; padding:15px; margin-bottom:13px; border:1.5px solid #c5d8ff; }
+.q-wrap .q-text { font-weight:700; color:var(--dark); margin-bottom:10px; font-size:.95rem; line-height:1.5; }
+.q-wrap .choices { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+.q-wrap .choices button {
+  font-family:'Poppins',sans-serif; font-weight:700; font-size:.88rem;
+  background:var(--white); border:2px solid var(--blue); color:var(--blue-dark);
+  padding:7px 16px; border-radius:50px; cursor:pointer; transition:.15s;
+}
+.q-wrap .choices button:hover:not(:disabled) { background:var(--blue); color:var(--white); transform:scale(1.04); }
+.q-wrap .feedback { font-weight:800; font-size:.88rem; min-height:20px; }
+
+/* NUMBER INPUT ACTIVITY */
+.num-input-row {
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+  background:var(--blue-light); border-radius:14px; padding:14px 16px;
+  margin-bottom:12px; font-family:'Baloo 2',cursive; font-size:1.2rem; font-weight:800;
+}
+.num-input {
+  font-family:'Baloo 2',cursive; font-size:1.3rem; font-weight:800;
+  width:90px; text-align:center; border:3px solid var(--blue); border-radius:10px;
+  padding:6px; color:var(--blue-dark); background:var(--white);
+  outline:none; transition:.2s;
+}
+.num-input:focus { border-color:var(--orange); background:#fffde7; }
+.num-input.correct { border-color:var(--green); background:var(--green-light); color:var(--green); }
+.num-input.wrong   { border-color:var(--red);   background:var(--red-light);   color:var(--red); animation:shake .4s; }
+.check-btn {
+  font-family:'Poppins',sans-serif; font-weight:800; font-size:.9rem;
+  background:var(--blue); color:var(--white); border:none; padding:8px 20px;
+  border-radius:50px; cursor:pointer; box-shadow:0 3px 0 var(--blue-dark); transition:.15s;
+}
+.check-btn:hover { background:var(--blue-dark); transform:translateY(-1px); }
+
+/* TF WRAP */
+.tf-item { background:var(--blue-light); border-radius:14px; padding:15px; margin-bottom:13px; border:1.5px solid #c5d8ff; }
+.tf-item .tf-text { font-weight:700; color:var(--dark); margin-bottom:10px; font-size:.95rem; line-height:1.5; }
+.tf-item .tf-btns { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+.tf-item .tf-btns button {
+  font-family:'Poppins',sans-serif; font-weight:800; font-size:.88rem;
+  padding:7px 20px; border-radius:50px; cursor:pointer; border:2px solid; transition:.15s;
+}
+.btn-t { background:var(--white); border-color:var(--green); color:var(--green); }
+.btn-f { background:var(--white); border-color:var(--red);   color:var(--red); }
+.btn-t:hover:not(:disabled) { background:var(--green); color:var(--white); }
+.btn-f:hover:not(:disabled) { background:var(--red);   color:var(--white); }
+.tf-item .feedback { font-weight:800; font-size:.88rem; min-height:18px; }
+
+/* MATCH */
+.match-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; align-items:start; margin-bottom:14px; }
+.match-col  { display:flex; flex-direction:column; gap:8px; }
+.match-col-lbl { font-family:'Baloo 2',cursive; font-size:.95rem; font-weight:800; color:var(--blue-dark); text-align:center; margin-bottom:4px; }
+.match-item {
+  font-family:'Poppins',sans-serif; font-weight:700; font-size:.88rem;
+  padding:9px 14px; border-radius:10px; border:2px solid #c5d8ff;
+  background:var(--white); cursor:pointer; text-align:center;
+  transition:all .2s; user-select:none;
+}
+.match-item:hover:not(.locked) { border-color:var(--blue); background:var(--blue-light); }
+.match-item.selected { border-color:var(--orange); background:var(--orange-light); }
+.match-item.locked   { border-color:var(--green); background:var(--green-light); color:var(--green); cursor:default; }
+.match-item.wrong-flash { animation:shake .4s; border-color:var(--red); background:var(--red-light); }
+.match-score { font-weight:800; color:var(--blue-dark); font-size:.9rem; margin-top:4px; }
+
+/* DONE MSG */
+.done-msg {
+  display:none; text-align:center; background:var(--green-light);
+  border:2px solid var(--green); border-radius:14px; padding:14px;
+  font-family:'Baloo 2',cursive; font-size:1.1rem; font-weight:800;
+  color:var(--green); margin-top:14px; animation:popIn .5s;
+}
+.done-msg.show { display:block; }
+
+/* WORD BANK */
+.wb-bank { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; background:var(--blue-light); border-radius:14px; padding:12px; }
+.wb-tok {
+  font-family:'Poppins',sans-serif; font-weight:800; font-size:.9rem;
+  background:var(--blue); color:var(--white); padding:6px 16px; border-radius:50px;
+  cursor:pointer; border:none; box-shadow:0 3px 0 var(--blue-dark); transition:opacity .2s,transform .12s; user-select:none;
+}
+.wb-tok:hover { transform:translateY(-2px); }
+.wb-tok.used { opacity:.3; pointer-events:none; }
+.wb-tok.sel  { outline:3px solid var(--orange); outline-offset:2px; }
+.fill-sent {
+  background:var(--blue-light); border-radius:10px; padding:12px 14px; margin-bottom:10px;
+  border:1.5px solid #c5d8ff; font-size:.95rem; font-weight:700; color:var(--dark);
+  display:flex; flex-wrap:wrap; align-items:center; gap:5px;
+  font-family:'Baloo 2',cursive; font-size:1rem;
+}
+.blank {
+  display:inline-flex; align-items:center; min-width:80px; height:32px;
+  border-bottom:3px solid var(--blue); padding:0 8px;
+  font-family:'Baloo 2',cursive; color:var(--blue); font-size:1rem;
+  cursor:pointer; border-radius:4px 4px 0 0; transition:background .15s;
+}
+.blank:hover { background:var(--blue-light); }
+.blank.filled  { color:var(--blue-dark); border-bottom-color:var(--green); }
+.blank.correct { border-bottom-color:var(--green); color:var(--green); }
+.blank.wrong-fill { border-bottom-color:var(--red); color:var(--red); animation:shake .4s; }
+.wb-check-btn {
+  font-family:'Poppins',sans-serif; font-weight:800; font-size:.9rem;
+  background:var(--blue); color:var(--white); border:none; padding:9px 26px;
+  border-radius:50px; cursor:pointer; margin-top:12px;
+  box-shadow:0 3px 10px rgba(26,115,232,.3); transition:.2s;
+}
+.wb-check-btn:hover { background:var(--blue-dark); transform:translateY(-1px); }
+.wb-feedback { font-weight:800; font-size:.9rem; margin-top:10px; min-height:20px; }
+
+/* ANIMATIONS */
+@keyframes popIn { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+
+/* RESPONSIVE */
+@media(max-width:560px){
+  .match-grid { grid-template-columns:1fr; }
+  .compare { grid-template-columns:1fr; }
+  .clock-row { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-btn">← Back</a>
+<div class="cheer-banner" id="cheer">Brilliant work, Emunah! You're a maths superstar! ⭐🔢 Keep going!</div>
+
+<!-- HEADER -->
+<header>
+  <div class="ruler-stripe"></div>
+  <div class="header-inner">
+    <h1>🔢 Maths Exam Prep ⭐</h1>
+    <p>Year 3 · Cambridge · End of Term — Fix every mistake, reach 50/50!</p>
+    <div class="topic-pills">
+      <a class="topic-pill" href="#time">🕐 Telling Time</a>
+      <a class="topic-pill" href="#complements">🔟 Complements</a>
+      <a class="topic-pill" href="#units">📏 Unit Conversions</a>
+      <a class="topic-pill" href="#multiples">✖️ Times Tables</a>
+      <a class="topic-pill" href="#subtraction">➖ Column Subtraction</a>
+      <a class="topic-pill" href="#area">📐 Area &amp; Perimeter</a>
+      <a class="topic-pill" href="#venn">⭕ Venn Diagrams</a>
+    </div>
+  </div>
+  <div class="ruler-stripe-b"></div>
+</header>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════
+     SECTION 1 — TELLING THE TIME
+═══════════════════════════════════════ -->
+<div id="time"></div>
+<div class="sec-heading" style="--c:#e53935">🕐 Section 1 — Telling the Time (Quarter Past &amp; Quarter To)</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q5b Mistake — Quarter past six = 06:15 NOT 06:45!</h3>
+  <p>You wrote <strong>06:45</strong> for "quarter past six" ❌<br>
+  06:45 is <strong>quarter TO seven</strong> (15 minutes before 7). Quarter PAST means 15 minutes after the hour — so quarter past six = <strong>06:15</strong>.</p>
+  <div class="compare">
+    <div class="wrong-eg">✗ "quarter past six" = 06:45 ❌<br><em>06:45 means 15 mins before 7 — that is quarter TO seven.</em></div>
+    <div class="right-eg">✓ "quarter past six" = 06:15 ✅<br><em>15 minutes AFTER 6 = 06:15.</em></div>
+  </div>
+</div>
+
+<div class="teach-box" style="--c:#e53935">
+  <p>🕐 <strong>Quarter past</strong> = 15 minutes after the hour → add <span class="hl-g">:15</span></p>
+  <p>🕐 <strong>Half past</strong> = 30 minutes after the hour → add <span class="hl-b">:30</span></p>
+  <p>🕐 <strong>Quarter to</strong> = 15 minutes BEFORE the next hour → add <span class="hl-r">:45</span></p>
+  <p style="margin-top:8px">💡 Think of the clock face: quarter past = minute hand at <strong>3</strong> · half past = at <strong>6</strong> · quarter to = at <strong>9</strong></p>
+</div>
+
+<!-- Clock reference cards -->
+<div class="clock-row">
+  <div class="clock-card" style="--c:#1a73e8">
+    <div class="digital-box">07:15</div>
+    <div style="height:10px"></div>
+    <div class="clock-name">Quarter past seven</div>
+    <div style="font-size:.8rem;color:#888;font-weight:700">Minute hand → 3 (15 mins)</div>
+  </div>
+  <div class="clock-card" style="--c:#e53935">
+    <div class="digital-box" style="background:#b71c1c">07:30</div>
+    <div style="height:10px"></div>
+    <div class="clock-name">Half past seven ✅ (Q5a)</div>
+    <div style="font-size:.8rem;color:#888;font-weight:700">Minute hand → 6 (30 mins)</div>
+  </div>
+  <div class="clock-card" style="--c:#f57c00">
+    <div class="digital-box" style="background:#e65100">06:15</div>
+    <div style="height:10px"></div>
+    <div class="clock-name">Quarter past six ⭐ (Q5b correct answer)</div>
+    <div style="font-size:.8rem;color:var(--green);font-weight:800">✅ 06:15 NOT 06:45!</div>
+  </div>
+  <div class="clock-card" style="--c:#6a1b9a">
+    <div class="digital-box" style="background:#4a148c">06:45</div>
+    <div style="height:10px"></div>
+    <div class="clock-name">Quarter TO seven ⚠️</div>
+    <div style="font-size:.8rem;color:var(--red);font-weight:800">❌ This is NOT quarter past six!</div>
+  </div>
+  <div class="clock-card" style="--c:#2e7d32">
+    <div class="digital-box" style="background:#1b5e20">08:45</div>
+    <div style="height:10px"></div>
+    <div class="clock-name">Quarter to nine</div>
+    <div style="font-size:.8rem;color:#888;font-weight:700">Minute hand → 9 (45 mins)</div>
+  </div>
+  <div class="clock-card" style="--c:#c2185b">
+    <div class="digital-box" style="background:#880e4f">03:15</div>
+    <div style="height:10px"></div>
+    <div class="clock-name">Quarter past three</div>
+    <div style="font-size:.8rem;color:#888;font-weight:700">Minute hand → 3 (15 mins)</div>
+  </div>
+</div>
+
+<!-- Activity 1 — Time MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--red)">1</div>Write the time in digital form — Pick the correct answer</h2>
+  <p class="hint">Tap the correct digital time. Remember: past = :15 or :30, TO = :45</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a1s">0 / 10</span></div>
+  <div id="a1"></div>
+  <div class="done-msg" id="a1d">🎉 Time master! You got every clock right!</div>
+</div>
+
+<!-- Activity 2 — Time TF -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--red)">2</div>Time — True or False?</h2>
+  <p class="hint">Is the digital time correct for the words shown?</p>
+  <div id="a2"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 2 — COMPLEMENTS TO 100 & 1000
+═══════════════════════════════════════ -->
+<div id="complements"></div>
+<div class="sec-heading" style="--c:#6a1b9a">🔟 Section 2 — Complements to 100 and 1000</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q6 Mistake — All four complements were wrong!</h3>
+  <p>You wrote: 270+<strong>80830</strong>=1000 ❌ · 690+<strong>410</strong>=1000 ❌ · 35+<strong>75</strong>=100 ❌ · 12+<strong>98</strong>=100 ❌</p>
+  <div class="compare">
+    <div class="wrong-eg">✗ 270 + 80830 = 1000 ❌<br>✗ 690 + 410 = 1100 ❌<br>✗ 35 + 75 = 110 ❌<br>✗ 12 + 98 = 110 ❌</div>
+    <div class="right-eg">✓ 270 + <strong>730</strong> = 1000 ✅<br>✓ 690 + <strong>310</strong> = 1000 ✅<br>✓ 35 + <strong>65</strong> = 100 ✅<br>✓ 12 + <strong>88</strong> = 100 ✅</div>
+  </div>
+</div>
+
+<div class="teach-box" style="--c:#6a1b9a">
+  <p>💡 <strong>Complement to 100</strong>: Ask "what do I add to reach 100?" → <span class="hl-p">100 − number = complement</span></p>
+  <p>💡 <strong>Complement to 1000</strong>: Ask "what do I add to reach 1000?" → <span class="hl-p">1000 − number = complement</span></p>
+  <p>🔑 <strong>Quick check</strong>: always add your answer back — if it equals 100 or 1000, you're right!<br>
+  e.g. 35 + ? = 100 → 100 − 35 = <strong>65</strong> → check: 35 + 65 = 100 ✅</p>
+</div>
+
+<!-- Interactive complements practice -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--purple)">3</div>Find the Missing Complement — Type your answer!</h2>
+  <p class="hint">Type the missing number, then press Check. Use the 100-square in your head!</p>
+  <div id="compRows"></div>
+  <button class="wb-check-btn" onclick="checkComplements()">Check all ✔</button>
+  <div class="wb-feedback" id="compFb"></div>
+</div>
+
+<!-- Activity 4 — Complements MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--purple)">4</div>Complements — Pick the correct missing number</h2>
+  <p class="hint">Tap the correct answer.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a4s">0 / 10</span></div>
+  <div id="a4"></div>
+  <div class="done-msg" id="a4d">🎉 Complement champion!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 3 — UNIT CONVERSIONS
+═══════════════════════════════════════ -->
+<div id="units"></div>
+<div class="sec-heading" style="--c:#00695c">📏 Section 3 — Unit Conversions (cm, m, km)</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q14a Mistake — 4 metres = 400 cm, NOT 40 cm!</h3>
+  <p>You wrote <strong>4 metres = 40 centimetres</strong> ❌<br>
+  There are <strong>100 cm</strong> in 1 metre — so 4 metres = 4 × 100 = <strong>400 cm</strong>. You may have used ×10 instead of ×100.</p>
+  <div class="compare">
+    <div class="wrong-eg">✗ 4 m = 40 cm ❌<br><em>40 cm = 0.4 m — less than half a metre. That's tiny!</em></div>
+    <div class="right-eg">✓ 4 m = <strong>400</strong> cm ✅<br><em>4 × 100 = 400. One metre = 100 cm always!</em></div>
+  </div>
+</div>
+
+<div class="teach-box" style="--c:#00695c">
+  <p>📏 <span class="hl-g">1 metre = 100 centimetres</span> → to convert m → cm, multiply by <strong>100</strong></p>
+  <p>📏 <span class="hl-g">1 kilometre = 1000 metres</span> → to convert km → m, multiply by <strong>1000</strong></p>
+  <p>📏 <span class="hl-b">½ km = 500 m</span> · <span class="hl-b">¾ km = 750 m</span> · <span class="hl-b">¼ km = 250 m</span></p>
+  <p>📏 To go backwards: cm → m ÷ 100 · m → km ÷ 1000</p>
+</div>
+
+<!-- Conversion reference table -->
+<div style="background:var(--white);border-radius:18px;padding:20px 22px;margin-bottom:24px;box-shadow:0 4px 14px rgba(0,0,0,.07);overflow-x:auto">
+  <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--teal);margin-bottom:14px">📐 Conversion Table</div>
+  <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+    <tr style="background:#e0f2f1">
+      <th style="padding:10px 14px;text-align:left;font-family:'Baloo 2',cursive;color:var(--teal);border-radius:8px 0 0 0">Measurement</th>
+      <th style="padding:10px 14px;text-align:left;font-family:'Baloo 2',cursive;color:var(--teal)">Conversion</th>
+      <th style="padding:10px 14px;text-align:left;font-family:'Baloo 2',cursive;color:var(--teal)">Operation</th>
+      <th style="padding:10px 14px;text-align:left;font-family:'Baloo 2',cursive;color:var(--teal);border-radius:0 8px 0 0">Example</th>
+    </tr>
+    <tr style="border-bottom:1px solid #e0f2f1">
+      <td style="padding:10px 14px;font-weight:700">metres → cm</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--green)">× 100</td>
+      <td style="padding:10px 14px;font-weight:600;color:#555">Multiply by 100</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--blue)">4 m = 400 cm ⭐</td>
+    </tr>
+    <tr style="background:#f8fffe;border-bottom:1px solid #e0f2f1">
+      <td style="padding:10px 14px;font-weight:700">cm → metres</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--orange)">÷ 100</td>
+      <td style="padding:10px 14px;font-weight:600;color:#555">Divide by 100</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--blue)">200 cm = 2 m ✅</td>
+    </tr>
+    <tr style="border-bottom:1px solid #e0f2f1">
+      <td style="padding:10px 14px;font-weight:700">km → metres</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--green)">× 1000</td>
+      <td style="padding:10px 14px;font-weight:600;color:#555">Multiply by 1000</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--blue)">¾ km = 750 m ✅</td>
+    </tr>
+    <tr style="background:#f8fffe">
+      <td style="padding:10px 14px;font-weight:700">metres → km</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--orange)">÷ 1000</td>
+      <td style="padding:10px 14px;font-weight:600;color:#555">Divide by 1000</td>
+      <td style="padding:10px 14px;font-weight:800;color:var(--blue)">3000 m = 3 km</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Activity 5 — Conversions MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--teal)">5</div>Unit Conversions — Pick the correct answer</h2>
+  <p class="hint">Remember: m → cm = ×100, km → m = ×1000</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a5s">0 / 10</span></div>
+  <div id="a5"></div>
+  <div class="done-msg" id="a5d">🎉 Conversion expert!</div>
+</div>
+
+<!-- Activity 6 — Conversion fill-in -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--teal)">6</div>Complete the Conversions — Word Bank</h2>
+  <p class="hint">Tap a number from the bank, then tap the blank where it belongs.</p>
+  <div class="wb-bank" id="wb6bank"></div>
+  <div id="wb6sents"></div>
+  <button class="wb-check-btn" onclick="checkWB('wb6','wb6fb',wb6data)">Check ✔</button>
+  <div class="wb-feedback" id="wb6fb"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 4 — TIMES TABLES & MULTIPLES
+═══════════════════════════════════════ -->
+<div id="multiples"></div>
+<div class="sec-heading" style="--c:#f57c00">✖️ Section 4 — Times Tables &amp; Multiples</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q16 — Multiples of 4 in a list</h3>
+  <p>From the list <strong>8, 14, 4, 6, 36, 18</strong> — circle ALL multiples of 4.<br>
+  The multiples of 4 are: <strong>8</strong> (4×2), <strong>4</strong> (4×1), and <strong>36</strong> (4×9). Not 14, 6 or 18.</p>
+  <div class="compare">
+    <div class="wrong-eg">✗ 14, 6, 18 are NOT multiples of 4<br><em>None of these divide evenly by 4.</em></div>
+    <div class="right-eg">✓ 4, 8, 36 ARE multiples of 4 ✅<br><em>4÷4=1, 8÷4=2, 36÷4=9 — all divide exactly.</em></div>
+  </div>
+</div>
+
+<div class="teach-box" style="--c:#f57c00">
+  <p>⭐ A <strong>multiple</strong> of a number is what you get when you multiply it: 4, 8, 12, 16, 20, 24, 28, 32, <span class="hl-o">36</span>, 40…</p>
+  <p>🔑 Quick test: divide the number by 4 — if there is <span class="hl-g">no remainder</span>, it IS a multiple. If there is a remainder, it is NOT.</p>
+  <p>e.g. 36 ÷ 4 = 9 (no remainder) → ✅ multiple · 14 ÷ 4 = 3 remainder 2 → ❌ not a multiple</p>
+</div>
+
+<!-- 4× table display -->
+<div style="background:var(--white);border-radius:18px;padding:20px;margin-bottom:24px;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+  <div style="font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;color:var(--orange);margin-bottom:12px">⭐ The 4 Times Table — All Multiples of 4</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px">
+    <div id="tt4"></div>
+  </div>
+</div>
+
+<!-- Activity 7 — Times tables MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--orange)">7</div>Is it a Multiple of 4? — True or False</h2>
+  <p class="hint">Is the number a multiple of 4? Think: does 4 go into it exactly?</p>
+  <div id="a7"></div>
+</div>
+
+<!-- Activity 8 — Identify multiples -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--orange)">8</div>Times Tables Quiz</h2>
+  <p class="hint">Tap the correct answer.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a8s">0 / 10</span></div>
+  <div id="a8"></div>
+  <div class="done-msg" id="a8d">🎉 Times tables sorted!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 5 — COLUMN SUBTRACTION
+═══════════════════════════════════════ -->
+<div id="subtraction"></div>
+<div class="sec-heading" style="--c:#c2185b">➖ Section 5 — Column Subtraction with Borrowing</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q7 Method Mistake — 764 − 392 = 372, NOT 572</h3>
+  <p>Your working showed <strong>572</strong> ❌ (you wrote the correct answer 372 separately, but the column method had an error). Let's make the borrowing method solid.</p>
+  <div class="compare">
+    <div class="wrong-eg">✗ Hundreds digit error in borrowing ❌<br>764 − 392 ≠ 572</div>
+    <div class="right-eg">✓ 764 − 392 = 372 ✅<br>Units: 4−2=2 · Tens: 6−9 borrow → 16−9=7 · Hundreds: 7−1−3=3</div>
+  </div>
+</div>
+
+<div class="teach-box" style="--c:#c2185b">
+  <p>📝 <strong>Column subtraction — borrowing steps:</strong></p>
+  <p>1️⃣ Units column first: if top &lt; bottom, <span class="hl-r">borrow 10</span> from tens column</p>
+  <p>2️⃣ Tens column: remember to <span class="hl-r">reduce by 1</span> because you borrowed</p>
+  <p>3️⃣ Hundreds column: if top &lt; bottom, borrow from thousands</p>
+  <p>⚠️ Most mistakes happen when you forget to reduce the column you borrowed from!</p>
+</div>
+
+<!-- Step-by-step 764-392 visual -->
+<div style="background:var(--white);border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+  <div style="font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;color:var(--pink);margin-bottom:16px">📝 Step-by-step: 764 − 392</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;flex-wrap:wrap">
+    <div>
+      <div style="font-weight:700;font-size:.88rem;color:#555;margin-bottom:8px">Column layout:</div>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;line-height:2;background:#f8f9ff;border-radius:12px;padding:14px 20px;display:inline-block;border:2px solid #e8eeff">
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <span style="color:#aaa;font-size:.7rem;margin-bottom:-6px">H</span>
+          <span style="color:#aaa;font-size:.7rem;margin-bottom:-6px">T</span>
+          <span style="color:#aaa;font-size:.7rem;margin-bottom:-6px">U</span>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <span>7</span><span>6</span><span>4</span>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;color:var(--red)">
+          <span>−</span><span>3</span><span>9</span><span>2</span>
+        </div>
+        <div style="border-top:3px solid var(--dark);margin:4px 0"></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;color:var(--green)">
+          <span>3</span><span>7</span><span>2</span>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:.88rem;font-weight:700;color:#333">
+      <div style="margin-bottom:10px;padding:8px 12px;background:#e8f5e9;border-radius:8px">
+        <strong style="color:var(--green)">Units:</strong> 4 − 2 = <strong>2</strong> ✅
+      </div>
+      <div style="margin-bottom:10px;padding:8px 12px;background:#fff3e0;border-radius:8px">
+        <strong style="color:var(--orange)">Tens:</strong> 6 − 9? → BORROW! 16 − 9 = <strong>7</strong><br>
+        <span style="font-size:.8rem;color:#888">The 7 in hundreds becomes 6 after borrowing</span>
+      </div>
+      <div style="padding:8px 12px;background:#e8f0fe;border-radius:8px">
+        <strong style="color:var(--blue)">Hundreds:</strong> 6 (after borrowing) − 3 = <strong>3</strong><br>
+        <span style="font-size:.8rem;color:var(--red)">⚠️ Use 6 not 7 — you borrowed 1!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Activity 9 — Subtraction MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--pink)">9</div>Column Subtraction — Pick the correct answer</h2>
+  <p class="hint">Work it out in columns. Watch the borrowing!</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a9s">0 / 10</span></div>
+  <div id="a9"></div>
+  <div class="done-msg" id="a9d">🎉 Subtraction superstar!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 6 — AREA & PERIMETER
+═══════════════════════════════════════ -->
+<div id="area"></div>
+<div class="sec-heading" style="--c:#1a73e8">📐 Section 6 — Area &amp; Perimeter</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q12 — Draw a rectangle with area 12 square centimetres</h3>
+  <p>Area = 12 sq cm means the rectangle must contain exactly 12 grid squares.<br>
+  Possible rectangles: <strong>3 × 4</strong>, <strong>2 × 6</strong>, or <strong>1 × 12</strong>.</p>
+</div>
+
+<div class="teach-box" style="--c:#1a73e8">
+  <p>📐 <strong>Area</strong> = length × width (count the squares inside) · measured in <span class="hl-b">square units (sq cm)</span></p>
+  <p>📐 <strong>Perimeter</strong> = add up ALL the sides · measured in <span class="hl-g">cm (or m, km)</span></p>
+  <p>Example: rectangle 3 × 4 → Area = 3 × 4 = <strong>12 sq cm</strong> · Perimeter = 3+4+3+4 = <strong>14 cm</strong></p>
+</div>
+
+<!-- Interactive grid: draw a 12 sq cm rectangle -->
+<div style="background:var(--white);border-radius:18px;padding:22px;margin-bottom:24px;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+  <div style="font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;color:var(--blue);margin-bottom:8px">🎨 Click squares to draw a rectangle with area = 12 sq cm</div>
+  <p style="font-size:.85rem;font-weight:600;color:#888;margin-bottom:14px">Click grid squares to fill them in. You need exactly 12 filled squares in a rectangle shape.</p>
+  <div id="drawGrid" style="display:grid;grid-template-columns:repeat(8,32px);gap:1px;background:#ccc;border:2px solid #999;width:fit-content;margin-bottom:14px"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+    <button onclick="checkGrid()" class="wb-check-btn">Check my rectangle ✔</button>
+    <button onclick="clearGrid()" style="font-family:'Poppins',sans-serif;font-weight:700;font-size:.88rem;background:white;border:2px solid #ccc;padding:7px 18px;border-radius:50px;cursor:pointer">Clear ✕</button>
+    <span id="gridCount" style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--blue)">Filled: 0 / 12</span>
+  </div>
+  <div class="wb-feedback" id="gridFb"></div>
+</div>
+
+<!-- Activity 10 — Area/Perimeter MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--blue)">10</div>Area &amp; Perimeter Quiz</h2>
+  <p class="hint">Tap the correct answer. Remember: Area = l × w · Perimeter = sum of all sides.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a10s">0 / 10</span></div>
+  <div id="a10"></div>
+  <div class="done-msg" id="a10d">🎉 Area and perimeter mastered!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 7 — VENN DIAGRAMS & SORTING
+═══════════════════════════════════════ -->
+<div id="venn"></div>
+<div class="sec-heading" style="--c:#2e7d32">⭕ Section 7 — Venn Diagrams</div>
+
+<div class="teach-box" style="--c:#2e7d32">
+  <p>⭕ A <strong>Venn diagram</strong> has two overlapping circles. Numbers that belong to BOTH groups go in the <span class="hl-g">overlapping middle section</span>.</p>
+  <p>e.g. Even numbers AND multiples of 5: <strong>20</strong> is even AND a multiple of 5 → goes in the <span class="hl-g">middle</span> overlap (not just one side!)</p>
+  <p>You correctly identified that <strong>20</strong> was in the wrong position in Q17 ✅ — great work!</p>
+</div>
+
+<!-- Activity 11 — Venn MCQ -->
+<div class="act-box">
+  <h2><div class="act-num" style="background:var(--green)">11</div>Venn Diagrams — Which section does it go in?</h2>
+  <p class="hint">Decide if the number belongs in: Left only · Middle (both) · Right only · Outside (neither)</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a11s">0 / 8</span></div>
+  <div id="a11"></div>
+  <div class="done-msg" id="a11d">🎉 Venn diagram expert! 🎉</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 8 — MEGA FINAL QUIZ
+═══════════════════════════════════════ -->
+<div class="sec-heading" style="--c:#ff6f00;margin-top:56px">🏆 Final Challenge — Mixed Exam Questions!</div>
+<div class="act-box">
+  <h2><div class="act-num" style="background:#ff6f00">12</div>Mixed Exam Practice — All Topics!</h2>
+  <p class="hint">Just like the real exam. Tap the correct answer!</p>
+  <div class="score-bar" style="background:linear-gradient(135deg,#e65100,#ff6f00)"><span>Score:</span><span class="score-val" id="a12s">0 / 12</span></div>
+  <div id="a12"></div>
+  <div class="done-msg" id="a12d">🎉🎉 YOU FINISHED! Amazing maths, Emunah — you're ready for the exam! 🌟🔢</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════
+   CHEER
+═══════════════════════════════════ */
+let cc = 0;
+function cheer(n) { cc += (n||1); if (cc >= 5) document.getElementById('cheer').classList.add('show'); }
+
+/* ═══════════════════════════════════
+   GENERIC MCQ
+═══════════════════════════════════ */
+function mcq(listId, scoreId, doneId, data) {
+  const el = document.getElementById(listId); if (!el) return;
+  let correct=0, answered=0;
+  data.forEach((q,i) => {
+    const w = document.createElement('div'); w.className='q-wrap';
+    w.innerHTML=`<div class="q-text">${i+1}. ${q.q}</div>
+      <div class="choices">${q.opts.map(o=>`<button data-v="${o}">${o}</button>`).join('')}</div>
+      <div class="feedback"></div>`;
+    w.querySelectorAll('button').forEach(b => b.addEventListener('click',()=>{
+      if(w.dataset.done) return; w.dataset.done='1';
+      w.querySelectorAll('button').forEach(x=>x.disabled=true);
+      const fb=w.querySelector('.feedback');
+      if(b.dataset.v===q.ans){
+        b.style.cssText='background:#2e7d32;color:white;border-color:#1b5e20';
+        fb.textContent='✅ Correct!'; fb.style.color='#2e7d32'; correct++; cheer();
+      } else {
+        b.style.cssText='background:#c62828;color:white;border-color:#8b0000';
+        fb.textContent=`❌ Answer: ${q.ans}${q.hint?' — '+q.hint:''}`;
+        fb.style.color='#c62828';
+        w.querySelectorAll('button').forEach(x=>{ if(x.dataset.v===q.ans) x.style.cssText='background:#c8f7de;color:#004d20;border-color:#2e7d32'; });
+      }
+      answered++;
+      if(scoreId) document.getElementById(scoreId).textContent=`${correct} / ${data.length}`;
+      if(answered===data.length && doneId){ document.getElementById(doneId).classList.add('show'); cheer(2); }
+    }));
+    el.appendChild(w);
+  });
+}
+
+/* TF BUILDER */
+function tf(listId, data) {
+  const el = document.getElementById(listId); if (!el) return;
+  data.forEach((q,i)=>{
+    const d=document.createElement('div'); d.className='tf-item';
+    d.innerHTML=`<div class="tf-text">${i+1}. ${q.s}</div>
+      <div class="tf-btns"><button class="btn-t">✅ TRUE</button><button class="btn-f">❌ FALSE</button></div>
+      <div class="feedback"></div>`;
+    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      if(d.dataset.done) return; d.dataset.done='1';
+      d.querySelectorAll('button').forEach(x=>x.disabled=true);
+      const fb=d.querySelector('.feedback'), chose=b.classList.contains('btn-t');
+      if(chose===q.a){ b.style.cssText='background:#2e7d32;color:white;border-color:#1b5e20'; fb.textContent='✅ Correct!'; fb.style.color='#2e7d32'; cheer(); }
+      else { b.style.cssText='background:#c62828;color:white;border-color:#8b0000'; fb.textContent=`❌ ${q.h}`; fb.style.color='#c62828';
+        d.querySelectorAll('button').forEach(x=>{ if(x.classList.contains('btn-t')===q.a) x.style.cssText='background:#c8f7de;color:#004d20;border-color:#2e7d32'; }); }
+    }));
+    el.appendChild(d);
+  });
+}
+
+/* WORD BANK */
+let selW=null;
+function buildWB(bankId, sentsId, words, sents) {
+  const bank=document.getElementById(bankId+'bank'), sentEl=document.getElementById(bankId+'sents');
+  const answered=new Array(sents.length).fill(false);
+  words.forEach(w=>{
+    const t=document.createElement('button'); t.className='wb-tok'; t.textContent=w; t.dataset.w=w;
+    t.addEventListener('click',()=>{ if(t.classList.contains('used')) return;
+      document.querySelectorAll(`#${bankId}bank .wb-tok`).forEach(x=>x.classList.remove('sel'));
+      if(selW===w){selW=null;return;} selW=w; t.classList.add('sel'); });
+    bank.appendChild(t);
+  });
+  sents.forEach((s,i)=>{
+    const parts=s.t.split('___'), item=document.createElement('div'), bid=`${bankId}b${i}`;
+    item.className='fill-sent'; item.innerHTML=`<span>${i+1}. ${parts[0]}</span><span class="blank" id="${bid}" data-f="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>${parts[1]||''}</span>`;
+    sentEl.appendChild(item);
+    document.getElementById(bid).addEventListener('click',()=>{
+      if(answered[i]) return; const bl=document.getElementById(bid);
+      if(!selW&&bl.dataset.f){ const old=bl.dataset.f; bl.innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; bl.dataset.f=''; bl.className='blank';
+        const tk=[...document.querySelectorAll(`#${bankId}bank .wb-tok`)].find(x=>x.dataset.w===old); if(tk) tk.classList.remove('used'); return; }
+      if(!selW) return;
+      const old=bl.dataset.f;
+      if(old){ const tk=[...document.querySelectorAll(`#${bankId}bank .wb-tok`)].find(x=>x.dataset.w===old); if(tk) tk.classList.remove('used'); }
+      bl.textContent=selW; bl.dataset.f=selW; bl.className='blank filled';
+      const ut=[...document.querySelectorAll(`#${bankId}bank .wb-tok`)].find(x=>x.dataset.w===selW);
+      if(ut){ut.classList.add('used');ut.classList.remove('sel');}
+      selW=null; document.querySelectorAll(`#${bankId}bank .wb-tok`).forEach(x=>x.classList.remove('sel'));
+    });
+  });
+}
+function checkWB(bankId, fbId, sents) {
+  let c=0;
+  sents.forEach((s,i)=>{ const b=document.getElementById(`${bankId}b${i}`); if(!b)return;
+    if(b.dataset.f===s.a){ b.className='blank correct'; c++; } else b.classList.add('wrong-fill'); });
+  const fb=document.getElementById(fbId);
+  if(c===sents.length){fb.textContent=`✅ Perfect! All ${sents.length} correct!`;fb.style.color='#2e7d32';cheer(2);}
+  else{fb.textContent=`${c}/${sents.length} correct — check the red blanks!`;fb.style.color='#c62828';}
+}
+
+/* ═══════════════════════════════════
+   4× TABLE DISPLAY
+═══════════════════════════════════ */
+(function(){ const c=document.getElementById('tt4'); if(!c) return;
+  const p=c.parentElement;
+  const grid=document.createElement('div'); grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px';
+  for(let i=1;i<=12;i++){
+    const d=document.createElement('div');
+    d.style.cssText='background:#fff3e0;border-radius:10px;padding:8px 10px;font-family:"Baloo 2",cursive;font-size:.95rem;font-weight:800;text-align:center;border-left:3px solid #f57c00';
+    d.innerHTML=`<span style="color:#888">4 × ${i} =</span> <span style="color:#e65100;font-size:1.1rem">${4*i}</span>`;
+    grid.appendChild(d);
+  }
+  p.insertBefore(grid, c); c.remove();
+})();
+
+/* ═══════════════════════════════════
+   INTERACTIVE GRID (Q12)
+═══════════════════════════════════ */
+const GCOLS=8, GROWS=6;
+const gridState=Array(GROWS).fill(null).map(()=>Array(GCOLS).fill(false));
+(function(){
+  const g=document.getElementById('drawGrid'); if(!g) return;
+  for(let r=0;r<GROWS;r++) for(let c=0;c<GCOLS;c++){
+    const cell=document.createElement('div'); cell.className='grid-cell';
+    cell.dataset.r=r; cell.dataset.c=c;
+    cell.addEventListener('click',()=>{
+      gridState[r][c]=!gridState[r][c]; cell.classList.toggle('filled',gridState[r][c]);
+      const cnt=gridState.flat().filter(Boolean).length;
+      document.getElementById('gridCount').textContent=`Filled: ${cnt} / 12`;
+    });
+    g.appendChild(cell);
+  }
+})();
+function clearGrid(){
+  gridState.forEach(r=>r.fill(false));
+  document.querySelectorAll('#drawGrid .grid-cell').forEach(c=>{c.classList.remove('filled','locked');});
+  document.getElementById('gridCount').textContent='Filled: 0 / 12';
+  document.getElementById('gridFb').textContent='';
+}
+function checkGrid(){
+  const cnt=gridState.flat().filter(Boolean).length;
+  const fb=document.getElementById('gridFb');
+  if(cnt!==12){ fb.textContent=`You have ${cnt} squares filled — you need exactly 12!`; fb.style.color='#c62828'; return; }
+  // Check if filled cells form a rectangle
+  let minR=GROWS,maxR=-1,minC=GCOLS,maxC=-1;
+  for(let r=0;r<GROWS;r++) for(let c=0;c<GCOLS;c++){
+    if(gridState[r][c]){ minR=Math.min(minR,r);maxR=Math.max(maxR,r);minC=Math.min(minC,c);maxC=Math.max(maxC,c); }
+  }
+  let isRect=true;
+  for(let r=minR;r<=maxR;r++) for(let c=minC;c<=maxC;c++) if(!gridState[r][c]) isRect=false;
+  const h=maxR-minR+1,w=maxC-minC+1;
+  if(isRect&&h*w===12){
+    fb.textContent=`✅ Perfect! You drew a ${h} × ${w} rectangle = 12 square cm! Well done!`;
+    fb.style.color='#2e7d32'; cheer(2);
+    document.querySelectorAll('#drawGrid .grid-cell').forEach(c=>{ if(c.classList.contains('filled')) c.classList.add('locked'); });
+  } else {
+    fb.textContent=`❌ That's not a rectangle shape. Try a 3×4, 2×6 or 1×12 arrangement!`;
+    fb.style.color='#c62828';
+  }
+}
+
+/* ═══════════════════════════════════
+   COMPLEMENTS INPUT PRACTICE
+═══════════════════════════════════ */
+const compData=[
+  {q:'270 + ___ = 1000', ans:730, target:1000},
+  {q:'690 + ___ = 1000', ans:310, target:1000},
+  {q:'35 + ___ = 100',   ans:65,  target:100 },
+  {q:'12 + ___ = 100',   ans:88,  target:100 },
+  {q:'450 + ___ = 1000', ans:550, target:1000},
+  {q:'78 + ___ = 100',   ans:22,  target:100 },
+  {q:'330 + ___ = 1000', ans:670, target:1000},
+  {q:'47 + ___ = 100',   ans:53,  target:100 },
+];
+(function(){
+  const el=document.getElementById('compRows'); if(!el) return;
+  compData.forEach((d,i)=>{
+    const row=document.createElement('div'); row.className='num-input-row';
+    row.innerHTML=`<span>${d.q.split('___')[0]}</span>
+      <input class="num-input" id="ci${i}" type="number" min="0" max="1000" placeholder="?" />
+      <span>${d.q.split('___')[1]||''}</span>`;
+    el.appendChild(row);
+  });
+})();
+function checkComplements(){
+  let c=0;
+  compData.forEach((d,i)=>{
+    const inp=document.getElementById('ci'+i); if(!inp) return;
+    const v=parseInt(inp.value);
+    if(v===d.ans){ inp.className='num-input correct'; c++; }
+    else { inp.className='num-input wrong'; setTimeout(()=>inp.className='num-input',600); }
+  });
+  const fb=document.getElementById('compFb');
+  if(c===compData.length){fb.textContent=`✅ Perfect! All ${compData.length} complements correct!`;fb.style.color='#2e7d32';cheer(2);}
+  else{fb.textContent=`${c}/${compData.length} correct. Tip: ${1000} − 270 = 730. Check the red ones!`;fb.style.color='#c62828';}
+}
+
+/* ═══════════════════════════════════
+   WORD BANK DATA
+═══════════════════════════════════ */
+const wb6data=[
+  {t:'4 metres = ___ centimetres',    a:'400'},
+  {t:'3/4 kilometre = ___ metres',    a:'750'},
+  {t:'200 centimetres = ___ metres',  a:'2'  },
+  {t:'7 metres = ___ centimetres',    a:'700'},
+  {t:'1/2 kilometre = ___ metres',    a:'500'},
+  {t:'500 centimetres = ___ metres',  a:'5'  },
+];
+buildWB('wb6','wb6',['400','750','2','700','500','5'], wb6data);
+
+/* ═══════════════════════════════════
+   ACTIVITY DATA
+═══════════════════════════════════ */
+
+// A1 — Time MCQ
+mcq('a1','a1s','a1d',[
+  {q:'<strong>Quarter past six</strong> in digital form is:',
+   opts:['06:45','06:30','06:15'],ans:'06:15',hint:'Quarter past = 15 mins after = :15'},
+  {q:'<strong>Half past seven</strong> in digital form is:',
+   opts:['07:15','07:30','07:45'],ans:'07:30',hint:'Half past = 30 mins after = :30'},
+  {q:'<strong>Quarter to nine</strong> in digital form is:',
+   opts:['09:15','09:45','08:45'],ans:'08:45',hint:'Quarter TO nine = 15 mins BEFORE 9 = 08:45'},
+  {q:'<strong>Quarter past three</strong> in digital form is:',
+   opts:['03:45','03:15','02:45'],ans:'03:15',hint:'Past = after the hour. Quarter = 15 mins. 03:15'},
+  {q:'<strong>Half past eleven</strong> in digital form is:',
+   opts:['11:15','11:45','11:30'],ans:'11:30',hint:'Half past = 30 mins after = :30'},
+  {q:'What time is <strong>06:45</strong> in words?',
+   opts:['Quarter past six','Quarter to six','Quarter to seven'],ans:'Quarter to seven',hint:'06:45 = 15 mins before 7:00 = quarter TO seven'},
+  {q:'What time is <strong>08:15</strong> in words?',
+   opts:['Quarter to eight','Quarter past eight','Half past eight'],ans:'Quarter past eight',hint:':15 = quarter past. 08:15 = quarter past eight'},
+  {q:'What time is <strong>04:30</strong> in words?',
+   opts:['Quarter past four','Quarter to four','Half past four'],ans:'Half past four',hint:':30 = half past. 04:30 = half past four'},
+  {q:'<strong>Quarter to five</strong> in digital form is:',
+   opts:['05:15','04:45','05:45'],ans:'04:45',hint:'Quarter TO five = 15 mins before 5 = 04:45'},
+  {q:'<strong>Quarter past midnight (12)</strong> in digital form is:',
+   opts:['12:15','12:45','00:15'],ans:'12:15',hint:'Quarter past 12 = 15 mins after 12 = 12:15'},
+]);
+
+// A2 — Time TF
+tf('a2',[
+  {s:'"Quarter past six" in digital form is 06:15.',     a:true,  h:'Correct! Quarter past = :15 after the hour. 06:15 ✅'},
+  {s:'"Quarter past six" in digital form is 06:45.',     a:false, h:'06:45 is quarter TO seven. Quarter PAST six = 06:15.'},
+  {s:'"Quarter to seven" in digital form is 06:45.',     a:true,  h:'Correct! Quarter TO seven = 15 mins before 7 = 06:45 ✅'},
+  {s:'"Half past four" in digital form is 04:30.',       a:true,  h:'Correct! Half past = :30. 04:30 ✅'},
+  {s:'06:15 means quarter TO six.',                      a:false, h:'No! 06:15 means quarter PAST six (15 mins after 6). Quarter TO six = 05:45.'},
+  {s:'Quarter to and quarter past mean the same thing.',  a:false, h:'No! Quarter PAST = 15 mins after the hour (:15). Quarter TO = 15 mins before the next hour (:45).'},
+]);
+
+// A4 — Complements MCQ
+mcq('a4','a4s','a4d',[
+  {q:'270 + ___ = 1000',opts:['730','80830','830'],ans:'730',hint:'1000 − 270 = 730'},
+  {q:'690 + ___ = 1000',opts:['410','310','210'],  ans:'310',hint:'1000 − 690 = 310. 690+410=1100 ❌'},
+  {q:'35 + ___ = 100',  opts:['75','65','55'],      ans:'65', hint:'100 − 35 = 65. 35+75=110 ❌'},
+  {q:'12 + ___ = 100',  opts:['98','88','78'],      ans:'88', hint:'100 − 12 = 88. 12+98=110 ❌'},
+  {q:'450 + ___ = 1000',opts:['650','450','550'],   ans:'550',hint:'1000 − 450 = 550'},
+  {q:'78 + ___ = 100',  opts:['32','12','22'],      ans:'22', hint:'100 − 78 = 22'},
+  {q:'___ + 425 = 1000',opts:['675','575','585'],   ans:'575',hint:'1000 − 425 = 575'},
+  {q:'___ + 63 = 100',  opts:['47','37','57'],      ans:'37', hint:'100 − 63 = 37'},
+  {q:'130 + ___ = 1000',opts:['970','870','770'],   ans:'870',hint:'1000 − 130 = 870'},
+  {q:'54 + ___ = 100',  opts:['56','46','36'],      ans:'46', hint:'100 − 54 = 46'},
+]);
+
+// A5 — Unit Conversions MCQ
+mcq('a5','a5s','a5d',[
+  {q:'4 metres = ___ centimetres',  opts:['40 cm','400 cm','4000 cm'], ans:'400 cm',  hint:'4 × 100 = 400 cm. NOT 40!'},
+  {q:'3/4 km = ___ metres',         opts:['34 m','75 m','750 m'],      ans:'750 m',   hint:'3/4 × 1000 = 750 m ✅'},
+  {q:'200 centimetres = ___ metres',opts:['20 m','0.2 m','2 m'],       ans:'2 m',     hint:'200 ÷ 100 = 2 m ✅'},
+  {q:'7 metres = ___ centimetres',  opts:['70 cm','700 cm','7000 cm'], ans:'700 cm',  hint:'7 × 100 = 700 cm'},
+  {q:'1/2 km = ___ metres',         opts:['50 m','500 m','5000 m'],    ans:'500 m',   hint:'1/2 × 1000 = 500 m'},
+  {q:'500 cm = ___ metres',         opts:['50 m','0.5 m','5 m'],       ans:'5 m',     hint:'500 ÷ 100 = 5 m'},
+  {q:'3000 metres = ___ kilometres',opts:['30 km','0.3 km','3 km'],    ans:'3 km',    hint:'3000 ÷ 1000 = 3 km'},
+  {q:'1/4 km = ___ metres',         opts:['250 m','400 m','25 m'],     ans:'250 m',   hint:'1/4 × 1000 = 250 m'},
+  {q:'900 cm = ___ metres',         opts:['90 m','0.9 m','9 m'],       ans:'9 m',     hint:'900 ÷ 100 = 9 m'},
+  {q:'Which is the BEST unit to measure the LENGTH of a car?',
+   opts:['Centimetres','Metres','Kilometres'],ans:'Metres',hint:'A car is about 4-5 metres long.'},
+]);
+
+// A7 — Is it a multiple of 4? TF
+tf('a7',[
+  {s:'<strong>8</strong> is a multiple of 4.',   a:true,  h:'Correct! 8 ÷ 4 = 2 (no remainder) → ✅ multiple of 4.'},
+  {s:'<strong>14</strong> is a multiple of 4.',  a:false, h:'14 ÷ 4 = 3 remainder 2 → NOT a multiple of 4.'},
+  {s:'<strong>36</strong> is a multiple of 4.',  a:true,  h:'Correct! 36 ÷ 4 = 9 (no remainder) → ✅ multiple of 4.'},
+  {s:'<strong>18</strong> is a multiple of 4.',  a:false, h:'18 ÷ 4 = 4 remainder 2 → NOT a multiple of 4.'},
+  {s:'<strong>4</strong> is a multiple of 4.',   a:true,  h:'Correct! 4 ÷ 4 = 1 (no remainder) → ✅ Yes, 4 itself is a multiple of 4.'},
+  {s:'<strong>6</strong> is a multiple of 4.',   a:false, h:'6 ÷ 4 = 1 remainder 2 → NOT a multiple of 4.'},
+  {s:'<strong>20</strong> is a multiple of 4.',  a:true,  h:'Correct! 20 ÷ 4 = 5 → ✅ multiple of 4.'},
+  {s:'<strong>28</strong> is a multiple of 4.',  a:true,  h:'Correct! 28 ÷ 4 = 7 → ✅ multiple of 4.'},
+]);
+
+// A8 — Times tables MCQ
+mcq('a8','a8s','a8d',[
+  {q:'Which numbers from this list are multiples of 4? <strong>8, 14, 4, 6, 36, 18</strong>',
+   opts:['8 and 36 only','8, 4 and 36','14, 6 and 18'],ans:'8, 4 and 36',hint:'4×2=8, 4×1=4, 4×9=36'},
+  {q:'4 × 9 = ?',      opts:['32','36','40'],     ans:'36',hint:'4×9=36'},
+  {q:'4 × 7 = ?',      opts:['24','32','28'],     ans:'28',hint:'4×7=28'},
+  {q:'4 × 12 = ?',     opts:['44','46','48'],     ans:'48',hint:'4×12=48'},
+  {q:'32 ÷ 4 = ?',     opts:['7','8','9'],        ans:'8', hint:'32÷4=8 because 4×8=32'},
+  {q:'Which is NOT a multiple of 4?',opts:['12','20','18','24'],ans:'18',hint:'18÷4=4 remainder 2 — not a multiple.'},
+  {q:'4 × 6 = ?',      opts:['20','24','28'],     ans:'24',hint:'4×6=24'},
+  {q:'Is 48 a multiple of 4?',opts:['Yes, 48÷4=12','No, 48 is too big','No, only small numbers'],ans:'Yes, 48÷4=12',hint:'48÷4=12 exactly → yes, it is a multiple.'},
+  {q:'The 4 times table goes: 4, 8, 12, 16, 20… What comes next?',opts:['22','24','26'],ans:'24',hint:'20+4=24'},
+  {q:'4 × 11 = ?',     opts:['41','44','48'],     ans:'44',hint:'4×11=44'},
+]);
+
+// A9 — Column Subtraction MCQ
+mcq('a9','a9s','a9d',[
+  {q:'764 − 392 = ?',  opts:['572','372','472'],  ans:'372',  hint:'Borrow in tens: 16−9=7, then hundreds: 6−3=3. Answer: 372'},
+  {q:'247 − 95 = ?',   opts:['142','162','152'],  ans:'152',  hint:'Units: 7−5=2, Tens: 4−9 borrow→14−9=5 but 2→1, Hundreds: 1−0=1... actually 247−95=152'},
+  {q:'528 − 35 = ?',   opts:['483','493','503'],  ans:'493',  hint:'528−35: 8−5=3, 2−3 borrow→12−3=9, 5−1=4→ wait 528−35=493'},
+  {q:'300 − 147 = ?',  opts:['163','143','153'],  ans:'153',  hint:'300−147=153. Borrow carefully from hundreds.'},
+  {q:'600 − 254 = ?',  opts:['346','356','364'],  ans:'346',  hint:'600−254=346'},
+  {q:'845 − 267 = ?',  opts:['578','568','588'],  ans:'578',  hint:'845−267=578'},
+  {q:'500 − 188 = ?',  opts:['302','312','322'],  ans:'312',  hint:'500−188=312'},
+  {q:'764 children, 392 are girls. How many boys?',
+   opts:['572','272','372'],ans:'372',hint:'764−392=372 boys. ⚠️ Your working showed 572 but 372 is correct!'},
+  {q:'917 − 456 = ?',  opts:['451','461','471'],  ans:'461',  hint:'917−456=461'},
+  {q:'When subtracting 764 − 392, after borrowing in the tens column, what does the hundreds digit become?',
+   opts:['7 (unchanged)','6 (reduced by 1)','5'],ans:'6 (reduced by 1)',hint:'You borrowed 1 from the hundreds column, so 7 becomes 6.'},
+]);
+
+// A10 — Area & Perimeter MCQ
+mcq('a10','a10s','a10d',[
+  {q:'A rectangle is 3 cm long and 4 cm wide. What is its area?',
+   opts:['7 sq cm','14 sq cm','12 sq cm'],ans:'12 sq cm',hint:'Area = 3 × 4 = 12 sq cm'},
+  {q:'A rectangle is 3 cm long and 4 cm wide. What is its perimeter?',
+   opts:['12 cm','14 cm','7 cm'],ans:'14 cm',hint:'Perimeter = 3+4+3+4 = 14 cm'},
+  {q:'Which rectangle also has an area of 12 sq cm?',
+   opts:['2 × 7','2 × 6','3 × 5'],ans:'2 × 6',hint:'2 × 6 = 12 sq cm ✅'},
+  {q:'A square has sides of 5 cm. What is its area?',
+   opts:['10 sq cm','20 sq cm','25 sq cm'],ans:'25 sq cm',hint:'Area = 5 × 5 = 25 sq cm'},
+  {q:'A square has sides of 5 cm. What is its perimeter?',
+   opts:['10 cm','25 cm','20 cm'],ans:'20 cm',hint:'Perimeter = 5+5+5+5 = 20 cm'},
+  {q:'A shape has area 8 sq cm. Each square is 1 cm. Which rectangle could it be?',
+   opts:['3 × 3','2 × 4','3 × 4'],ans:'2 × 4',hint:'2 × 4 = 8 sq cm ✅'},
+  {q:'A rectangle is 7 cm × 2 cm. What is its perimeter?',
+   opts:['14 cm','9 cm','18 cm'],ans:'18 cm',hint:'Perimeter = 7+2+7+2 = 18 cm'},
+  {q:'What is the area of a 6 × 2 rectangle?',
+   opts:['8 sq cm','12 sq cm','16 sq cm'],ans:'12 sq cm',hint:'6 × 2 = 12 sq cm ✅'},
+  {q:'A shape has these sides: 4cm, 2cm, 3cm, 3cm, 7cm, 5cm. What is its perimeter?',
+   opts:['20 cm','24 cm','26 cm'],ans:'24 cm',hint:'4+2+3+3+7+5 = 24 cm ✅ (Q3b from your test!)'},
+  {q:'To draw a rectangle with area 12 sq cm on a grid, which dimensions work?',
+   opts:['5 × 7','3 × 4','4 × 5'],ans:'3 × 4',hint:'3 × 4 = 12 sq cm ✅. Any of 1×12, 2×6, 3×4 work.'},
+]);
+
+// A11 — Venn MCQ
+mcq('a11','a11s','a11d',[
+  {q:'Venn diagram: LEFT = even numbers, RIGHT = multiples of 5. Where does <strong>20</strong> go?',
+   opts:['Left only (even, not mult of 5)','Middle (both even AND mult of 5)','Right only (mult of 5, not even)'],
+   ans:'Middle (both even AND mult of 5)',hint:'20 is even (20÷2=10) AND a multiple of 5 (20÷5=4) → MIDDLE overlap.'},
+  {q:'Venn: LEFT = even, RIGHT = multiples of 5. Where does <strong>15</strong> go?',
+   opts:['Left only','Middle','Right only'],ans:'Right only',hint:'15 is odd (not even) but IS a multiple of 5 → right only.'},
+  {q:'Venn: LEFT = even, RIGHT = multiples of 5. Where does <strong>14</strong> go?',
+   opts:['Left only','Middle','Right only'],ans:'Left only',hint:'14 is even but NOT a multiple of 5 (14÷5=2 r4) → left only.'},
+  {q:'Venn: LEFT = multiples of 3, RIGHT = multiples of 4. Where does <strong>12</strong> go?',
+   opts:['Left only','Middle (both)','Right only'],ans:'Middle (both)',hint:'12 is both a multiple of 3 (12÷3=4) and of 4 (12÷4=3) → middle.'},
+  {q:'In the Venn diagram from Q17, which number was NOT in the correct position?',
+   opts:['14','40','20'],ans:'20',hint:'20 is even AND a multiple of 5, so it should be in the OVERLAP with 40 — not in the multiples-of-5 only section.'},
+  {q:'Venn: LEFT = even, RIGHT = multiples of 5. Is <strong>40</strong> correctly placed in the MIDDLE?',
+   opts:['Yes — 40 is both even and a multiple of 5','No — 40 is only even','No — 40 is only a multiple of 5'],
+   ans:'Yes — 40 is both even and a multiple of 5',hint:'40÷2=20 (even ✅) and 40÷5=8 (multiple of 5 ✅) → correctly in the overlap.'},
+  {q:'Venn: LEFT = even, RIGHT = multiples of 5. Where does <strong>6</strong> go?',
+   opts:['Left only','Middle','Outside both circles'],ans:'Left only',hint:'6 is even but NOT a multiple of 5 → left circle only.'},
+  {q:'A number is in the MIDDLE of a Venn diagram with left="multiples of 2" and right="multiples of 3". This means:',
+   opts:['The number is not a multiple of either','The number is a multiple of BOTH 2 and 3','The number is only a multiple of 2'],
+   ans:'The number is a multiple of BOTH 2 and 3',hint:'The middle/overlap means it satisfies BOTH conditions.'},
+]);
+
+// A12 — MEGA FINAL
+mcq('a12','a12s','a12d',[
+  {q:'<strong>"Quarter past six"</strong> in digital form is:',
+   opts:['06:45','06:15','06:30'],ans:'06:15',hint:'Quarter PAST = :15 after the hour.'},
+  {q:'<strong>270 + ___ = 1000</strong>',opts:['830','730','720'],ans:'730',hint:'1000 − 270 = 730'},
+  {q:'<strong>4 metres = ___ centimetres</strong>',opts:['40','400','4000'],ans:'400',hint:'4 × 100 = 400 cm'},
+  {q:'Which numbers from the list are multiples of 4? <strong>8, 14, 4, 6, 36, 18</strong>',
+   opts:['8 and 36 only','14 and 18','8, 4 and 36'],ans:'8, 4 and 36',hint:'4×2=8, 4×1=4, 4×9=36 ✅'},
+  {q:'<strong>764 − 392 = ?</strong>',opts:['572','472','372'],ans:'372',hint:'Borrow in tens: 16−9=7. Hundreds: 6−3=3. Answer: 372'},
+  {q:'A rectangle is <strong>3 cm × 4 cm</strong>. What is the area?',
+   opts:['7 sq cm','14 sq cm','12 sq cm'],ans:'12 sq cm',hint:'3 × 4 = 12 sq cm'},
+  {q:'<strong>35 + ___ = 100</strong>',opts:['75','65','55'],ans:'65',hint:'100 − 35 = 65. NOT 75 (35+75=110)'},
+  {q:'<strong>3/4 km = ___ metres</strong>',opts:['34 m','75 m','750 m'],ans:'750 m',hint:'3/4 × 1000 = 750 m'},
+  {q:'<strong>"Quarter to nine"</strong> in digital form is:',
+   opts:['09:15','09:45','08:45'],ans:'08:45',hint:'Quarter TO nine = 15 mins before 9 = 08:45'},
+  {q:'<strong>12 + ___ = 100</strong>',opts:['98','88','78'],ans:'88',hint:'100 − 12 = 88. NOT 98 (12+98=110)'},
+  {q:'Venn diagram: LEFT=even, RIGHT=multiples of 5. Where does <strong>20</strong> go?',
+   opts:['Left only','Right only','Middle (both)'],ans:'Middle (both)',hint:'20 is even AND a multiple of 5 → MIDDLE overlap.'},
+  {q:'<strong>690 + ___ = 1000</strong>',opts:['410','310','210'],ans:'310',hint:'1000 − 690 = 310. NOT 410 (690+410=1100)'},
+]);
+</script>
+</body>
+</html>

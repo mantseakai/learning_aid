@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>French Exam Prep 🌟 — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:       #1565c0;
+  --blue-light: #bbdefb;
+  --blue-mid:   #1976d2;
+  --blue-dark:  #0d47a1;
+  --pink:       #e91e8c;
+  --gold:       #fcd116;
+  --green:      #2e7d32;
+  --green-light:#e8f5e9;
+  --red:        #c62828;
+  --red-light:  #ffebee;
+  --orange:     #e65100;
+  --bg:         linear-gradient(160deg,#ffeef8 0%,#f8d7f0 40%,#e8d5f5 100%);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 70px;
+  color: #1a1a2e;
+}
+
+/* BACK BUTTON */
+.back-home-btn {
+  position: fixed; top: 14px; left: 14px; z-index: 999;
+  background: white; color: var(--pink); border: 2.5px solid var(--pink);
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .9rem;
+  padding: 8px 16px; border-radius: 50px; text-decoration: none;
+  box-shadow: 0 3px 10px rgba(233,30,140,.15);
+  transition: background .2s, color .2s, transform .15s;
+}
+.back-home-btn:hover { background: var(--pink); color: white; transform: translateY(-1px); }
+
+/* CHEER */
+#cheer {
+  display: none; background: linear-gradient(135deg,#ff6ec7,#e91e8c,#1565c0);
+  color: #fff; text-align: center; font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.1rem,3.5vw,1.6rem); padding: 18px 24px;
+  border-radius: 16px; margin: 24px auto; max-width: 750px;
+  box-shadow: 0 6px 24px rgba(233,30,140,.35);
+  animation: popIn .5s ease; letter-spacing: .5px;
+}
+@keyframes popIn { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
+@keyframes shake  { 0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)} }
+
+/* HERO */
+header {
+  background: linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,#1976d2 100%);
+  padding: 70px 20px 60px; text-align: center; position: relative; overflow: hidden;
+}
+header::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 38px;
+  background: linear-gradient(160deg,#ffeef8 0%,#f8d7f0 40%,#e8d5f5 100%);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+header h1 {
+  font-family: 'Fredoka One', cursive; color: #fff;
+  font-size: clamp(1.9rem,6vw,3.2rem); letter-spacing: 1.5px;
+  text-shadow: 3px 3px 0 rgba(0,0,0,.3); animation: popIn .7s ease; margin-bottom: 10px;
+}
+header .subtitle { color: #bbdefb; font-size: clamp(.9rem,2.5vw,1.1rem); font-weight: 600; margin-bottom: 18px; }
+.date-badge {
+  display: inline-block; background: rgba(255,255,255,.15); color: white;
+  border: 1.5px solid rgba(255,255,255,.4); border-radius: 50px;
+  padding: 5px 16px; font-size: .88rem; font-weight: 700;
+}
+.topic-pills {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px;
+}
+.topic-pill {
+  background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.45);
+  color: #fff; font-weight: 800; font-size: .82rem; padding: 5px 14px;
+  border-radius: 50px; text-decoration: none; transition: background .2s;
+}
+.topic-pill:hover { background: rgba(255,255,255,.3); }
+
+/* MAIN */
+main { max-width: 820px; margin: 0 auto; padding: 30px 16px 0; }
+
+/* SECTION TITLES */
+.section-title {
+  font-family: 'Fredoka One', cursive; color: var(--blue-dark);
+  font-size: clamp(1.3rem,4vw,1.8rem); margin-bottom: 6px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title .flag { font-size: 1.4rem; }
+.section-intro { color: #444; font-size: .95rem; font-weight: 600; margin-bottom: 20px; padding-left: 4px; }
+.section-divider {
+  height: 3px; background: linear-gradient(90deg,var(--blue-light),var(--pink),var(--blue-light));
+  border-radius: 4px; margin: 32px 0 28px; opacity: .5;
+}
+
+/* RULE / TEACH BOX */
+.rule-box {
+  background: linear-gradient(135deg,#fff9c4,#fff3e0); border: 2.5px solid #f9a825;
+  border-radius: 14px; padding: 18px 20px; margin-bottom: 22px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.rule-box .icon { font-size: 2rem; flex-shrink: 0; }
+.rule-box h3 { font-family: 'Fredoka One', cursive; color: var(--orange); font-size: 1.05rem; margin-bottom: 6px; }
+.rule-box p  { color: #444; font-size: .9rem; font-weight: 600; line-height: 1.5; }
+.rule-box .compare { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.wrong-eg { background: var(--red-light); color: var(--red); border: 1.5px solid #ef9a9a; border-radius: 8px; padding: 7px 12px; font-size: .85rem; font-weight: 700; }
+.right-eg  { background: var(--green-light); color: var(--green); border: 1.5px solid #a5d6a7; border-radius: 8px; padding: 7px 12px; font-size: .85rem; font-weight: 700; }
+
+/* SENTENCE HIGHLIGHT */
+.sentence-highlight {
+  background: #e8f0fe; border-left: 4px solid var(--blue); border-radius: 0 10px 10px 0;
+  padding: 12px 16px; margin: 14px 0 22px; font-size: .93rem; font-weight: 700; color: #1a237e;
+}
+.sentence-highlight .en { color: #555; font-style: italic; font-weight: 600; margin-top: 4px; display: block; font-size: .88rem; }
+
+/* NUMBER TABLE */
+.num-table-wrap { background: white; border-radius: 16px; border: 2px solid var(--blue-light); overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 14px rgba(21,101,192,.12); }
+.num-table-header { background: linear-gradient(135deg,var(--blue-dark),var(--blue)); color: white; padding: 12px 18px; font-family: 'Fredoka One', cursive; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+table.num-tbl { width: 100%; border-collapse: collapse; font-size: .9rem; }
+table.num-tbl th { background: #e3f2fd; color: var(--blue-dark); font-weight: 800; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--blue-light); }
+table.num-tbl td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+table.num-tbl tr:last-child td { border-bottom: none; }
+table.num-tbl tr:nth-child(even) td { background: #f8fbff; }
+.num-fr { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: 1rem; }
+.num-trick { font-size: .78rem; font-weight: 700; color: var(--orange); background: #fff3e0; border-radius: 6px; padding: 2px 8px; margin-left: 6px; }
+.num-warn { background: #ffebee; }
+.num-warn .num-fr { color: var(--red); }
+
+/* CLOCK CARD */
+.clocks-row { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 16px; margin-bottom: 22px; }
+.clock-card {
+  background: white; border-radius: 16px; border: 2px solid var(--blue-light);
+  padding: 18px 14px; text-align: center; box-shadow: 0 4px 14px rgba(21,101,192,.1);
+}
+.clock-face {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 4px solid var(--blue); margin: 0 auto 12px;
+  background: #f8fbff; position: relative; display: flex; align-items: center; justify-content: center;
+}
+.clock-face .time-text { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: 1.2rem; }
+.clock-fr { font-family: 'Fredoka One', cursive; color: var(--blue-dark); font-size: .95rem; margin-bottom: 4px; }
+.clock-en { color: #666; font-size: .82rem; font-weight: 700; }
+
+/* TIME UNITS GRID */
+.unit-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 14px; margin-bottom: 24px; }
+.unit-card {
+  background: white; border-radius: 14px; border: 2px solid var(--blue-light);
+  padding: 14px 12px; text-align: center; box-shadow: 0 3px 10px rgba(21,101,192,.1);
+  transition: transform .2s, box-shadow .2s;
+}
+.unit-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(21,101,192,.18); }
+.unit-card .icon { font-size: 2rem; margin-bottom: 8px; }
+.unit-card .fr { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: 1.1rem; margin-bottom: 3px; }
+.unit-card .en { color: #555; font-size: .85rem; font-weight: 700; margin-bottom: 6px; }
+.unit-card .detail { background: #e8f0fe; border-radius: 8px; padding: 5px 8px; font-size: .78rem; color: #1a237e; font-weight: 700; }
+
+/* VOCAB GRID */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(170px,1fr)); gap: 14px; margin-bottom: 24px; }
+.vocab-card {
+  background: white; border-radius: 14px; border: 2px solid var(--blue-light);
+  padding: 14px 12px; text-align: center; box-shadow: 0 3px 10px rgba(21,101,192,.1);
+}
+.vocab-card .fr { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: 1.1rem; margin-bottom: 3px; }
+.vocab-card .en { color: #555; font-size: .85rem; font-weight: 700; margin-bottom: 8px; }
+.vocab-card .example { background: #e8f0fe; border-radius: 8px; padding: 6px 8px; font-size: .78rem; color: #1a237e; font-weight: 600; line-height: 1.4; text-align: left; }
+.vocab-card .example em { display: block; color: #555; font-style: normal; font-weight: 400; margin-top: 2px; }
+
+/* ACTIVITY CARD */
+.activity-card {
+  background: white; border-radius: 18px; border: 2.5px solid var(--blue-light);
+  padding: 24px 22px; margin-bottom: 28px; box-shadow: 0 4px 16px rgba(21,101,192,.1);
+}
+.activity-card h2 {
+  font-family: 'Fredoka One', cursive; color: var(--blue);
+  font-size: clamp(1.1rem,3vw,1.35rem); margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+}
+.activity-card .act-intro { color: #555; font-size: .9rem; font-weight: 600; margin-bottom: 20px; }
+.score-line { font-family: 'Fredoka One', cursive; color: var(--blue-dark); font-size: .9rem; margin-bottom: 12px; }
+
+/* Q-WRAP */
+.q-wrap {
+  background: #f5f7ff; border-radius: 12px; padding: 16px; margin-bottom: 14px; border: 1.5px solid #dde4ff;
+}
+.q-wrap .q-text { font-weight: 800; color: #1a237e; margin-bottom: 10px; font-size: .95rem; }
+.q-wrap .choices { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.q-wrap .choices button {
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
+  background: white; border: 2px solid var(--blue); color: var(--blue);
+  padding: 7px 16px; border-radius: 50px; cursor: pointer;
+  transition: background .15s, color .15s, transform .12s;
+}
+.q-wrap .choices button:hover:not(:disabled) { background: var(--blue); color: white; transform: scale(1.05); }
+.q-wrap .feedback { font-weight: 800; font-size: .9rem; min-height: 22px; }
+
+/* TF-WRAP */
+.tf-wrap {
+  background: #f5f7ff; border-radius: 12px; padding: 16px; margin-bottom: 14px; border: 1.5px solid #dde4ff;
+}
+.tf-wrap .tf-text { font-weight: 800; color: #1a237e; margin-bottom: 4px; font-size: .95rem; }
+.tf-wrap .tf-sentence { background: #e8f0fe; border-radius: 8px; padding: 8px 12px; font-size: .92rem; color: #1a237e; font-style: italic; margin-bottom: 10px; font-weight: 700; }
+.tf-wrap .tf-btns { display: flex; gap: 8px; margin-bottom: 8px; }
+.tf-wrap .tf-btns button { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .88rem; padding: 7px 22px; border-radius: 50px; cursor: pointer; border: 2px solid; transition: .15s; }
+.tf-wrap .tf-btns .btn-true  { background: white; border-color: var(--green); color: var(--green); }
+.tf-wrap .tf-btns .btn-true:hover:not(:disabled)  { background: var(--green); color: white; }
+.tf-wrap .tf-btns .btn-false { background: white; border-color: var(--red); color: var(--red); }
+.tf-wrap .tf-btns .btn-false:hover:not(:disabled) { background: var(--red); color: white; }
+.tf-wrap .feedback { font-weight: 800; font-size: .9rem; min-height: 22px; }
+
+/* MATCH */
+.match-area { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-col h4 { font-family: 'Fredoka One', cursive; color: var(--blue); font-size: .95rem; margin-bottom: 4px; text-align: center; }
+.match-item {
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
+  padding: 9px 14px; border-radius: 10px; border: 2px solid var(--blue-light);
+  background: white; cursor: pointer; text-align: center;
+  transition: border-color .15s, background .15s; user-select: none;
+}
+.match-item:hover:not(.matched-ok) { border-color: var(--pink); background: #fce4ec; }
+.match-item.selected   { border-color: var(--pink); background: #fce4ec; }
+.match-item.matched-ok { border-color: var(--green); background: var(--green-light); color: var(--green); cursor: default; }
+.match-score { font-weight: 800; color: var(--blue-dark); font-size: .9rem; margin-top: 4px; }
+
+/* WORD BANK */
+.word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.wb-token {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .88rem;
+  background: var(--blue); color: white; padding: 6px 16px; border-radius: 50px;
+  cursor: pointer; border: none; transition: opacity .2s, transform .12s;
+  box-shadow: 0 3px 0 var(--blue-dark);
+}
+.wb-token:hover:not(.used) { transform: scale(1.07); }
+.wb-token.used  { opacity: .35; cursor: default; pointer-events: none; }
+.wb-token.sel   { outline: 3px solid var(--pink); }
+.fill-sentence {
+  background: #f5f7ff; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+  border: 1.5px solid #dde4ff; font-size: .92rem; font-weight: 700; color: #1a237e;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.blank {
+  display: inline-flex; align-items: center; min-width: 90px; height: 30px;
+  border-bottom: 2.5px solid var(--blue); padding: 0 8px;
+  font-family: 'Fredoka One', cursive; color: var(--pink); font-size: .95rem;
+  cursor: pointer; background: transparent; border-radius: 4px 4px 0 0; transition: background .15s;
+}
+.blank:hover { background: #e8f0fe; }
+.blank.filled { color: var(--blue-dark); border-bottom-color: var(--green); }
+.blank.wrong-fill { border-bottom-color: var(--red); color: var(--red); animation: shake .4s; }
+.wb-check-btn {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .95rem;
+  background: var(--blue); color: white; border: none; padding: 10px 28px;
+  border-radius: 50px; cursor: pointer; margin-top: 12px;
+  transition: background .2s, transform .15s; box-shadow: 0 3px 10px rgba(21,101,192,.3);
+}
+.wb-check-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.wb-feedback { font-weight: 800; font-size: .92rem; color: #333; margin-top: 8px; min-height: 22px; }
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .match-area { grid-template-columns: 1fr; }
+  .rule-box .compare { grid-template-columns: 1fr; }
+  .num-table-wrap { font-size: .82rem; }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<div id="cheer">🎉 Fantastique, Emunah! Tu es une étoile! ⭐ Continue — tu vas réussir l'examen! 🇫🇷💙</div>
+
+<!-- HERO -->
+<header>
+  <h1>🇫🇷 French Exam Prep ✨</h1>
+  <p class="subtitle">Year 3 · Cambridge · End of Term — On va s'entraîner!</p>
+  <span class="date-badge">juillet 2026</span>
+  <div class="topic-pills">
+    <a class="topic-pill" href="#numbers">🔢 Nombres 40–99</a>
+    <a class="topic-pill" href="#time">🕐 L'Heure</a>
+    <a class="topic-pill" href="#units">📅 Unités de Temps</a>
+    <a class="topic-pill" href="#days">📆 Les Jours</a>
+    <a class="topic-pill" href="#vocab">📖 Vocabulaire</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     SECTION 1 — LES NOMBRES 40–99
+══════════════════════════════════════ -->
+<div id="numbers"></div>
+<h2 class="section-title" style="margin-top:30px"><span class="flag">🔢</span> Section 1 — Les Nombres 40–99</h2>
+<p class="section-intro">These are the tricky numbers you missed in the test. Learn the pattern — French numbers are built like little sums!</p>
+
+<div class="rule-box">
+  <div class="icon">⚠️</div>
+  <div>
+    <h3>The 3 Numbers Emunah Missed!</h3>
+    <p>These three numbers have special French patterns — they are NOT built the way you might expect:</p>
+    <div class="compare">
+      <div class="wrong-eg">✗ 49 = "Quatre-neuf" ❌<br>✗ 79 = "Sixzonét-neuf" ❌<br>✗ 99 = "Neuf-neuf" ❌</div>
+      <div class="right-eg">✓ 49 = quarante-neuf ✅<br>✓ 79 = soixante-dix-neuf ✅<br>✓ 99 = quatre-vingt-dix-neuf ✅</div>
+    </div>
+  </div>
+</div>
+
+<div class="num-table-wrap">
+  <div class="num-table-header">🇫🇷 French Numbers — The Pattern</div>
+  <table class="num-tbl">
+    <thead>
+      <tr><th>Number</th><th>French</th><th>How it's built</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>40</strong></td>
+        <td><span class="num-fr">quarante</span></td>
+        <td>Just a word to learn — like "forty"</td>
+      </tr>
+      <tr>
+        <td><strong>41</strong></td>
+        <td><span class="num-fr">quarante et un</span></td>
+        <td>quarante + et + un</td>
+      </tr>
+      <tr class="num-warn">
+        <td><strong>49</strong></td>
+        <td><span class="num-fr">quarante-neuf</span></td>
+        <td>quarante (40) + neuf (9) = 49 ⭐</td>
+      </tr>
+      <tr>
+        <td><strong>50</strong></td>
+        <td><span class="num-fr">cinquante</span></td>
+        <td>Just a word to learn — like "fifty"</td>
+      </tr>
+      <tr>
+        <td><strong>60</strong></td>
+        <td><span class="num-fr">soixante</span></td>
+        <td>Just a word to learn — like "sixty"</td>
+      </tr>
+      <tr>
+        <td><strong>70</strong></td>
+        <td><span class="num-fr">soixante-dix</span> <span class="num-trick">60+10!</span></td>
+        <td>soixante (60) + dix (10) = 70</td>
+      </tr>
+      <tr>
+        <td><strong>71</strong></td>
+        <td><span class="num-fr">soixante et onze</span></td>
+        <td>soixante (60) + et + onze (11) = 71</td>
+      </tr>
+      <tr class="num-warn">
+        <td><strong>79</strong></td>
+        <td><span class="num-fr">soixante-dix-neuf</span></td>
+        <td>soixante (60) + dix (10) + neuf (9) = 79 ⭐</td>
+      </tr>
+      <tr>
+        <td><strong>80</strong></td>
+        <td><span class="num-fr">quatre-vingts</span> <span class="num-trick">4×20!</span></td>
+        <td>quatre (4) × vingts (20s) = 80</td>
+      </tr>
+      <tr>
+        <td><strong>81</strong></td>
+        <td><span class="num-fr">quatre-vingt-un</span></td>
+        <td>quatre-vingt (80) + un (1) = 81</td>
+      </tr>
+      <tr>
+        <td><strong>90</strong></td>
+        <td><span class="num-fr">quatre-vingt-dix</span> <span class="num-trick">80+10!</span></td>
+        <td>quatre-vingt (80) + dix (10) = 90</td>
+      </tr>
+      <tr class="num-warn">
+        <td><strong>99</strong></td>
+        <td><span class="num-fr">quatre-vingt-dix-neuf</span></td>
+        <td>quatre-vingt (80) + dix (10) + neuf (9) = 99 ⭐</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sentence-highlight">
+  🧮 Trick to remember: French counts in <strong>20s</strong> from 60!<br>
+  70 = 60+10 &nbsp;·&nbsp; 80 = 4×20 &nbsp;·&nbsp; 90 = (4×20)+10
+  <span class="en">soixante-dix · quatre-vingts · quatre-vingt-dix</span>
+</div>
+
+<!-- ACTIVITY 1 — Number MCQ -->
+<div class="activity-card">
+  <h2>🔢 Activity 1 — What is the French number?</h2>
+  <p class="act-intro">Tap the correct French word for each numeral.</p>
+  <div class="score-line" id="a1score">Score: 0 / 10</div>
+  <div id="a1list"></div>
+  <div class="wb-feedback" id="a1done"></div>
+</div>
+
+<!-- ACTIVITY 2 — Number matching -->
+<div class="activity-card">
+  <h2>🔗 Activity 2 — Match numeral to French word</h2>
+  <p class="act-intro">Tap a number on the left, then tap its French name on the right.</p>
+  <div class="match-area">
+    <div class="match-col">
+      <h4>🔢 Numeral</h4>
+      <div class="match-item" id="mnl-36"  data-key="36"  data-side="left">36</div>
+      <div class="match-item" id="mnl-49"  data-key="49"  data-side="left">49</div>
+      <div class="match-item" id="mnl-70"  data-key="70"  data-side="left">70</div>
+      <div class="match-item" id="mnl-79"  data-key="79"  data-side="left">79</div>
+      <div class="match-item" id="mnl-90"  data-key="90"  data-side="left">90</div>
+      <div class="match-item" id="mnl-99"  data-key="99"  data-side="left">99</div>
+    </div>
+    <div class="match-col">
+      <h4>🇫🇷 French</h4>
+      <div class="match-item" id="mnr-49"  data-key="49"  data-side="right">quarante-neuf</div>
+      <div class="match-item" id="mnr-99"  data-key="99"  data-side="right">quatre-vingt-dix-neuf</div>
+      <div class="match-item" id="mnr-90"  data-key="90"  data-side="right">quatre-vingt-dix</div>
+      <div class="match-item" id="mnr-36"  data-key="36"  data-side="right">trente-six</div>
+      <div class="match-item" id="mnr-70"  data-key="70"  data-side="right">soixante-dix</div>
+      <div class="match-item" id="mnr-79"  data-key="79"  data-side="right">soixante-dix-neuf</div>
+    </div>
+  </div>
+  <div class="match-score" id="a2score"></div>
+</div>
+
+<!-- ACTIVITY 3 — Word bank: write the number -->
+<div class="activity-card">
+  <h2>✍️ Activity 3 — Word Bank: Fill in the Number</h2>
+  <p class="act-intro">Tap a French number from the bank, then tap the blank where it belongs.</p>
+  <div class="word-bank" id="wb3bank"></div>
+  <div id="wb3sents"></div>
+  <button class="wb-check-btn" onclick="checkWB3()">Check ✔</button>
+  <div class="wb-feedback" id="wb3fb"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 2 — L'HEURE (THE TIME)
+══════════════════════════════════════ -->
+<div id="time"></div>
+<h2 class="section-title"><span class="flag">🕐</span> Section 2 — L'Heure (Telling the Time)</h2>
+<p class="section-intro">In the test you wrote "1:22 am" and "2:21 pm" — but in French class you need to answer in FRENCH! Learn the pattern below.</p>
+
+<div class="rule-box">
+  <div class="icon">⚠️</div>
+  <div>
+    <h3>How to say the time in French</h3>
+    <p>Always start with <strong>Il est</strong> (= It is), then the hour, then <strong>heure(s)</strong>, then the minutes.</p>
+    <div class="compare">
+      <div class="wrong-eg">✗ "1:22 am" ❌<br>✗ "2:21 pm" ❌<br><em>That's English — not French!</em></div>
+      <div class="right-eg">✓ Il est une heure vingt-deux ✅<br>✓ Il est deux heures vingt et un ✅</div>
+    </div>
+  </div>
+</div>
+
+<div class="sentence-highlight">
+  <strong>Il est [heure] heure(s) [minutes].</strong>
+  <span class="en">= It is [hour] o'clock [minutes].</span>
+</div>
+
+<div class="clocks-row">
+  <div class="clock-card">
+    <div class="clock-face"><span class="time-text">1:00</span></div>
+    <div class="clock-fr">Il est une heure.</div>
+    <div class="clock-en">It is one o'clock.</div>
+  </div>
+  <div class="clock-card">
+    <div class="clock-face"><span class="time-text">2:15</span></div>
+    <div class="clock-fr">Il est deux heures quinze.</div>
+    <div class="clock-en">It is two fifteen.</div>
+  </div>
+  <div class="clock-card">
+    <div class="clock-face"><span class="time-text">1:22</span></div>
+    <div class="clock-fr">Il est une heure vingt-deux.</div>
+    <div class="clock-en">It is one twenty-two.</div>
+  </div>
+  <div class="clock-card">
+    <div class="clock-face"><span class="time-text">2:21</span></div>
+    <div class="clock-fr">Il est deux heures vingt et un.</div>
+    <div class="clock-en">It is two twenty-one.</div>
+  </div>
+  <div class="clock-card">
+    <div class="clock-face"><span class="time-text">3:30</span></div>
+    <div class="clock-fr">Il est trois heures trente.</div>
+    <div class="clock-en">It is three thirty.</div>
+  </div>
+  <div class="clock-card">
+    <div class="clock-face"><span class="time-text">10:00</span></div>
+    <div class="clock-fr">Il est dix heures.</div>
+    <div class="clock-en">It is ten o'clock.</div>
+  </div>
+</div>
+
+<div class="rule-box">
+  <div class="icon">💡</div>
+  <div>
+    <h3>Special rule: "une heure" vs "heures"</h3>
+    <p>1 o'clock = <strong>une heure</strong> (singular — just one hour!)<br>
+    All other times = <strong>heures</strong> (plural — two hours, three hours...)</p>
+    <div class="compare">
+      <div class="right-eg">Il est <strong>une</strong> heure. (1:00) ✅</div>
+      <div class="right-eg">Il est <strong>deux</strong> heures. (2:00) ✅</div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY 4 — Time MCQ -->
+<div class="activity-card">
+  <h2>🕐 Activity 4 — What time is it? (Quelle heure est-il?)</h2>
+  <p class="act-intro">Tap the correct French sentence for the time shown.</p>
+  <div class="score-line" id="a4score">Score: 0 / 8</div>
+  <div id="a4list"></div>
+  <div class="wb-feedback" id="a4done"></div>
+</div>
+
+<!-- ACTIVITY 5 — True/False time -->
+<div class="activity-card">
+  <h2>✅ Activity 5 — True or False: L'Heure</h2>
+  <p class="act-intro">Is the French time sentence correct? Tap TRUE or FALSE.</p>
+  <div id="a5list"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 3 — TIME UNITS
+══════════════════════════════════════ -->
+<div id="units"></div>
+<h2 class="section-title"><span class="flag">📅</span> Section 3 — Les Unités de Temps (Time Units)</h2>
+<p class="section-intro">In Activité 5, you matched Year, Week, Month, Day and Hour to their French descriptions. Let's learn these properly!</p>
+
+<div class="unit-grid">
+  <div class="unit-card">
+    <div class="icon">⏰</div>
+    <div class="fr">une heure</div>
+    <div class="en">one hour</div>
+    <div class="detail">= 60 minutes</div>
+  </div>
+  <div class="unit-card">
+    <div class="icon">☀️</div>
+    <div class="fr">un jour</div>
+    <div class="en">one day</div>
+    <div class="detail">= 24 heures</div>
+  </div>
+  <div class="unit-card">
+    <div class="icon">📅</div>
+    <div class="fr">une semaine</div>
+    <div class="en">one week</div>
+    <div class="detail">= 7 jours</div>
+  </div>
+  <div class="unit-card">
+    <div class="icon">🗓️</div>
+    <div class="fr">un mois</div>
+    <div class="en">one month</div>
+    <div class="detail">= 4 semaines</div>
+  </div>
+  <div class="unit-card">
+    <div class="icon">🎂</div>
+    <div class="fr">un an / une année</div>
+    <div class="en">one year</div>
+    <div class="detail">= 12 mois</div>
+  </div>
+</div>
+
+<div class="sentence-highlight">
+  Il y a <strong>sept jours</strong> dans une semaine. &nbsp;→&nbsp; There are <strong>7 days</strong> in a week.<br>
+  Il y a <strong>douze mois</strong> dans une année. &nbsp;→&nbsp; There are <strong>12 months</strong> in a year.
+  <span class="en">Il y a = There are / there is</span>
+</div>
+
+<!-- ACTIVITY 6 — Time units MCQ -->
+<div class="activity-card">
+  <h2>📅 Activity 6 — Time Units: Which one is it?</h2>
+  <p class="act-intro">Tap the correct French time unit for each clue.</p>
+  <div class="score-line" id="a6score">Score: 0 / 8</div>
+  <div id="a6list"></div>
+  <div class="wb-feedback" id="a6done"></div>
+</div>
+
+<!-- ACTIVITY 7 — Match time units -->
+<div class="activity-card">
+  <h2>🔗 Activity 7 — Match English to French (Time Units)</h2>
+  <p class="act-intro">Tap a word on the left, then tap its match on the right. This is exactly like Activité 5 in your test!</p>
+  <div class="match-area">
+    <div class="match-col">
+      <h4>🇬🇧 English</h4>
+      <div class="match-item" data-key="year"  data-side="left">Year</div>
+      <div class="match-item" data-key="week"  data-side="left">Week</div>
+      <div class="match-item" data-key="month" data-side="left">Month</div>
+      <div class="match-item" data-key="day"   data-side="left">Day</div>
+      <div class="match-item" data-key="hour"  data-side="left">Hour</div>
+    </div>
+    <div class="match-col">
+      <h4>🇫🇷 French description</h4>
+      <div class="match-item" data-key="month" data-side="right">quatre semaines 🗓️</div>
+      <div class="match-item" data-key="hour"  data-side="right">soixante minutes ⏰</div>
+      <div class="match-item" data-key="year"  data-side="right">12 mois 🎂</div>
+      <div class="match-item" data-key="day"   data-side="right">vingt-quatre heures ☀️</div>
+      <div class="match-item" data-key="week"  data-side="right">sept jours 📅</div>
+    </div>
+  </div>
+  <div class="match-score" id="a7score"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 4 — LES JOURS / DAY LOGIC
+══════════════════════════════════════ -->
+<div id="days"></div>
+<h2 class="section-title"><span class="flag">📆</span> Section 4 — Les Jours &amp; La Logique des Jours</h2>
+<p class="section-intro">You got two days questions wrong. Let's fix both — understanding which day comes before and after, and knowing that "dimanche" is the day for church!</p>
+
+<div class="rule-box">
+  <div class="icon">⚠️</div>
+  <div>
+    <h3>Q23: Je vais à l'église chaque ___</h3>
+    <p>You chose <strong>vendredi</strong> ❌ — but Christians go to church on <strong>dimanche</strong> (Sunday). <br>
+    Vendredi = Friday (the Islamic prayer day). Dimanche = Sunday (the Christian worship day).</p>
+    <div class="compare">
+      <div class="wrong-eg">✗ vendredi = Friday ❌</div>
+      <div class="right-eg">✓ dimanche = Sunday ✅ (church day!)</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule-box">
+  <div class="icon">⚠️</div>
+  <div>
+    <h3>Q25: Hier était lundi, demain sera ___</h3>
+    <p>You chose <strong>mardi</strong> ❌ — but think it through step by step:</p>
+    <div class="compare">
+      <div class="wrong-eg">✗ Thinking: lundi → mardi ❌<br><em>You jumped one day forward but forgot that "hier" means YESTERDAY — so lundi was already gone!</em></div>
+      <div class="right-eg">✓ hier = lundi → aujourd'hui = mardi → demain = mercredi ✅<br><em>If yesterday was Monday, today is Tuesday, so tomorrow is Wednesday!</em></div>
+    </div>
+  </div>
+</div>
+
+<div class="sentence-highlight">
+  <strong>hier → aujourd'hui → demain</strong>
+  <span class="en">yesterday → today → tomorrow</span>
+</div>
+
+<!-- ACTIVITY 8 — Day logic MCQ -->
+<div class="activity-card">
+  <h2>📆 Activity 8 — Day Logic (Hier / Aujourd'hui / Demain)</h2>
+  <p class="act-intro">Think carefully! Remember: if yesterday was Monday, today is Tuesday, tomorrow is Wednesday.</p>
+  <div class="score-line" id="a8score">Score: 0 / 8</div>
+  <div id="a8list"></div>
+  <div class="wb-feedback" id="a8done"></div>
+</div>
+
+<!-- ACTIVITY 9 — Days TF -->
+<div class="activity-card">
+  <h2>✅ Activity 9 — True or False: Les Jours</h2>
+  <p class="act-intro">Is the sentence correct? Think carefully about the days and their order!</p>
+  <div id="a9list"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 5 — VOCABULARY (Reading)
+══════════════════════════════════════ -->
+<div id="vocab"></div>
+<h2 class="section-title"><span class="flag">📖</span> Section 5 — Vocabulaire de la Lecture</h2>
+<p class="section-intro">In Activité 1, Question 4, you chose "lave" but the text says "Danielle <strong>joue</strong> à la marelle avec Rachelle." Let's make sure you know all the key verbs from the passage.</p>
+
+<div class="rule-box">
+  <div class="icon">⚠️</div>
+  <div>
+    <h3>Q4: Danielle ___ à la marelle avec Rachelle</h3>
+    <p>You chose <strong>lave</strong> (= washes) ❌ — but <strong>joue</strong> (= plays) is correct.<br>
+    "Jouer à la marelle" = to play hopscotch. <strong>Laver</strong> means to wash — Danielle does that too, but NOT with Rachelle!</p>
+    <div class="compare">
+      <div class="wrong-eg">✗ lave = washes ❌<br><em>She washes dishes earlier — not with Rachelle!</em></div>
+      <div class="right-eg">✓ joue = plays ✅<br><em>"Danielle joue à la marelle avec Rachelle."</em></div>
+    </div>
+  </div>
+</div>
+
+<div class="vocab-grid">
+  <div class="vocab-card">
+    <div class="fr">jouer</div>
+    <div class="en">to play</div>
+    <div class="example">Danielle joue à la marelle.<em>Danielle plays hopscotch.</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">laver</div>
+    <div class="en">to wash</div>
+    <div class="example">Elle lave la vaisselle.<em>She washes the dishes.</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">porter</div>
+    <div class="en">to wear / carry</div>
+    <div class="example">Elle porte une robe.<em>She wears a dress.</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">appeler</div>
+    <div class="en">to call</div>
+    <div class="example">Elle appelle Michelle.<em>She calls Michelle.</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">vider</div>
+    <div class="en">to empty</div>
+    <div class="example">Vide la poubelle!<em>Empty the bin!</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">sauter</div>
+    <div class="en">to jump</div>
+    <div class="example">Danielle saute.<em>Danielle jumps.</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">la vaisselle</div>
+    <div class="en">the dishes</div>
+    <div class="example">laver la vaisselle<em>to wash the dishes</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">la poubelle</div>
+    <div class="en">the bin / rubbish</div>
+    <div class="example">vider la poubelle<em>to empty the bin</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">la marelle</div>
+    <div class="en">hopscotch</div>
+    <div class="example">jouer à la marelle<em>to play hopscotch</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">nouvelle</div>
+    <div class="en">new (feminine)</div>
+    <div class="example">une nouvelle robe<em>a new dress</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">belle</div>
+    <div class="en">beautiful (feminine)</div>
+    <div class="example">Elle est belle.<em>She is beautiful.</em></div>
+  </div>
+  <div class="vocab-card">
+    <div class="fr">comme</div>
+    <div class="en">like / as</div>
+    <div class="example">comme une sauterelle<em>like a grasshopper</em></div>
+  </div>
+</div>
+
+<!-- ACTIVITY 10 — Vocab MCQ -->
+<div class="activity-card">
+  <h2>📖 Activity 10 — What does the word mean?</h2>
+  <p class="act-intro">Tap the correct English meaning for each French word.</p>
+  <div class="score-line" id="a10score">Score: 0 / 10</div>
+  <div id="a10list"></div>
+  <div class="wb-feedback" id="a10done"></div>
+</div>
+
+<!-- ACTIVITY 11 — Reading comprehension fill-in -->
+<div class="activity-card">
+  <h2>📝 Activity 11 — La journée de Danielle: Word Bank</h2>
+  <p class="act-intro">Tap a word from the bank, then tap the blank to fill in the sentence about the story.</p>
+  <div class="word-bank" id="wb11bank"></div>
+  <div id="wb11sents"></div>
+  <button class="wb-check-btn" onclick="checkWB11()">Check ✔</button>
+  <div class="wb-feedback" id="wb11fb"></div>
+</div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════
+   CHEER
+═══════════════════════════════════ */
+let cheerCount = 0;
+function addCheer(n) {
+  cheerCount += (n || 1);
+  if (cheerCount >= 3) document.getElementById('cheer').style.display = 'block';
+}
+
+/* ═══════════════════════════════════
+   GENERIC MCQ BUILDER
+═══════════════════════════════════ */
+function buildMCQ(listId, scoreId, doneId, data) {
+  const list = document.getElementById(listId);
+  let correct = 0, answered = 0;
+  const total = data.length;
+  data.forEach((q, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'q-wrap';
+    wrap.innerHTML = `<div class="q-text">${i+1}. ${q.q}</div>
+      <div class="choices">${q.opts.map(o => `<button data-val="${o}">${o}</button>`).join('')}</div>
+      <div class="feedback"></div>`;
+    wrap.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (wrap.dataset.done) return;
+        wrap.dataset.done = '1';
+        wrap.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = wrap.querySelector('.feedback');
+        if (btn.dataset.val === q.ans) {
+          btn.style.background = '#4caf50'; btn.style.color = 'white'; btn.style.borderColor = '#2e7d32';
+          fb.textContent = '✅ Correct! Bien joué!'; fb.style.color = '#2e7d32';
+          correct++; addCheer();
+        } else {
+          btn.style.background = '#ef5350'; btn.style.color = 'white'; btn.style.borderColor = '#c62828';
+          fb.textContent = `❌ The answer is: ${q.ans}`; fb.style.color = '#c62828';
+          wrap.querySelectorAll('button').forEach(b => {
+            if (b.dataset.val === q.ans) { b.style.background='#4caf50'; b.style.color='white'; b.style.borderColor='#2e7d32'; }
+          });
+        }
+        answered++;
+        document.getElementById(scoreId).textContent = `Score: ${correct} / ${total}`;
+        if (answered === total && doneId) {
+          document.getElementById(doneId).textContent = '🎉 Section complete! Fantastique!';
+          document.getElementById(doneId).style.color = '#2e7d32';
+          addCheer(2);
+        }
+      });
+    });
+    list.appendChild(wrap);
+  });
+}
+
+/* ═══════════════════════════════════
+   GENERIC TF BUILDER
+═══════════════════════════════════ */
+function buildTF(listId, data) {
+  const list = document.getElementById(listId);
+  data.forEach((q, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'tf-wrap';
+    wrap.innerHTML = `<div class="tf-text">${i+1}. ${q.label}</div>
+      ${q.sentence ? `<div class="tf-sentence">${q.sentence}</div>` : ''}
+      <div class="tf-btns">
+        <button class="btn-true">✅ TRUE</button>
+        <button class="btn-false">❌ FALSE</button>
+      </div>
+      <div class="feedback"></div>`;
+    wrap.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (wrap.dataset.done) return;
+        wrap.dataset.done = '1';
+        wrap.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = wrap.querySelector('.feedback');
+        const chose = btn.classList.contains('btn-true');
+        if (chose === q.ans) {
+          btn.style.background = '#4caf50'; btn.style.color = 'white';
+          fb.textContent = '✅ Correct! Bravo!'; fb.style.color = '#2e7d32';
+          addCheer();
+        } else {
+          btn.style.background = '#ef5350'; btn.style.color = 'white';
+          fb.textContent = `❌ ${q.hint || (q.ans ? 'That is TRUE.' : 'That is FALSE.')}`;
+          fb.style.color = '#c62828';
+          wrap.querySelectorAll('button').forEach(b => {
+            const isTrue = b.classList.contains('btn-true');
+            if (isTrue === q.ans) { b.style.background='#4caf50'; b.style.color='white'; }
+          });
+        }
+      });
+    });
+    list.appendChild(wrap);
+  });
+}
+
+/* ═══════════════════════════════════
+   GENERIC MATCH BUILDER
+═══════════════════════════════════ */
+function initMatch(containerSelector, scoreId, total) {
+  let sel = null, matched = 0;
+  document.querySelectorAll(containerSelector + ' .match-item').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('matched-ok')) return;
+      if (!sel) {
+        document.querySelectorAll(containerSelector + ' .match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected');
+        sel = el;
+        return;
+      }
+      if (el.dataset.side === sel.dataset.side) {
+        document.querySelectorAll(containerSelector + ' .match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected');
+        sel = el;
+        return;
+      }
+      if (el.dataset.key === sel.dataset.key) {
+        sel.classList.remove('selected'); sel.classList.add('matched-ok');
+        el.classList.remove('selected');  el.classList.add('matched-ok');
+        matched++;
+        const sc = document.getElementById(scoreId);
+        if (sc) sc.textContent = matched === total
+          ? `🎉 Parfait! All ${total} matched!`
+          : `${matched} / ${total} matched ✅`;
+        if (matched === total) addCheer(2);
+      } else {
+        const s = sel;
+        s.classList.remove('selected'); el.classList.remove('selected');
+        [s, el].forEach(e => { e.style.background='#ffebee'; e.style.borderColor='#ef5350'; setTimeout(()=>{ e.style.background=''; e.style.borderColor=''; },500); });
+      }
+      sel = null;
+    });
+  });
+}
+
+/* ═══════════════════════════════════
+   GENERIC WORD BANK BUILDER
+═══════════════════════════════════ */
+function buildWordBank(bankId, sentsId, words, sentences) {
+  const bankEl = document.getElementById(bankId);
+  const sentsEl = document.getElementById(sentsId);
+  let selWord = null;
+  const answered = new Array(sentences.length).fill(false);
+
+  words.forEach(w => {
+    const tok = document.createElement('button');
+    tok.className = 'wb-token'; tok.textContent = w; tok.dataset.word = w;
+    tok.addEventListener('click', () => {
+      if (tok.classList.contains('used')) return;
+      document.querySelectorAll(`#${bankId} .wb-token`).forEach(t => t.classList.remove('sel'));
+      if (selWord === w) { selWord = null; return; }
+      selWord = w; tok.classList.add('sel');
+    });
+    bankEl.appendChild(tok);
+  });
+
+  sentences.forEach((s, i) => {
+    const parts = s.text.split('___');
+    const item = document.createElement('div'); item.className = 'fill-sentence';
+    const blankId = `${bankId}b${i}`;
+    item.innerHTML = `<span>${i+1}. ${parts[0]}</span><span class="blank" id="${blankId}" data-filled="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>${parts[1] || ''}</span>`;
+    sentsEl.appendChild(item);
+    document.getElementById(blankId).addEventListener('click', () => {
+      if (answered[i]) return;
+      const blank = document.getElementById(blankId);
+      if (!selWord && blank.dataset.filled) {
+        const old = blank.dataset.filled;
+        blank.textContent = '        '; blank.dataset.filled = '';
+        blank.classList.remove('filled','wrong-fill');
+        const tok = [...document.querySelectorAll(`#${bankId} .wb-token`)].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+        return;
+      }
+      if (!selWord) return;
+      const old = blank.dataset.filled;
+      if (old) {
+        const tok = [...document.querySelectorAll(`#${bankId} .wb-token`)].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+      }
+      blank.textContent = selWord; blank.dataset.filled = selWord; blank.classList.add('filled');
+      const usedTok = [...document.querySelectorAll(`#${bankId} .wb-token`)].find(t => t.dataset.word === selWord);
+      if (usedTok) { usedTok.classList.add('used'); usedTok.classList.remove('sel'); }
+      selWord = null;
+      document.querySelectorAll(`#${bankId} .wb-token`).forEach(t => t.classList.remove('sel'));
+    });
+  });
+}
+
+function checkWBGeneric(bankId, sentsId, fbId, sentences, total) {
+  let correct = 0;
+  sentences.forEach((s, i) => {
+    const blank = document.getElementById(`${bankId}b${i}`);
+    const filled = blank ? blank.dataset.filled : '';
+    if (filled === s.ans) {
+      if (blank) { blank.classList.remove('wrong-fill'); blank.classList.add('filled'); }
+      correct++;
+    } else {
+      if (blank) blank.classList.add('wrong-fill');
+    }
+  });
+  const fb = document.getElementById(fbId);
+  if (correct === total) {
+    fb.textContent = `✅ Parfait! All ${total} correct! Excellent travail!`; fb.style.color = '#2e7d32'; addCheer(2);
+  } else {
+    fb.textContent = `${correct} / ${total} correct — les blancs rouges ont besoin d'être corrigés!`; fb.style.color = '#c62828';
+  }
+}
+
+/* ═══════════════════════════════════
+   SECTION 1 DATA — NUMBERS
+═══════════════════════════════════ */
+buildMCQ('a1list','a1score','a1done', [
+  { q: 'What is <strong>49</strong> in French?',
+    opts: ['quarante-neuf','quatre-neuf','cinquante-neuf'], ans: 'quarante-neuf' },
+  { q: 'What is <strong>79</strong> in French?',
+    opts: ['sixzonét-neuf','soixante-neuf','soixante-dix-neuf'], ans: 'soixante-dix-neuf' },
+  { q: 'What is <strong>99</strong> in French?',
+    opts: ['neuf-neuf','quatre-vingt-dix-neuf','quatre-vingt-neuf'], ans: 'quatre-vingt-dix-neuf' },
+  { q: 'What is <strong>70</strong> in French?',
+    opts: ['soixante-dix','septante','soixante-onze'], ans: 'soixante-dix' },
+  { q: 'What is <strong>80</strong> in French?',
+    opts: ['huitante','quatre-vingts','quatre-vingt-dix'], ans: 'quatre-vingts' },
+  { q: 'What is <strong>90</strong> in French?',
+    opts: ['quatre-vingt-dix','quatre-vingts','soixante-dix'], ans: 'quatre-vingt-dix' },
+  { q: 'What is <strong>36</strong> in French?',
+    opts: ['trente-six','vingt-six','quarante-six'], ans: 'trente-six' },
+  { q: 'What is <strong>28</strong> in French?',
+    opts: ['vingt-neuf','vingt-huit','vingt-sept'], ans: 'vingt-huit' },
+  { q: 'What is <strong>15</strong> in French?',
+    opts: ['cinq','cinquante','quinze'], ans: 'quinze' },
+  { q: 'What is <strong>soixante-dix-neuf</strong> in numbers?',
+    opts: ['69','79','89'], ans: '79' },
+]);
+
+initMatch('#a2list', 'a2score', 6);
+document.querySelector('#a2list') || (function(){
+  document.querySelectorAll('.match-item').forEach(el => {
+    el.addEventListener('click', () => {});
+  });
+})();
+
+const wb3words = ['quarante-neuf','soixante-dix','quatre-vingts','quatre-vingt-dix','soixante-dix-neuf','quatre-vingt-dix-neuf'];
+const wb3sents = [
+  { text: 'Il y a ___ euros dans mon sac. (49)',        ans: 'quarante-neuf' },
+  { text: 'Ma grand-mère a ___ ans. (70)',              ans: 'soixante-dix' },
+  { text: 'Le livre coûte ___ centimes. (80)',          ans: 'quatre-vingts' },
+  { text: "C'est le numéro ___. (90)",                  ans: 'quatre-vingt-dix' },
+  { text: 'Il a ___ points. (79)',                      ans: 'soixante-dix-neuf' },
+  { text: 'Il y a ___ élèves. (99)',                    ans: 'quatre-vingt-dix-neuf' },
+];
+buildWordBank('wb3bank','wb3sents', wb3words, wb3sents);
+function checkWB3() { checkWBGeneric('wb3bank','wb3sents','wb3fb', wb3sents, wb3sents.length); }
+
+/* ═══════════════════════════════════
+   SECTION 2 DATA — TIME
+═══════════════════════════════════ */
+buildMCQ('a4list','a4score','a4done', [
+  { q: '🕐 The clock shows <strong>1:00</strong>. How do you say this in French?',
+    opts: ['Il est un heure.','Il est une heure.','Il est deux heures.'], ans: 'Il est une heure.' },
+  { q: '🕑 The clock shows <strong>2:00</strong>. How do you say this in French?',
+    opts: ['Il est deux heure.','Il est une heure.','Il est deux heures.'], ans: 'Il est deux heures.' },
+  { q: '🕐 The clock shows <strong>1:22</strong>. How do you say this in French?',
+    opts: ['Il est une heure vingt-deux.','Il est deux heures vingt-deux.','Il est une heure vingt-trois.'], ans: 'Il est une heure vingt-deux.' },
+  { q: '🕑 The clock shows <strong>2:21</strong>. How do you say this in French?',
+    opts: ['Il est une heure vingt et un.','Il est deux heures vingt et un.','Il est trois heures vingt et un.'], ans: 'Il est deux heures vingt et un.' },
+  { q: '🕒 The clock shows <strong>3:30</strong>. How do you say this in French?',
+    opts: ['Il est quatre heures trente.','Il est trois heures trois.','Il est trois heures trente.'], ans: 'Il est trois heures trente.' },
+  { q: '🕙 The clock shows <strong>10:15</strong>. How do you say this in French?',
+    opts: ['Il est dix heures quinze.','Il est dix heures cinq.','Il est quinze heures dix.'], ans: 'Il est dix heures quinze.' },
+  { q: 'Which sentence has the correct structure for telling the time?',
+    opts: ['Heure est il deux.','Il est deux heures.','Deux heures est il.'], ans: 'Il est deux heures.' },
+  { q: 'Why do we say "Il est <strong>une</strong> heure" but "Il est <strong>deux</strong> heures"?',
+    opts: ['Because 1 and 2 are different numbers.','Because 1 is singular (une), all others are plural (heures).','Because "une" is always used for time.'], ans: 'Because 1 is singular (une), all others are plural (heures).' },
+]);
+
+buildTF('a5list', [
+  { label: 'Is this correct French?', sentence: 'Il est trois heures vingt.', ans: true,  hint: 'Correct! Il est [hour] heures [minutes] is the right pattern.' },
+  { label: 'Is this correct French?', sentence: '3:30 am', ans: false, hint: 'That is English! You need to write it in French: Il est trois heures trente.' },
+  { label: 'Is this correct French?', sentence: 'Il est une heure.', ans: true,  hint: 'Correct! For 1 o\'clock we say "une heure" (singular).' },
+  { label: 'Is this correct French?', sentence: 'Il est un heure.', ans: false, hint: '"Un" is wrong here. 1 o\'clock = Il est UNE heure (feminine).' },
+  { label: 'Is this correct French?', sentence: 'Il est deux heures quinze.', ans: true,  hint: 'Correct! 2:15 = Il est deux heures quinze.' },
+  { label: 'Is this correct French?', sentence: 'Il est dix heure.', ans: false, hint: 'Missing the \'s\'! It should be "dix heures" (plural) because 10 > 1.' },
+]);
+
+/* ═══════════════════════════════════
+   SECTION 3 DATA — TIME UNITS
+═══════════════════════════════════ */
+buildMCQ('a6list','a6score','a6done', [
+  { q: 'A year has <strong>12</strong> of these. Which French time unit is it?',
+    opts: ['un jour','un mois','une semaine'], ans: 'un mois' },
+  { q: 'A week has <strong>7 jours</strong>. What is "week" in French?',
+    opts: ['un mois','un an','une semaine'], ans: 'une semaine' },
+  { q: 'An hour has <strong>60 minutes</strong>. What is "hour" in French?',
+    opts: ['un jour','une heure','une minute'], ans: 'une heure' },
+  { q: 'A day has <strong>vingt-quatre heures</strong>. What is "day" in French?',
+    opts: ['une semaine','un an','un jour'], ans: 'un jour' },
+  { q: 'Un an has <strong>12 mois</strong>. What does "un an" mean in English?',
+    opts: ['a month','a week','a year'], ans: 'a year' },
+  { q: '"Il y a <strong>sept jours</strong> dans une semaine." — How many days in a week?',
+    opts: ['5','7','12'], ans: '7' },
+  { q: '"Il y a <strong>douze mois</strong> dans une année." — How many months in a year?',
+    opts: ['7','4','12'], ans: '12' },
+  { q: 'Match: "Year" → ___',
+    opts: ['sept jours','quatre semaines','12 mois'], ans: '12 mois' },
+]);
+
+initMatch('.activity-card:nth-of-type(7)', 'a7score', 5);
+
+/* ═══════════════════════════════════
+   SECTION 4 DATA — DAYS LOGIC
+═══════════════════════════════════ */
+buildMCQ('a8list','a8score','a8done', [
+  { q: '<strong>Hier était lundi.</strong> Quel jour est demain? (If yesterday was Monday, what is tomorrow?)',
+    opts: ['mardi','mercredi','jeudi'], ans: 'mercredi' },
+  { q: '<strong>Hier était mercredi.</strong> Quel jour est aujourd\'hui?',
+    opts: ['mardi','jeudi','mercredi'], ans: 'jeudi' },
+  { q: '<strong>Demain sera vendredi.</strong> Quel jour est aujourd\'hui?',
+    opts: ['mercredi','jeudi','samedi'], ans: 'jeudi' },
+  { q: '<strong>Aujourd\'hui c\'est dimanche.</strong> Quel jour était hier?',
+    opts: ['lundi','samedi','vendredi'], ans: 'samedi' },
+  { q: 'Je vais à l\'église chaque ___.',
+    opts: ['vendredi','samedi','dimanche'], ans: 'dimanche' },
+  { q: 'Le premier jour de la semaine (French calendar) est ___.',
+    opts: ['dimanche','lundi','mardi'], ans: 'lundi' },
+  { q: '<strong>Hier était samedi.</strong> Quel jour est demain?',
+    opts: ['dimanche','lundi','mardi'], ans: 'lundi' },
+  { q: 'Je m\'appelle Kwasi — je suis né un ___.',
+    opts: ['mardi','vendredi','dimanche'], ans: 'dimanche' },
+]);
+
+buildTF('a9list', [
+  { label: 'Hier était lundi. Donc (so) aujourd\'hui est mardi.', ans: true,  hint: 'Correct! If yesterday = Monday, today = Tuesday.' },
+  { label: 'Hier était lundi. Donc demain est mardi.',            ans: false, hint: 'No! If yesterday=Monday, today=Tuesday, so TOMORROW = mercredi (Wednesday).' },
+  { label: 'Je vais à l\'église chaque dimanche.', ans: true,  hint: 'Correct! Christians go to church on Sunday = dimanche.' },
+  { label: 'Je vais à l\'église chaque vendredi.', ans: false, hint: 'No — Friday (vendredi) is not the church day. Dimanche (Sunday) is!' },
+  { label: 'Lundi est le premier jour de la semaine (en français).', ans: true, hint: 'Correct! In the French calendar, the week starts on Monday.' },
+  { label: 'Dimanche est le premier jour de la semaine (en français).', ans: false, hint: 'Dimanche (Sunday) is the LAST day of the week in French! Monday (lundi) is first.' },
+  { label: 'Aujourd\'hui c\'est jeudi. Hier était mercredi.', ans: true, hint: 'Correct! Wednesday comes before Thursday.' },
+  { label: 'Aujourd\'hui c\'est mardi. Demain sera lundi.',   ans: false, hint: 'No! After Tuesday (mardi) comes Wednesday (mercredi) — not Monday.' },
+]);
+
+/* ═══════════════════════════════════
+   SECTION 5 DATA — VOCAB
+═══════════════════════════════════ */
+buildMCQ('a10list','a10score','a10done', [
+  { q: 'What does <strong>jouer</strong> mean?',    opts: ['to wash','to play','to jump'], ans: 'to play' },
+  { q: 'What does <strong>laver</strong> mean?',    opts: ['to call','to wear','to wash'], ans: 'to wash' },
+  { q: 'What does <strong>porter</strong> mean?',   opts: ['to jump','to wear / carry','to empty'], ans: 'to wear / carry' },
+  { q: 'What does <strong>sauter</strong> mean?',   opts: ['to sing','to wash','to jump'], ans: 'to jump' },
+  { q: 'What does <strong>vider</strong> mean?',    opts: ['to empty','to call','to play'], ans: 'to empty' },
+  { q: 'What does <strong>la vaisselle</strong> mean?', opts: ['the bin','the dishes','the dress'], ans: 'the dishes' },
+  { q: 'What does <strong>la poubelle</strong> mean?',  opts: ['the washing','the bin / rubbish','the hopscotch'], ans: 'the bin / rubbish' },
+  { q: 'What does <strong>la marelle</strong> mean?',   opts: ['the song','hopscotch','the grasshopper'], ans: 'hopscotch' },
+  { q: 'What does <strong>nouvelle</strong> mean?',     opts: ['old','beautiful','new'], ans: 'new' },
+  { q: '"Danielle joue <strong>à la marelle</strong> avec Rachelle." What does Danielle do with Rachelle?',
+    opts: ['She washes dishes with her.','She wears a dress for her.','She plays hopscotch with her.'], ans: 'She plays hopscotch with her.' },
+]);
+
+const wb11words = ['joue','lave','porte','saute','vide','belle'];
+const wb11sents = [
+  { text: 'Danielle ___ la vaisselle.',              ans: 'lave'  },
+  { text: 'Michelle ___ la poubelle.',               ans: 'vide'  },
+  { text: 'Danielle ___ une nouvelle robe.',         ans: 'porte' },
+  { text: 'Danielle ___ à la marelle avec Rachelle.',ans: 'joue'  },
+  { text: 'Danielle ___ comme une sauterelle.',      ans: 'saute' },
+  { text: 'Elle est ___.',                           ans: 'belle' },
+];
+buildWordBank('wb11bank','wb11sents', wb11words, wb11sents);
+function checkWB11() { checkWBGeneric('wb11bank','wb11sents','wb11fb', wb11sents, wb11sents.length); }
+
+/* ═══════════════════════════════════
+   INIT MATCH ACTIVITIES
+═══════════════════════════════════ */
+(function() {
+  // Activity 2 — number match
+  let sel2 = null, matched2 = 0;
+  document.querySelectorAll('#mnl-36,#mnl-49,#mnl-70,#mnl-79,#mnl-90,#mnl-99,#mnr-49,#mnr-99,#mnr-90,#mnr-36,#mnr-70,#mnr-79').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('matched-ok')) return;
+      if (!sel2) {
+        document.querySelectorAll('.match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel2 = el; return;
+      }
+      if (el.dataset.side === sel2.dataset.side) {
+        document.querySelectorAll('.match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel2 = el; return;
+      }
+      if (el.dataset.key === sel2.dataset.key) {
+        sel2.classList.remove('selected'); sel2.classList.add('matched-ok');
+        el.classList.remove('selected');  el.classList.add('matched-ok');
+        matched2++;
+        const sc = document.getElementById('a2score');
+        sc.textContent = matched2 === 6 ? '🎉 Parfait! All 6 matched!' : `${matched2} / 6 matched ✅`;
+        if (matched2 === 6) addCheer(2);
+      } else {
+        const s = sel2;
+        s.classList.remove('selected'); el.classList.remove('selected');
+        [s, el].forEach(e => { e.style.background='#ffebee'; e.style.borderColor='#ef5350'; setTimeout(()=>{e.style.background='';e.style.borderColor='';},500); });
+      }
+      sel2 = null;
+    });
+  });
+
+  // Activity 7 — time units match
+  let sel7 = null, matched7 = 0;
+  document.querySelectorAll('#a7sel .match-item, .activity-card .match-item[data-key="year"], .activity-card .match-item[data-key="week"], .activity-card .match-item[data-key="month"], .activity-card .match-item[data-key="day"], .activity-card .match-item[data-key="hour"]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('matched-ok')) return;
+      if (!sel7) {
+        document.querySelectorAll('.match-item.selected').forEach(e => {
+          if (['year','week','month','day','hour'].includes(e.dataset.key)) e.classList.remove('selected');
+        });
+        el.classList.add('selected'); sel7 = el; return;
+      }
+      if (el === sel7) { el.classList.remove('selected'); sel7 = null; return; }
+      if (el.dataset.side === sel7.dataset.side) {
+        document.querySelectorAll('.match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel7 = el; return;
+      }
+      if (el.dataset.key === sel7.dataset.key) {
+        sel7.classList.remove('selected'); sel7.classList.add('matched-ok');
+        el.classList.remove('selected');  el.classList.add('matched-ok');
+        matched7++;
+        const sc = document.getElementById('a7score');
+        if (sc) sc.textContent = matched7 === 5 ? '🎉 Parfait! All 5 matched!' : `${matched7} / 5 matched ✅`;
+        if (matched7 === 5) addCheer(2);
+      } else {
+        const s = sel7;
+        s.classList.remove('selected'); el.classList.remove('selected');
+        [s, el].forEach(e => { e.style.background='#ffebee'; e.style.borderColor='#ef5350'; setTimeout(()=>{e.style.background='';e.style.borderColor='';},500); });
+      }
+      sel7 = null;
+    });
+  });
+})();
+</script>
+</body>
+</html>

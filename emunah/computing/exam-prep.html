@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computing Exam Prep 🖥️ — Emunah</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple:      #7c4dff;
+  --purple-dark: #4a148c;
+  --purple-light:#ede7f6;
+  --teal:        #00bcd4;
+  --teal-dark:   #00838f;
+  --orange:      #ff6d00;
+  --pink:        #f50057;
+  --green:       #00c853;
+  --green-dark:  #007a2f;
+  --yellow:      #ffd600;
+  --red:         #d32f2f;
+  --red-light:   #ffebee;
+  --dark:        #1a1535;
+  --light:       #f4f0ff;
+  --ink:         #2d2b55;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--light);
+  background-image:
+    radial-gradient(circle at 5%  90%, rgba(124,77,255,.06) 0%, transparent 40%),
+    radial-gradient(circle at 95% 10%, rgba(0,188,212,.06)  0%, transparent 40%);
+  color: var(--dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── BACK BUTTON ── */
+.back-home-btn {
+  position: fixed; top: 14px; left: 14px; z-index: 9999;
+  background: rgba(255,255,255,.92); border: 2px solid rgba(0,0,0,.13);
+  color: #333; font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: .88rem; padding: 7px 16px; border-radius: 50px;
+  text-decoration: none; box-shadow: 0 3px 12px rgba(0,0,0,.13);
+  backdrop-filter: blur(4px); transition: all .2s;
+}
+.back-home-btn:hover { background: white; transform: translateX(-2px); }
+
+/* ── CHEER BANNER ── */
+.cheer-banner {
+  display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9998;
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple), var(--teal));
+  color: #fff; font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.1rem,4vw,1.5rem); text-align: center;
+  padding: 16px 20px; box-shadow: 0 4px 20px rgba(124,77,255,.4);
+  animation: slideDown .6s cubic-bezier(.34,1.56,.64,1);
+}
+.cheer-banner.show { display: block; }
+@keyframes slideDown { from{transform:translateY(-100%)} to{transform:translateY(0)} }
+
+/* ── HEADER ── */
+.page-header {
+  background: linear-gradient(135deg, #4a148c 0%, #7c4dff 45%, #00bcd4 100%);
+  padding: 70px 24px 55px; text-align: center; position: relative; overflow: hidden;
+}
+.page-header::before {
+  content:''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 2px,transparent 2px,transparent 20px);
+}
+.page-header::after {
+  content:''; position: absolute; bottom:-1px; left:0; right:0; height:40px;
+  background: var(--light); clip-path: ellipse(60% 100% at 50% 100%);
+}
+.header-badge {
+  display: inline-block; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+  color: white; font-weight: 800; font-size: .82rem; padding: 4px 16px;
+  border-radius: 50px; margin-bottom: 14px; letter-spacing: .5px; position: relative;
+}
+.header-icons { font-size: 48px; display: block; position: relative; margin-bottom: 10px; }
+.page-header h1 {
+  font-family: 'Fredoka One', cursive; font-size: clamp(2rem,6vw,3.2rem);
+  color: white; text-shadow: 3px 4px rgba(0,0,0,.2); position: relative; line-height: 1.1;
+}
+.page-header p { color: rgba(255,255,255,.88); font-size: 1rem; font-weight: 700; margin-top: 8px; position: relative; }
+.topic-pills {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; position: relative;
+}
+.topic-pill {
+  background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.4);
+  color: #fff; font-weight: 800; font-size: .82rem; padding: 5px 14px;
+  border-radius: 50px; text-decoration: none; transition: background .2s;
+}
+.topic-pill:hover { background: rgba(255,255,255,.28); }
+
+/* ── MAIN ── */
+.main { max-width: 900px; margin: 0 auto; padding: 40px 18px 80px; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: 'Fredoka One', cursive; font-size: 1.7rem; color: var(--dark);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px; margin-top: 52px;
+}
+.section-label:first-child { margin-top: 0; }
+.section-label::after {
+  content:''; flex:1; height:3px;
+  background: linear-gradient(90deg, var(--purple), transparent); border-radius: 2px;
+}
+
+/* ── INTRO / TEACH BOX ── */
+.intro-box {
+  background: white; border-radius: 22px; padding: 24px 26px; margin-bottom: 28px;
+  border-left: 7px solid var(--purple); box-shadow: 0 4px 18px rgba(124,77,255,.1);
+}
+.intro-box p { font-size: 1rem; font-weight: 700; line-height: 1.8; color: #444; }
+.intro-box p + p { margin-top: 8px; }
+
+/* ── WARN BOX ── */
+.warn-box {
+  background: var(--red-light); border-left: 6px solid var(--red);
+  border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 22px;
+}
+.warn-box h3 { font-family: 'Fredoka One', cursive; color: var(--red); font-size: 1.05rem; margin-bottom: 8px; }
+.warn-box p  { font-size: .9rem; font-weight: 700; color: #5d0000; line-height: 1.5; }
+.compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.wrong-eg { background: #ffcdd2; color: var(--red);   border-radius: 10px; padding: 8px 12px; font-size: .85rem; font-weight: 700; }
+.right-eg  { background: #c8f7de; color: #004d20;     border-radius: 10px; padding: 8px 12px; font-size: .85rem; font-weight: 700; }
+
+/* ── CONCEPT GRID ── */
+.concept-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(165px,1fr)); gap: 16px; margin-bottom: 28px; }
+.concept-card {
+  background: white; border-radius: 20px; padding: 20px 14px 16px; text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.07); border: 3px solid transparent;
+  border-top: 4px solid var(--c, var(--purple)); transition: transform .18s, box-shadow .18s;
+}
+.concept-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.concept-card .c-icon { font-size: 44px; display: block; margin-bottom: 8px; }
+.concept-card .c-name { font-family: 'Fredoka One', cursive; font-size: 1.15rem; color: var(--c, var(--purple)); margin-bottom: 6px; }
+.concept-card .c-def  { font-size: .82rem; font-weight: 700; color: #555; line-height: 1.45; }
+.concept-card .c-eg   { margin-top: 8px; background: var(--light); border-radius: 8px; padding: 5px 8px; font-size: .78rem; font-weight: 700; color: var(--purple-dark); }
+
+/* ── POWERPOINT INTERFACE DIAGRAM ── */
+.ppt-window {
+  background: #2b2b2b; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 10px 32px rgba(0,0,0,.25); margin-bottom: 28px;
+}
+.ppt-titlebar {
+  background: #1e1e1e; padding: 8px 14px; display: flex; align-items: center; gap: 10px;
+}
+.ppt-tbname { color: #ccc; font-size: .82rem; font-weight: 800; flex: 1; text-align: center; }
+.win-btns { display: flex; gap: 6px; }
+.win-btn {
+  width: 26px; height: 26px; border-radius: 6px; border: none;
+  font-size: .8rem; font-weight: 900; cursor: default;
+  display: flex; align-items: center; justify-content: center;
+}
+.win-btn.minimize { background: #ffd600; color: #5a4000; }
+.win-btn.restore  { background: #00c853; color: #004d20; }
+.win-btn.close    { background: #f50057; color: white; }
+.ppt-ribbon {
+  background: #f3f3f3; border-bottom: 1px solid #ddd; padding: 0;
+}
+.ppt-tabs {
+  display: flex; gap: 0; padding: 0 10px;
+}
+.ppt-tab {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .82rem;
+  padding: 8px 14px; cursor: pointer; border: none; background: transparent;
+  color: #555; border-bottom: 3px solid transparent; transition: .15s;
+}
+.ppt-tab.active { color: var(--purple-dark); border-bottom-color: var(--purple); background: white; }
+.ppt-tab:hover:not(.active) { background: #e8e8e8; }
+.ribbon-content {
+  background: white; padding: 10px 16px; min-height: 56px;
+  font-size: .82rem; font-weight: 700; color: #444; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.ribbon-btn {
+  background: var(--light); border: 1.5px solid #c5b8f8; border-radius: 8px;
+  padding: 5px 12px; font-size: .8rem; font-weight: 800; color: var(--purple-dark);
+  cursor: default;
+}
+.ppt-slide-area {
+  background: #6b6b6b; padding: 16px; min-height: 120px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ppt-slide {
+  background: white; width: 220px; height: 110px; border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', cursive; font-size: .95rem; color: #999;
+}
+.ppt-label-row {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; margin-bottom: 28px;
+}
+.ppt-label-chip {
+  background: white; border: 2px solid var(--purple); border-radius: 50px;
+  padding: 6px 16px; font-size: .85rem; font-weight: 800; color: var(--purple-dark);
+  display: flex; align-items: center; gap: 6px;
+}
+.ppt-label-chip .chip-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--c, var(--purple)); }
+
+/* ── DEVICE CARDS ── */
+.device-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(140px,1fr)); gap: 14px; margin-bottom: 28px; }
+.device-card {
+  background: white; border-radius: 18px; padding: 18px 12px; text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,.07); border: 3px solid transparent;
+  border-top: 4px solid var(--c, var(--teal));
+}
+.device-card .d-icon { font-size: 40px; margin-bottom: 8px; display: block; }
+.device-card .d-name { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--c, var(--teal-dark)); margin-bottom: 4px; }
+.device-card .d-type { font-size: .75rem; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.device-card .d-def  { font-size: .78rem; font-weight: 700; color: #555; line-height: 1.4; }
+
+/* ── ACTIVITY BOX ── */
+.activity-box {
+  background: white; border-radius: 24px; padding: 28px 24px; margin-bottom: 32px;
+  box-shadow: 0 5px 22px rgba(0,0,0,.07);
+}
+.activity-box h2 {
+  font-family: 'Fredoka One', cursive; font-size: 1.45rem;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--dark);
+}
+.activity-box .act-num {
+  background: var(--purple); color: white; width: 34px; height: 34px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.activity-box .hint { font-size: .9rem; font-weight: 700; color: #888; margin-bottom: 20px; }
+.score-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(135deg,var(--purple-dark),var(--purple));
+  color: white; border-radius: 12px; padding: 10px 18px; margin-bottom: 14px;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+}
+.score-val { font-size: 1.3rem; }
+
+/* ── Q WRAP ── */
+.q-wrap { background: #f8f6ff; border-radius: 14px; padding: 16px; margin-bottom: 14px; border: 1.5px solid #e0d8ff; }
+.q-wrap .q-text { font-weight: 800; color: var(--dark); margin-bottom: 10px; font-size: .95rem; line-height: 1.5; }
+.q-wrap .choices { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.q-wrap .choices button {
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
+  background: white; border: 2px solid var(--purple); color: var(--purple-dark);
+  padding: 7px 16px; border-radius: 50px; cursor: pointer; transition: .15s;
+}
+.q-wrap .choices button:hover:not(:disabled) { background: var(--purple); color: white; transform: scale(1.04); }
+.q-wrap .feedback { font-weight: 800; font-size: .88rem; min-height: 20px; }
+
+/* ── TF WRAP ── */
+.tf-item { background: #f8f6ff; border-radius: 14px; padding: 16px; margin-bottom: 14px; border: 1.5px solid #e0d8ff; }
+.tf-item .tf-text { font-weight: 800; color: var(--dark); margin-bottom: 10px; font-size: .95rem; line-height: 1.5; }
+.tf-item .tf-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.tf-item .tf-btns button {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .88rem;
+  padding: 7px 20px; border-radius: 50px; cursor: pointer; border: 2px solid; transition: .15s;
+}
+.tf-item .btn-t { background: white; border-color: var(--green);  color: var(--green-dark); }
+.tf-item .btn-f { background: white; border-color: var(--red);    color: var(--red); }
+.tf-item .btn-t:hover:not(:disabled) { background: var(--green); color: white; }
+.tf-item .btn-f:hover:not(:disabled) { background: var(--red);   color: white; }
+.tf-item .feedback { font-weight: 800; font-size: .88rem; min-height: 20px; }
+
+/* ── MATCH ── */
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; align-items: start; margin-bottom: 14px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-col-label { font-family: 'Fredoka One', cursive; font-size: .95rem; color: var(--purple-dark); text-align: center; margin-bottom: 4px; }
+.match-item {
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
+  padding: 9px 14px; border-radius: 10px; border: 2px solid #ddd;
+  background: white; cursor: pointer; text-align: center;
+  transition: all .2s; user-select: none;
+}
+.match-item:hover:not(.locked) { border-color: var(--purple); background: var(--purple-light); }
+.match-item.selected { border-color: var(--pink); background: #fff0f6; }
+.match-item.locked   { border-color: var(--green); background: #f0fff5; color: var(--green-dark); cursor: default; }
+.match-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: var(--red-light); }
+.match-score { font-weight: 800; color: var(--purple-dark); font-size: .9rem; margin-top: 4px; }
+
+/* ── WORD BANK ── */
+.wb-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; background: var(--light); border-radius: 14px; padding: 12px 14px; }
+.wb-tok {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .88rem;
+  background: var(--purple); color: white; padding: 6px 16px; border-radius: 50px;
+  cursor: pointer; border: none; box-shadow: 0 3px 0 var(--purple-dark); transition: opacity .2s, transform .12s;
+  user-select: none;
+}
+.wb-tok:hover { transform: translateY(-2px); }
+.wb-tok.used  { opacity: .3; pointer-events: none; }
+.wb-tok.sel   { outline: 3px solid var(--teal); outline-offset: 2px; }
+.fill-sent {
+  background: #f8f6ff; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+  border: 1.5px solid #e0d8ff; font-size: .95rem; font-weight: 700; color: var(--dark);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+}
+.blank {
+  display: inline-flex; align-items: center; min-width: 100px; height: 32px;
+  border-bottom: 3px solid var(--purple); padding: 0 8px;
+  font-family: 'Fredoka One', cursive; color: var(--purple); font-size: .95rem;
+  cursor: pointer; border-radius: 4px 4px 0 0; transition: background .15s;
+}
+.blank:hover { background: var(--purple-light); }
+.blank.filled  { color: var(--purple-dark); border-bottom-color: var(--green); }
+.blank.correct { border-bottom-color: var(--green); color: var(--green-dark); }
+.blank.wrong-fill { border-bottom-color: var(--red); color: var(--red); animation: shake .4s; }
+.wb-check-btn {
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .95rem;
+  background: var(--purple); color: white; border: none; padding: 10px 28px;
+  border-radius: 50px; cursor: pointer; margin-top: 12px;
+  box-shadow: 0 3px 10px rgba(124,77,255,.3); transition: background .2s, transform .15s;
+}
+.wb-check-btn:hover { background: var(--purple-dark); transform: translateY(-1px); }
+.wb-feedback { font-weight: 800; font-size: .92rem; margin-top: 10px; min-height: 22px; }
+
+/* ── DONE MSG ── */
+.done-msg {
+  display: none; text-align: center; background: #f0fff5;
+  border: 2px solid var(--green); border-radius: 14px; padding: 14px;
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  color: var(--green-dark); margin-top: 14px; animation: popIn .5s;
+}
+.done-msg.show { display: block; }
+
+/* ── KEYBOARD VISUAL ── */
+.key-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.key {
+  background: white; border: 2px solid #ccc; border-radius: 8px;
+  min-width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .78rem;
+  box-shadow: 0 3px 0 #bbb; padding: 0 8px; color: var(--dark);
+}
+.key.highlight { background: var(--purple); color: white; border-color: var(--purple-dark); box-shadow: 0 3px 0 var(--purple-dark); }
+.key.wide  { min-width: 80px; }
+.key.wider { min-width: 120px; }
+
+/* ── TASKBAR VISUAL ── */
+.desktop-mock {
+  background: #87ceeb; border-radius: 14px; overflow: hidden;
+  margin-bottom: 22px; border: 3px solid #ddd; box-shadow: 0 4px 16px rgba(0,0,0,.1);
+}
+.desktop-area { height: 100px; display: flex; align-items: center; justify-content: center; }
+.desktop-icon { font-size: 28px; text-align: center; }
+.desktop-icon p { font-size: .7rem; font-weight: 800; color: white; text-shadow: 0 1px 3px rgba(0,0,0,.5); margin-top: 3px; }
+.taskbar-mock {
+  background: linear-gradient(135deg, #1a1a3e, #2d2b65);
+  padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+}
+.taskbar-start { background: var(--teal); color: white; font-weight: 800; font-size: .78rem; padding: 4px 12px; border-radius: 4px; }
+.taskbar-item  { background: rgba(255,255,255,.1); color: #ccc; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
+.taskbar-clock { margin-left: auto; color: #ccc; font-size: .75rem; font-weight: 800; }
+.position-label {
+  background: var(--teal); color: white; font-family: 'Fredoka One', cursive;
+  font-size: .9rem; text-align: center; padding: 8px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes popIn { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes shake  { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+
+/* ── RESPONSIVE ── */
+@media(max-width:540px) {
+  .match-grid { grid-template-columns: 1fr; }
+  .compare-row { grid-template-columns: 1fr; }
+  .concept-grid { grid-template-columns: repeat(auto-fill,minmax(140px,1fr)); }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+<div class="cheer-banner" id="cheer">Amazing work, Emunah! You're going to ace that computing exam! 💻🌟</div>
+
+<!-- HERO -->
+<div class="page-header">
+  <span class="header-badge">Year 3 · Cambridge · Computing Exam Prep</span>
+  <span class="header-icons">💻🖥️⌨️🖱️</span>
+  <h1>Computing Exam Prep ✨</h1>
+  <p>End of Term · Let's fix every mistake and get to 100%!</p>
+  <div class="topic-pills">
+    <a class="topic-pill" href="#multimedia">🎬 Multimedia Types</a>
+    <a class="topic-pill" href="#ppt">📊 PowerPoint Tabs</a>
+    <a class="topic-pill" href="#hardware">🖥️ Computer Hardware</a>
+    <a class="topic-pill" href="#screen">🖱️ Screen Layout</a>
+    <a class="topic-pill" href="#devices">🎮 Input &amp; Output</a>
+    <a class="topic-pill" href="#windows">🪟 Window Controls</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════
+     SECTION 1 — MULTIMEDIA TYPES
+═══════════════════════════════════════ -->
+<div id="multimedia"></div>
+<div class="section-label">🎬 Section 1 — Multimedia Types</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q1 Mistake — "Digits" is NOT multimedia</h3>
+  <p>The question asked: <em>"Which of the following is NOT a type of multimedia?"</em><br>
+  You chose <strong>Audio</strong> — but Audio IS a type of multimedia! A speaker plays audio in a presentation. <strong>Digits</strong> (raw numbers/data) is NOT a multimedia type.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ Audio is NOT multimedia ❌<br><em>Audio IS multimedia — it includes music, sounds, voiceovers!</em></div>
+    <div class="right-eg">✓ Digits is NOT multimedia ✅<br><em>Digits are just numbers/data — not a media type.</em></div>
+  </div>
+</div>
+
+<div class="intro-box">
+  <p><strong>Multimedia</strong> means using MORE than one type of media together — like pictures, sounds and videos all in one presentation. The 5 types of multimedia are:</p>
+</div>
+
+<div class="concept-grid">
+  <div class="concept-card" style="--c:#7c4dff">
+    <span class="c-icon">🖼️</span>
+    <div class="c-name">Image</div>
+    <div class="c-def">Photos, drawings and pictures</div>
+    <div class="c-eg">e.g. a photo of an animal on a slide</div>
+  </div>
+  <div class="concept-card" style="--c:#00bcd4">
+    <span class="c-icon">🎬</span>
+    <div class="c-name">Video</div>
+    <div class="c-def">Moving pictures that tell a story</div>
+    <div class="c-eg">e.g. a YouTube clip in a slideshow</div>
+  </div>
+  <div class="concept-card" style="--c:#ff6d00">
+    <span class="c-icon">🔊</span>
+    <div class="c-name">Audio</div>
+    <div class="c-def">Sounds, music, voiceovers</div>
+    <div class="c-eg">e.g. background music on a slide</div>
+  </div>
+  <div class="concept-card" style="--c:#00c853">
+    <span class="c-icon">📝</span>
+    <div class="c-name">Text</div>
+    <div class="c-def">Words and sentences on screen</div>
+    <div class="c-eg">e.g. a title or bullet points</div>
+  </div>
+  <div class="concept-card" style="--c:#f50057">
+    <span class="c-icon">✨</span>
+    <div class="c-name">Animation</div>
+    <div class="c-def">Moving effects on text or images</div>
+    <div class="c-eg">e.g. a word that flies onto the slide</div>
+  </div>
+  <div class="concept-card" style="--c:#888" style="opacity:.7">
+    <span class="c-icon">🔢</span>
+    <div class="c-name">Digits ❌</div>
+    <div class="c-def">Just numbers/data — NOT a multimedia type!</div>
+    <div class="c-eg">Raw numbers are not media</div>
+  </div>
+</div>
+
+<!-- Activity 1 -->
+<div class="activity-box">
+  <h2><div class="act-num">1</div>Is it multimedia? — True or False</h2>
+  <p class="hint">Is each item a type of multimedia? Tap TRUE or FALSE.</p>
+  <div id="a1list"></div>
+</div>
+
+<!-- Activity 2 -->
+<div class="activity-box">
+  <h2><div class="act-num">2</div>Which is NOT multimedia? — Pick the odd one out</h2>
+  <p class="hint">Tap the answer that is NOT a type of multimedia.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a2score">0 / 6</span></div>
+  <div id="a2list"></div>
+  <div class="done-msg" id="a2done">🎉 Perfect! You know exactly what multimedia is!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 2 — POWERPOINT TABS
+═══════════════════════════════════════ -->
+<div id="ppt"></div>
+<div class="section-label">📊 Section 2 — PowerPoint Tabs</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q5 Mistake — Background is under DESIGN, not Table</h3>
+  <p>The question asked: <em>"What tab do you click to change the background of your slide?"</em><br>
+  You chose <strong>Table</strong> ❌ — but there is no "Table" tab for backgrounds! The answer is <strong>Design</strong>. The Design tab controls how your slides <em>look</em>.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ Table ❌<br><em>Table is for adding data tables, not changing the slide background.</em></div>
+    <div class="right-eg">✓ Design ✅<br><em>The Design tab changes backgrounds, themes and colours for your whole presentation.</em></div>
+  </div>
+</div>
+
+<div class="intro-box">
+  <p>The <strong>Ribbon</strong> is the toolbar at the top of PowerPoint. It has different <strong>tabs</strong> — each tab shows different buttons for different jobs. Click a tab below to see what it does!</p>
+</div>
+
+<!-- Interactive PPT interface -->
+<div class="ppt-window">
+  <div class="ppt-titlebar">
+    <div style="color:#aaa;font-size:.75rem;font-weight:700">🗂</div>
+    <div class="ppt-tbname">Presentation1 — PowerPoint &nbsp;·&nbsp; <span style="color:#6cf">Title Bar</span></div>
+    <div class="win-btns">
+      <div class="win-btn minimize" title="Minimize">—</div>
+      <div class="win-btn restore"  title="Restore">⬜</div>
+      <div class="win-btn close"    title="Close">✕</div>
+    </div>
+  </div>
+  <div class="ppt-ribbon">
+    <div class="ppt-tabs" id="pptTabs">
+      <button class="ppt-tab active" data-tab="home">Home</button>
+      <button class="ppt-tab" data-tab="insert">Insert</button>
+      <button class="ppt-tab" data-tab="design">Design</button>
+      <button class="ppt-tab" data-tab="transitions">Transitions</button>
+      <button class="ppt-tab" data-tab="animations">Animations</button>
+      <button class="ppt-tab" data-tab="slideshow">Slide Show</button>
+    </div>
+    <div class="ribbon-content" id="ribbonContent">
+      <span class="ribbon-btn">Paste</span>
+      <span class="ribbon-btn">New Slide</span>
+      <span class="ribbon-btn"><strong>B</strong></span>
+      <span class="ribbon-btn"><em>I</em></span>
+      <span class="ribbon-btn"><u>U</u></span>
+      <span style="color:#888;font-size:.85rem;font-weight:700;margin-left:6px">← <strong>Home tab</strong>: copy/paste, font style, adding new slides, text formatting.</span>
+    </div>
+  </div>
+  <div class="ppt-slide-area">
+    <div class="ppt-slide">Click a tab above! 👆</div>
+  </div>
+</div>
+
+<div class="ppt-label-row">
+  <div class="ppt-label-chip" style="--c:#7c4dff"><span class="chip-dot"></span>Home — text &amp; paste</div>
+  <div class="ppt-label-chip" style="--c:#00bcd4"><span class="chip-dot" style="background:#00bcd4"></span>Insert — add pictures</div>
+  <div class="ppt-label-chip" style="--c:#ff6d00"><span class="chip-dot" style="background:#ff6d00"></span>Design — background &amp; theme ⭐</div>
+  <div class="ppt-label-chip" style="--c:#f50057"><span class="chip-dot" style="background:#f50057"></span>Transitions — slide change effects</div>
+  <div class="ppt-label-chip" style="--c:#00c853"><span class="chip-dot" style="background:#00c853"></span>Animations — moving text/images</div>
+  <div class="ppt-label-chip" style="--c:#ffd600"><span class="chip-dot" style="background:#ffd600"></span>Slide Show — present your slides</div>
+</div>
+
+<!-- Activity 3 -->
+<div class="activity-box">
+  <h2><div class="act-num">3</div>Which tab do you use? — Pick the right one</h2>
+  <p class="hint">Each question describes a task in PowerPoint. Tap the tab you would click.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a3score">0 / 8</span></div>
+  <div id="a3list"></div>
+  <div class="done-msg" id="a3done">🎉 PowerPoint tabs mastered!</div>
+</div>
+
+<!-- Activity 4 — True/False tabs -->
+<div class="activity-box">
+  <h2><div class="act-num">4</div>PowerPoint — True or False?</h2>
+  <p class="hint">Is the statement about PowerPoint correct?</p>
+  <div id="a4list"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 3 — COMPUTER HARDWARE / CPU
+═══════════════════════════════════════ -->
+<div id="hardware"></div>
+<div class="section-label">🖥️ Section 3 — Computer Hardware &amp; the CPU</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q8 Mistake — The MICROPROCESSOR controls everything, not the Mouse</h3>
+  <p>The question asked: <em>"The ___ controls all the activities of the computer."</em><br>
+  You chose <strong>Mouse</strong> ❌ — a mouse is an input device (it lets you point and click), but it does NOT control the computer. The <strong>Microprocessor (CPU)</strong> is the brain of the computer — it controls everything.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ Mouse ❌<br><em>The mouse is an input device — it sends signals TO the computer. It doesn't control it.</em></div>
+    <div class="right-eg">✓ Microprocessor (CPU) ✅<br><em>The CPU (Central Processing Unit) is the brain — it processes every instruction.</em></div>
+  </div>
+</div>
+
+<div class="concept-grid">
+  <div class="concept-card" style="--c:#f50057">
+    <span class="c-icon">🧠</span>
+    <div class="c-name">CPU / Microprocessor</div>
+    <div class="c-def">The <strong>brain</strong> of the computer. Controls ALL activities and processes instructions.</div>
+    <div class="c-eg">Also called the "processor"</div>
+  </div>
+  <div class="concept-card" style="--c:#7c4dff">
+    <span class="c-icon">🖥️</span>
+    <div class="c-name">Monitor</div>
+    <div class="c-def">The screen that displays output. You see things on it.</div>
+    <div class="c-eg">Output device</div>
+  </div>
+  <div class="concept-card" style="--c:#00bcd4">
+    <span class="c-icon">⌨️</span>
+    <div class="c-name">Keyboard</div>
+    <div class="c-def">You type letters and numbers. Sends input to the computer.</div>
+    <div class="c-eg">Input device</div>
+  </div>
+  <div class="concept-card" style="--c:#ff6d00">
+    <span class="c-icon">🖱️</span>
+    <div class="c-name">Mouse</div>
+    <div class="c-def">You point, click and drag. Sends input to the computer.</div>
+    <div class="c-eg">Input device ← NOT the brain!</div>
+  </div>
+  <div class="concept-card" style="--c:#00c853">
+    <span class="c-icon">🔊</span>
+    <div class="c-name">Speaker</div>
+    <div class="c-def">Brings sound OUT of the computer. You hear audio through it.</div>
+    <div class="c-eg">Output device</div>
+  </div>
+  <div class="concept-card" style="--c:#9c27b0">
+    <span class="c-icon">🖨️</span>
+    <div class="c-name">Printer</div>
+    <div class="c-def">Prints documents onto paper from the computer.</div>
+    <div class="c-eg">Output device</div>
+  </div>
+</div>
+
+<div class="intro-box">
+  <p>💡 <strong>Easy way to remember Input vs Output:</strong><br>
+  <strong>Input</strong> = things you put INTO the computer (keyboard, mouse, joystick, microphone)<br>
+  <strong>Output</strong> = things that come OUT of the computer (monitor, speaker, printer)</p>
+</div>
+
+<!-- Activity 5 -->
+<div class="activity-box">
+  <h2><div class="act-num">5</div>CPU or not? — True or False</h2>
+  <p class="hint">Is the statement about the microprocessor and computer parts correct?</p>
+  <div id="a5list"></div>
+</div>
+
+<!-- Activity 6 — Input/Output match -->
+<div class="activity-box">
+  <h2><div class="act-num">6</div>Input or Output? — Match the device</h2>
+  <p class="hint">Tap a device on the left, then tap whether it is an INPUT or OUTPUT device on the right.</p>
+  <div class="score-bar"><span>Matched:</span><span class="score-val" id="a6score">0 / 6</span></div>
+  <div class="match-grid" id="a6grid">
+    <div class="match-col">
+      <div class="match-col-label">💻 Device</div>
+      <div class="match-item" data-key="in-kb"   data-side="L">⌨️ Keyboard</div>
+      <div class="match-item" data-key="out-mon"  data-side="L">🖥️ Monitor</div>
+      <div class="match-item" data-key="in-mouse" data-side="L">🖱️ Mouse</div>
+      <div class="match-item" data-key="out-spk"  data-side="L">🔊 Speaker</div>
+      <div class="match-item" data-key="in-joy"   data-side="L">🕹️ Joystick</div>
+      <div class="match-item" data-key="out-prt"  data-side="L">🖨️ Printer</div>
+    </div>
+    <div class="match-col">
+      <div class="match-col-label">📥📤 Type</div>
+      <div class="match-item" data-key="out-spk"  data-side="R">📤 OUTPUT — brings sound out</div>
+      <div class="match-item" data-key="in-kb"    data-side="R">📥 INPUT — you type into it</div>
+      <div class="match-item" data-key="out-prt"  data-side="R">📤 OUTPUT — prints on paper</div>
+      <div class="match-item" data-key="in-mouse" data-side="R">📥 INPUT — you click with it</div>
+      <div class="match-item" data-key="out-mon"  data-side="R">📤 OUTPUT — displays the screen</div>
+      <div class="match-item" data-key="in-joy"   data-side="R">📥 INPUT — controls games</div>
+    </div>
+  </div>
+  <div class="match-score" id="a6score-txt"></div>
+</div>
+
+<!-- Activity 7 — hardware MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">7</div>Computer Hardware Quiz</h2>
+  <p class="hint">Tap the correct answer for each question.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a7score">0 / 8</span></div>
+  <div id="a7list"></div>
+  <div class="done-msg" id="a7done">🎉 Hardware expert! Excellent!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 4 — TASKBAR / SCREEN LAYOUT
+═══════════════════════════════════════ -->
+<div id="screen"></div>
+<div class="section-label">🖱️ Section 4 — The Taskbar &amp; Screen Layout</div>
+
+<div class="warn-box">
+  <h3>⚠️ Q10 Mistake — Taskbar is at the BOTTOM, not the top</h3>
+  <p>The question asked: <em>"Where is the taskbar usually located on the computer screen?"</em><br>
+  You chose <strong>At the top</strong> ❌ — the top is where the <strong>title bar</strong> and <strong>menu bar</strong> are inside an app. The <strong>taskbar</strong> (with the Start button, open apps, and clock) sits at the very <strong>bottom</strong> of the Windows screen.</p>
+  <div class="compare-row">
+    <div class="wrong-eg">✗ At the top ❌<br><em>The top has the title bar (shows the app name). That is NOT the taskbar.</em></div>
+    <div class="right-eg">✓ At the bottom ✅<br><em>The taskbar sits at the bottom — it has the Start button, open programs and the clock.</em></div>
+  </div>
+</div>
+
+<!-- Desktop mock -->
+<div class="desktop-mock">
+  <div style="padding: 8px 12px; background: rgba(0,0,0,.15); font-size:.7rem; font-weight:800; color:white; text-align:right; letter-spacing:.5px;">
+    ← TOP of screen: Title Bar lives here (inside apps)
+  </div>
+  <div class="desktop-area">
+    <div class="desktop-icon">
+      <div style="font-size:32px">🗂️</div>
+      <p>My Files</p>
+    </div>
+    <div class="desktop-icon" style="margin-left:24px">
+      <div style="font-size:32px">🌐</div>
+      <p>Browser</p>
+    </div>
+    <div class="desktop-icon" style="margin-left:24px">
+      <div style="font-size:32px">📊</div>
+      <p>PowerPoint</p>
+    </div>
+  </div>
+  <div class="taskbar-mock">
+    <div class="taskbar-start">⊞ Start</div>
+    <div class="taskbar-item">📊 PowerPoint</div>
+    <div class="taskbar-item">🌐 Browser</div>
+    <div class="taskbar-clock">12:45 PM</div>
+  </div>
+  <div class="position-label">⬆️ TASKBAR — always at the BOTTOM of the screen</div>
+</div>
+
+<div class="intro-box">
+  <p>🪟 <strong>Parts of the Windows screen:</strong><br>
+  • <strong>Desktop</strong> — the background area with icons<br>
+  • <strong>Taskbar</strong> — the bar at the <strong>bottom</strong> with the Start button and open apps<br>
+  • <strong>Title Bar</strong> — inside each app window, at the <strong>top</strong> — shows the app's name<br>
+  • <strong>Ribbon</strong> — the toolbar with tabs (Home, Insert, Design…) inside apps like PowerPoint</p>
+</div>
+
+<!-- Activity 8 — screen layout MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">8</div>Screen Layout Quiz — Where is it?</h2>
+  <p class="hint">Tap the correct answer.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a8score">0 / 8</span></div>
+  <div id="a8list"></div>
+  <div class="done-msg" id="a8done">🎉 Screen layout sorted!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 5 — INPUT & OUTPUT DEVICES
+═══════════════════════════════════════ -->
+<div id="devices"></div>
+<div class="section-label">🎮 Section 5 — Input &amp; Output Devices</div>
+
+<div class="intro-box">
+  <p>In Part 2 of the test you named devices well! Let's make sure you know ALL the common ones, whether they are input or output, and the special ones like the <strong>joystick</strong> and <strong>game controller</strong>.</p>
+</div>
+
+<div class="device-grid">
+  <div class="device-card" style="--c:#7c4dff">
+    <span class="d-icon">🕹️</span>
+    <div class="d-name">Joystick</div>
+    <div class="d-type">INPUT</div>
+    <div class="d-def">Used to control movement in games and flight simulators</div>
+  </div>
+  <div class="device-card" style="--c:#7c4dff">
+    <span class="d-icon">🎮</span>
+    <div class="d-name">Game Controller</div>
+    <div class="d-type">INPUT</div>
+    <div class="d-def">Used to play video games — sends button presses to the computer</div>
+  </div>
+  <div class="device-card" style="--c:#00bcd4">
+    <span class="d-icon">🖨️</span>
+    <div class="d-name">Printer</div>
+    <div class="d-type">OUTPUT</div>
+    <div class="d-def">Prints documents and images onto paper</div>
+  </div>
+  <div class="device-card" style="--c:#ff6d00">
+    <span class="d-icon">💻</span>
+    <div class="d-name">Laptop</div>
+    <div class="d-type">COMPUTER</div>
+    <div class="d-def">A portable computer — has keyboard, screen and processor built in</div>
+  </div>
+  <div class="device-card" style="--c:#00c853">
+    <span class="d-icon">🔊</span>
+    <div class="d-name">Speaker</div>
+    <div class="d-type">OUTPUT</div>
+    <div class="d-def">Brings sound OUT of the computer — the output device for audio</div>
+  </div>
+  <div class="device-card" style="--c:#f50057">
+    <span class="d-icon">📻</span>
+    <div class="d-name">Radio</div>
+    <div class="d-type">NOT a computer device</div>
+    <div class="d-def">Receives broadcast signals — it is a separate electronic device, NOT connected to a computer</div>
+  </div>
+  <div class="device-card" style="--c:#9c27b0">
+    <span class="d-icon">🎤</span>
+    <div class="d-name">Microphone</div>
+    <div class="d-type">INPUT</div>
+    <div class="d-def">Captures your voice and sends it into the computer</div>
+  </div>
+  <div class="device-card" style="--c:#ff6d00">
+    <span class="d-icon">📷</span>
+    <div class="d-name">Camera / Webcam</div>
+    <div class="d-type">INPUT</div>
+    <div class="d-def">Captures images and video and sends them into the computer</div>
+  </div>
+</div>
+
+<!-- Activity 9 — device MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">9</div>Name that Device! — Pick the correct answer</h2>
+  <p class="hint">Tap the right answer for each question about computer devices.</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a9score">0 / 8</span></div>
+  <div id="a9list"></div>
+  <div class="done-msg" id="a9done">🎉 All devices identified!</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 6 — WINDOW CONTROLS + KEYBOARD
+═══════════════════════════════════════ -->
+<div id="windows"></div>
+<div class="section-label">🪟 Section 6 — Window Controls &amp; Keyboard Keys</div>
+
+<div class="intro-box">
+  <p>You got the window labels and fill-in sentences right in Part 2! Let's make sure these are rock-solid for the exam. Remember the window control buttons and the special keyboard keys.</p>
+</div>
+
+<!-- Keyboard visual -->
+<div style="background:white;border-radius:20px;padding:24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(0,0,0,.07)">
+  <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--purple-dark);margin-bottom:14px">⌨️ Special Keyboard Keys</div>
+  <div class="key-row">
+    <div class="key highlight wide">Caps Lock</div>
+    <div class="key">A</div><div class="key">S</div><div class="key">D</div><div class="key">F</div>
+    <div class="key">G</div><div class="key">H</div><div class="key">J</div><div class="key">K</div><div class="key">L</div>
+  </div>
+  <div class="key-row" style="margin-top:8px">
+    <div class="key highlight wider">← Delete / Backspace</div>
+    <div class="key highlight">Enter ↵</div>
+    <div class="key highlight wider">Space Bar</div>
+    <div class="key">Ctrl</div><div class="key">Z</div>
+  </div>
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:var(--purple-light);border-radius:12px;padding:12px 14px;font-size:.88rem;font-weight:700">
+      <strong style="color:var(--purple-dark)">Caps Lock</strong> — types CAPITAL letters when turned on. Like pressing Shift for every letter!
+    </div>
+    <div style="background:#e0f7fa;border-radius:12px;padding:12px 14px;font-size:.88rem;font-weight:700">
+      <strong style="color:var(--teal-dark)">Delete</strong> — removes a selected picture or the character to the right of the cursor
+    </div>
+    <div style="background:#e8f5e9;border-radius:12px;padding:12px 14px;font-size:.88rem;font-weight:700">
+      <strong style="color:#2e7d32">Ctrl + Z</strong> — UNDO! Takes back your last action (does NOT delete a picture)
+    </div>
+    <div style="background:#fff8e1;border-radius:12px;padding:12px 14px;font-size:.88rem;font-weight:700">
+      <strong style="color:#f57f17">Enter</strong> — confirms or starts a new line. NOT used to delete pictures.
+    </div>
+  </div>
+</div>
+
+<!-- Window controls reference -->
+<div style="background:white;border-radius:20px;padding:24px;margin-bottom:28px;box-shadow:0 4px 16px rgba(0,0,0,.07)">
+  <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--purple-dark);margin-bottom:14px">🪟 Window Control Buttons</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+    <div style="background:#fff8dc;border-radius:12px;padding:14px;font-size:.9rem;font-weight:700;border-left:4px solid #ffd600">
+      <span style="font-size:1.3rem">—</span> <strong>Minimize</strong><br>
+      <span style="font-size:.82rem;color:#555">Hides the window (it's still open in the taskbar)</span>
+    </div>
+    <div style="background:#e8f5e9;border-radius:12px;padding:14px;font-size:.9rem;font-weight:700;border-left:4px solid #00c853">
+      <span style="font-size:1.3rem">⬜</span> <strong>Restore Down</strong><br>
+      <span style="font-size:.82rem;color:#555">Makes the window smaller / restores it to a smaller size</span>
+    </div>
+    <div style="background:#ffebee;border-radius:12px;padding:14px;font-size:.9rem;font-weight:700;border-left:4px solid #f50057">
+      <span style="font-size:1.3rem">✕</span> <strong>Close (X button)</strong><br>
+      <span style="font-size:.82rem;color:#555">Closes / shuts the window. Helps you <em>close</em> your work.</span>
+    </div>
+    <div style="background:var(--purple-light);border-radius:12px;padding:14px;font-size:.9rem;font-weight:700;border-left:4px solid var(--purple)">
+      <span style="font-size:1.3rem">📋</span> <strong>Ribbon</strong><br>
+      <span style="font-size:.82rem;color:#555">The toolbar with all the tabs (Home, Insert, Design…) at the top of an app</span>
+    </div>
+  </div>
+</div>
+
+<!-- Activity 10 — window/keyboard MCQ -->
+<div class="activity-box">
+  <h2><div class="act-num">10</div>Window Controls &amp; Keyboard — Final Quiz!</h2>
+  <p class="hint">This is just like the real exam. Tap the correct answer!</p>
+  <div class="score-bar"><span>Score:</span><span class="score-val" id="a10score">0 / 10</span></div>
+  <div id="a10list"></div>
+  <div class="done-msg" id="a10done">🎉 Amazing! You finished all 10 questions!</div>
+</div>
+
+<!-- Activity 11 — fill-in word bank (like Part 2 Q3) -->
+<div class="activity-box">
+  <h2><div class="act-num">11</div>Complete the Sentences — Word Bank (just like the exam!)</h2>
+  <p class="hint">Tap a word from the word bank, then tap the blank where it belongs.</p>
+  <div class="wb-bank" id="wb11bank"></div>
+  <div id="wb11sents"></div>
+  <button class="wb-check-btn" onclick="checkWB11()">Check my answers ✔</button>
+  <div class="wb-feedback" id="wb11fb"></div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════
+   CHEER
+═══════════════════════════════════ */
+let cheerCount = 0;
+function addCheer(n) {
+  cheerCount += (n || 1);
+  if (cheerCount >= 3) document.getElementById('cheer').classList.add('show');
+}
+
+/* ═══════════════════════════════════
+   POWERPOINT TAB INTERACTIVITY
+═══════════════════════════════════ */
+const tabInfo = {
+  home: {
+    btns: ['Paste','New Slide','B','I','U','Font Size'],
+    desc: '<strong>Home tab</strong>: copy/paste, font style, adding new slides, text formatting.'
+  },
+  insert: {
+    btns: ['Picture','Table','Chart','Text Box','Video'],
+    desc: '🖼️ <strong>Insert tab</strong>: add pictures from your computer, tables, charts, videos and text boxes.'
+  },
+  design: {
+    btns: ['Themes','Background Format','Colours','Fonts'],
+    desc: '🎨 <strong>Design tab</strong>: change the background, theme, colours and fonts for your whole slide. ⭐ This is the answer to Q5!'
+  },
+  transitions: {
+    btns: ['No Transition','Fade','Push','Wipe','Effect Options'],
+    desc: '✨ <strong>Transitions tab</strong>: add effects when moving from one slide to the next.'
+  },
+  animations: {
+    btns: ['No Animation','Appear','Fly In','Bounce','Spin'],
+    desc: '🌀 <strong>Animations tab</strong>: make text or images move on a slide (fly in, fade, bounce…).'
+  },
+  slideshow: {
+    btns: ['From Beginning','From Current Slide','Set Up Show'],
+    desc: '▶️ <strong>Slide Show tab</strong>: start presenting your slideshow from the beginning or current slide.'
+  }
+};
+
+document.querySelectorAll('.ppt-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.ppt-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const info = tabInfo[tab.dataset.tab];
+    const rc = document.getElementById('ribbonContent');
+    rc.innerHTML = info.btns.map(b => `<span class="ribbon-btn">${b}</span>`).join('') +
+      `<span style="color:#555;font-size:.82rem;font-weight:700;margin-left:8px">${info.desc}</span>`;
+  });
+});
+
+/* ═══════════════════════════════════
+   GENERIC MCQ BUILDER
+═══════════════════════════════════ */
+function buildMCQ(listId, scoreId, doneId, data) {
+  const list = document.getElementById(listId);
+  let correct = 0, answered = 0;
+  const total = data.length;
+  data.forEach((q, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'q-wrap';
+    wrap.innerHTML = `<div class="q-text">${i+1}. ${q.q}</div>
+      <div class="choices">${q.opts.map(o => `<button data-val="${o}">${o}</button>`).join('')}</div>
+      <div class="feedback"></div>`;
+    wrap.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (wrap.dataset.done) return;
+        wrap.dataset.done = '1';
+        wrap.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = wrap.querySelector('.feedback');
+        if (btn.dataset.val === q.ans) {
+          btn.style.cssText = 'background:#00c853;color:white;border-color:#007a2f';
+          fb.textContent = '✅ Correct! Well done!'; fb.style.color = '#007a2f';
+          correct++; addCheer();
+        } else {
+          btn.style.cssText = 'background:#f50057;color:white;border-color:#b0003a';
+          fb.textContent = `❌ The answer is: "${q.ans}" — ${q.hint || ''}`;
+          fb.style.color = '#b0003a';
+          wrap.querySelectorAll('button').forEach(b => {
+            if (b.dataset.val === q.ans) b.style.cssText = 'background:#c8f7de;color:#004d20;border-color:#00c853';
+          });
+        }
+        answered++;
+        if (scoreId) document.getElementById(scoreId).textContent = `${correct} / ${total}`;
+        if (answered === total && doneId) {
+          document.getElementById(doneId).classList.add('show'); addCheer(2);
+        }
+      });
+    });
+    list.appendChild(wrap);
+  });
+}
+
+/* ═══════════════════════════════════
+   GENERIC TF BUILDER
+═══════════════════════════════════ */
+function buildTF(listId, data) {
+  const list = document.getElementById(listId);
+  data.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'tf-item';
+    div.innerHTML = `<div class="tf-text">${i+1}. ${q.stmt}</div>
+      <div class="tf-btns">
+        <button class="btn-t">✅ TRUE</button>
+        <button class="btn-f">❌ FALSE</button>
+      </div>
+      <div class="feedback"></div>`;
+    div.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (div.dataset.done) return;
+        div.dataset.done = '1';
+        div.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = div.querySelector('.feedback');
+        const chose = btn.classList.contains('btn-t');
+        if (chose === q.ans) {
+          btn.style.cssText = 'background:#00c853;color:white;border-color:#007a2f';
+          fb.textContent = '✅ Correct!'; fb.style.color = '#007a2f';
+          addCheer();
+        } else {
+          btn.style.cssText = 'background:#f50057;color:white;border-color:#b0003a';
+          fb.textContent = `❌ ${q.hint}`; fb.style.color = '#b0003a';
+          div.querySelectorAll('button').forEach(b => {
+            if (b.classList.contains('btn-t') === q.ans)
+              b.style.cssText = 'background:#c8f7de;color:#004d20;border-color:#00c853';
+          });
+        }
+      });
+    });
+    list.appendChild(div);
+  });
+}
+
+/* ═══════════════════════════════════
+   MATCH — a6grid
+═══════════════════════════════════ */
+(function() {
+  let sel = null, matched = 0;
+  document.querySelectorAll('#a6grid .match-item').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('locked')) return;
+      if (!sel) {
+        document.querySelectorAll('#a6grid .match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel = el; return;
+      }
+      if (el.dataset.side === sel.dataset.side) {
+        document.querySelectorAll('#a6grid .match-item.selected').forEach(e => e.classList.remove('selected'));
+        el.classList.add('selected'); sel = el; return;
+      }
+      if (el.dataset.key === sel.dataset.key) {
+        sel.classList.remove('selected'); sel.classList.add('locked');
+        el.classList.remove('selected');  el.classList.add('locked');
+        matched++;
+        const sc = document.getElementById('a6score');
+        sc.textContent = matched === 6 ? '6 / 6' : `${matched} / 6`;
+        const txt = document.getElementById('a6score-txt');
+        if (matched === 6) { txt.textContent = '🎉 Perfect! All 6 matched correctly!'; addCheer(2); }
+        else txt.textContent = `${matched} / 6 matched ✅`;
+      } else {
+        const s = sel;
+        s.classList.remove('selected'); el.classList.remove('selected');
+        [s, el].forEach(e => {
+          e.classList.add('wrong-flash');
+          setTimeout(() => e.classList.remove('wrong-flash'), 500);
+        });
+      }
+      sel = null;
+    });
+  });
+})();
+
+/* ═══════════════════════════════════
+   WORD BANK — Activity 11
+═══════════════════════════════════ */
+const wb11words = ['PowerPoint','Save As','hide','close','Save','Microprocessor'];
+const wb11sents = [
+  { text: 'The ✕ button helps us ___ our work.',                  ans: 'close'         },
+  { text: 'The ___ command is used when saving an old work.',     ans: 'Save'          },
+  { text: 'The minimize button helps us ___ the application window.', ans: 'hide'      },
+  { text: 'We type and work in Microsoft ___.',                   ans: 'PowerPoint'    },
+  { text: 'To save your work with a new name, click on ___.',     ans: 'Save As'       },
+  { text: 'The ___ controls all the activities of the computer.', ans: 'Microprocessor'},
+];
+
+(function buildWB() {
+  const bankEl = document.getElementById('wb11bank');
+  const sentsEl = document.getElementById('wb11sents');
+  let selWord = null;
+  const answered = new Array(wb11sents.length).fill(false);
+
+  wb11words.forEach(w => {
+    const tok = document.createElement('button');
+    tok.className = 'wb-tok'; tok.textContent = w; tok.dataset.word = w;
+    tok.addEventListener('click', () => {
+      if (tok.classList.contains('used')) return;
+      document.querySelectorAll('.wb-tok').forEach(t => t.classList.remove('sel'));
+      if (selWord === w) { selWord = null; return; }
+      selWord = w; tok.classList.add('sel');
+    });
+    bankEl.appendChild(tok);
+  });
+
+  wb11sents.forEach((s, i) => {
+    const parts = s.text.split('___');
+    const item = document.createElement('div'); item.className = 'fill-sent';
+    const blankId = `wb11b${i}`;
+    item.innerHTML = `<span>${i+1}. ${parts[0]}</span><span class="blank" id="${blankId}" data-filled="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>${parts[1] || ''}</span>`;
+    sentsEl.appendChild(item);
+
+    document.getElementById(blankId).addEventListener('click', () => {
+      if (answered[i]) return;
+      const blank = document.getElementById(blankId);
+      if (!selWord && blank.dataset.filled) {
+        const old = blank.dataset.filled;
+        blank.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        blank.dataset.filled = ''; blank.className = 'blank';
+        const tok = [...document.querySelectorAll('.wb-tok')].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+        return;
+      }
+      if (!selWord) return;
+      const old = blank.dataset.filled;
+      if (old) {
+        const tok = [...document.querySelectorAll('.wb-tok')].find(t => t.dataset.word === old);
+        if (tok) tok.classList.remove('used');
+      }
+      blank.textContent = selWord; blank.dataset.filled = selWord; blank.className = 'blank filled';
+      const usedTok = [...document.querySelectorAll('.wb-tok')].find(t => t.dataset.word === selWord);
+      if (usedTok) { usedTok.classList.add('used'); usedTok.classList.remove('sel'); }
+      selWord = null;
+      document.querySelectorAll('.wb-tok').forEach(t => t.classList.remove('sel'));
+    });
+  });
+})();
+
+function checkWB11() {
+  let correct = 0;
+  wb11sents.forEach((s, i) => {
+    const blank = document.getElementById(`wb11b${i}`);
+    const filled = blank ? blank.dataset.filled : '';
+    if (filled === s.ans) {
+      blank.className = 'blank correct'; correct++;
+    } else {
+      blank.classList.add('wrong-fill');
+    }
+  });
+  const fb = document.getElementById('wb11fb');
+  if (correct === wb11sents.length) {
+    fb.textContent = `✅ Perfect! All ${wb11sents.length} correct! You're ready for the exam!`;
+    fb.style.color = '#007a2f'; addCheer(2);
+  } else {
+    fb.textContent = `${correct} / ${wb11sents.length} correct — check the red blanks!`;
+    fb.style.color = '#b0003a';
+  }
+}
+
+/* ═══════════════════════════════════
+   ACTIVITY DATA
+═══════════════════════════════════ */
+
+// Activity 1 — TF: is it multimedia?
+buildTF('a1list', [
+  { stmt: '🖼️ An <strong>Image</strong> (photo) is a type of multimedia.',    ans: true,  hint: 'Images ARE multimedia — photos and drawings are a media type.' },
+  { stmt: '🔊 <strong>Audio</strong> (sound/music) is a type of multimedia.',  ans: true,  hint: 'Audio IS multimedia — music, sounds and voiceovers are all multimedia.' },
+  { stmt: '🔢 <strong>Digits</strong> (numbers/data) is a type of multimedia.',ans: false, hint: 'Digits are NOT multimedia — they are raw numbers/data, not a media format.' },
+  { stmt: '🎬 <strong>Video</strong> (moving pictures) is a type of multimedia.',ans: true, hint: 'Video IS multimedia — moving images are a key multimedia type.' },
+  { stmt: '✨ <strong>Animation</strong> (moving effects) is a type of multimedia.',ans: true,hint: 'Animation IS multimedia — flying text, bouncing images are multimedia effects.' },
+  { stmt: '📝 <strong>Text</strong> (words on screen) is a type of multimedia.', ans: true, hint: 'Text IS one of the 5 multimedia types used in presentations.' },
+]);
+
+// Activity 2 — NOT multimedia (odd one out MCQ)
+buildMCQ('a2list','a2score','a2done', [
+  { q: 'Which of these is <strong>NOT</strong> a type of multimedia?',
+    opts: ['Image','Digits','Audio'],             ans: 'Digits',       hint: 'Digits are raw numbers — not a media type.' },
+  { q: 'Which of these <strong>IS</strong> a type of multimedia?',
+    opts: ['Digits','Data','Video'],              ans: 'Video',        hint: 'Video (moving pictures) is one of the 5 multimedia types.' },
+  { q: 'Which of these is <strong>NOT</strong> a type of multimedia?',
+    opts: ['Text','Numbers','Animation'],         ans: 'Numbers',      hint: 'Numbers/digits are data, not a multimedia type.' },
+  { q: 'A presentation uses images, audio and video. This is an example of:',
+    opts: ['a document','multimedia','a spreadsheet'], ans: 'multimedia', hint: 'Using multiple media types together = multimedia.' },
+  { q: 'Which item would you add to a slide to make it more interesting using multimedia?',
+    opts: ['A digit','More numbers','A video clip'], ans: 'A video clip', hint: 'A video clip is a multimedia element that makes presentations interesting.' },
+  { q: 'Why do we use multimedia in a presentation?',
+    opts: ['To remove all words','To make it more interesting','To stop using pictures'], ans: 'To make it more interesting', hint: 'Multimedia makes presentations engaging and easier to understand.' },
+]);
+
+// Activity 3 — PowerPoint tabs MCQ
+buildMCQ('a3list','a3score','a3done', [
+  { q: 'You want to <strong>change the background colour</strong> of your slide. Which tab do you click?',
+    opts: ['Home','Insert','Design'],          ans: 'Design',    hint: 'Design tab controls background, themes and colours.' },
+  { q: 'You want to <strong>add a picture from your computer</strong>. Which tab do you click?',
+    opts: ['Design','Home','Insert'],          ans: 'Insert',    hint: 'Insert tab is used to add pictures, tables, charts and videos.' },
+  { q: 'You want to <strong>make text bold</strong>. Which tab do you click?',
+    opts: ['Insert','Home','Transitions'],     ans: 'Home',      hint: 'Home tab has all text formatting — bold, italic, font size.' },
+  { q: 'You want to add an <strong>effect when moving from slide to slide</strong>. Which tab?',
+    opts: ['Design','Animations','Transitions'], ans: 'Transitions', hint: 'Transitions tab adds effects between slides (fade, push, wipe…).' },
+  { q: 'You want text to <strong>fly onto the slide</strong>. Which tab do you use?',
+    opts: ['Slide Show','Animations','Design'], ans: 'Animations', hint: 'Animations tab makes text or images move on the slide.' },
+  { q: 'You want to <strong>start presenting</strong> your slideshow. Which tab?',
+    opts: ['Insert','Home','Slide Show'],      ans: 'Slide Show', hint: 'Slide Show tab starts your presentation from the beginning.' },
+  { q: 'To add a <strong>new slide</strong> to your presentation, you use:',
+    opts: ['Design tab','Home tab','Slide Show tab'], ans: 'Home tab', hint: 'New Slide is in the Home tab, in the Slides group.' },
+  { q: 'The <strong>Design tab</strong> is used to:',
+    opts: ['Add pictures','Change background and theme','Start the slideshow'], ans: 'Change background and theme', hint: 'Design = background, themes, colours, fonts for your slides.' },
+]);
+
+// Activity 4 — TF: PowerPoint
+buildTF('a4list', [
+  { stmt: 'The <strong>Design tab</strong> is used to change the background of a slide.',       ans: true,  hint: 'Correct! Design tab → Background → Format Background.' },
+  { stmt: 'The <strong>Table tab</strong> is used to change the slide background.',             ans: false, hint: 'There is no "Table tab" for backgrounds. It\'s the Design tab.' },
+  { stmt: 'The <strong>Insert tab</strong> is used to add a picture from your computer.',       ans: true,  hint: 'Correct! Insert tab → Pictures → This Device.' },
+  { stmt: 'To delete a selected picture, you press <strong>Ctrl + Z</strong>.',                ans: false, hint: 'Ctrl+Z is UNDO. To delete a selected picture, press the DELETE key.' },
+  { stmt: 'To delete a selected picture from a slide, you press <strong>Delete</strong>.',     ans: true,  hint: 'Correct! Select the picture and press Delete to remove it.' },
+  { stmt: 'The <strong>Animations tab</strong> adds effects when moving between slides.',       ans: false, hint: 'No — Animations adds effects ON a slide. Moving BETWEEN slides = Transitions tab.' },
+  { stmt: 'We type and work in <strong>Microsoft PowerPoint</strong>.',                        ans: true,  hint: 'Correct! PowerPoint is the Microsoft app for creating presentations.' },
+  { stmt: 'To save with a <strong>new name</strong>, you click <strong>Save As</strong>.',     ans: true,  hint: 'Correct! Save = same name. Save As = new name or new location.' },
+]);
+
+// Activity 5 — TF: CPU/hardware
+buildTF('a5list', [
+  { stmt: 'The <strong>Microprocessor (CPU)</strong> controls all the activities of the computer.', ans: true,  hint: 'Correct! The CPU is the brain — it processes every instruction.' },
+  { stmt: 'The <strong>Mouse</strong> controls all the activities of the computer.',               ans: false, hint: 'The mouse is an INPUT device. It does NOT control the computer — the CPU does.' },
+  { stmt: 'The <strong>Monitor</strong> is an output device because it displays information.',     ans: true,  hint: 'Correct! The monitor shows you the output — what the computer is doing.' },
+  { stmt: 'The <strong>Keyboard</strong> is an output device.',                                    ans: false, hint: 'The keyboard is an INPUT device — you send information INTO the computer by typing.' },
+  { stmt: 'A <strong>Speaker</strong> is an output device that brings sound out of a computer.',   ans: true,  hint: 'Correct! Sound comes OUT through speakers = output device.' },
+  { stmt: 'The <strong>Printer</strong> is an input device.',                                      ans: false, hint: 'The printer is an OUTPUT device — it outputs your work onto paper.' },
+]);
+
+// Activity 7 — hardware MCQ
+buildMCQ('a7list','a7score','a7done', [
+  { q: 'The ___ controls all the activities of the computer.',
+    opts: ['Monitor','Mouse','Microprocessor'],    ans: 'Microprocessor', hint: 'The CPU/Microprocessor is the brain of the computer.' },
+  { q: 'Which output device brings sound out of a computer?',
+    opts: ['Monitor','Speaker','Printer'],          ans: 'Speaker',        hint: 'Speakers output sound from the computer.' },
+  { q: 'Which of these is an INPUT device?',
+    opts: ['Printer','Monitor','Keyboard'],         ans: 'Keyboard',       hint: 'The keyboard sends input INTO the computer.' },
+  { q: 'Which of these is an OUTPUT device?',
+    opts: ['Mouse','Joystick','Monitor'],           ans: 'Monitor',        hint: 'The monitor displays output — it shows you things.' },
+  { q: 'A joystick is used to:',
+    opts: ['Print documents','Control games and movement','Display pictures'], ans: 'Control games and movement', hint: 'A joystick is an input device used mainly for games.' },
+  { q: 'Which device outputs your document printed on paper?',
+    opts: ['Speaker','Printer','Monitor'],          ans: 'Printer',        hint: 'Printer = output device that prints on paper.' },
+  { q: 'The CPU stands for:',
+    opts: ['Central Printing Unit','Computer Power Unit','Central Processing Unit'], ans: 'Central Processing Unit', hint: 'CPU = Central Processing Unit — the processor/brain of the computer.' },
+  { q: 'Which device can BOTH receive and display? (it shows output AND you interact with it)',
+    opts: ['Touchscreen','Speaker','Printer'],      ans: 'Touchscreen',    hint: 'A touchscreen is both input (you touch it) and output (it displays things).' },
+]);
+
+// Activity 8 — screen layout MCQ
+buildMCQ('a8list','a8score','a8done', [
+  { q: 'Where is the <strong>taskbar</strong> usually located on the Windows screen?',
+    opts: ['At the top','In the middle','At the bottom'], ans: 'At the bottom', hint: 'The taskbar is always at the bottom — it has the Start button, open apps and clock.' },
+  { q: 'The <strong>title bar</strong> is located:',
+    opts: ['At the bottom of the screen','At the top of an app window','In the middle of the slide'], ans: 'At the top of an app window', hint: 'The title bar is at the top of each open window and shows the app\'s name.' },
+  { q: 'The <strong>taskbar</strong> contains:',
+    opts: ['Bold/Italic/Underline buttons','The Start button, open apps and the clock','The slide thumbnails'], ans: 'The Start button, open apps and the clock', hint: 'The taskbar shows the Start button, all open programs and the system clock.' },
+  { q: 'What appears at the very top of a PowerPoint window, showing the file name?',
+    opts: ['Taskbar','Ribbon','Title Bar'],          ans: 'Title Bar',      hint: 'The title bar shows "Presentation1 — PowerPoint" at the top of the window.' },
+  { q: 'The <strong>Ribbon</strong> in PowerPoint is:',
+    opts: ['The bar at the bottom of the screen','The toolbar with tabs like Home, Insert, Design','The slide thumbnail panel'], ans: 'The toolbar with tabs like Home, Insert, Design', hint: 'The Ribbon is the toolbar at the top of PowerPoint containing all the tabs.' },
+  { q: 'Which part of the screen would you look at to see the Start button?',
+    opts: ['The title bar','The ribbon','The taskbar at the bottom'], ans: 'The taskbar at the bottom', hint: 'The Start button is in the taskbar, which sits at the bottom of the screen.' },
+  { q: 'What does the window control button <strong>— (minus)</strong> do?',
+    opts: ['Closes the window','Makes the window smaller (minimize)','Deletes the file'], ans: 'Makes the window smaller (minimize)', hint: 'The minus/dash button minimizes (hides) the window to the taskbar.' },
+  { q: 'What does pressing <strong>Ctrl + Z</strong> do?',
+    opts: ['Saves your work','Deletes a picture','Undoes your last action'], ans: 'Undoes your last action', hint: 'Ctrl + Z = Undo — it takes back your last action.' },
+]);
+
+// Activity 9 — devices MCQ
+buildMCQ('a9list','a9score','a9done', [
+  { q: 'Which output device brings sound out of a computer?',
+    opts: ['Microphone','Speaker','Printer'],        ans: 'Speaker',        hint: 'Speaker = output device for sound.' },
+  { q: 'Which input device is used to control movement in video games?',
+    opts: ['Speaker','Printer','Joystick'],          ans: 'Joystick',       hint: 'A joystick is an input device used to control games and flight simulators.' },
+  { q: 'A printer is:',
+    opts: ['An input device','An output device','The brain of the computer'], ans: 'An output device', hint: 'The printer outputs your document onto paper.' },
+  { q: 'Which device is a portable computer with everything built in?',
+    opts: ['Printer','Speaker','Laptop'],            ans: 'Laptop',         hint: 'A laptop is a portable computer with screen, keyboard and processor built in.' },
+  { q: 'The microphone is:',
+    opts: ['An output device','An input device','A storage device'], ans: 'An input device', hint: 'A microphone sends your voice INTO the computer — it\'s an input device.' },
+  { q: 'Which device captures pictures and sends them to the computer?',
+    opts: ['Speaker','Camera / Webcam','Printer'],  ans: 'Camera / Webcam', hint: 'A camera/webcam is an input device — it captures images into the computer.' },
+  { q: 'A keyboard is used to:',
+    opts: ['Print text on paper','Type text and numbers into the computer','Display the screen'], ans: 'Type text and numbers into the computer', hint: 'Keyboard = input device for typing.' },
+  { q: 'Which key types capital letters when turned on?',
+    opts: ['Enter key','Spacebar','Caps Lock'],      ans: 'Caps Lock',      hint: 'Caps Lock keeps capital letters on — all keys type uppercase when it\'s on.' },
+]);
+
+// Activity 10 — window controls + keyboard MCQ
+buildMCQ('a10list','a10score','a10done', [
+  { q: 'What does the <strong>✕ (X) button</strong> do in a window?',
+    opts: ['Minimizes the window','Closes the window','Saves your work'], ans: 'Closes the window', hint: 'The X button closes (shuts) the window completely.' },
+  { q: 'What does the <strong>— (minus) button</strong> do?',
+    opts: ['Closes the window','Hides/minimizes the window','Restores the window'], ans: 'Hides/minimizes the window', hint: 'Minimize hides the window — it\'s still open in the taskbar.' },
+  { q: 'What does the <strong>⬜ Restore Down button</strong> do?',
+    opts: ['Closes the app','Makes the window smaller / restores it','Saves your file'], ans: 'Makes the window smaller / restores it', hint: 'Restore Down makes a maximised window smaller.' },
+  { q: 'To <strong>delete a selected picture</strong> from a PowerPoint slide, you press:',
+    opts: ['Ctrl + Z','Enter','Delete'], ans: 'Delete', hint: 'Select the picture then press the Delete key to remove it.' },
+  { q: 'Which key is used to type capital letters?',
+    opts: ['Enter key','Caps Lock key','Spacebar'], ans: 'Caps Lock key', hint: 'Caps Lock makes all letters uppercase.' },
+  { q: 'Where is the taskbar <strong>usually</strong> located?',
+    opts: ['At the top','In the middle','At the bottom'], ans: 'At the bottom', hint: 'The taskbar is always at the bottom of the Windows screen.' },
+  { q: 'Which tab do you use to change the slide <strong>background</strong>?',
+    opts: ['Table','Home','Design'], ans: 'Design', hint: 'Design tab controls slide background, themes and colours.' },
+  { q: 'The <strong>Microprocessor</strong> is also known as the:',
+    opts: ['Monitor','CPU','Mouse'], ans: 'CPU', hint: 'CPU = Central Processing Unit = Microprocessor = the brain of the computer.' },
+  { q: 'The Ribbon is:',
+    opts: ['The bottom bar with the Start button','The toolbar with tabs at the top of an app','The window control buttons'], ans: 'The toolbar with tabs at the top of an app', hint: 'The Ribbon is the tab toolbar (Home, Insert, Design…) inside apps like PowerPoint.' },
+  { q: 'Which of these is NOT a type of multimedia?',
+    opts: ['Audio','Video','Digits'], ans: 'Digits', hint: 'Digits (raw numbers) are NOT a multimedia type. Audio and Video ARE.' },
+]);
+</script>
+</body>
+</html>
