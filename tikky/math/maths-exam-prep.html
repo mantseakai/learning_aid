@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maths Exam Prep ⭐ — Tikky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #fff8e1 0%, #e8f5e9 50%, #e3f2fd 100%);
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+
+    .back-home-btn {
+      position: fixed; top: 14px; left: 14px; z-index: 9999;
+      background: rgba(255,255,255,0.95); border: 2px solid #ffd600;
+      color: #f57f17; font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 0.9rem;
+      padding: 8px 18px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 14px rgba(255,214,0,0.3);
+      transition: all 0.2s;
+    }
+    .back-home-btn:hover { background: #ffd600; color: #333; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #ff6f00 0%, #ffd600 50%, #43a047 100%);
+      color: white; text-align: center;
+      padding: 72px 24px 44px;
+    }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem,7vw,3.6rem);
+      text-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+    }
+    .hero p { font-size: 1.1rem; font-weight: 700; opacity: 0.95; }
+    .hero .star-row { font-size: 2rem; margin-bottom: 10px; }
+
+    /* TOPIC MENU */
+    .topic-menu {
+      max-width: 780px; margin: 28px auto 0;
+      padding: 0 16px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 14px;
+    }
+    .topic-btn {
+      background: white; border-radius: 18px;
+      padding: 18px 16px; text-align: center;
+      border: 3px solid #ddd;
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      color: #333; cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      text-decoration: none; display: block;
+    }
+    .topic-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.13); }
+    .topic-btn .tb-icon { font-size: 2rem; margin-bottom: 6px; display: block; }
+    .topic-btn.t1 { border-color: #7c4dff; color: #4527a0; }
+    .topic-btn.t2 { border-color: #00897b; color: #00695c; }
+    .topic-btn.t3 { border-color: #e53935; color: #b71c1c; }
+    .topic-btn.t4 { border-color: #f57c00; color: #e65100; }
+    .topic-btn.t5 { border-color: #1565c0; color: #0d47a1; }
+    .topic-btn.t6 { border-color: #c0392b; color: #922b21; }
+    .topic-btn.t1:hover { background: #ede7f6; }
+    .topic-btn.t2:hover { background: #e0f2f1; }
+    .topic-btn.t3:hover { background: #ffebee; }
+    .topic-btn.t4:hover { background: #fff3e0; }
+    .topic-btn.t5:hover { background: #e3f2fd; }
+    .topic-btn.t6:hover { background: #fce4ec; }
+
+    /* MISTAKE ALERT */
+    .mistake-alert {
+      max-width: 780px; margin: 28px auto 0; padding: 0 16px;
+    }
+    .alert-box {
+      background: #fff3e0; border: 3px solid #ff6f00;
+      border-radius: 18px; padding: 18px 20px;
+    }
+    .alert-box h3 { font-family: 'Fredoka One', cursive; color: #e65100; font-size: 1.3rem; margin-bottom: 10px; }
+    .alert-box ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .alert-box li { font-weight: 700; color: #555; font-size: 0.97rem; }
+    .alert-box li::before { content: "⚠️ "; }
+
+    /* MAIN */
+    .main { max-width: 780px; margin: 0 auto; padding: 24px 16px; }
+
+    /* SECTION HEADERS */
+    .sec-header {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      margin: 36px 0 14px;
+      display: flex; align-items: center; gap: 10px;
+      scroll-margin-top: 70px;
+    }
+
+    /* TEACH PANEL */
+    .teach-panel {
+      border-radius: 20px; padding: 22px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+    }
+    .teach-panel h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem; margin-bottom: 12px;
+    }
+    .teach-panel .example-row {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+    }
+    .ex-chip {
+      background: white; border-radius: 12px; padding: 10px 16px;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      border: 2px solid rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .tip-box {
+      background: rgba(255,255,255,0.7); border-radius: 12px;
+      padding: 12px 14px; font-size: 0.95rem; font-weight: 700;
+      margin-top: 10px; line-height: 1.6;
+    }
+    .number-word-table {
+      width: 100%; border-collapse: collapse; margin-top: 10px;
+    }
+    .number-word-table th, .number-word-table td {
+      padding: 9px 14px; text-align: left;
+      border: 2px solid rgba(0,0,0,0.08);
+      font-weight: 700; font-size: 0.95rem;
+    }
+    .number-word-table th {
+      font-family: 'Fredoka One', cursive;
+      background: rgba(0,0,0,0.06); font-size: 1rem;
+    }
+    .hl { color: #c62828; font-weight: 900; }
+
+    /* place value visual */
+    .pv-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0; }
+    .pv-box {
+      border-radius: 12px; padding: 12px 16px; text-align: center;
+      min-width: 80px;
+      font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: white;
+    }
+    .pv-h { font-size: 0.75rem; font-weight: 800; opacity: 0.85; display: block; }
+    .pv-hundreds { background: #7c4dff; }
+    .pv-tens     { background: #00897b; }
+    .pv-ones     { background: #ef6c00; }
+    .pv-equals { font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: #333; }
+
+    /* ACTIVITY SECTION */
+    .activity-section {
+      background: white; border-radius: 22px;
+      padding: 24px 22px; margin-bottom: 26px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem; margin-bottom: 5px;
+    }
+    .activity-sub {
+      font-size: 0.97rem; font-weight: 600; color: #777;
+      margin-bottom: 18px;
+    }
+
+    /* progress dots */
+    .pdots { display: flex; gap: 7px; margin-bottom: 18px; flex-wrap: wrap; }
+    .pdot { width: 15px; height: 15px; border-radius: 50%; background: #ddd; transition: background 0.3s; }
+    .pdot.done  { background: #43a047; }
+    .pdot.wrong { background: #ef5350; }
+
+    /* Q-BOX */
+    .q-box { background: #f5f5f5; border-radius: 16px; padding: 18px; }
+    .q-text { font-size: 1.15rem; font-weight: 800; color: #222; margin-bottom: 14px; line-height: 1.5; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choice-btn {
+      padding: 14px 10px; border-radius: 14px;
+      border: 3px solid #ddd; background: white;
+      font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+      color: #333; cursor: pointer; transition: all 0.2s;
+    }
+    .choice-btn:hover { border-color: #ff6f00; background: #fff3e0; }
+    .choice-btn.correct  { background: #c8e6c9; border-color: #388e3c; color: #1b5e20; }
+    .choice-btn.wrong-ans{ background: #ffcdd2; border-color: #c62828; color: #b71c1c; animation: shake 0.4s; }
+    .choice-btn:disabled { cursor: default; }
+    .q-fb { margin-top: 12px; font-size: 1.05rem; font-weight: 800; min-height: 24px; text-align: center; }
+    .q-fb.good { color: #2e7d32; } .q-fb.bad { color: #c62828; }
+
+    /* FILL BLANK */
+    .fill-seq {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .fill-num { font-family: 'Fredoka One', cursive; font-size: 1.7rem; color: #333; }
+    .fill-blank {
+      width: 64px; height: 64px; border-radius: 14px;
+      border: 3px dashed #ff6f00; background: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 2rem; color: #ff6f00;
+    }
+    .fill-blank.ok  { background: #c8e6c9; border-color: #388e3c; color: #1b5e20; border-style: solid; animation: popIn 0.3s; }
+    .fill-blank.err { background: #ffcdd2; border-color: #c62828; color: #b71c1c; border-style: solid; animation: shake 0.4s; }
+    .fill-sep { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #aaa; }
+    .bank { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .bank-btn {
+      min-width: 58px; height: 58px; padding: 0 10px;
+      border-radius: 14px; border: 3px solid #ddd;
+      background: white; font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem; color: #333; cursor: pointer; transition: all 0.18s;
+    }
+    .bank-btn:hover:not(:disabled) { background: #fff3e0; border-color: #ff6f00; transform: scale(1.08); }
+    .bank-btn:disabled { opacity: 0.4; cursor: default; }
+
+    /* TYPE IN */
+    .type-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+    .type-input {
+      border: 3px solid #ddd; border-radius: 12px;
+      padding: 10px 14px; font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem; color: #333; width: 160px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .type-input:focus { border-color: #ff6f00; }
+    .type-input.ok  { background: #c8e6c9; border-color: #388e3c; color: #1b5e20; }
+    .type-input.err { background: #ffcdd2; border-color: #c62828; color: #b71c1c; }
+    .check-btn {
+      padding: 11px 24px; border-radius: 50px; border: none;
+      background: #ff6f00; color: white;
+      font-family: 'Fredoka One', cursive; font-size: 1rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .check-btn:hover { background: #e65100; transform: scale(1.04); }
+
+    /* COLUMN ADDITION/SUBTRACTION */
+    .col-calc {
+      display: inline-flex; flex-direction: column; align-items: flex-end;
+      background: white; border: 3px solid #ddd; border-radius: 14px;
+      padding: 14px 20px; font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem; color: #333;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      margin-bottom: 14px;
+    }
+    .col-calc .op-row { display: flex; align-items: center; gap: 8px; }
+    .col-calc .op-sym { color: #e53935; margin-right: 4px; }
+    .col-calc .divider { width: 100%; height: 3px; background: #333; margin: 6px 0; border-radius: 2px; }
+    .calc-input {
+      font-family: 'Fredoka One', cursive; font-size: 1.8rem;
+      color: #ff6f00; width: 80px; border: none; border-bottom: 3px solid #ff6f00;
+      background: transparent; text-align: right; outline: none;
+    }
+    .calc-input.ok  { color: #2e7d32; border-color: #388e3c; }
+    .calc-input.err { color: #c62828; border-color: #c62828; animation: shake 0.4s; }
+
+    /* T/F */
+    .tf-item { background: #f5f5f5; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+    .tf-stmt { font-size: 1.05rem; font-weight: 700; color: #333; margin-bottom: 10px; }
+    .tf-btns { display: flex; gap: 10px; }
+    .tf-btn {
+      flex: 1; padding: 12px; border-radius: 12px; border: 3px solid transparent;
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+    }
+    .tf-t { background: #e8f5e9; border-color: #388e3c; color: #2e7d32; }
+    .tf-f { background: #ffebee; border-color: #c62828; color: #b71c1c; }
+    .tf-btn:hover:not(:disabled) { transform: scale(1.04); }
+    .tf-btn.sel-ok  { background: #c8e6c9; border-color: #2e7d32; }
+    .tf-btn.sel-err { background: #ffcdd2; border-color: #c62828; animation: shake 0.4s; }
+    .tf-btn:disabled { cursor: default; opacity: 0.75; }
+    .tf-hint { font-size: 0.85rem; font-weight: 700; color: #888; margin-top: 6px; display: none; }
+    .tf-hint.show { display: block; }
+
+    /* DONE BADGE */
+    .done-badge {
+      display: none; text-align: center; padding: 16px;
+      background: linear-gradient(135deg, #ff6f00, #ffd600);
+      color: white; border-radius: 16px;
+      font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+      margin-top: 16px; animation: popIn 0.4s ease;
+    }
+    .done-badge.show { display: block; }
+
+    /* CHEER */
+    .cheer-box {
+      display: none; max-width: 780px; margin: 0 auto 40px;
+      background: linear-gradient(135deg, #ff6f00, #ffd600, #43a047);
+      border-radius: 24px; padding: 30px 24px; text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18); animation: popIn 0.5s ease;
+    }
+    .cheer-box.show { display: block; }
+    .cheer-box h2 { font-family: 'Fredoka One', cursive; font-size: clamp(1.8rem,6vw,3rem); color: white; margin-bottom: 8px; }
+    .cheer-box p  { font-size: 1.05rem; color: rgba(255,255,255,0.95); font-weight: 700; }
+
+    /* WORD BANK TEXT */
+    .wb-text { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .wb-chip {
+      background: #fff9c4; border: 2px solid #f9a825;
+      border-radius: 50px; padding: 6px 16px;
+      font-weight: 800; font-size: 0.95rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .wb-chip:hover { background: #fff176; }
+    .wb-chip.used  { opacity: 0.35; cursor: default; pointer-events: none; }
+    .text-blank {
+      display: inline-block; min-width: 140px; border-bottom: 4px solid #ff6f00;
+      padding: 2px 8px; font-weight: 900; color: #ff6f00;
+      font-size: 1rem; vertical-align: middle; cursor: pointer;
+      background: #fff3e0; border-radius: 6px 6px 0 0; margin: 0 4px;
+    }
+    .text-blank.locked-ok { background: #c8e6c9; color: #1b5e20; border-color: #388e3c; }
+    .text-blank.locked-err { background: #ffcdd2; color: #b71c1c; border-color: #c62828; }
+
+    /* SHAPES GRID */
+    .shapes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 14px; margin-bottom: 16px; }
+    .shape-card {
+      background: white; border: 3px solid #ddd; border-radius: 16px;
+      padding: 16px 10px; text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: transform 0.2s;
+    }
+    .shape-card:hover { transform: translateY(-3px); }
+    .shape-card .sh-icon { font-size: 2.4rem; margin-bottom: 6px; }
+    .shape-card .sh-name { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #333; }
+    .shape-card .sh-dim  { font-size: 0.8rem; font-weight: 700; color: #888; margin-top: 2px; }
+
+    /* ANIMATIONS */
+    @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.1);opacity:1} 100%{transform:scale(1)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 50%{transform:translateX(8px)} 80%{transform:translateX(-6px)} }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  </style>
+</head>
+<body>
+
+<a href="../index.html" class="back-home-btn">← Back</a>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="star-row">⭐🧮⭐</div>
+  <h1>Maths Exam Prep!</h1>
+  <p>Get ready to ace your final test, Tikky! 🎯</p>
+</div>
+
+<!-- TOPIC MENU -->
+<div class="topic-menu">
+  <a href="#topic1" class="topic-btn t1"><span class="tb-icon">🔢</span>Numbers in Words &amp; Figures</a>
+  <a href="#topic2" class="topic-btn t2"><span class="tb-icon">🏛️</span>Tens &amp; Ones</a>
+  <a href="#topic3" class="topic-btn t3"><span class="tb-icon">➕➖</span>Addition &amp; Subtraction</a>
+  <a href="#topic4" class="topic-btn t4"><span class="tb-icon">🔢</span>Number Patterns</a>
+  <a href="#topic5" class="topic-btn t5"><span class="tb-icon">📝</span>Numerals in Words</a>
+  <a href="#topic6" class="topic-btn t6"><span class="tb-icon">🔷</span>2D &amp; 3D Shapes</a>
+</div>
+
+<!-- MISTAKES ALERT -->
+<div class="mistake-alert">
+  <div class="alert-box">
+    <h3>⚠️ Let's fix these from your last test!</h3>
+    <ul>
+      <li>Q12: 3 + 4 = 7, not 9! Let's practise adding.</li>
+      <li>Q14: Counting in 2s: 2, 4, <strong>6</strong>, 8, 10, 12 — don't skip!</li>
+      <li>Q15: Counting in 3s: 3, 6, 9, 12, <strong>15</strong>, <strong>18</strong> — not 14!</li>
+      <li>Q23: 35 = <strong>thirty</strong>-five (not "treety-five")</li>
+    </ul>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ======================================================
+     TOPIC 1 — NUMBERS IN WORDS & FIGURES (hundreds)
+====================================================== -->
+<div id="topic1" class="sec-header" style="color:#4527a0;">🔢 Topic 1 — Numbers in Words &amp; Figures</div>
+
+<div class="teach-panel" style="background:linear-gradient(135deg,#ede7f6,#d1c4e9);border:3px solid #7c4dff;">
+  <h3 style="color:#4527a0;">How to write numbers up to 999</h3>
+  <div class="example-row">
+    <div class="pv-row">
+      <div class="pv-box pv-hundreds">5<span class="pv-h">hundreds</span></div>
+      <div class="pv-equals">+</div>
+      <div class="pv-box pv-tens">1<span class="pv-h">tens</span></div>
+      <div class="pv-equals">+</div>
+      <div class="pv-box pv-ones">0<span class="pv-h">ones</span></div>
+      <div class="pv-equals">= <span style="font-family:'Fredoka One',cursive;font-size:1.6rem;color:#4527a0;">510</span></div>
+    </div>
+  </div>
+  <div class="tip-box" style="background:rgba(124,77,255,0.1);">
+    💡 <strong>Five hundred and ten</strong> → 5 (hundreds) + 1 (tens) + 0 (ones) = <strong>510</strong><br>
+    💡 <strong>One hundred and eight</strong> → 1 (hundred) + 0 (tens) + 8 (ones) = <strong>108</strong> — remember the zero in the middle!<br>
+    💡 <strong>Four hundred and sixteen</strong> → 4 (hundreds) + 16 = <strong>416</strong>
+  </div>
+</div>
+
+<!-- Activity 1a: words → figures MCQ -->
+<div class="activity-section">
+  <div class="activity-title" style="color:#4527a0;">✏️ Activity 1a — Write the number!</div>
+  <div class="activity-sub">Read the words and tap the correct number.</div>
+  <div class="pdots" id="a1aDots"></div>
+  <div id="a1aContainer"></div>
+  <div class="done-badge" id="a1aDone">🎉 Brilliant! You know your hundreds! 🔢</div>
+</div>
+
+<!-- Activity 1b: figures → words MCQ -->
+<div class="activity-section">
+  <div class="activity-title" style="color:#4527a0;">✏️ Activity 1b — Write in words!</div>
+  <div class="activity-sub">Look at the number and tap the correct words.</div>
+  <div class="pdots" id="a1bDots"></div>
+  <div id="a1bContainer"></div>
+  <div class="done-badge" id="a1bDone">🎉 Excellent! You can read and write numbers! ⭐</div>
+</div>
+
+
+<!-- ======================================================
+     TOPIC 2 — TENS AND ONES
+====================================================== -->
+<div id="topic2" class="sec-header" style="color:#00695c;">🏛️ Topic 2 — Tens &amp; Ones</div>
+
+<div class="teach-panel" style="background:linear-gradient(135deg,#e0f2f1,#b2dfdb);border:3px solid #00897b;">
+  <h3 style="color:#00695c;">How tens and ones work</h3>
+  <div class="example-row">
+    <div class="pv-row">
+      <div class="pv-box pv-tens">7<span class="pv-h">tens</span></div>
+      <div class="pv-equals">+</div>
+      <div class="pv-box pv-ones">2<span class="pv-h">ones</span></div>
+      <div class="pv-equals">= <span style="font-family:'Fredoka One',cursive;font-size:1.6rem;color:#00695c;">72</span></div>
+    </div>
+    <div class="pv-row">
+      <div class="pv-box pv-tens">9<span class="pv-h">tens</span></div>
+      <div class="pv-equals">+</div>
+      <div class="pv-box pv-ones">9<span class="pv-h">ones</span></div>
+      <div class="pv-equals">= <span style="font-family:'Fredoka One',cursive;font-size:1.6rem;color:#00695c;">99</span></div>
+    </div>
+  </div>
+  <div class="tip-box" style="background:rgba(0,137,123,0.1);">
+    💡 The <strong>TENS digit</strong> is on the left. The <strong>ONES digit</strong> is on the right.<br>
+    💡 72 → 7 tens + 2 ones &nbsp;|&nbsp; 16 → 1 ten + 6 ones<br>
+    💡 6 tens + 8 ones → write the tens first: <strong>68</strong>
+  </div>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#00695c;">🏛️ Activity 2 — Tens &amp; Ones!</div>
+  <div class="activity-sub">Tap the correct answer for each question.</div>
+  <div class="pdots" id="a2Dots"></div>
+  <div id="a2Container"></div>
+  <div class="done-badge" id="a2Done">🎉 You've mastered tens and ones! 🏛️⭐</div>
+</div>
+
+
+<!-- ======================================================
+     TOPIC 3 — ADDITION & SUBTRACTION
+====================================================== -->
+<div id="topic3" class="sec-header" style="color:#b71c1c;">➕➖ Topic 3 — Addition &amp; Subtraction</div>
+
+<div class="teach-panel" style="background:linear-gradient(135deg,#ffebee,#ffcdd2);border:3px solid #e53935;">
+  <h3 style="color:#b71c1c;">Adding and taking away</h3>
+  <div class="example-row">
+    <div style="background:white;border-radius:14px;padding:14px 18px;">
+      <div style="font-family:'Fredoka One',cursive;font-size:1rem;color:#b71c1c;margin-bottom:8px;">🍎 + 🍎🍎🍎 = 🍎🍎🍎🍎 = <strong>4</strong></div>
+      <div style="font-size:0.9rem;font-weight:700;color:#555;">Tim has 3, John has 4 → 3 + 4 = <span class="hl">7</span> (NOT 9! Count carefully!)</div>
+    </div>
+  </div>
+  <div class="tip-box" style="background:rgba(229,57,53,0.08);">
+    💡 <strong>Column addition:</strong> always add the <strong>ONES</strong> first, then the <strong>TENS</strong>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;91 + 16 → ones: 1+6=7 · tens: 9+1=10 → write <strong>107</strong><br>
+    💡 <strong>Column subtraction:</strong> take away the <strong>ONES</strong> first, then the <strong>TENS</strong>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;80 − 10 → ones: 0−0=0 · tens: 8−1=7 → write <strong>70</strong>
+  </div>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#b71c1c;">➕ Activity 3a — Story Sums!</div>
+  <div class="activity-sub">Read the story and tap the right answer.</div>
+  <div class="pdots" id="a3aDots"></div>
+  <div id="a3aContainer"></div>
+  <div class="done-badge" id="a3aDone">🎉 Great work solving story sums! ⭐</div>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#b71c1c;">🧮 Activity 3b — Column Sums!</div>
+  <div class="activity-sub">Work out each column sum and type your answer.</div>
+  <div id="a3bContainer"></div>
+  <div class="done-badge" id="a3bDone">🎉 Superstar at column sums! ➕➖</div>
+</div>
+
+
+<!-- ======================================================
+     TOPIC 4 — NUMBER PATTERNS
+====================================================== -->
+<div id="topic4" class="sec-header" style="color:#e65100;">🔢 Topic 4 — Number Patterns</div>
+
+<div class="teach-panel" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:3px solid #f57c00;">
+  <h3 style="color:#e65100;">Patterns from the test — count in 2s and 3s!</h3>
+  <div class="example-row">
+    <div class="ex-chip" style="border-color:#00897b;color:#00695c;">+2: 2, 4, <span class="hl">6</span>, 8, 10, 12…</div>
+    <div class="ex-chip" style="border-color:#7c4dff;color:#4527a0;">+3: 3, 6, 9, 12, <span class="hl">15</span>, <span class="hl">18</span>…</div>
+  </div>
+  <div class="tip-box" style="background:rgba(245,124,0,0.1);">
+    💡 Count in <strong>2s</strong>: always add 2 more each time → 2, 4, 6, 8, 10, 12<br>
+    💡 Count in <strong>3s</strong>: always add 3 more each time → 3, 6, 9, 12, <strong>15</strong>, <strong>18</strong><br>
+    💡 After 12 in the 3s pattern: 12 + 3 = <strong>15</strong>, then 15 + 3 = <strong>18</strong>
+  </div>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#e65100;">🔢 Activity 4 — Missing Numbers!</div>
+  <div class="activity-sub">Tap the missing number to fill the gap!</div>
+  <div class="pdots" id="a4Dots"></div>
+  <div id="a4Container"></div>
+  <div class="done-badge" id="a4Done">🎉 Pattern master! You spotted them all! 🔢⭐</div>
+</div>
+
+
+<!-- ======================================================
+     TOPIC 5 — NUMERALS IN WORDS
+====================================================== -->
+<div id="topic5" class="sec-header" style="color:#0d47a1;">📝 Topic 5 — Numerals in Words</div>
+
+<div class="teach-panel" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:3px solid #1565c0;">
+  <h3 style="color:#0d47a1;">Writing numbers as words — the tricky ones!</h3>
+  <table class="number-word-table">
+    <thead><tr><th>Number</th><th>In Words</th><th>Watch out!</th></tr></thead>
+    <tbody>
+      <tr><td>11</td><td><strong>eleven</strong></td><td>not "elevan"</td></tr>
+      <tr><td>12</td><td><strong>twelve</strong></td><td>not "twelf"</td></tr>
+      <tr><td>13</td><td><strong>thirteen</strong></td><td>ends in -teen</td></tr>
+      <tr><td>17</td><td><strong>seventeen</strong></td><td>ends in -teen</td></tr>
+      <tr><td>20</td><td><strong>twenty</strong></td><td>not "tweny"</td></tr>
+      <tr><td>24</td><td><strong>twenty-four</strong></td><td>hyphen in middle</td></tr>
+      <tr><td>35</td><td><strong>thirty-five</strong></td><td class="hl">NOT "treety-five"!</td></tr>
+      <tr><td>64</td><td><strong>sixty-four</strong></td><td>ends in -ty</td></tr>
+      <tr><td>47</td><td><strong>forty-seven</strong></td><td>for-ty (no 'u')</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#0d47a1;">📝 Activity 5a — Number to Word!</div>
+  <div class="activity-sub">Tap the correct word for each number.</div>
+  <div class="pdots" id="a5aDots"></div>
+  <div id="a5aContainer"></div>
+  <div class="done-badge" id="a5aDone">🎉 You can write numbers in words! 📝⭐</div>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#0d47a1;">📝 Activity 5b — Spell the Word Bank!</div>
+  <div class="activity-sub">Tap a word from the bank, then tap the blank to fill it!</div>
+  <div class="wb-text" id="wb5b">
+    <span class="wb-chip" id="wc_eleven"      onclick="wbSel('eleven')">eleven</span>
+    <span class="wb-chip" id="wc_twelve"      onclick="wbSel('twelve')">twelve</span>
+    <span class="wb-chip" id="wc_seventeen"   onclick="wbSel('seventeen')">seventeen</span>
+    <span class="wb-chip" id="wc_twenty"      onclick="wbSel('twenty')">twenty</span>
+    <span class="wb-chip" id="wc_thirty"      onclick="wbSel('thirty')">thirty</span>
+    <span class="wb-chip" id="wc_forty"       onclick="wbSel('forty')">forty</span>
+    <span class="wb-chip" id="wc_sixty"       onclick="wbSel('sixty')">sixty</span>
+    <span class="wb-chip" id="wc_seventy"     onclick="wbSel('seventy')">seventy</span>
+  </div>
+  <div style="font-size:1rem;font-weight:800;color:#333;line-height:2.6;">
+    1. 11 = <span class="text-blank" id="tb1" onclick="wbFill('tb1','eleven')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+    2. 12 = <span class="text-blank" id="tb2" onclick="wbFill('tb2','twelve')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+    3. 17 = <span class="text-blank" id="tb3" onclick="wbFill('tb3','seventeen')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+    4. 20 = <span class="text-blank" id="tb4" onclick="wbFill('tb4','twenty')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+    5. 35 = <span class="text-blank" id="tb5" onclick="wbFill('tb5','thirty')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-five<br>
+    6. 47 = <span class="text-blank" id="tb6" onclick="wbFill('tb6','forty')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-seven<br>
+    7. 64 = <span class="text-blank" id="tb7" onclick="wbFill('tb7','sixty')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-four<br>
+    8. 72 = <span class="text-blank" id="tb8" onclick="wbFill('tb8','seventy')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-two
+  </div>
+  <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;">
+    <button class="check-btn" onclick="checkWb5b()">✅ Check!</button>
+    <button class="check-btn" style="background:#888;" onclick="resetWb5b()">🔄 Try Again</button>
+  </div>
+  <div id="wb5bFb" style="margin-top:10px;font-weight:800;font-size:1rem;min-height:22px;"></div>
+  <div class="done-badge" id="a5bDone">🎉 You nailed the spellings! 📝</div>
+</div>
+
+
+<!-- ======================================================
+     TOPIC 6 — 2D & 3D SHAPES
+====================================================== -->
+<div id="topic6" class="sec-header" style="color:#922b21;">🔷 Topic 6 — 2D &amp; 3D Shapes</div>
+
+<div class="teach-panel" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0);border:3px solid #c0392b;">
+  <h3 style="color:#922b21;">2D shapes (flat) vs 3D shapes (solid)</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px;">
+    <div>
+      <div style="font-family:'Fredoka One',cursive;font-size:1rem;color:#922b21;margin-bottom:8px;">🟦 2D (flat shapes)</div>
+      <div class="shapes-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="shape-card"><div class="sh-icon">⬜</div><div class="sh-name">Square</div><div class="sh-dim">4 equal sides</div></div>
+        <div class="shape-card"><div class="sh-icon">⬛</div><div class="sh-name">Rectangle</div><div class="sh-dim">2 long + 2 short</div></div>
+        <div class="shape-card"><div class="sh-icon">🔺</div><div class="sh-name">Triangle</div><div class="sh-dim">3 sides</div></div>
+        <div class="shape-card"><div class="sh-icon">⭕</div><div class="sh-name">Circle</div><div class="sh-dim">no corners</div></div>
+        <div class="shape-card"><div class="sh-icon">⭐</div><div class="sh-name">Star</div><div class="sh-dim">5 points</div></div>
+        <div class="shape-card"><div class="sh-icon">🔷</div><div class="sh-name">Diamond</div><div class="sh-dim">4 sides</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'Fredoka One',cursive;font-size:1rem;color:#922b21;margin-bottom:8px;">🧊 3D (solid shapes)</div>
+      <div class="shapes-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="shape-card"><div class="sh-icon">🧊</div><div class="sh-name">Cube</div><div class="sh-dim">6 square faces</div></div>
+        <div class="shape-card"><div class="sh-icon">📦</div><div class="sh-name">Cuboid</div><div class="sh-dim">6 rectangle faces</div></div>
+        <div class="shape-card"><div class="sh-icon">🥫</div><div class="sh-name">Cylinder</div><div class="sh-dim">2 circles + 1 roll</div></div>
+        <div class="shape-card"><div class="sh-icon">🔺</div><div class="sh-name">Pyramid</div><div class="sh-dim">square base + 4 tri</div></div>
+        <div class="shape-card"><div class="sh-icon">🏀</div><div class="sh-name">Sphere</div><div class="sh-dim">perfectly round</div></div>
+        <div class="shape-card"><div class="sh-icon">🍦</div><div class="sh-name">Cone</div><div class="sh-dim">circle base + tip</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tip-box" style="background:rgba(192,57,43,0.08);">
+    💡 <strong>2D = flat</strong> — you can draw it on paper. &nbsp;|&nbsp; <strong>3D = solid</strong> — you can hold it!<br>
+    💡 From the test: cube ✅ · cuboid ✅ · cylinder ✅ — all 3D shapes!
+  </div>
+</div>
+
+<div class="activity-section">
+  <div class="activity-title" style="color:#922b21;">🔷 Activity 6 — 2D or 3D?</div>
+  <div class="activity-sub">Tap the right answer for each shape!</div>
+  <div class="pdots" id="a6Dots"></div>
+  <div id="a6Container"></div>
+  <div class="done-badge" id="a6Done">🎉 You're a shapes star! 🔷⭐</div>
+</div>
+
+<!-- CHEER -->
+<div class="cheer-box" id="cheerBox">
+  <div style="font-size:2.5rem;margin-bottom:8px;">🎉⭐🧮⭐🎉</div>
+  <h2>Amazing, Tikky! 🌟</h2>
+  <p>You are so ready for your final test! Keep practising and you'll ACE it! 🏆</p>
+</div>
+
+</div><!-- /main -->
+
+<script>
+/* ===================================================
+   GLOBAL CHEER
+=================================================== */
+let cheerCount = 0, cheerDone = false;
+function cheer() {
+  cheerCount++;
+  if (cheerCount >= 3 && !cheerDone) {
+    cheerDone = true;
+    const cb = document.getElementById('cheerBox');
+    cb.classList.add('show');
+    setTimeout(() => cb.scrollIntoView({behavior:'smooth',block:'center'}), 200);
+  }
+}
+
+/* ===================================================
+   UTILS
+=================================================== */
+function buildDots(id, n) {
+  const el = document.getElementById(id);
+  el.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('div');
+    d.className = 'pdot';
+    d.id = id + '_' + i;
+    el.appendChild(d);
+  }
+}
+function markDot(id, i, state) {
+  const d = document.getElementById(id + '_' + i);
+  if (d) { d.classList.remove('done','wrong'); d.classList.add(state); }
+}
+
+/* Generic MCQ engine */
+function makeMCQ(containerSel, dotsSel, doneSel, questions, ctxKey) {
+  const state = { cur: 0, qs: questions, key: ctxKey };
+  window[ctxKey] = state;
+  buildDots(dotsSel, questions.length);
+  renderMCQ(state, containerSel, dotsSel, doneSel);
+}
+function renderMCQ(state, containerSel, dotsSel, doneSel) {
+  const c = document.getElementById(containerSel);
+  if (state.cur >= state.qs.length) {
+    c.innerHTML = '';
+    document.getElementById(doneSel).classList.add('show');
+    cheer(); return;
+  }
+  const q = state.qs[state.cur];
+  const idx = state.cur;
+  const choicesHtml = q.choices.map(ch =>
+    `<button class="choice-btn" onclick="pickMCQ('${ctxEsc(ch)}','${ctxEsc(q.answer)}',${idx},'${containerSel}','${dotsSel}','${doneSel}','${state.key}')">${ch}</button>`
+  ).join('');
+  c.innerHTML = `<div class="q-box">
+    <div class="q-text">${q.q}</div>
+    <div class="choices">${choicesHtml}</div>
+    <div class="q-fb" id="${state.key}fb"></div>
+  </div>`;
+}
+function ctxEsc(s) { return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+function pickMCQ(chosen, answer, idx, containerSel, dotsSel, doneSel, ctxKey) {
+  const state = window[ctxKey];
+  if (!state || state.cur !== idx) return;
+  const btns = document.querySelectorAll('#' + containerSel + ' .choice-btn');
+  btns.forEach(b => b.disabled = true);
+  const clickedBtn = [...btns].find(b => b.textContent.trim() === chosen.trim());
+  if (chosen === answer) {
+    if (clickedBtn) clickedBtn.classList.add('correct');
+    const fb = document.getElementById(ctxKey + 'fb');
+    if (fb) { fb.textContent = '⭐ Correct! Well done!'; fb.className = 'q-fb good'; }
+    markDot(dotsSel, idx, 'done');
+    state.cur++;
+    setTimeout(() => renderMCQ(state, containerSel, dotsSel, doneSel), 900);
+  } else {
+    if (clickedBtn) clickedBtn.classList.add('wrong-ans');
+    const fb = document.getElementById(ctxKey + 'fb');
+    if (fb) { fb.textContent = '❌ Not quite — try again!'; fb.className = 'q-fb bad'; }
+    setTimeout(() => {
+      btns.forEach(b => { b.disabled = false; b.classList.remove('wrong-ans'); });
+      if (fb) fb.textContent = '';
+    }, 900);
+  }
+}
+
+/* Generic fill-blank engine */
+function makeFill(containerSel, dotsSel, doneSel, questions, ctxKey) {
+  const state = { cur: 0, qs: questions, key: ctxKey };
+  window[ctxKey] = state;
+  buildDots(dotsSel, questions.length);
+  renderFill(state, containerSel, dotsSel, doneSel);
+}
+function renderFill(state, containerSel, dotsSel, doneSel) {
+  const c = document.getElementById(containerSel);
+  if (state.cur >= state.qs.length) {
+    c.innerHTML = '';
+    document.getElementById(doneSel).classList.add('show');
+    cheer(); return;
+  }
+  const q = state.qs[state.cur];
+  const idx = state.cur;
+  const seqHtml = q.seq.map((n, si) => {
+    const comma = si < q.seq.length - 1 ? '<span class="fill-sep">,</span>' : '';
+    if (n === '?') return `<div class="fill-blank" id="${state.key}blank${idx}">❓</div>${comma}`;
+    return `<span class="fill-num">${n}</span>${comma}`;
+  }).join('');
+  const bankHtml = q.bank.map(n =>
+    `<button class="bank-btn" onclick="pickFill(${n},${q.answer},${idx},'${containerSel}','${dotsSel}','${doneSel}','${state.key}')">${n}</button>`
+  ).join('');
+  c.innerHTML = `<div class="q-box">
+    <div class="q-text">${q.q || 'Fill the missing number!'}</div>
+    <div class="fill-seq">${seqHtml}</div>
+    <div style="font-weight:700;color:#777;font-size:0.9rem;margin-bottom:6px;">Tap the right number:</div>
+    <div class="bank">${bankHtml}</div>
+    <div class="q-fb" id="${state.key}fb"></div>
+  </div>`;
+}
+function pickFill(chosen, answer, idx, containerSel, dotsSel, doneSel, ctxKey) {
+  const state = window[ctxKey];
+  if (!state || state.cur !== idx) return;
+  const blank = document.getElementById(ctxKey + 'blank' + idx);
+  const btns  = document.querySelectorAll('#' + containerSel + ' .bank-btn');
+  if (chosen === answer) {
+    blank.textContent = chosen;
+    blank.classList.add('ok');
+    btns.forEach(b => b.disabled = true);
+    const fb = document.getElementById(ctxKey + 'fb');
+    if (fb) { fb.textContent = '⭐ Yes! That\'s it!'; fb.className = 'q-fb good'; }
+    markDot(dotsSel, idx, 'done');
+    state.cur++;
+    setTimeout(() => renderFill(state, containerSel, dotsSel, doneSel), 900);
+  } else {
+    blank.textContent = chosen;
+    blank.classList.add('err');
+    const fb = document.getElementById(ctxKey + 'fb');
+    if (fb) { fb.textContent = '❌ Not quite — try another!'; fb.className = 'q-fb bad'; }
+    setTimeout(() => {
+      blank.textContent = '❓';
+      blank.classList.remove('err');
+      if (fb) fb.textContent = '';
+    }, 700);
+  }
+}
+
+/* ===================================================
+   TOPIC 1a — Words → Figures
+=================================================== */
+const a1aQs = [
+  { q: '📝 Five hundred and ten = ?',          choices: ['510','501','550','410'],   answer: '510' },
+  { q: '📝 Two hundred = ?',                    choices: ['200','220','20','202'],    answer: '200' },
+  { q: '📝 Four hundred and sixteen = ?',       choices: ['460','416','406','446'],   answer: '416' },
+  { q: '📝 One hundred and eight = ?',          choices: ['180','118','108','18'],    answer: '108' },
+  { q: '📝 Three hundred and fifty-two = ?',    choices: ['325','352','532','302'],   answer: '352' },
+  { q: '📝 Six hundred and forty = ?',          choices: ['604','640','46','646'],    answer: '640' },
+  { q: '📝 Two hundred and five = ?',           choices: ['250','205','255','200'],   answer: '205' },
+  { q: '📝 Nine hundred and ninety-nine = ?',   choices: ['909','990','999','919'],   answer: '999' },
+];
+
+/* ===================================================
+   TOPIC 1b — Figures → Words
+=================================================== */
+const a1bQs = [
+  { q: '🔢 64 = ?',  choices: ['sixty-four','fifty-four','forty-six','sixty-six'],  answer: 'sixty-four' },
+  { q: '🔢 24 = ?',  choices: ['forty-two','twenty-four','fourteen','twelve'],       answer: 'twenty-four' },
+  { q: '🔢 17 = ?',  choices: ['seventy','seven','seventeen','eleven'],              answer: 'seventeen' },
+  { q: '🔢 35 = ?',  choices: ['treety-five','thirty-five','fifty-three','therty-five'], answer: 'thirty-five' },
+  { q: '🔢 100 = ?', choices: ['ten','one thousand','one hundred','one hundred and ten'], answer: 'one hundred' },
+  { q: '🔢 47 = ?',  choices: ['fourteen','seventy-four','forty-seven','forty-four'],answer: 'forty-seven' },
+];
+
+/* ===================================================
+   TOPIC 2 — Tens & Ones
+=================================================== */
+const a2Qs = [
+  { q: '🏛️ 72 = ___ tens and ___ ones.',   choices: ['7 tens and 2 ones','2 tens and 7 ones','7 tens and 7 ones','9 tens and 2 ones'], answer: '7 tens and 2 ones' },
+  { q: '🏛️ 6 tens and 8 ones = ?',          choices: ['86','608','68','76'],          answer: '68' },
+  { q: '🏛️ 99 = ___ tens and ___ ones.',    choices: ['9 tens and 9 ones','9 tens and 0 ones','0 tens and 9 ones','10 tens and 0 ones'], answer: '9 tens and 9 ones' },
+  { q: '🏛️ 16 = ___ tens and ___ ones.',    choices: ['6 tens and 1 one','1 ten and 6 ones','1 ten and 1 one','6 tens and 6 ones'], answer: '1 ten and 6 ones' },
+  { q: '🏛️ 3 tens and 4 ones = ?',           choices: ['43','30','304','34'],          answer: '34' },
+  { q: '🏛️ 50 = ___ tens and ___ ones.',    choices: ['5 tens and 5 ones','0 tens and 5 ones','5 tens and 0 ones','15 tens and 0 ones'], answer: '5 tens and 0 ones' },
+  { q: '🏛️ 4 tens and 7 ones = ?',           choices: ['74','407','47','40'],          answer: '47' },
+  { q: '🏛️ 83 = ___ tens and ___ ones.',    choices: ['3 tens and 8 ones','8 tens and 8 ones','8 tens and 3 ones','0 tens and 83 ones'], answer: '8 tens and 3 ones' },
+];
+
+/* ===================================================
+   TOPIC 3a — Story Sums
+=================================================== */
+const a3aQs = [
+  { q: '🍪 Jill has 9 biscuits. Tony has 7 biscuits. Who has the MOST?',  choices: ['Jill','Tony','They are the same','Cannot tell'], answer: 'Jill' },
+  { q: '🍎 Tim picked 3 apples. John picked 4 apples. How many ALTOGETHER?', choices: ['6','8','9','7'], answer: '7' },
+  { q: '🎈 Maya has 47 stickers. She gets 18 more. How many now?',        choices: ['55','65','29','75'], answer: '65' },
+  { q: '✏️ Lena has 15 pencils. She gives 6 to her friend. How many LEFT?', choices: ['21','10','9','11'], answer: '9' },
+  { q: '🐶 Tom has 12 toy cars. He gives 5 away. How many does he have?', choices: ['17','5','7','8'],  answer: '7' },
+  { q: '🍭 Ama has 8 sweets. Kofi gives her 9 more. How many altogether?',choices: ['15','16','17','18'], answer: '17' },
+  { q: '🐟 There were 20 fish in a tank. 8 swam away. How many are left?',choices: ['28','10','12','14'], answer: '12' },
+];
+
+/* ===================================================
+   TOPIC 3b — Column Sums
+=================================================== */
+const a3bCalcs = [
+  { top: '91', bot: '16', op: '+', answer: 107 },
+  { top: '55', bot: '23', op: '+', answer: 78  },
+  { top: '36', bot: '16', op: '-', answer: 20  },
+  { top: '80', bot: '10', op: '-', answer: 70  },
+  { top: '43', bot: '25', op: '+', answer: 68  },
+  { top: '74', bot: '32', op: '-', answer: 42  },
+  { top: '62', bot: '19', op: '+', answer: 81  },
+  { top: '95', bot: '40', op: '-', answer: 55  },
+];
+let a3bDoneCount = 0;
+function buildA3b() {
+  const c = document.getElementById('a3bContainer');
+  c.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px;">' +
+    a3bCalcs.map((q, i) => `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="col-calc">
+          <div class="op-row"><span>${q.top}</span></div>
+          <div class="op-row"><span class="op-sym">${q.op}</span>${q.bot}</div>
+          <div class="divider"></div>
+          <input class="calc-input" id="calc${i}" type="number" placeholder="?" onkeydown="if(event.key==='Enter')chkCalc(${i})" />
+        </div>
+        <button class="check-btn" onclick="chkCalc(${i})" style="font-size:0.9rem;padding:9px 18px;">Check ✅</button>
+        <div style="font-weight:800;font-size:0.95rem;min-height:20px;" id="calcfb${i}"></div>
+      </div>`
+    ).join('') + '</div>';
+}
+function chkCalc(i) {
+  const inp = document.getElementById('calc' + i);
+  const fb  = document.getElementById('calcfb' + i);
+  const val = parseInt(inp.value);
+  inp.classList.remove('ok','err');
+  if (val === a3bCalcs[i].answer) {
+    inp.classList.add('ok');
+    fb.textContent = '✅ Correct!';
+    fb.style.color = '#2e7d32';
+    inp.disabled = true;
+    a3bDoneCount++;
+    if (a3bDoneCount === a3bCalcs.length) {
+      document.getElementById('a3bDone').classList.add('show');
+      cheer();
+    }
+  } else {
+    inp.classList.add('err');
+    fb.textContent = '❌ Try again!';
+    fb.style.color = '#c62828';
+    setTimeout(() => { inp.classList.remove('err'); fb.textContent = ''; inp.value = ''; }, 900);
+  }
+}
+
+/* ===================================================
+   TOPIC 4 — Number Patterns (fill blank)
+=================================================== */
+const a4Qs = [
+  { q: 'Count in 1s: 25, 26, 27, 28, ___', seq: ['25','26','27','28','?'], answer: 29, bank: [28,29,30,27] },
+  { q: 'Count in 1s: 25, 26, 27, 28, 29, ___', seq: ['25','26','27','28','29','?'], answer: 30, bank: [31,30,29,32] },
+  { q: 'Count in 2s: 2, 4, ___, 8, 10', seq: ['2','4','?','8','10'], answer: 6, bank: [5,6,7,3] },
+  { q: 'Count in 2s: 2, 4, 6, 8, 10, ___', seq: ['2','4','6','8','10','?'], answer: 12, bank: [11,12,13,14] },
+  { q: 'Count in 3s: 3, 6, 9, 12, ___', seq: ['3','6','9','12','?'], answer: 15, bank: [13,14,15,16] },
+  { q: 'Count in 3s: 3, 6, 9, 12, 15, ___', seq: ['3','6','9','12','15','?'], answer: 18, bank: [16,17,18,19] },
+  { q: 'Count in 2s: ___, 4, 6, 8, 10', seq: ['?','4','6','8','10'], answer: 2, bank: [1,2,3,5] },
+  { q: 'Count in 3s: ___, 6, 9, 12', seq: ['?','6','9','12'], answer: 3, bank: [2,3,4,6] },
+  { q: 'Count in 2s: 10, 12, ___, 16', seq: ['10','12','?','16'], answer: 14, bank: [13,14,15,11] },
+  { q: 'Count in 3s: 9, 12, ___, 18', seq: ['9','12','?','18'], answer: 15, bank: [13,14,15,16] },
+];
+
+/* ===================================================
+   TOPIC 5a — Numerals in Words MCQ
+=================================================== */
+const a5aQs = [
+  { q: '📝 35 = ?', choices: ['treety-five','thirty-five','therty-five','thirdy-five'], answer: 'thirty-five' },
+  { q: '📝 17 = ?', choices: ['seventy','seven-teen','seventeen','seventee'],          answer: 'seventeen' },
+  { q: '📝 64 = ?', choices: ['sixteen','sixty-four','forty-six','sixtyfour'],         answer: 'sixty-four' },
+  { q: '📝 24 = ?', choices: ['twenty four','twenty-two','twenty-four','two-four'],    answer: 'twenty-four' },
+  { q: '📝 11 = ?', choices: ['onety-one','elevan','eleven','elbeven'],                answer: 'eleven' },
+  { q: '📝 47 = ?', choices: ['four-seven','seventy-four','fortyseven','forty-seven'], answer: 'forty-seven' },
+  { q: '📝 80 = ?', choices: ['eighy','eighty','eight-ty','eightee'],                  answer: 'eighty' },
+  { q: '📝 13 = ?', choices: ['thirty','thiteen','thirteen','thirtene'],               answer: 'thirteen' },
+];
+
+/* ===================================================
+   TOPIC 6 — Shapes MCQ
+=================================================== */
+const a6Qs = [
+  { q: '🔷 Is a SQUARE a 2D or 3D shape?',    choices: ['2D','3D'], answer: '2D' },
+  { q: '🧊 Is a CUBE a 2D or 3D shape?',       choices: ['2D','3D'], answer: '3D' },
+  { q: '⭕ Is a CIRCLE a 2D or 3D shape?',     choices: ['2D','3D'], answer: '2D' },
+  { q: '🥫 Is a CYLINDER a 2D or 3D shape?',   choices: ['2D','3D'], answer: '3D' },
+  { q: '🔺 Is a TRIANGLE a 2D or 3D shape?',   choices: ['2D','3D'], answer: '2D' },
+  { q: '📦 Is a CUBOID a 2D or 3D shape?',     choices: ['2D','3D'], answer: '3D' },
+  { q: '⭐ Is a STAR a 2D or 3D shape?',        choices: ['2D','3D'], answer: '2D' },
+  { q: '🏀 Is a SPHERE a 2D or 3D shape?',     choices: ['2D','3D'], answer: '3D' },
+  { q: '🔷 How many sides does a TRIANGLE have?', choices: ['2','3','4','5'], answer: '3' },
+  { q: '🧊 How many faces does a CUBE have?',  choices: ['4','5','6','8'],  answer: '6' },
+  { q: '🔷 Which of these is a 3D shape?',     choices: ['Circle','Square','Sphere','Triangle'], answer: 'Sphere' },
+  { q: '🔷 Which of these is a 2D shape?',     choices: ['Cone','Cylinder','Cube','Rectangle'],  answer: 'Rectangle' },
+];
+
+/* ===================================================
+   WORD BANK (Activity 5b)
+=================================================== */
+const tbAns = {
+  tb1:'eleven', tb2:'twelve', tb3:'seventeen', tb4:'twenty',
+  tb5:'thirty', tb6:'forty', tb7:'sixty', tb8:'seventy'
+};
+let wbSelected = null, tbState = {};
+function wbSel(word) {
+  wbSelected = word;
+  document.querySelectorAll('.wb-chip').forEach(w => w.style.outline = 'none');
+  const el = document.getElementById('wc_' + word);
+  if (el) el.style.outline = '3px solid #ff6f00';
+}
+function wbFill(bid, ans) {
+  if (!wbSelected) { alert('Tap a word first! 👆'); return; }
+  const slot = document.getElementById(bid);
+  if (slot.classList.contains('locked-ok')) return;
+  slot.textContent = wbSelected;
+  tbState[bid] = wbSelected;
+  document.querySelectorAll('.wb-chip').forEach(w => w.style.outline = 'none');
+  wbSelected = null;
+}
+function checkWb5b() {
+  let correct = 0;
+  const total = Object.keys(tbAns).length;
+  for (const [id, ans] of Object.entries(tbAns)) {
+    const slot = document.getElementById(id);
+    if (tbState[id] === ans) {
+      correct++;
+      slot.className = 'text-blank locked-ok';
+      document.getElementById('wc_' + ans).classList.add('used');
+    } else if (tbState[id]) {
+      slot.className = 'text-blank locked-err';
+      setTimeout(() => {
+        slot.className = 'text-blank';
+        slot.textContent = '         ';
+        delete tbState[id];
+        if (tbState[id] && document.getElementById('wc_' + tbState[id]))
+          document.getElementById('wc_' + tbState[id]).classList.remove('used');
+      }, 800);
+    }
+  }
+  const fb = document.getElementById('wb5bFb');
+  fb.textContent = `You got ${correct} out of ${total}!`;
+  fb.style.color = correct >= 6 ? '#2e7d32' : '#c62828';
+  if (correct === total) {
+    document.getElementById('a5bDone').classList.add('show');
+    cheer();
+  }
+}
+function resetWb5b() {
+  tbState = {}; wbSelected = null;
+  for (const id of Object.keys(tbAns)) {
+    const s = document.getElementById(id);
+    s.textContent = '         ';
+    s.className = 'text-blank';
+  }
+  document.querySelectorAll('.wb-chip').forEach(w => { w.classList.remove('used'); w.style.outline = 'none'; });
+  document.getElementById('wb5bFb').textContent = '';
+}
+
+/* ===================================================
+   INIT
+=================================================== */
+makeMCQ('a1aContainer','a1aDots','a1aDone', a1aQs, 'ctx1a');
+makeMCQ('a1bContainer','a1bDots','a1bDone', a1bQs, 'ctx1b');
+makeMCQ('a2Container', 'a2Dots', 'a2Done',  a2Qs,  'ctx2');
+makeMCQ('a3aContainer','a3aDots','a3aDone', a3aQs, 'ctx3a');
+buildA3b();
+makeFill('a4Container','a4Dots','a4Done',   a4Qs,  'ctx4');
+makeMCQ('a5aContainer','a5aDots','a5aDone', a5aQs, 'ctx5a');
+makeMCQ('a6Container', 'a6Dots', 'a6Done',  a6Qs,  'ctx6');
+</script>
+</body>
+</html>

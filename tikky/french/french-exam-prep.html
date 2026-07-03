@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇫🇷 French Exam Prep — Tikky!</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2D6BE4;--red:#E63946;--navy:#1B2A6B;
+  --gold:#FFD166;--mint:#06D6A0;--soft:#F7F9FF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Quicksand',sans-serif;
+  background:linear-gradient(160deg,#1B2A6B 0%,#2D6BE4 60%,#1a3a7a 100%);
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 12%,rgba(255,255,255,0.6) 0%,transparent 100%),
+    radial-gradient(1px 1px at 28% 38%,rgba(255,255,255,0.45) 0%,transparent 100%),
+    radial-gradient(2px 2px at 52% 18%,rgba(255,255,255,0.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 72% 58%,rgba(255,255,255,0.5) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 86% 8%,rgba(255,255,255,0.8) 0%,transparent 100%),
+    radial-gradient(1px 1px at 18% 72%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 63% 82%,rgba(255,255,255,0.6) 0%,transparent 100%);
+}
+.flag-bar{height:8px;background:linear-gradient(90deg,#002395 33%,#fff 33%,#fff 66%,#ED2939 66%);position:sticky;top:0;z-index:100;}
+
+.back-btn{
+  position:fixed;top:14px;left:14px;z-index:9999;
+  background:rgba(255,255,255,0.95);border:2px solid rgba(255,255,255,0.4);
+  color:#1B2A6B;font-family:'Quicksand',sans-serif;font-weight:700;font-size:0.88rem;
+  padding:7px 16px;border-radius:50px;text-decoration:none;
+  box-shadow:0 3px 12px rgba(0,0,0,0.2);transition:all 0.2s;
+}
+.back-btn:hover{background:#FFD166;color:#1B2A6B;}
+
+/* APP */
+.app{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:14px 14px 80px;}
+
+/* HEADER */
+.header{text-align:center;padding:22px 0 14px;}
+.flag-wave{font-size:3rem;display:block;animation:wave 2s ease-in-out infinite;}
+@keyframes wave{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.header h1{font-family:'Baloo Bhai 2',cursive;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:800;color:#FFD166;text-shadow:3px 3px 0 rgba(0,0,0,0.3);margin:8px 0 4px;}
+.header .sub{color:rgba(255,255,255,0.8);font-size:1rem;font-weight:700;}
+
+/* STARS */
+.stars-row{display:flex;justify-content:center;gap:8px;margin:12px 0;}
+.star{font-size:1.6rem;filter:grayscale(1) opacity(0.25);transition:all 0.35s;}
+.star.lit{filter:none;animation:sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes sPop{0%{transform:scale(0)}60%{transform:scale(1.5) rotate(-15deg)}100%{transform:scale(1)}}
+
+/* MISTAKE ALERT */
+.alert-card{
+  background:rgba(255,255,255,0.97);border-radius:20px;padding:18px 20px;
+  margin-bottom:18px;border-left:6px solid #E63946;
+  box-shadow:0 8px 30px rgba(0,0,0,0.18);
+}
+.alert-card h3{font-family:'Baloo Bhai 2',cursive;font-size:1.2rem;color:#c62828;margin-bottom:10px;}
+.alert-item{
+  background:#fff3cd;border:2px solid #f9a825;border-radius:12px;
+  padding:10px 14px;margin-bottom:8px;font-size:0.95rem;font-weight:700;color:#333;
+}
+.alert-item .wrong{color:#c62828;text-decoration:line-through;margin-right:6px;}
+.alert-item .right{color:#2e7d32;}
+
+/* TOPIC MENU */
+.topic-menu{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;
+}
+@media(max-width:440px){.topic-menu{grid-template-columns:repeat(2,1fr);}}
+.t-btn{
+  background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.2);
+  border-radius:16px;padding:12px 8px;text-align:center;
+  font-family:'Baloo Bhai 2',cursive;font-size:0.85rem;font-weight:600;
+  color:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.2s;text-decoration:none;
+  display:block;backdrop-filter:blur(4px);
+}
+.t-btn:hover{background:rgba(255,209,102,0.25);border-color:#FFD166;color:#FFD166;transform:translateY(-2px);}
+.t-btn .ti{font-size:1.4rem;display:block;margin-bottom:4px;}
+
+/* SECTION */
+.section{margin-bottom:28px;scroll-margin-top:60px;}
+.sec-tag{
+  font-family:'Baloo Bhai 2',cursive;font-size:1.3rem;font-weight:800;
+  color:#FFD166;margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  text-shadow:0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,0.97);border-radius:22px;
+  padding:20px 18px;margin-bottom:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.18);
+}
+.card-title{font-family:'Baloo Bhai 2',cursive;font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:14px;}
+
+/* NUMBER GRID */
+.num-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.num-cell{
+  background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-radius:14px;
+  padding:10px 6px;text-align:center;border:2px solid #C7D2FE;
+  cursor:pointer;transition:all 0.18s;
+}
+.num-cell:hover{transform:scale(1.06);background:linear-gradient(135deg,#818cf8,#6366f1);color:white;border-color:#4f46e5;}
+.num-cell .n-fr{font-family:'Baloo Bhai 2',cursive;font-size:0.85rem;font-weight:800;color:#3730a3;}
+.num-cell:hover .n-fr{color:white;}
+.num-cell .n-num{font-size:0.7rem;font-weight:700;color:#818cf8;}
+.num-cell:hover .n-num{color:rgba(255,255,255,0.8);}
+
+/* COLOUR ROW */
+.colour-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
+.colour-card{
+  border-radius:16px;padding:14px 10px;text-align:center;
+  border:3px solid rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.18s;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+.colour-card:hover{transform:translateY(-3px) scale(1.03);}
+.colour-card .cc-emoji{font-size:2rem;margin-bottom:4px;}
+.colour-card .cc-fr{font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:800;}
+.colour-card .cc-en{font-size:0.78rem;font-weight:700;color:#666;margin-top:2px;}
+
+/* RULE BOX */
+.rule-box{
+  border-radius:16px;padding:16px 18px;margin-bottom:12px;
+  font-size:0.97rem;font-weight:700;line-height:1.8;
+}
+.rule-box strong{font-family:'Baloo Bhai 2',cursive;font-size:1.05rem;}
+.rule-green{background:#e8f5e9;border:3px solid #43a047;color:#2e7d32;}
+.rule-blue {background:#e3f2fd;border:3px solid #1e88e5;color:#0d47a1;}
+.rule-red  {background:#ffebee;border:3px solid #e53935;color:#b71c1c;}
+.rule-gold {background:#fff8e1;border:3px solid #f9a825;color:#e65100;}
+
+.pill{
+  display:inline-block;padding:3px 12px;border-radius:50px;
+  font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:800;
+  margin:2px 4px;
+}
+.pill-blue{background:#2D6BE4;color:white;}
+.pill-red {background:#E63946;color:white;}
+.pill-green{background:#06D6A0;color:#1B2A6B;}
+.pill-gold{background:#FFD166;color:#1B2A6B;}
+
+/* CONJUGATION TABLE */
+.conj-table{width:100%;border-collapse:collapse;margin:10px 0;}
+.conj-table th,.conj-table td{
+  padding:10px 12px;text-align:left;border:2px solid #e0e0e0;
+  font-size:0.95rem;
+}
+.conj-table th{font-family:'Baloo Bhai 2',cursive;background:#f0f4ff;color:#1B2A6B;font-size:1rem;}
+.conj-table .hl-row{background:#fff9c4;}
+.conj-table .hl-row td{font-weight:900;color:#c62828;}
+.conj-table .ok-row{background:#e8f5e9;}
+.conj-table .ok-row td{font-weight:900;color:#2e7d32;}
+
+/* BODY PARTS */
+.body-list{display:flex;flex-direction:column;gap:10px;}
+.body-row{
+  display:flex;align-items:center;gap:12px;background:#f8faff;
+  border-radius:14px;padding:12px 14px;border:2px solid #e0e7ff;
+  cursor:pointer;transition:all 0.18s;
+}
+.body-row:hover{background:#EEF2FF;border-color:#818cf8;transform:translateX(4px);}
+.body-icon{font-size:1.8rem;width:44px;text-align:center;}
+.body-fr{font-family:'Baloo Bhai 2',cursive;font-size:1.1rem;color:#3730a3;font-weight:800;flex:1;}
+.body-action{font-size:0.82rem;font-weight:700;color:#888;margin-top:2px;}
+.body-en{font-size:0.9rem;font-weight:700;color:#666;}
+
+/* DAY STRIP */
+.day-strip{display:flex;flex-direction:column;gap:8px;}
+.day-row{display:flex;align-items:center;gap:12px;border-radius:14px;padding:12px 14px;cursor:pointer;transition:transform 0.18s;}
+.day-row:hover{transform:translateX(6px);}
+.day-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo Bhai 2',cursive;font-size:0.95rem;font-weight:800;color:#fff;flex-shrink:0;}
+.day-fr{font-family:'Baloo Bhai 2',cursive;font-size:1.1rem;font-weight:800;flex:1;}
+.day-en{font-size:0.88rem;font-weight:700;color:#888;}
+.day-em{font-size:1.3rem;}
+
+/* QUIZ */
+.quiz-q{
+  background:linear-gradient(135deg,#F7F9FF,#EEF2FF);border-radius:18px;
+  padding:20px;text-align:center;margin-bottom:14px;border:2px solid #E0E7FF;
+}
+.quiz-em{font-size:3rem;display:block;margin-bottom:8px;animation:bob 1.5s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.quiz-q p{font-family:'Baloo Bhai 2',cursive;font-size:1.15rem;color:var(--navy);font-weight:800;line-height:1.4;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.q-opt{
+  padding:14px 8px;border-radius:14px;border:2.5px solid #E5E7EB;
+  background:#fff;font-family:'Baloo Bhai 2',cursive;font-size:1.05rem;
+  font-weight:700;color:#555;cursor:pointer;transition:all 0.18s;
+  box-shadow:0 4px 0 rgba(0,0,0,0.07);text-align:center;
+}
+.q-opt:hover{transform:translateY(-3px);border-color:#FFD166;background:#fffde7;}
+.q-opt.correct{background:#D1FAE5;color:#065f46;border-color:#06D6A0;box-shadow:0 4px 0 #059669;}
+.q-opt.wrong{background:#FEE2E2;color:#991b1b;border-color:#E63946;animation:shake 0.4s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}50%{transform:translateX(8px)}80%{transform:translateX(-6px)}}
+.feedback{
+  text-align:center;font-family:'Baloo Bhai 2',cursive;font-size:1.1rem;
+  font-weight:800;padding:11px;border-radius:13px;display:none;margin-top:10px;
+}
+.feedback.ok{display:block;background:#D1FAE5;color:#065f46;}
+.feedback.no{display:block;background:#FEE2E2;color:#991b1b;}
+
+/* PROG BAR */
+.prog-wrap{background:#e0e7ff;border-radius:50px;height:10px;margin-bottom:6px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#FFD166,#FF9F43);transition:width 0.4s;}
+.prog-lbl{font-size:0.8rem;color:rgba(255,255,255,0.7);font-weight:700;text-align:right;margin-bottom:12px;}
+
+/* FILL BLANK */
+.fill-q{background:linear-gradient(135deg,#F7F9FF,#EEF2FF);border-radius:16px;padding:18px;margin-bottom:12px;}
+.fill-stmt{font-family:'Baloo Bhai 2',cursive;font-size:1.15rem;color:var(--navy);margin-bottom:14px;line-height:1.5;}
+.blank{
+  display:inline-block;min-width:100px;border-bottom:4px solid #2D6BE4;
+  padding:2px 8px;font-weight:900;color:#2D6BE4;vertical-align:middle;
+  cursor:pointer;background:#e8f0fe;border-radius:6px 6px 0 0;margin:0 4px;
+}
+.blank.ok{background:#D1FAE5;color:#065f46;border-color:#06D6A0;}
+.blank.err{background:#FEE2E2;color:#991b1b;border-color:#E63946;}
+.fill-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.fill-chip{
+  padding:9px 18px;border-radius:50px;background:#fff;
+  border:2.5px solid #C7D2FE;font-family:'Baloo Bhai 2',cursive;
+  font-size:1rem;font-weight:700;color:#3730a3;cursor:pointer;transition:all 0.18s;
+}
+.fill-chip:hover{background:#EEF2FF;border-color:#6366f1;transform:translateY(-2px);}
+.fill-chip.used{opacity:0.3;pointer-events:none;}
+
+/* MATCH */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.match-col-lbl{font-family:'Baloo Bhai 2',cursive;font-size:0.88rem;color:#aaa;text-align:center;margin-bottom:6px;font-weight:800;}
+.m-item{
+  padding:12px 8px;border-radius:13px;text-align:center;
+  font-family:'Baloo Bhai 2',cursive;font-size:0.95rem;font-weight:700;
+  cursor:pointer;transition:all 0.18s;border:2.5px solid transparent;
+  user-select:none;margin-bottom:8px;
+}
+.m-fr{background:#EEF2FF;color:#3730a3;border-color:#C7D2FE;}
+.m-en{background:#F0FFF4;color:#065f46;border-color:#A7F3D0;}
+.m-item:hover{transform:translateY(-3px);}
+.m-item.selected{box-shadow:0 0 0 3px #FFD166;transform:scale(1.04);}
+.m-item.correct{background:#D1FAE5;color:#065f46;border-color:#06D6A0;animation:cPop 0.4s;}
+.m-item.wrong{animation:shake 0.4s;background:#FEE2E2;border-color:#E63946;}
+@keyframes cPop{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+/* BUTTONS */
+.btn{
+  padding:12px 26px;border-radius:50px;border:none;
+  font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:800;
+  cursor:pointer;color:white;transition:all 0.15s;
+}
+.btn-gold{background:#FFD166;color:#1B2A6B;box-shadow:0 4px 0 #c9a600;}
+.btn-mint{background:#06D6A0;box-shadow:0 4px 0 #048a6e;}
+.btn-gray{background:#adb5bd;box-shadow:0 4px 0 #868e96;}
+.btn:hover{transform:translateY(-2px);}
+.btn:active{transform:translateY(2px);}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+
+/* SCORE BOX */
+.score-box{
+  display:none;text-align:center;padding:14px;
+  background:linear-gradient(135deg,#FFD166,#FF9F43);
+  color:#1B2A6B;border-radius:14px;
+  font-family:'Baloo Bhai 2',cursive;font-size:1.2rem;margin-top:14px;
+}
+.score-box.show{display:block;}
+
+/* MINI TEST */
+.mini-test-q{
+  background:rgba(255,255,255,0.97);border-radius:18px;padding:20px 18px;
+  margin-bottom:12px;box-shadow:0 6px 24px rgba(0,0,0,0.15);
+}
+.mt-num{font-size:0.8rem;font-weight:700;color:#aaa;margin-bottom:6px;}
+.mt-q{font-family:'Baloo Bhai 2',cursive;font-size:1.05rem;color:var(--navy);margin-bottom:12px;font-weight:800;}
+.mt-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.mt-opt{
+  padding:10px 18px;border-radius:50px;border:2.5px solid #C7D2FE;
+  background:#EEF2FF;font-family:'Baloo Bhai 2',cursive;font-size:0.95rem;
+  font-weight:700;color:#3730a3;cursor:pointer;transition:all 0.18s;
+}
+.mt-opt:hover{background:#E0E7FF;border-color:#6366f1;}
+.mt-opt.correct{background:#D1FAE5;color:#065f46;border-color:#06D6A0;}
+.mt-opt.wrong{background:#FEE2E2;color:#991b1b;border-color:#E63946;animation:shake 0.4s;}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;justify-content:center;align-items:center;}
+.overlay.show{display:flex;}
+.cel-box{
+  background:#fff;border-radius:28px;padding:36px 28px;text-align:center;
+  max-width:320px;width:90%;animation:zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  box-shadow:0 20px 60px rgba(0,0,0,0.35);
+}
+@keyframes zoomIn{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+.cel-box .cel-em{font-size:3.5rem;display:block;margin-bottom:10px;}
+.cel-box h2{font-family:'Baloo Bhai 2',cursive;font-size:1.8rem;color:var(--navy);margin-bottom:8px;}
+.cel-box p{color:#777;font-size:0.95rem;margin-bottom:18px;line-height:1.5;}
+
+/* PDOTS */
+.pdots{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;}
+.pdot{width:13px;height:13px;border-radius:50%;background:#ddd;transition:background 0.3s;}
+.pdot.ok{background:#06D6A0;}
+.pdot.err{background:#E63946;}
+
+@media(max-width:420px){
+  .quiz-opts{grid-template-columns:1fr;}
+  .match-cols{gap:6px;}
+  .m-item{font-size:0.85rem;padding:10px 6px;}
+}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-btn">← Retour</a>
+<div class="flag-bar"></div>
+
+<div class="app">
+
+<!-- HEADER -->
+<div class="header">
+  <span class="flag-wave">🇫🇷</span>
+  <h1>French Exam Prep!</h1>
+  <div class="sub">Get ready to ace it, Tikky! ⭐ · juillet 2026</div>
+</div>
+
+<!-- STARS -->
+<div class="stars-row" id="starsRow">
+  <span class="star" id="s1">⭐</span><span class="star" id="s2">⭐</span>
+  <span class="star" id="s3">⭐</span><span class="star" id="s4">⭐</span>
+  <span class="star" id="s5">⭐</span><span class="star" id="s6">⭐</span>
+  <span class="star" id="s7">⭐</span><span class="star" id="s8">⭐</span>
+</div>
+
+<!-- MISTAKES ALERT -->
+<div class="alert-card">
+  <h3>⚠️ Fix these from your last test!</h3>
+  <div class="alert-item">Q7: <span class="wrong">le fille</span>→ fille = feminine → <span class="right">LA fille ✅</span></div>
+  <div class="alert-item">Q9: <span class="wrong">La cahiers</span>→ cahiers = plural → <span class="right">LES cahiers ✅</span></div>
+  <div class="alert-item">Q11: <span class="wrong">Je est</span>→ with "Je" we say → <span class="right">Je SUIS ✅</span></div>
+  <div class="alert-item">Q13: <span class="wrong">Elle avons</span>→ "avons" goes with "nous" → <span class="right">Elle EST ✅</span></div>
+</div>
+
+<!-- TOPIC MENU -->
+<div class="topic-menu">
+  <a href="#t-nombres" class="t-btn"><span class="ti">🔢</span>Les Nombres</a>
+  <a href="#t-couleurs" class="t-btn"><span class="ti">🎨</span>Couleurs &amp; Fruits</a>
+  <a href="#t-articles" class="t-btn"><span class="ti">📌</span>le/la/l'/les</a>
+  <a href="#t-verbes" class="t-btn"><span class="ti">✏️</span>être &amp; avoir</a>
+  <a href="#t-jours" class="t-btn"><span class="ti">📅</span>Les Jours</a>
+  <a href="#t-corps" class="t-btn"><span class="ti">🧍</span>Le Corps</a>
+</div>
+
+
+<!-- =====================================================
+     TOPIC 1 — LES NOMBRES (1–20)
+===================================================== -->
+<div id="t-nombres" class="section">
+  <div class="sec-tag">🔢 Les Nombres — Numbers 1 to 20</div>
+
+  <div class="card">
+    <div class="card-title">🖱️ Tap a number to hear it!</div>
+    <div class="num-grid" id="numGrid"></div>
+    <div class="rule-box rule-blue" style="margin-top:14px;">
+      💡 <strong>After 16, the pattern changes:</strong><br>
+      17 = <span class="pill pill-blue">dix-sept</span> (10+7) &nbsp;
+      18 = <span class="pill pill-blue">dix-huit</span> (10+8) &nbsp;
+      19 = <span class="pill pill-blue">dix-neuf</span> (10+9) &nbsp;
+      20 = <span class="pill pill-gold">vingt</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Quiz — Numbers!</div>
+    <div class="prog-wrap"><div class="prog-fill" id="n1bar" style="width:0%"></div></div>
+    <div class="prog-lbl" id="n1lbl">Question 1 of 10</div>
+    <div class="quiz-q">
+      <span class="quiz-em" id="n1em">🔢</span>
+      <p id="n1q">Loading…</p>
+    </div>
+    <div class="quiz-opts" id="n1opts"></div>
+    <div class="feedback" id="n1fb"></div>
+    <div class="btn-row"><button class="btn btn-gold" id="n1next" style="display:none" onclick="nextNQ()">Suivant ➡️</button></div>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     TOPIC 2 — COULEURS & FRUITS
+===================================================== -->
+<div id="t-couleurs" class="section">
+  <div class="sec-tag">🎨 Les Couleurs &amp; Les Fruits</div>
+
+  <div class="card">
+    <div class="card-title">🎨 Colours — tap each card!</div>
+    <div class="colour-grid" id="colGrid"></div>
+    <div class="rule-box rule-green" style="margin-top:14px;">
+      💡 <strong>From the test:</strong><br>
+      🍌 La banane est <span class="pill pill-gold">jaune</span> &nbsp;
+      🍎 La pomme est <span class="pill pill-green">verte</span> &nbsp;
+      🍊 L'orange est un <span class="pill pill-blue">fruit</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Match — French to English!</div>
+    <p style="font-size:0.9rem;color:#888;font-weight:700;margin-bottom:12px;">Tap a French word, then its English match!</p>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-lbl">🇫🇷 French</div>
+        <div id="cm-fr"></div>
+      </div>
+      <div>
+        <div class="match-col-lbl">🇬🇧 English</div>
+        <div id="cm-en"></div>
+      </div>
+    </div>
+    <div class="feedback" id="cm-fb"></div>
+    <div class="btn-row"><button class="btn btn-gray" onclick="initColMatch()">🔄 New Match</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🍎 Fruit &amp; Colour Quiz!</div>
+    <div class="pdots" id="fcDots"></div>
+    <div id="fcContainer"></div>
+    <div class="score-box" id="fcDone">🎉 Parfait! You know colours and fruits!</div>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     TOPIC 3 — ARTICLES: le, la, l', les
+===================================================== -->
+<div id="t-articles" class="section">
+  <div class="sec-tag">📌 Les Articles — le · la · l' · les</div>
+
+  <div class="card">
+    <div class="card-title">📖 The 4 Rules — learn them well!</div>
+    <div class="rule-box rule-blue">
+      <strong>LE</strong> → masculine noun (boy/male things)<br>
+      <span class="pill pill-blue">le garçon</span> <span class="pill pill-blue">le livre</span> <span class="pill pill-blue">le stylo</span>
+    </div>
+    <div class="rule-box rule-red">
+      <strong>LA</strong> → feminine noun (girl/female things)<br>
+      <span class="pill pill-red">la fille</span> <span class="pill pill-red">la pomme</span> <span class="pill pill-red">la table</span>
+    </div>
+    <div class="rule-box rule-green">
+      <strong>L'</strong> → noun starting with a vowel (a, e, i, o, u)<br>
+      <span class="pill pill-green">l'arbre</span> <span class="pill pill-green">l'élève</span> <span class="pill pill-green">l'orange</span>
+    </div>
+    <div class="rule-box rule-gold">
+      <strong>LES</strong> → ALL plural nouns (more than one!)<br>
+      <span class="pill pill-gold">les cahiers</span> <span class="pill pill-gold">les livres</span> <span class="pill pill-gold">les filles</span>
+    </div>
+    <div class="rule-box" style="background:#fff3cd;border:3px solid #E63946;color:#c62828;">
+      ⚠️ <strong>Remember from your test:</strong><br>
+      <em>fille</em> is FEMININE → <strong>LA fille</strong> (NOT "le fille"!)<br>
+      <em>cahiers</em> is PLURAL → <strong>LES cahiers</strong> (NOT "la cahiers"!)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Fill in the blank — le, la, l' or les?</div>
+    <div id="artFillContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-mint" onclick="checkArtFill()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="resetArtFill()">🔄 Try Again</button>
+    </div>
+    <div id="artFillFb" style="margin-top:10px;font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:800;min-height:20px;"></div>
+    <div class="score-box" id="artDone">🎉 Super! You know le, la, l' and les!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Articles Quiz!</div>
+    <div class="pdots" id="artQDots"></div>
+    <div id="artQContainer"></div>
+    <div class="score-box" id="artQDone">🎉 Excellent! Articles mastered!</div>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     TOPIC 4 — ÊTRE & AVOIR
+===================================================== -->
+<div id="t-verbes" class="section">
+  <div class="sec-tag">✏️ Les Verbes — être &amp; avoir</div>
+
+  <div class="card">
+    <div class="card-title">📖 ÊTRE = "to be" &amp; AVOIR = "to have"</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+      <div>
+        <div style="font-family:'Baloo Bhai 2',cursive;font-size:1rem;color:#1B2A6B;font-weight:800;margin-bottom:8px;">ÊTRE (to be)</div>
+        <table class="conj-table">
+          <thead><tr><th>Pronoun</th><th>Verb</th></tr></thead>
+          <tbody>
+            <tr class="hl-row"><td>Je</td><td><strong>suis</strong> ⚠️</td></tr>
+            <tr><td>Tu</td><td>es</td></tr>
+            <tr class="hl-row"><td>Il / Elle</td><td><strong>est</strong> ⚠️</td></tr>
+            <tr><td>Nous</td><td>sommes</td></tr>
+            <tr><td>Vous</td><td>êtes</td></tr>
+            <tr><td>Ils / Elles</td><td>sont</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-family:'Baloo Bhai 2',cursive;font-size:1rem;color:#1B2A6B;font-weight:800;margin-bottom:8px;">AVOIR (to have)</div>
+        <table class="conj-table">
+          <thead><tr><th>Pronoun</th><th>Verb</th></tr></thead>
+          <tbody>
+            <tr><td>Je</td><td>ai</td></tr>
+            <tr class="ok-row"><td>Tu</td><td><strong>as</strong> ✅</td></tr>
+            <tr><td>Il / Elle</td><td>a</td></tr>
+            <tr class="ok-row"><td>Nous</td><td><strong>avons</strong> ✅</td></tr>
+            <tr><td>Vous</td><td>avez</td></tr>
+            <tr><td>Ils / Elles</td><td>ont</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="rule-box" style="background:#fff3cd;border:3px solid #E63946;color:#c62828;">
+      ⚠️ <strong>Your test mistakes:</strong><br>
+      <strong>Je suis</strong> un élève. (NOT "je est" — "suis" is for JE!)<br>
+      <strong>Elle est</strong> heureuse. (NOT "elle avons" — "avons" is for NOUS!)
+    </div>
+    <div class="rule-box rule-blue">
+      💡 <strong>Quick trick:</strong><br>
+      JE → <span class="pill pill-blue">SUIS</span> &nbsp; TU → <span class="pill pill-blue">ES</span> &nbsp; IL/ELLE → <span class="pill pill-blue">EST</span><br>
+      JE → <span class="pill pill-red">AI</span> &nbsp; TU → <span class="pill pill-red">AS</span> &nbsp; NOUS → <span class="pill pill-red">AVONS</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Verbs Quiz — être or avoir?</div>
+    <div class="pdots" id="vbDots"></div>
+    <div id="vbContainer"></div>
+    <div class="score-box" id="vbDone">🎉 Bravo! You know être and avoir!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Fill in the verb!</div>
+    <div id="verbFillContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-mint" onclick="checkVerbFill()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="resetVerbFill()">🔄 Try Again</button>
+    </div>
+    <div id="verbFillFb" style="margin-top:10px;font-family:'Baloo Bhai 2',cursive;font-size:1rem;font-weight:800;min-height:20px;"></div>
+    <div class="score-box" id="verbFillDone">🎉 Super! You know all the verb forms!</div>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     TOPIC 5 — LES JOURS DE LA SEMAINE
+===================================================== -->
+<div id="t-jours" class="section">
+  <div class="sec-tag">📅 Les Jours de la Semaine</div>
+
+  <div class="card">
+    <div class="card-title">🗓️ The 7 Days — tap each to hear!</div>
+    <div class="day-strip" id="dayStrip"></div>
+    <div class="rule-box rule-blue" style="margin-top:14px;">
+      💡 <strong>Before &amp; After from the test:</strong><br>
+      Après mercredi (after Wednesday) → <span class="pill pill-blue">jeudi</span><br>
+      Avant dimanche (before Sunday) → <span class="pill pill-red">samedi</span><br>
+      Le 3ème jour de la semaine → <span class="pill pill-gold">mercredi</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Days Quiz!</div>
+    <div class="pdots" id="dayDots"></div>
+    <div id="dayQContainer"></div>
+    <div class="score-box" id="dayQDone">🎉 Parfait! You know all the days!</div>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     TOPIC 6 — LE CORPS
+===================================================== -->
+<div id="t-corps" class="section">
+  <div class="sec-tag">🧍 Le Corps — Body Parts</div>
+
+  <div class="card">
+    <div class="card-title">🧍 Les parties du corps — tap each!</div>
+    <div class="body-list" id="bodyList"></div>
+    <div class="rule-box rule-green" style="margin-top:14px;">
+      💡 <strong>Actions from the test:</strong><br>
+      J'écoute avec les <span class="pill pill-blue">oreilles</span> 👂 (I listen with my ears)<br>
+      Je marche avec les <span class="pill pill-blue">pieds</span> 🦶 (I walk with my feet)<br>
+      Je mange avec la <span class="pill pill-red">bouche</span> 👄 (I eat with my mouth)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Body Parts Quiz!</div>
+    <div class="pdots" id="bpDots"></div>
+    <div id="bpContainer"></div>
+    <div class="score-box" id="bpDone">🎉 Bravo! You know the body parts!</div>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     FINAL MINI TEST (simulates real exam)
+===================================================== -->
+<div id="t-test" class="section">
+  <div class="sec-tag">🏆 Mini Test — Like the Real Exam!</div>
+  <div class="card">
+    <div class="card-title">📝 20 questions — just like in school!</div>
+    <div id="miniTestContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="checkMiniTest()">✅ Submit &amp; Check!</button>
+      <button class="btn btn-gray" onclick="buildMiniTest()">🔄 Reset</button>
+    </div>
+    <div id="mtFb" style="margin-top:14px;font-family:'Baloo Bhai 2',cursive;font-size:1.1rem;font-weight:800;min-height:22px;color:#1B2A6B;"></div>
+    <div class="score-box" id="mtDone"></div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="cel-em" id="celEm">🎉</span>
+    <h2 id="celTitle">Super!</h2>
+    <p id="celMsg">Très bien!</p>
+    <button class="btn btn-gold" style="width:100%" onclick="document.getElementById('overlay').classList.remove('show')">Continuez! 🚀</button>
+  </div>
+</div>
+
+<script>
+/* ===== GLOBAL ===== */
+let starCount=0;
+function addStar(){if(starCount<8){starCount++;document.getElementById('s'+(starCount)).classList.add('lit');}}
+function celebrate(em,title,msg){
+  document.getElementById('celEm').textContent=em;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function speak(text){
+  if('speechSynthesis' in window){
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='fr-FR';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u);
+  }
+}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+function buildDots(id,n){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='';
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='pdot';d.id=id+'_'+i;el.appendChild(d);}
+}
+function markDot(id,i,cls){const d=document.getElementById(id+'_'+i);if(d){d.classList.remove('ok','err');d.classList.add(cls);}}
+
+/* Generic MCQ runner */
+function MCQ(containerSel,dotsSel,doneSel,questions,key){
+  const state={cur:0,qs:questions};
+  window['mcq_'+key]=state;
+  buildDots(dotsSel,questions.length);
+  renderMCQ(key,containerSel,dotsSel,doneSel);
+}
+function renderMCQ(key,cs,ds,done){
+  const state=window['mcq_'+key];
+  const c=document.getElementById(cs);
+  if(!c)return;
+  if(state.cur>=state.qs.length){
+    c.innerHTML='';
+    const d=document.getElementById(done);if(d){d.classList.add('show');}
+    addStar();
+    return;
+  }
+  const q=state.qs[state.cur];
+  const idx=state.cur;
+  const opts=q.opts.map(o=>`<button class="q-opt" onclick="pickMCQ('${esc(o)}','${esc(q.ans)}',${idx},'${key}','${cs}','${ds}','${done}')">${o}</button>`).join('');
+  c.innerHTML=`<div class="quiz-q"><span class="quiz-em">${q.em||'🇫🇷'}</span><p>${q.q}</p></div><div class="quiz-opts">${opts}</div><div class="feedback" id="${key}fb"></div><div class="btn-row"><button class="btn btn-gold" id="${key}next" style="display:none" onclick="advMCQ('${key}','${cs}','${ds}','${done}')">Suivant ➡️</button></div>`;
+}
+function esc(s){return String(s).replace(/'/g,"\\'");}
+function pickMCQ(chosen,ans,idx,key,cs,ds,done){
+  const state=window['mcq_'+key];
+  if(!state||state.cur!==idx)return;
+  const fb=document.getElementById(key+'fb');
+  const btns=document.getElementById(cs).querySelectorAll('.q-opt');
+  btns.forEach(b=>b.disabled=true);
+  const hit=[...btns].find(b=>b.textContent.trim()===chosen.trim());
+  if(chosen===ans){
+    if(hit)hit.classList.add('correct');
+    if(fb){fb.textContent='🌟 Oui! Correct! Très bien!';fb.className='feedback ok';}
+    markDot(ds,idx,'ok');
+    document.getElementById(key+'next').style.display='inline-block';
+  } else {
+    if(hit)hit.classList.add('wrong');
+    [...btns].filter(b=>b.textContent.trim()===ans.trim()).forEach(b=>b.classList.add('correct'));
+    if(fb){fb.textContent='🤔 Non! La bonne réponse: '+ans;fb.className='feedback no';}
+    markDot(ds,idx,'err');
+    document.getElementById(key+'next').style.display='inline-block';
+  }
+}
+function advMCQ(key,cs,ds,done){
+  const state=window['mcq_'+key];
+  state.cur++;
+  renderMCQ(key,cs,ds,done);
+}
+
+/* ===== TOPIC 1 — NUMBERS ===== */
+const nums=[
+  {n:1,fr:'un'},{n:2,fr:'deux'},{n:3,fr:'trois'},{n:4,fr:'quatre'},{n:5,fr:'cinq'},
+  {n:6,fr:'six'},{n:7,fr:'sept'},{n:8,fr:'huit'},{n:9,fr:'neuf'},{n:10,fr:'dix'},
+  {n:11,fr:'onze'},{n:12,fr:'douze'},{n:13,fr:'treize'},{n:14,fr:'quatorze'},{n:15,fr:'quinze'},
+  {n:16,fr:'seize'},{n:17,fr:'dix-sept'},{n:18,fr:'dix-huit'},{n:19,fr:'dix-neuf'},{n:20,fr:'vingt'}
+];
+(function buildNumGrid(){
+  const g=document.getElementById('numGrid');
+  nums.forEach(d=>{
+    const cell=document.createElement('div');
+    cell.className='num-cell';
+    cell.innerHTML=`<div class="n-fr">${d.fr}</div><div class="n-num">${d.n}</div>`;
+    cell.onclick=()=>speak(d.fr);
+    g.appendChild(cell);
+  });
+})();
+
+const numQs=[
+  {em:'🔢',q:'17 = ?',                          opts:['dix-neuf','dix-sept','seize','vingt'],        ans:'dix-sept'},
+  {em:'🔢',q:'20 = ?',                           opts:['quatorze','onze','vingt','dix-huit'],         ans:'vingt'},
+  {em:'🔢',q:'Quel nombre vient après 14?',       opts:['seize','quinze','dix-huit','treize'],         ans:'quinze'},
+  {em:'🔢',q:'"quinze" = ?',                      opts:['13','16','14','15'],                          ans:'15'},
+  {em:'🔢',q:'"dix-neuf" = ?',                   opts:['17','18','20','19'],                          ans:'19'},
+  {em:'🔢',q:'"douze" = ?',                      opts:['11','13','12','14'],                          ans:'12'},
+  {em:'🔢',q:'Quel nombre vient avant 17?',       opts:['dix-huit','quinze','seize','quatorze'],       ans:'seize'},
+  {em:'🔢',q:'"vingt" = ?',                      opts:['10','15','18','20'],                          ans:'20'},
+  {em:'🔢',q:'16 = ?',                           opts:['quinze','dix-sept','seize','quatorze'],       ans:'seize'},
+  {em:'🔢',q:'Quel nombre vient après 18?',       opts:['dix-sept','seize','vingt','dix-neuf'],       ans:'dix-neuf'},
+];
+let nqIdx=0,nqAns=false;
+function initNQ(){nqIdx=0;nqAns=false;loadNQ();}
+function loadNQ(){
+  nqAns=false;
+  const q=numQs[nqIdx];
+  document.getElementById('n1em').textContent=q.em;
+  document.getElementById('n1q').textContent=q.q;
+  document.getElementById('n1bar').style.width=(nqIdx/numQs.length*100)+'%';
+  document.getElementById('n1lbl').textContent=`Question ${nqIdx+1} of ${numQs.length}`;
+  document.getElementById('n1fb').className='feedback';
+  document.getElementById('n1next').style.display='none';
+  const opts=document.getElementById('n1opts');
+  opts.innerHTML='';
+  shuffle(q.opts).forEach(o=>{
+    const b=document.createElement('button');b.className='q-opt';b.textContent=o;
+    b.onclick=()=>ansNQ(b,o,q.ans);
+    opts.appendChild(b);
+  });
+}
+function ansNQ(btn,chosen,ans){
+  if(nqAns)return;nqAns=true;
+  const fb=document.getElementById('n1fb');
+  document.getElementById('n1opts').querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
+  if(chosen===ans){
+    btn.classList.add('correct');fb.textContent='🌟 Oui! Correct!';fb.className='feedback ok';addStar();
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('n1opts').querySelectorAll('.q-opt').forEach(b=>{if(b.textContent===ans)b.classList.add('correct');});
+    fb.textContent='🤔 Non! La réponse: '+ans;fb.className='feedback no';
+  }
+  document.getElementById('n1next').style.display='block';
+  if(nqIdx===numQs.length-1)setTimeout(()=>celebrate('🔢','Numéros!','Tu connais tous les nombres! Formidable!'),700);
+}
+function nextNQ(){nqIdx=(nqIdx+1)%numQs.length;loadNQ();}
+
+/* ===== TOPIC 2 — COLOURS & FRUITS ===== */
+const colours=[
+  {fr:'rouge',en:'red',emoji:'🔴',bg:'#ffcdd2',border:'#e53935'},
+  {fr:'bleu',en:'blue',emoji:'🔵',bg:'#bbdefb',border:'#1e88e5'},
+  {fr:'vert / verte',en:'green',emoji:'🟢',bg:'#c8e6c9',border:'#43a047'},
+  {fr:'jaune',en:'yellow',emoji:'🟡',bg:'#fff9c4',border:'#f9a825'},
+  {fr:'blanc / blanche',en:'white',emoji:'⬜',bg:'#f5f5f5',border:'#bdbdbd'},
+  {fr:'noir / noire',en:'black',emoji:'⬛',bg:'#eeeeee',border:'#616161'},
+  {fr:'rose',en:'pink',emoji:'🌸',bg:'#fce4ec',border:'#e91e8c'},
+  {fr:'orange',en:'orange',emoji:'🟠',bg:'#ffe0b2',border:'#ef6c00'},
+];
+(function buildColGrid(){
+  const g=document.getElementById('colGrid');
+  colours.forEach(c=>{
+    const card=document.createElement('div');
+    card.className='colour-card';
+    card.style.cssText=`background:${c.bg};border-color:${c.border};`;
+    card.innerHTML=`<div class="cc-emoji">${c.emoji}</div><div class="cc-fr">${c.fr}</div><div class="cc-en">${c.en}</div>`;
+    card.onclick=()=>speak(c.fr.split(' /')[0]);
+    g.appendChild(card);
+  });
+})();
+
+/* colour match */
+const colMatchPairs=[
+  {fr:'rouge 🔴',en:'red'},{fr:'bleu 🔵',en:'blue'},
+  {fr:'vert 🟢',en:'green'},{fr:'jaune 🟡',en:'yellow'},
+  {fr:'rose 🌸',en:'pink'}
+];
+let cmSel=null,cmMatched=new Set();
+function initColMatch(){
+  cmSel=null;cmMatched=new Set();
+  const shuffEn=shuffle(colMatchPairs);
+  const frEl=document.getElementById('cm-fr');
+  const enEl=document.getElementById('cm-en');
+  frEl.innerHTML='';enEl.innerHTML='';
+  colMatchPairs.forEach((p,i)=>{
+    const el=document.createElement('div');el.className='m-item m-fr';el.textContent=p.fr;el.dataset.idx=i;
+    el.onclick=()=>cmClick(el,i,'fr');frEl.appendChild(el);
+  });
+  shuffEn.forEach(p=>{
+    const i=colMatchPairs.indexOf(p);
+    const el=document.createElement('div');el.className='m-item m-en';el.textContent=p.en;el.dataset.idx=i;
+    el.onclick=()=>cmClick(el,i,'en');enEl.appendChild(el);
+  });
+  document.getElementById('cm-fb').className='feedback';
+}
+function cmClick(el,idx,side){
+  if(cmMatched.has(idx))return;
+  const fb=document.getElementById('cm-fb');
+  if(!cmSel){cmSel={el,idx,side};el.classList.add('selected');return;}
+  if(cmSel.side===side){cmSel.el.classList.remove('selected');cmSel={el,idx,side};el.classList.add('selected');return;}
+  cmSel.el.classList.remove('selected');
+  if(cmSel.idx===idx){
+    cmSel.el.classList.add('correct');el.classList.add('correct');
+    cmMatched.add(idx);cmSel=null;
+    fb.textContent='✅ Correct! Bien!';fb.className='feedback ok';
+    if(cmMatched.size===colMatchPairs.length){addStar();setTimeout(()=>celebrate('🎨','Parfait!','You matched all the colours!'),600);setTimeout(initColMatch,3500);}
+  } else {
+    cmSel.el.classList.add('wrong');el.classList.add('wrong');cmSel=null;
+    fb.textContent='🤔 Non! Essaie encore!';fb.className='feedback no';
+    setTimeout(()=>{document.querySelectorAll('.m-item.wrong').forEach(x=>x.classList.remove('wrong'));fb.className='feedback';},900);
+  }
+}
+
+const fcQs=[
+  {em:'🍌',q:'La banane est ___.',opts:['noire','bleue','jaune','rouge'],ans:'jaune'},
+  {em:'🍎',q:'La pomme est ___.',opts:['verte','rose','blanche','jaune'],ans:'verte'},
+  {em:'🍊',q:"L'orange est un ___.",opts:['animal','jouet','fruit','légume'],ans:'fruit'},
+  {em:'🍅',q:'La tomate est ___.',opts:['bleue','rouge','verte','noire'],ans:'rouge'},
+  {em:'🍇',q:'Les raisins sont ___.',opts:['jaunes','rouges','blancs','verts'],ans:'rouges'},
+  {em:'🥛',q:'Le lait est ___.',opts:['rouge','bleu','blanc','jaune'],ans:'blanc'},
+  {em:'🌿',q:'L\'herbe est ___.',opts:['rouge','blanche','jaune','verte'],ans:'verte'},
+  {em:'🍊',q:"L'orange est de couleur ___.",opts:['bleue','orange','verte','rose'],ans:'orange'},
+];
+MCQ('fcContainer','fcDots','fcDone',fcQs,'fc');
+
+/* ===== TOPIC 3 — ARTICLES ===== */
+const artFillQs=[
+  {stmt:'___ fille est gentille.',ans:'La',bank:['Le','La','L\'','Les'],hint:'fille = feminine'},
+  {stmt:'___ arbre est grand.',ans:"L'",bank:['Le','La',"L'",'Les'],hint:'arbre starts with vowel'},
+  {stmt:'___ cahiers sont sur la table.',ans:'Les',bank:['Le','La','Les',"L'"],hint:'cahiers = plural'},
+  {stmt:'___ garçon joue au football.',ans:'Le',bank:['Le','La','Les',"L'"],hint:'garçon = masculine'},
+  {stmt:'___ école est grande.',ans:"L'",bank:['Le','La',"L'",'Les'],hint:'école starts with vowel'},
+  {stmt:'___ livres sont intéressants.',ans:'Les',bank:['Le','La','Les',"L'"],hint:'livres = plural'},
+  {stmt:'___ chat est mignon.',ans:'Le',bank:['Le','La',"L'",'Les'],hint:'chat = masculine'},
+  {stmt:'___ orange est sucrée.',ans:"L'",bank:['Le','La',"L'",'Les'],hint:'orange starts with vowel'},
+];
+let artState={},artWbSel=null;
+function buildArtFill(){
+  artState={};artWbSel=null;
+  const c=document.getElementById('artFillContainer');
+  c.innerHTML=artFillQs.map((q,i)=>`
+    <div class="fill-q" style="margin-bottom:10px;">
+      <div class="fill-stmt">
+        <span class="blank" id="abl${i}" onclick="artFill(${i})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${q.stmt}
+        <span style="font-size:0.78rem;color:#aaa;margin-left:6px;">(${q.hint})</span>
+      </div>
+      <div class="fill-bank">
+        ${q.bank.map(w=>`<span class="fill-chip" id="afc_${i}_${w.replace(/'/g,'p')}" onclick="artSelChip('${esc(w)}',${i})">${w}</span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function artSelChip(word,qIdx){
+  artWbSel=word;
+  document.querySelectorAll('.fill-chip').forEach(c=>c.style.outline='none');
+  const el=document.getElementById('afc_'+qIdx+'_'+word.replace(/'/g,'p'));
+  if(el)el.style.outline='3px solid #2D6BE4';
+  artFill(qIdx);
+}
+function artFill(qIdx){
+  if(!artWbSel)return;
+  const slot=document.getElementById('abl'+qIdx);
+  if(slot.classList.contains('ok'))return;
+  slot.textContent=artWbSel;
+  artState[qIdx]=artWbSel;
+  artWbSel=null;
+  document.querySelectorAll('.fill-chip').forEach(c=>c.style.outline='none');
+}
+function checkArtFill(){
+  let correct=0;
+  artFillQs.forEach((q,i)=>{
+    const slot=document.getElementById('abl'+i);
+    if(artState[i]===q.ans){correct++;slot.className='blank ok';}
+    else if(artState[i]){slot.className='blank err';setTimeout(()=>{slot.className='blank';slot.textContent='      ';delete artState[i];},800);}
+  });
+  const fb=document.getElementById('artFillFb');
+  fb.textContent=`Tu as ${correct} sur ${artFillQs.length}!`;
+  fb.style.color=correct>=6?'#2e7d32':'#c62828';
+  if(correct===artFillQs.length){document.getElementById('artDone').classList.add('show');addStar();}
+}
+function resetArtFill(){artState={};artWbSel=null;buildArtFill();document.getElementById('artFillFb').textContent='';}
+
+const artQQs=[
+  {em:'📌',q:'"la fille" — why is it LA?',opts:['It starts with a vowel','fille is feminine','fille is plural','fille is masculine'],ans:'fille is feminine'},
+  {em:'📌',q:'___ cahiers (plural!)',opts:['Le','La',"L'",'Les'],ans:'Les'},
+  {em:'📌',q:'___ élève (starts with a vowel!)',opts:['Le','La',"L'",'Les'],ans:"L'"},
+  {em:'📌',q:'___ stylo (masculine)',opts:['Le','La',"L'",'Les'],ans:'Le'},
+  {em:'📌',q:'___ maison (feminine)',opts:['Le','La',"L'",'Les'],ans:'La'},
+  {em:'📌',q:'___ enfants (plural)',opts:['Le','La',"L'",'Les'],ans:'Les'},
+  {em:'📌',q:'___ ami (masculine, starts with vowel)',opts:['Le','La',"L'",'Les'],ans:"L'"},
+  {em:'📌',q:'___ tables (plural)',opts:['Le','La',"L'",'Les'],ans:'Les'},
+  {em:'📌',q:'___ père (masculine)',opts:['Le','La',"L'",'Les'],ans:'Le'},
+  {em:'📌',q:'___ mère (feminine)',opts:['Le','La',"L'",'Les'],ans:'La'},
+];
+MCQ('artQContainer','artQDots','artQDone',artQQs,'artq');
+
+/* ===== TOPIC 4 — VERBS ===== */
+const vbQs=[
+  {em:'✏️',q:'Je ___ un élève.',opts:['suis','es','est','sommes'],ans:'suis'},
+  {em:'✏️',q:'Tu ___ un stylo.',opts:['ai','as','a','avons'],ans:'as'},
+  {em:'✏️',q:'Elle ___ heureuse.',opts:['avons','suis','es','est'],ans:'est'},
+  {em:'✏️',q:'Nous ___ des livres.',opts:['avez','etes','avons','ont'],ans:'avons'},
+  {em:'✏️',q:'Il ___ grand.',opts:['suis','sommes','est','es'],ans:'est'},
+  {em:'✏️',q:'Je ___ un livre.',opts:['es','est','ai','avons'],ans:'ai'},
+  {em:'✏️',q:'Tu ___ un élève.',opts:['suis','es','est','êtes'],ans:'es'},
+  {em:'✏️',q:'Nous ___ français.',opts:['avons','sommes','êtes','sont'],ans:'sommes'},
+  {em:'✏️',q:'"Je suis" → "être" OR "avoir"?',opts:['avoir','être'],ans:'être'},
+  {em:'✏️',q:'"Nous avons" → "être" OR "avoir"?',opts:['être','avoir'],ans:'avoir'},
+  {em:'✏️',q:'Elle ___ une pomme.',opts:['suis','es','a','avons'],ans:'a'},
+  {em:'✏️',q:'Ils ___ des amis.',opts:['avons','sommes','ont','êtes'],ans:'ont'},
+];
+MCQ('vbContainer','vbDots','vbDone',vbQs,'vb');
+
+const verbFillQs=[
+  {stmt:'Je ___ un garçon.',ans:'suis',bank:['suis','es','est','sommes'],hint:'Je + être'},
+  {stmt:'Tu ___ un stylo.',ans:'as',bank:['ai','as','a','avons'],hint:'Tu + avoir'},
+  {stmt:'Elle ___ contente.',ans:'est',bank:['suis','es','est','sommes'],hint:'Elle + être'},
+  {stmt:'Nous ___ des livres.',ans:'avons',bank:['avez','avons','ont','a'],hint:'Nous + avoir'},
+  {stmt:'Il ___ intelligent.',ans:'est',bank:['suis','es','est','sont'],hint:'Il + être'},
+  {stmt:'Je ___ un crayon.',ans:'ai',bank:['ai','as','a','avons'],hint:'Je + avoir'},
+];
+let vfState={},vfWbSel=null;
+function buildVerbFill(){
+  vfState={};vfWbSel=null;
+  const c=document.getElementById('verbFillContainer');
+  c.innerHTML=verbFillQs.map((q,i)=>`
+    <div class="fill-q" style="margin-bottom:10px;">
+      <div class="fill-stmt">
+        ${q.stmt.replace('___',`<span class="blank" id="vbl${i}" onclick="vfFill(${i})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`)}
+        <span style="font-size:0.78rem;color:#aaa;margin-left:6px;">(${q.hint})</span>
+      </div>
+      <div class="fill-bank">
+        ${q.bank.map(w=>`<span class="fill-chip" id="vfc_${i}_${w}" onclick="vfSel('${esc(w)}',${i})">${w}</span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function vfSel(word,qIdx){
+  vfWbSel=word;
+  document.querySelectorAll('.fill-chip').forEach(c=>c.style.outline='none');
+  const el=document.getElementById('vfc_'+qIdx+'_'+word);
+  if(el)el.style.outline='3px solid #2D6BE4';
+  vfFill(qIdx);
+}
+function vfFill(qIdx){
+  if(!vfWbSel)return;
+  const slot=document.getElementById('vbl'+qIdx);
+  if(slot.classList.contains('ok'))return;
+  slot.textContent=vfWbSel;
+  vfState[qIdx]=vfWbSel;
+  vfWbSel=null;
+  document.querySelectorAll('.fill-chip').forEach(c=>c.style.outline='none');
+}
+function checkVerbFill(){
+  let correct=0;
+  verbFillQs.forEach((q,i)=>{
+    const slot=document.getElementById('vbl'+i);
+    if(vfState[i]===q.ans){correct++;slot.className='blank ok';}
+    else if(vfState[i]){slot.className='blank err';setTimeout(()=>{slot.className='blank';slot.textContent='      ';delete vfState[i];},800);}
+  });
+  const fb=document.getElementById('verbFillFb');
+  fb.textContent=`Tu as ${correct} sur ${verbFillQs.length}!`;
+  fb.style.color=correct>=5?'#2e7d32':'#c62828';
+  if(correct===verbFillQs.length){document.getElementById('verbFillDone').classList.add('show');addStar();}
+}
+function resetVerbFill(){vfState={};vfWbSel=null;buildVerbFill();document.getElementById('verbFillFb').textContent='';}
+
+/* ===== TOPIC 5 — DAYS ===== */
+const days=[
+  {fr:'lundi',en:'Monday',em:'🌙',n:1,c:'#FF6B6B'},
+  {fr:'mardi',en:'Tuesday',em:'🔥',n:2,c:'#FF9F43'},
+  {fr:'mercredi',en:'Wednesday',em:'💧',n:3,c:'#FFD166'},
+  {fr:'jeudi',en:'Thursday',em:'⚡',n:4,c:'#06D6A0'},
+  {fr:'vendredi',en:'Friday',em:'🎉',n:5,c:'#4ECDC4'},
+  {fr:'samedi',en:'Saturday',em:'☀️',n:6,c:'#A855F7'},
+  {fr:'dimanche',en:'Sunday',em:'🕊️',n:7,c:'#EC4899'},
+];
+(function buildDays(){
+  const el=document.getElementById('dayStrip');
+  days.forEach(d=>{
+    const row=document.createElement('div');row.className='day-row';
+    row.style.cssText=`background:${d.c}18;border:2px solid ${d.c}44;`;
+    row.innerHTML=`<div class="day-num" style="background:${d.c}">${d.n}</div><div class="day-fr" style="color:${d.c};font-family:'Baloo Bhai 2',cursive;font-size:1.1rem;font-weight:800;flex:1;">${d.fr}</div><div class="day-en" style="font-size:0.88rem;font-weight:700;color:#888;">${d.en}</div><div style="font-size:1.3rem;">${d.em}</div>`;
+    row.onclick=()=>speak(d.fr);
+    el.appendChild(row);
+  });
+})();
+
+const dayQs=[
+  {em:'📅',q:'Après mercredi, c\'est ___.',opts:['mardi','jeudi','dimanche','vendredi'],ans:'jeudi'},
+  {em:'📅',q:'Avant dimanche, c\'est ___.',opts:['vendredi','lundi','samedi','mercredi'],ans:'samedi'},
+  {em:'📅',q:'Le troisième jour de la semaine est ___.',opts:['mardi','jeudi','mercredi','lundi'],ans:'mercredi'},
+  {em:'📅',q:'"Monday" in French is ___.',opts:['mardi','mercredi','jeudi','lundi'],ans:'lundi'},
+  {em:'📅',q:'"Friday" in French is ___.',opts:['samedi','dimanche','jeudi','vendredi'],ans:'vendredi'},
+  {em:'📅',q:'Après vendredi, c\'est ___.',opts:['mercredi','dimanche','lundi','samedi'],ans:'samedi'},
+  {em:'📅',q:'Avant lundi, c\'est ___.',opts:['mardi','samedi','vendredi','dimanche'],ans:'dimanche'},
+  {em:'📅',q:'Le premier jour de la semaine est ___.',opts:['dimanche','mardi','lundi','mercredi'],ans:'lundi'},
+  {em:'📅',q:'"Sunday" in French is ___.',opts:['samedi','vendredi','jeudi','dimanche'],ans:'dimanche'},
+  {em:'📅',q:'Le cinquième jour est ___.',opts:['jeudi','mercredi','vendredi','samedi'],ans:'vendredi'},
+];
+MCQ('dayQContainer','dayDots','dayQDone',dayQs,'dayq');
+
+/* ===== TOPIC 6 — BODY PARTS ===== */
+const bodyParts=[
+  {fr:'la tête',en:'head',em:'👤',action:'Je pense avec la tête.'},
+  {fr:'les yeux',en:'eyes',em:'👁️',action:'Je regarde avec les yeux.'},
+  {fr:'les oreilles',en:'ears',em:'👂',action:'J\'écoute avec les oreilles.'},
+  {fr:'le nez',en:'nose',em:'👃',action:'Je sens avec le nez.'},
+  {fr:'la bouche',en:'mouth',em:'👄',action:'Je mange avec la bouche.'},
+  {fr:'les mains',en:'hands',em:'🙌',action:'Je touche avec les mains.'},
+  {fr:'les pieds',en:'feet',em:'🦶',action:'Je marche avec les pieds.'},
+  {fr:'les bras',en:'arms',em:'💪',action:'Je porte avec les bras.'},
+  {fr:'les jambes',en:'legs',em:'🦵',action:'Je cours avec les jambes.'},
+  {fr:'les cheveux',en:'hair',em:'💇',action:'J\'ai des cheveux.'},
+];
+(function buildBody(){
+  const el=document.getElementById('bodyList');
+  bodyParts.forEach(b=>{
+    const row=document.createElement('div');row.className='body-row';
+    row.innerHTML=`<div class="body-icon">${b.em}</div><div style="flex:1;"><div class="body-fr">${b.fr}</div><div class="body-action">${b.action}</div></div><div class="body-en">${b.en}</div>`;
+    row.onclick=()=>speak(b.fr);
+    el.appendChild(row);
+  });
+})();
+
+const bpQs=[
+  {em:'👂',q:'J\'écoute avec les ___.',opts:['yeux','oreilles','bras','mains'],ans:'oreilles'},
+  {em:'🦶',q:'Je marche avec les ___.',opts:['mains','cheveux','pieds','jambes... wait'],opts:['mains','pieds','bras','cheveux'],ans:'pieds'},
+  {em:'👄',q:'Je mange avec la ___.',opts:['tête','jambe','bouche','main'],ans:'bouche'},
+  {em:'👁️',q:'Je regarde avec les ___.',opts:['oreilles','bras','mains','yeux'],ans:'yeux'},
+  {em:'👃',q:'Je sens avec le ___.',opts:['bouche','nez','pied','bras'],ans:'nez'},
+  {em:'🙌',q:'"les mains" means ___.',opts:['feet','arms','hands','legs'],ans:'hands'},
+  {em:'🦵',q:'"les jambes" means ___.',opts:['arms','hands','feet','legs'],ans:'legs'},
+  {em:'💪',q:'Je porte avec les ___.',opts:['pieds','jambes','bras','yeux'],ans:'bras'},
+  {em:'👤',q:'"la tête" means ___.',opts:['foot','ear','hand','head'],ans:'head'},
+  {em:'🦶',q:'"les pieds" means ___.',opts:['hands','arms','feet','eyes'],ans:'feet'},
+];
+MCQ('bpContainer','bpDots','bpDone',bpQs,'bp');
+
+/* ===== MINI TEST (20 Qs replicating exam) ===== */
+const mtQs=[
+  {q:'1. 17 = ___',opts:['dix-neuf','dix-sept','seize'],ans:'dix-sept'},
+  {q:'2. 20 = ___',opts:['vingt','quatorze','onze'],ans:'vingt'},
+  {q:'3. Quel nombre vient après 14?',opts:['seize','quinze','dix-huit'],ans:'quinze'},
+  {q:'4. La banane est ___.',opts:['jaune','noire','bleue'],ans:'jaune'},
+  {q:'5. La pomme est ___.',opts:['verte','rose','blanche'],ans:'verte'},
+  {q:"6. L'orange est un ___.",opts:['fruit','animal','jouet'],ans:'fruit'},
+  {q:'7. ___ fille est gentille.',opts:['La','Le',"L'",'Les'],ans:'La'},
+  {q:"8. ___ arbre est grand.",opts:["L'",'Le','La','Les'],ans:"L'"},
+  {q:'9. ___ cahiers sont sur la table.',opts:['Les','La','Le',"L'"],ans:'Les'},
+  {q:'10. ___ garçon joue au football.',opts:['Le','La',"L'",'Les'],ans:'Le'},
+  {q:'11. Je ___ un élève.',opts:['suis','as','est'],ans:'suis'},
+  {q:'12. Tu ___ un stylo.',opts:['ai','as','sommes'],ans:'as'},
+  {q:'13. Elle ___ heureuse.',opts:['est','avez','avons'],ans:'est'},
+  {q:'14. Nous ___ des livres.',opts:['avons','êtes','es'],ans:'avons'},
+  {q:'15. Après mercredi, c\'est ___.',opts:['mardi','jeudi','Dimanche'],ans:'jeudi'},
+  {q:'16. Avant dimanche, c\'est ___.',opts:['vendredi','samedi','lundi'],ans:'samedi'},
+  {q:'17. Le troisième jour de la semaine est ___.',opts:['mardi','jeudi','mercredi'],ans:'mercredi'},
+  {q:"18. J'écoute avec les ___.",opts:['oreilles','yeux','bras'],ans:'oreilles'},
+  {q:'19. Je marche avec les ___.',opts:['mains','pieds','cheveux'],ans:'pieds'},
+  {q:'20. Je mange avec la ___.',opts:['bouche','tête','jambe'],ans:'bouche'},
+];
+let mtAnswers={};
+function buildMiniTest(){
+  mtAnswers={};
+  document.getElementById('mtFb').textContent='';
+  document.getElementById('mtDone').classList.remove('show');
+  const c=document.getElementById('miniTestContainer');
+  c.innerHTML=mtQs.map((q,i)=>`
+    <div class="mini-test-q" id="mtq${i}">
+      <div class="mt-num">Question ${i+1} of 20</div>
+      <div class="mt-q">${q.q}</div>
+      <div class="mt-opts">
+        ${q.opts.map(o=>`<button class="mt-opt" id="mto_${i}_${esc(o)}" onclick="mtPick(${i},'${esc(o)}')">${o}</button>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function mtPick(i,chosen){
+  if(mtAnswers[i]!==undefined)return;
+  mtAnswers[i]=chosen;
+  const opts=document.getElementById('mtq'+i).querySelectorAll('.mt-opt');
+  opts.forEach(b=>{b.disabled=true;b.style.opacity='0.7';});
+  const hit=document.getElementById('mto_'+i+'_'+chosen);
+  if(hit)hit.style.opacity='1';
+  if(chosen===mtQs[i].ans){if(hit)hit.classList.add('correct');}
+  else{if(hit)hit.classList.add('wrong');}
+}
+function checkMiniTest(){
+  let correct=0;
+  mtQs.forEach((q,i)=>{
+    if(mtAnswers[i]===q.ans){correct++;}
+    // Show correct answer on unanswered
+    if(mtAnswers[i]===undefined){
+      const hit=document.getElementById('mto_'+i+'_'+esc(q.ans));
+      if(hit)hit.classList.add('correct');
+    }
+  });
+  const unanswered=mtQs.length-Object.keys(mtAnswers).length;
+  const fb=document.getElementById('mtFb');
+  if(unanswered>0){fb.textContent=`⚠️ You still have ${unanswered} question(s) unanswered!`;fb.style.color='#e65100';}
+  const done=document.getElementById('mtDone');
+  done.classList.add('show');
+  const pct=Math.round(correct/mtQs.length*100);
+  done.textContent=`🏆 You got ${correct} out of ${mtQs.length}! (${pct}%) ${correct>=16?'Amazing! 🌟':correct>=12?'Good work! Keep practising! 📚':'Keep practising — you can do it! 💪'}`;
+  if(correct>=16){addStar();setTimeout(()=>celebrate('🏆','Extraordinaire!',`${correct}/20! You are READY for the exam!`),500);}
+}
+
+/* ===== INIT ===== */
+initNQ();
+initColMatch();
+buildArtFill();
+buildVerbFill();
+buildMiniTest();
+</script>
+</body>
+</html>

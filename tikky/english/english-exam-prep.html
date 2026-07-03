@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Exam Prep ⭐ — Tikky!</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#87CEEB;--grass:#5cb85c;--sun:#FFD700;
+  --primary:#FF6B6B;--teal:#4ECDC4;--purple:#A855F7;
+  --orange:#FF9F43;--green:#43a047;--navy:#1a237e;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:linear-gradient(180deg,#87CEEB 0%,#b8e4f7 35%,#d4f1c0 35%,#c8eab0 100%);
+  min-height:100vh;overflow-x:hidden;
+}
+
+/* clouds */
+.clouds{position:fixed;top:0;left:0;width:100%;height:36vh;pointer-events:none;z-index:0;overflow:hidden;}
+.cloud{position:absolute;background:white;border-radius:50px;opacity:0.85;animation:float linear infinite;}
+.cloud::before,.cloud::after{content:'';position:absolute;background:white;border-radius:50%;}
+.cloud:nth-child(1){width:120px;height:38px;top:28px;animation-duration:22s;animation-delay:-4s;}
+.cloud:nth-child(1)::before{width:58px;height:58px;top:-28px;left:14px;}
+.cloud:nth-child(1)::after{width:38px;height:38px;top:-18px;left:54px;}
+.cloud:nth-child(2){width:90px;height:28px;top:65px;animation-duration:30s;animation-delay:-12s;}
+.cloud:nth-child(2)::before{width:44px;height:44px;top:-22px;left:10px;}
+.cloud:nth-child(2)::after{width:30px;height:30px;top:-14px;left:40px;}
+.cloud:nth-child(3){width:150px;height:48px;top:12px;animation-duration:38s;animation-delay:-20s;}
+.cloud:nth-child(3)::before{width:72px;height:72px;top:-36px;left:18px;}
+.cloud:nth-child(3)::after{width:52px;height:52px;top:-26px;left:68px;}
+@keyframes float{from{left:-200px}to{left:110%}}
+
+/* sun */
+.sun{position:fixed;top:16px;right:36px;width:64px;height:64px;background:var(--sun);border-radius:50%;box-shadow:0 0 0 10px rgba(255,215,0,0.25),0 0 40px rgba(255,215,0,0.4);z-index:0;}
+
+.back-btn{position:fixed;top:14px;left:14px;z-index:9999;background:rgba(255,255,255,0.95);border:2px solid rgba(0,0,0,0.14);color:#333;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;padding:7px 16px;border-radius:50px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.15);transition:all 0.2s;}
+.back-btn:hover{background:white;transform:translateX(-2px);}
+
+/* APP */
+.app{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:16px 14px 80px;}
+
+/* HEADER */
+.header{text-align:center;padding:22px 0 10px;}
+.header h1{font-family:'Baloo 2',cursive;font-size:clamp(2rem,7vw,3rem);font-weight:800;color:white;text-shadow:0 3px 10px rgba(0,0,0,0.25);margin-bottom:6px;}
+.header .sub{font-size:1rem;font-weight:700;color:rgba(255,255,255,0.9);}
+
+/* STARS */
+.stars-row{display:flex;justify-content:center;gap:8px;margin:12px 0 16px;}
+.star{font-size:1.7rem;filter:grayscale(1) opacity(0.3);transition:all 0.3s;}
+.star.lit{filter:none;animation:sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes sPop{0%{transform:scale(0)}60%{transform:scale(1.5) rotate(-15deg)}100%{transform:scale(1)}}
+
+/* MISTAKE ALERT */
+.alert{background:white;border-radius:20px;padding:18px 20px;margin-bottom:18px;border-left:6px solid #FF6B6B;box-shadow:0 6px 24px rgba(0,0,0,0.12);}
+.alert h3{font-family:'Baloo 2',cursive;font-size:1.2rem;color:#c62828;margin-bottom:10px;}
+.alert-row{background:#fff3cd;border:2px solid #f9a825;border-radius:12px;padding:9px 14px;margin-bottom:7px;font-size:0.93rem;font-weight:700;color:#333;line-height:1.5;}
+.alert-row .wrong{color:#c62828;text-decoration:line-through;margin-right:5px;}
+.alert-row .right{color:#2e7d32;font-weight:900;}
+
+/* TOPIC NAV */
+.topic-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
+@media(max-width:420px){.topic-nav{grid-template-columns:repeat(2,1fr);}}
+.tnav{background:rgba(255,255,255,0.92);border-radius:16px;padding:12px 8px;text-align:center;font-family:'Baloo 2',cursive;font-size:0.83rem;font-weight:800;color:#333;text-decoration:none;display:block;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.1);border:2px solid rgba(255,255,255,0.5);}
+.tnav:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.15);}
+.tnav .ti{font-size:1.4rem;display:block;margin-bottom:3px;}
+
+/* SECTION */
+.section{margin-bottom:26px;scroll-margin-top:60px;}
+.sec-tag{font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:white;margin-bottom:12px;display:flex;align-items:center;gap:8px;text-shadow:0 2px 8px rgba(0,0,0,0.2);}
+
+/* CARD */
+.card{background:white;border-radius:22px;padding:20px 18px;margin-bottom:14px;box-shadow:0 6px 24px rgba(0,0,0,0.12);}
+.card-title{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:14px;}
+
+/* RULE BOX */
+.rule{border-radius:16px;padding:14px 16px;margin-bottom:12px;font-size:0.95rem;font-weight:700;line-height:1.8;}
+.rule strong{font-family:'Baloo 2',cursive;font-size:1rem;}
+.rule-blue{background:#e3f2fd;border:3px solid #1e88e5;color:#0d47a1;}
+.rule-green{background:#e8f5e9;border:3px solid #43a047;color:#2e7d32;}
+.rule-red{background:#ffebee;border:3px solid #e53935;color:#b71c1c;}
+.rule-orange{background:#fff3e0;border:3px solid #ef6c00;color:#e65100;}
+.rule-purple{background:#f3e5f5;border:3px solid #8e24aa;color:#6a1b9a;}
+
+.pill{display:inline-block;padding:3px 12px;border-radius:50px;font-family:'Baloo 2',cursive;font-size:0.95rem;font-weight:800;margin:2px 3px;}
+.p-blue{background:#1e88e5;color:white;}
+.p-red{background:#e53935;color:white;}
+.p-green{background:#43a047;color:white;}
+.p-orange{background:#ef6c00;color:white;}
+.p-purple{background:#8e24aa;color:white;}
+.p-teal{background:#00897b;color:white;}
+.p-yellow{background:#FFD700;color:#333;}
+
+/* ING TABLE */
+.ing-table{width:100%;border-collapse:collapse;margin:10px 0;}
+.ing-table th,.ing-table td{padding:9px 12px;text-align:left;border:2px solid #e0e0e0;font-size:0.92rem;font-weight:700;}
+.ing-table th{font-family:'Baloo 2',cursive;background:#e3f2fd;color:#0d47a1;font-size:0.98rem;}
+.ing-table .hl{background:#fff9c4;font-weight:900;}
+.ing-table .hl td:last-child{color:#c62828;}
+
+/* PHONICS SOUND CARDS */
+.sound-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:14px;}
+.sound-card{border-radius:18px;padding:16px 12px;text-align:center;cursor:pointer;transition:transform 0.18s;box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+.sound-card:hover{transform:translateY(-4px) scale(1.04);}
+.sc-symbol{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;margin-bottom:4px;}
+.sc-words{font-size:0.78rem;font-weight:700;color:#555;line-height:1.6;}
+.sc-tap{font-size:0.7rem;color:#aaa;font-weight:700;margin-top:4px;}
+
+/* WORD TILE */
+.word-tiles{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;}
+.w-tile{background:white;border-radius:14px;padding:10px 16px;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;cursor:pointer;transition:all 0.18s;box-shadow:0 3px 10px rgba(0,0,0,0.1);border:2px solid #e0e0e0;}
+.w-tile:hover{transform:translateY(-2px);border-color:#1e88e5;}
+
+/* ACTIVITY — MCQ */
+.q-box{background:#f8f9ff;border-radius:16px;padding:18px;}
+.q-text{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:14px;line-height:1.4;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:380px){.opts{grid-template-columns:1fr;}}
+.opt{padding:13px 10px;border-radius:14px;border:2.5px solid #e0e0e0;background:white;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:700;color:#333;cursor:pointer;transition:all 0.18s;text-align:center;}
+.opt:hover{border-color:#FF6B6B;background:#fff5f5;}
+.opt.correct{background:#c8e6c9;border-color:#43a047;color:#1b5e20;}
+.opt.wrong{background:#ffcdd2;border-color:#e53935;color:#b71c1c;animation:shake 0.4s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}50%{transform:translateX(8px)}80%{transform:translateX(-6px)}}
+.q-fb{text-align:center;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;padding:10px;border-radius:12px;display:none;margin-top:10px;}
+.q-fb.ok{display:block;background:#c8e6c9;color:#1b5e20;}
+.q-fb.no{display:block;background:#ffcdd2;color:#b71c1c;}
+
+/* FILL BLANK */
+.blank{display:inline-block;min-width:90px;border-bottom:4px solid var(--primary);padding:2px 8px;font-weight:900;color:var(--primary);vertical-align:middle;cursor:pointer;background:#fff5f5;border-radius:6px 6px 0 0;margin:0 4px;}
+.blank.ok{background:#c8e6c9;color:#1b5e20;border-color:#43a047;}
+.blank.err{background:#ffcdd2;color:#b71c1c;border-color:#e53935;}
+.fill-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.f-chip{padding:9px 16px;border-radius:50px;background:white;border:2.5px solid #e0e0e0;font-family:'Baloo 2',cursive;font-size:0.95rem;font-weight:700;color:#333;cursor:pointer;transition:all 0.18s;}
+.f-chip:hover{background:#f5f5f5;border-color:#FF6B6B;}
+.f-chip.used{opacity:0.3;pointer-events:none;}
+
+/* SPELLING GAME */
+.spell-target{font-family:'Baloo 2',cursive;font-size:2.5rem;font-weight:800;text-align:center;color:var(--navy);margin-bottom:14px;letter-spacing:4px;}
+.spell-hint{font-size:0.9rem;font-weight:700;color:#888;text-align:center;margin-bottom:14px;}
+.letter-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;}
+.l-btn{width:48px;height:48px;border-radius:12px;border:2.5px solid #c5cae9;background:#e8eaf6;font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:#3949ab;cursor:pointer;transition:all 0.18s;}
+.l-btn:hover{background:#c5cae9;transform:scale(1.1);}
+.l-btn.used{opacity:0.3;pointer-events:none;}
+.spell-slots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+.s-slot{width:46px;height:52px;border-radius:12px;border:3px dashed #c5cae9;background:white;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#3949ab;cursor:pointer;transition:all 0.2s;}
+.s-slot.filled{border-style:solid;border-color:#FF6B6B;background:#fff5f5;animation:pop 0.2s;}
+.s-slot.correct{border-color:#43a047;background:#c8e6c9;color:#1b5e20;}
+.s-slot.wrong{border-color:#e53935;background:#ffcdd2;animation:shake 0.4s;}
+@keyframes pop{from{transform:scale(0.7)}to{transform:scale(1)}}
+
+/* PICTURE WRITER */
+.pic-box{border-radius:18px;overflow:hidden;border:3px solid #e0e0e0;margin-bottom:14px;}
+.pic-box .pic-top{background:#e8f5e9;padding:14px;text-align:center;}
+.pic-box .pic-em{font-size:4rem;display:block;margin-bottom:6px;}
+.pic-box .pic-desc{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#2e7d32;}
+.sentence-builder{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#f9fbe7;border-top:2px solid #e0e0e0;min-height:54px;align-items:center;}
+.sb-chip{padding:8px 14px;border-radius:50px;background:#fff;border:2.5px solid #c5cae9;font-family:'Baloo 2',cursive;font-size:0.95rem;font-weight:800;color:#333;cursor:pointer;transition:all 0.18s;user-select:none;}
+.sb-chip:hover{border-color:#FF6B6B;background:#fff5f5;transform:translateY(-2px);}
+.sb-chip.placed{opacity:0.35;pointer-events:none;}
+.sb-drop{min-height:48px;border-radius:14px;border:3px dashed #aaa;background:white;display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;align-items:center;margin-bottom:10px;}
+.sb-drop-chip{padding:7px 12px;border-radius:50px;background:#FF6B6B;color:white;font-family:'Baloo 2',cursive;font-size:0.92rem;font-weight:800;cursor:pointer;transition:all 0.15s;}
+.sb-drop-chip:hover{background:#e53935;transform:scale(0.96);}
+.drop-hint{color:#ccc;font-weight:700;font-size:0.9rem;}
+
+/* PROG BAR */
+.prog-wrap{background:#e0e0e0;border-radius:50px;height:10px;margin-bottom:6px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#FF6B6B,#FF9F43);transition:width 0.4s;}
+.prog-lbl{font-size:0.8rem;font-weight:700;color:#888;text-align:right;margin-bottom:12px;}
+.pdots{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.pdot{width:13px;height:13px;border-radius:50%;background:#ddd;transition:background 0.3s;}
+.pdot.ok{background:#43a047;}.pdot.err{background:#e53935;}
+
+/* BUTTONS */
+.btn{padding:12px 26px;border-radius:50px;border:none;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;cursor:pointer;transition:all 0.15s;}
+.btn-primary{background:#FF6B6B;color:white;box-shadow:0 4px 0 #c62828;}
+.btn-green{background:#43a047;color:white;box-shadow:0 4px 0 #2e7d32;}
+.btn-gray{background:#adb5bd;color:white;box-shadow:0 4px 0 #868e96;}
+.btn:hover{transform:translateY(-2px);}
+.btn:active{transform:translateY(2px);}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+
+/* SCORE BOX */
+.score-box{display:none;text-align:center;padding:14px;background:linear-gradient(135deg,#FFD700,#FF9F43);color:#333;border-radius:14px;font-family:'Baloo 2',cursive;font-size:1.2rem;margin-top:14px;font-weight:800;}
+.score-box.show{display:block;}
+
+/* MINI TEST */
+.mt-q{background:white;border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+.mt-num{font-size:0.78rem;font-weight:700;color:#aaa;margin-bottom:6px;}
+.mt-qtext{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:10px;line-height:1.4;}
+.mt-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.mt-opt{padding:9px 16px;border-radius:50px;border:2.5px solid #e0e0e0;background:#f9fbe7;font-family:'Baloo 2',cursive;font-size:0.92rem;font-weight:700;color:#333;cursor:pointer;transition:all 0.18s;}
+.mt-opt:hover{border-color:#FF6B6B;background:#fff5f5;}
+.mt-opt.correct{background:#c8e6c9;border-color:#43a047;color:#1b5e20;}
+.mt-opt.wrong{background:#ffcdd2;border-color:#e53935;color:#b71c1c;animation:shake 0.4s;}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;justify-content:center;align-items:center;}
+.overlay.show{display:flex;}
+.cel-box{background:white;border-radius:28px;padding:34px 26px;text-align:center;max-width:310px;width:90%;animation:zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+@keyframes zoomIn{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+.cel-em{font-size:3.2rem;display:block;margin-bottom:8px;}
+.cel-box h2{font-family:'Baloo 2',cursive;font-size:1.8rem;color:var(--navy);margin-bottom:8px;}
+.cel-box p{color:#777;font-size:0.93rem;margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="clouds"><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div></div>
+<div class="sun"></div>
+<a href="../index.html" class="back-btn">← Back</a>
+
+<div class="app">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>✏️ English Exam Prep!</h1>
+  <div class="sub">Practice hard and ace your test, Tikky! ⭐</div>
+</div>
+
+<!-- STARS -->
+<div class="stars-row" id="starsRow">
+  <span class="star" id="s1">⭐</span><span class="star" id="s2">⭐</span>
+  <span class="star" id="s3">⭐</span><span class="star" id="s4">⭐</span>
+  <span class="star" id="s5">⭐</span><span class="star" id="s6">⭐</span>
+  <span class="star" id="s7">⭐</span><span class="star" id="s8">⭐</span>
+</div>
+
+<!-- MISTAKES ALERT -->
+<div class="alert">
+  <h3>⚠️ Fix these from your last test!</h3>
+  <div class="alert-row">Q3: <span class="wrong">raning</span> → run has a short vowel so double the n → <span class="right">running ✅</span></div>
+  <div class="alert-row">Q8 /ch/: second word was wrong → try <span class="right">chair, cheese, chin, chest ✅</span></div>
+  <div class="alert-row">Q9 /sh/: first word misspelt → <span class="right">sheep, shop, shell, ship ✅</span></div>
+  <div class="alert-row">Q10 /th/: wrote "theeth" → correct spelling: <span class="right">teeth OR the, this, that ✅</span></div>
+  <div class="alert-row">Descriptive writing: write <span class="right">WHO + IS/ARE + VERB-ING + more detail!</span> → "The boy is climbing the tree." ✅</div>
+</div>
+
+<!-- TOPIC NAV -->
+<div class="topic-nav">
+  <a href="#t-ing" class="tnav"><span class="ti">🏃</span>Present Continuous</a>
+  <a href="#t-phonics" class="tnav"><span class="ti">🔤</span>Phonics &amp; Spelling</a>
+  <a href="#t-wh" class="tnav"><span class="ti">❓</span>WH Questions</a>
+  <a href="#t-nouns" class="tnav"><span class="ti">📦</span>Countable Nouns</a>
+  <a href="#t-writing" class="tnav"><span class="ti">🖼️</span>Descriptive Writing</a>
+  <a href="#t-test" class="tnav"><span class="ti">🏆</span>Mini Test</a>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 1 — PRESENT CONTINUOUS
+============================================================ -->
+<div id="t-ing" class="section">
+  <div class="sec-tag">🏃 Present Continuous — is/are + verb-ING</div>
+
+  <div class="card">
+    <div class="card-title">📖 The Three Rules for adding -ING</div>
+    <div class="rule rule-blue">
+      <strong>Rule 1 — Most verbs:</strong> just add <span class="pill p-blue">-ing</span><br>
+      <span class="pill p-blue">play</span> → playing &nbsp; <span class="pill p-blue">eat</span> → eating &nbsp; <span class="pill p-blue">meet</span> → meeting
+    </div>
+    <div class="rule rule-red" style="border-color:#c62828;">
+      <strong>Rule 2 — Short vowel + consonant: DOUBLE the last letter!</strong><br>
+      <span class="pill p-red">run</span> → run<strong>n</strong>ing &nbsp;
+      <span class="pill p-red">hop</span> → hop<strong>p</strong>ing &nbsp;
+      <span class="pill p-red">sit</span> → sit<strong>t</strong>ing &nbsp;
+      <span class="pill p-red">swim</span> → swim<strong>m</strong>ing<br>
+      <span style="font-size:0.85rem;">👆 Short vowel = a, e, i, o, u said quickly (like the <em>u</em> in run)</span>
+    </div>
+    <div class="rule rule-orange">
+      <strong>Rule 3 — Verb ends in silent -e: drop the e, add -ing</strong><br>
+      <span class="pill p-orange">ride</span> → rid~~e~~ → riding &nbsp;
+      <span class="pill p-orange">write</span> → writ~~e~~ → writing &nbsp;
+      <span class="pill p-orange">make</span> → mak~~e~~ → making
+    </div>
+
+    <table class="ing-table">
+      <thead><tr><th>Verb</th><th>Rule</th><th>+ing form</th></tr></thead>
+      <tbody>
+        <tr><td>eat</td><td>just add -ing</td><td>eating</td></tr>
+        <tr><td>play</td><td>just add -ing</td><td>playing</td></tr>
+        <tr><td>meet</td><td>just add -ing</td><td>meeting</td></tr>
+        <tr class="hl"><td><strong>run</strong></td><td>⚠️ short vowel → double n</td><td><strong>running</strong></td></tr>
+        <tr class="hl"><td><strong>hop</strong></td><td>⚠️ short vowel → double p</td><td><strong>hopping</strong></td></tr>
+        <tr class="hl"><td><strong>sit</strong></td><td>⚠️ short vowel → double t</td><td><strong>sitting</strong></td></tr>
+        <tr><td>ride</td><td>drop -e</td><td>riding</td></tr>
+        <tr><td>write</td><td>drop -e</td><td>writing</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule rule-green" style="margin-top:12px;">
+      💡 <strong>am / is / are</strong><br>
+      <span class="pill p-green">I am</span> running &nbsp;
+      <span class="pill p-green">She is / He is / It is</span> eating &nbsp;
+      <span class="pill p-green">They are / We are</span> playing
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Activity 1 — Pick the correct -ing form!</div>
+    <div class="pdots" id="ing1Dots"></div>
+    <div id="ing1Container"></div>
+    <div class="score-box" id="ing1Done">🎉 Amazing! You know present continuous! 🏃⭐</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Activity 2 — Fill in the sentence!</div>
+    <div id="ing2Container"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkIng2()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="resetIng2()">🔄 Try Again</button>
+    </div>
+    <div id="ing2Fb" style="margin-top:10px;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;min-height:20px;"></div>
+    <div class="score-box" id="ing2Done">🎉 You can make -ing sentences perfectly!</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 2 — PHONICS & SPELLING
+============================================================ -->
+<div id="t-phonics" class="section">
+  <div class="sec-tag">🔤 Phonics &amp; Spelling — Sounds!</div>
+
+  <div class="card">
+    <div class="card-title">👂 Tap a sound card to hear it!</div>
+    <div class="sound-grid" id="soundGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔤 Word Families — tap any word to hear it!</div>
+    <div id="wordFamilies"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎮 Spelling Game — Tap letters to spell the word!</div>
+    <div id="spellHint" class="spell-hint">Loading…</div>
+    <div id="spellTarget" style="text-align:center;font-size:3rem;margin-bottom:10px;">🔤</div>
+    <div class="spell-slots" id="spellSlots"></div>
+    <div class="letter-grid" id="letterGrid"></div>
+    <div class="q-fb" id="spellFb"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkSpell()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="clearSpell()">🔄 Clear</button>
+      <button class="btn btn-primary" id="spellNext" style="display:none" onclick="nextSpell()">Next ➡️</button>
+    </div>
+    <div style="text-align:center;margin-top:10px;font-size:0.85rem;font-weight:700;color:#888;" id="spellCount"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Phonics Quiz — Which sound does this word have?</div>
+    <div class="pdots" id="ph1Dots"></div>
+    <div id="ph1Container"></div>
+    <div class="score-box" id="ph1Done">🎉 Phonics superstar! 🔤⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 3 — WH QUESTIONS
+============================================================ -->
+<div id="t-wh" class="section">
+  <div class="sec-tag">❓ WH Questions — What · When · Where · Why · Who · How</div>
+
+  <div class="card">
+    <div class="card-title">📖 Which question word to use?</div>
+    <div class="rule rule-blue"><strong>WHAT</strong> — asking about a thing 🔍<br><em>"What is that?" · "What is your name?"</em></div>
+    <div class="rule rule-green"><strong>WHEN</strong> — asking about time ⏰<br><em>"When is your birthday?" · "When do you sleep?"</em></div>
+    <div class="rule" style="background:#e8f5e9;border:3px solid #00897b;color:#004d40;"><strong>WHERE</strong> — asking about a place 📍<br><em>"Where is Jack?" · "Where do you live?"</em></div>
+    <div class="rule rule-orange"><strong>WHY</strong> — asking for a reason 🤔<br><em>"Why is he sad?" · "Why are you late?"</em></div>
+    <div class="rule rule-purple"><strong>WHO</strong> — asking about a person 👤<br><em>"Who is your teacher?" · "Who is at the door?"</em></div>
+    <div class="rule rule-red"><strong>HOW</strong> — asking about way / feeling 😊<br><em>"How are you?" · "How do you spell it?"</em></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 WH Question Quiz!</div>
+    <div class="pdots" id="wh1Dots"></div>
+    <div id="wh1Container"></div>
+    <div class="score-box" id="wh1Done">🎉 WH Questions expert! ❓⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 4 — COUNTABLE & UNCOUNTABLE NOUNS
+============================================================ -->
+<div id="t-nouns" class="section">
+  <div class="sec-tag">📦 Countable &amp; Uncountable Nouns</div>
+
+  <div class="card">
+    <div class="card-title">📖 What is the difference?</div>
+    <div class="rule rule-blue">
+      <strong>COUNTABLE nouns</strong> — you can COUNT them! 1, 2, 3…<br>
+      <span class="pill p-blue">1 apple</span> <span class="pill p-blue">2 cats</span> <span class="pill p-blue">3 books</span> <span class="pill p-blue">4 cups</span><br>
+      They have a plural (add -s or -es): apple<strong>s</strong>, cat<strong>s</strong>, book<strong>s</strong>
+    </div>
+    <div class="rule rule-orange">
+      <strong>UNCOUNTABLE nouns</strong> — you CANNOT count them!<br>
+      <span class="pill p-orange">water</span> <span class="pill p-orange">milk</span> <span class="pill p-orange">rice</span> <span class="pill p-orange">bread</span> <span class="pill p-orange">sugar</span> <span class="pill p-orange">coffee</span><br>
+      No plural — we say "some water" NOT "two waters"
+    </div>
+    <div class="rule rule-green">
+      💡 <strong>Test yourself:</strong> Can I say "one ___, two ___"?<br>
+      ✅ one apple, two apples → <strong>countable</strong><br>
+      ❌ one water, two waters → <strong>uncountable</strong>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div style="background:#e3f2fd;border-radius:14px;padding:14px;">
+        <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#0d47a1;margin-bottom:8px;">✅ Countable</div>
+        <div class="word-tiles" style="flex-direction:column;gap:6px;">
+          <div class="w-tile" style="border-color:#1e88e5;" onclick="speak('car')">🚗 car / cars</div>
+          <div class="w-tile" style="border-color:#1e88e5;" onclick="speak('apple')">🍎 apple / apples</div>
+          <div class="w-tile" style="border-color:#1e88e5;" onclick="speak('book')">📚 book / books</div>
+          <div class="w-tile" style="border-color:#1e88e5;" onclick="speak('cup')">☕ cup / cups</div>
+          <div class="w-tile" style="border-color:#1e88e5;" onclick="speak('cat')">🐱 cat / cats</div>
+          <div class="w-tile" style="border-color:#1e88e5;" onclick="speak('chair')">🪑 chair / chairs</div>
+        </div>
+      </div>
+      <div style="background:#fff3e0;border-radius:14px;padding:14px;">
+        <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#e65100;margin-bottom:8px;">❌ Uncountable</div>
+        <div class="word-tiles" style="flex-direction:column;gap:6px;">
+          <div class="w-tile" style="border-color:#ef6c00;" onclick="speak('water')">💧 water</div>
+          <div class="w-tile" style="border-color:#ef6c00;" onclick="speak('milk')">🥛 milk</div>
+          <div class="w-tile" style="border-color:#ef6c00;" onclick="speak('rice')">🍚 rice</div>
+          <div class="w-tile" style="border-color:#ef6c00;" onclick="speak('bread')">🍞 bread</div>
+          <div class="w-tile" style="border-color:#ef6c00;" onclick="speak('sugar')">🍬 sugar</div>
+          <div class="w-tile" style="border-color:#ef6c00;" onclick="speak('butter')">🧈 butter</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Sort it — Countable or Uncountable?</div>
+    <div class="pdots" id="noun1Dots"></div>
+    <div id="noun1Container"></div>
+    <div class="score-box" id="noun1Done">🎉 Brilliant! You know countable nouns! 📦⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 5 — DESCRIPTIVE WRITING
+============================================================ -->
+<div id="t-writing" class="section">
+  <div class="sec-tag">🖼️ Descriptive Writing — Write About a Picture!</div>
+
+  <div class="card">
+    <div class="card-title">📖 How to write a great sentence about a picture!</div>
+    <div class="rule rule-blue">
+      <strong>Step 1:</strong> WHO is in the picture? → <span class="pill p-blue">The boy</span> <span class="pill p-blue">The girl</span> <span class="pill p-blue">They</span>
+    </div>
+    <div class="rule rule-green">
+      <strong>Step 2:</strong> What are they DOING? → <span class="pill p-green">is climbing</span> <span class="pill p-green">are flying</span> <span class="pill p-green">is crying</span>
+    </div>
+    <div class="rule rule-orange">
+      <strong>Step 3:</strong> Add WHERE or WHAT → <span class="pill p-orange">the tree</span> <span class="pill p-orange">a kite</span> <span class="pill p-orange">in bed</span>
+    </div>
+    <div style="background:#f9fbe7;border:3px solid #43a047;border-radius:14px;padding:14px;margin-top:4px;">
+      <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#2e7d32;margin-bottom:8px;">✅ Good sentences:</div>
+      <div style="font-size:0.93rem;font-weight:700;color:#333;line-height:2.1;">
+        🪁 <strong>The children are flying kites.</strong><br>
+        🌳 <strong>The boy is climbing the tree.</strong><br>
+        😭 <strong>The girl is crying.</strong><br>
+        😴 <strong>He is sleeping in bed.</strong><br>
+        ⚽ <strong>They are playing football.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏗️ Sentence Builder — Put the words in the right order!</div>
+    <div id="sbContainer"></div>
+    <div class="score-box" id="sbDone">🎉 You built perfect sentences! 🖼️⭐</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🖼️ Picture Quiz — Choose the best sentence!</div>
+    <div class="pdots" id="pic1Dots"></div>
+    <div id="pic1Container"></div>
+    <div class="score-box" id="pic1Done">🎉 Amazing writer! You described every picture! ⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     MINI TEST
+============================================================ -->
+<div id="t-test" class="section">
+  <div class="sec-tag">🏆 Mini Test — Like the Real Exam!</div>
+  <div class="card">
+    <div class="card-title">📝 25 questions — all 4 topics covered!</div>
+    <div id="mtContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkMT()">✅ Submit &amp; Check!</button>
+      <button class="btn btn-gray" onclick="buildMT()">🔄 Reset</button>
+    </div>
+    <div id="mtFb" style="margin-top:12px;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;min-height:20px;color:var(--navy);"></div>
+    <div class="score-box" id="mtDone"></div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="cel-em" id="celEm">🎉</span>
+    <h2 id="celTitle">Well done!</h2>
+    <p id="celMsg">Keep going!</p>
+    <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('overlay').classList.remove('show')">Keep going! 🚀</button>
+  </div>
+</div>
+
+<script>
+/* ============ GLOBAL ============ */
+let starCount=0;
+function addStar(){if(starCount<8){starCount++;document.getElementById('s'+(starCount)).classList.add('lit');}}
+function celebrate(em,title,msg){
+  document.getElementById('celEm').textContent=em;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function speak(text){
+  if('speechSynthesis' in window){
+    const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=0.82;
+    speechSynthesis.cancel();speechSynthesis.speak(u);
+  }
+}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+function esc(s){return String(s).replace(/'/g,"\\'");}
+function buildDots(id,n){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='';
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='pdot';d.id=id+'_'+i;el.appendChild(d);}
+}
+function markDot(id,i,cls){const d=document.getElementById(id+'_'+i);if(d){d.classList.remove('ok','err');d.classList.add(cls);}}
+
+/* Generic MCQ */
+function MCQ(cs,ds,done,questions,key){
+  window['mcq_'+key]={cur:0,qs:questions};
+  buildDots(ds,questions.length);
+  renderMCQ(key,cs,ds,done);
+}
+function renderMCQ(key,cs,ds,done){
+  const st=window['mcq_'+key];
+  const c=document.getElementById(cs);if(!c)return;
+  if(st.cur>=st.qs.length){
+    c.innerHTML='';document.getElementById(done).classList.add('show');addStar();return;
+  }
+  const q=st.qs[st.cur];const idx=st.cur;
+  const opts=shuffle(q.opts).map(o=>`<button class="opt" onclick="pickMCQ('${esc(o)}','${esc(q.ans)}',${idx},'${key}','${cs}','${ds}','${done}')">${o}</button>`).join('');
+  c.innerHTML=`<div class="q-box"><div class="q-text">${q.q}</div><div class="opts">${opts}</div><div class="q-fb" id="${key}fb"></div><div class="btn-row"><button class="btn btn-primary" id="${key}nxt" style="display:none" onclick="advMCQ('${key}','${cs}','${ds}','${done}')">Next ➡️</button></div></div>`;
+}
+function pickMCQ(chosen,ans,idx,key,cs,ds,done){
+  const st=window['mcq_'+key];if(!st||st.cur!==idx)return;
+  const btns=document.getElementById(cs).querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const hit=[...btns].find(b=>b.textContent.trim()===chosen.trim());
+  const fb=document.getElementById(key+'fb');
+  if(chosen===ans){
+    if(hit)hit.classList.add('correct');
+    fb.textContent='⭐ Correct! Well done!';fb.className='q-fb ok';markDot(ds,idx,'ok');
+  } else {
+    if(hit)hit.classList.add('wrong');
+    [...btns].filter(b=>b.textContent.trim()===ans.trim()).forEach(b=>b.classList.add('correct'));
+    fb.textContent='❌ Not quite! The answer is: '+ans;fb.className='q-fb no';markDot(ds,idx,'err');
+  }
+  document.getElementById(key+'nxt').style.display='inline-block';
+}
+function advMCQ(key,cs,ds,done){window['mcq_'+key].cur++;renderMCQ(key,cs,ds,done);}
+
+/* ============ TOPIC 1 — PRESENT CONTINUOUS ============ */
+const ing1Qs=[
+  {q:'She is ___ an ice cream. (eat)',opts:['eating','eatting','eats','ating'],ans:'eating'},
+  {q:'They are ___ football. (play)',opts:['playing','playin','playying','plaing'],ans:'playing'},
+  {q:'The animals are ___. (run)',opts:['runing','running','runs','ran'],ans:'running'},
+  {q:'Kofi is ___ on one leg. (hop)',opts:['hoping','hopping','hopeing','hops'],ans:'hopping'},
+  {q:'I am ___ my friends. (meet)',opts:['meetting','metting','meeting','meetin'],ans:'meeting'},
+  {q:'The cat is ___. (sit)',opts:['siting','sitting','siteing','sits'],ans:'sitting'},
+  {q:'She is ___ her bike. (ride)',opts:['rideing','riding','ridding','rides'],ans:'riding'},
+  {q:'He is ___ in the pool. (swim)',opts:['swiming','swim','swimming','swimeing'],ans:'swimming'},
+  {q:'They are ___ a story. (write)',opts:['writeing','writting','writing','writes'],ans:'writing'},
+  {q:'The dog is ___ in the park. (run)',opts:['runing','running','runnings','ran'],ans:'running'},
+];
+MCQ('ing1Container','ing1Dots','ing1Done',ing1Qs,'ing1');
+
+/* Activity 2 — fill blank present continuous */
+const ing2Qs=[
+  {stmt:'She is ___ an ice cream.',ans:'eating',bank:['eating','eatting','eats','ating']},
+  {stmt:'The children are ___ kites.',ans:'flying',bank:['flying','flyin','flyying','fliing']},
+  {stmt:'The animals are ___.',ans:'running',bank:['running','runing','ran','runnings']},
+  {stmt:'Kofi is ___ on one leg.',ans:'hopping',bank:['hopping','hoping','hops','hopeing']},
+  {stmt:'He is ___ the tree.',ans:'climbing',bank:['climbing','climeing','climbbing','climb']},
+  {stmt:'She is ___ in bed.',ans:'sleeping',bank:['sleeping','sleeppping','sleepin','slept']},
+];
+let ing2State={},ing2Sel=null;
+function buildIng2(){
+  ing2State={};ing2Sel=null;
+  const c=document.getElementById('ing2Container');
+  c.innerHTML=ing2Qs.map((q,i)=>`
+    <div style="background:#f8f9ff;border-radius:14px;padding:14px;margin-bottom:10px;">
+      <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:10px;">
+        ${q.stmt.replace('___',`<span class="blank" id="ib${i}" onclick="ing2Fill(${i})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`)}
+      </div>
+      <div class="fill-bank">${q.bank.map(w=>`<span class="f-chip" id="ifc_${i}_${esc(w)}" onclick="ing2Sel('${esc(w)}',${i})">${w}</span>`).join('')}</div>
+    </div>`).join('');
+}
+function ing2Sel(w,qi){
+  ing2Sel=w;
+  document.querySelectorAll('.f-chip').forEach(c=>c.style.outline='none');
+  const el=document.getElementById('ifc_'+qi+'_'+w);
+  if(el)el.style.outline='3px solid #FF6B6B';
+  ing2Fill(qi);
+}
+function ing2Fill(qi){
+  if(!ing2Sel)return;
+  const slot=document.getElementById('ib'+qi);
+  if(slot.classList.contains('ok'))return;
+  slot.textContent=ing2Sel;
+  ing2State[qi]=ing2Sel;
+  ing2Sel=null;
+  document.querySelectorAll('.f-chip').forEach(c=>c.style.outline='none');
+}
+function checkIng2(){
+  let ok=0;
+  ing2Qs.forEach((q,i)=>{
+    const slot=document.getElementById('ib'+i);
+    if(ing2State[i]===q.ans){ok++;slot.className='blank ok';}
+    else if(ing2State[i]){slot.className='blank err';setTimeout(()=>{slot.className='blank';slot.textContent='       ';delete ing2State[i];},800);}
+  });
+  const fb=document.getElementById('ing2Fb');
+  fb.textContent=`You got ${ok} out of ${ing2Qs.length}!`;
+  fb.style.color=ok>=5?'#2e7d32':'#c62828';
+  if(ok===ing2Qs.length){document.getElementById('ing2Done').classList.add('show');addStar();}
+}
+function resetIng2(){ing2State={};ing2Sel=null;buildIng2();document.getElementById('ing2Fb').textContent='';}
+
+/* ============ TOPIC 2 — PHONICS ============ */
+const phonicSounds=[
+  {sym:'/y/',col:'#FF6B6B',bg:'#ffebee',words:['yam','yolk','yes','yell','yoga'],em:'🍠'},
+  {sym:'/ng/',col:'#9c27b0',bg:'#f3e5f5',words:['sing','song','ring','king','long'],em:'🎵'},
+  {sym:'/ch/',col:'#2196f3',bg:'#e3f2fd',words:['chair','chin','chest','cheese','church'],em:'🪑'},
+  {sym:'/sh/',col:'#43a047',bg:'#e8f5e9',words:['sheep','shell','ship','shop','shoe'],em:'🐑'},
+  {sym:'/th/',col:'#ef6c00',bg:'#fff3e0',words:['the','this','that','teeth','think'],em:'🦷'},
+];
+(function buildSoundGrid(){
+  const g=document.getElementById('soundGrid');
+  phonicSounds.forEach(s=>{
+    const card=document.createElement('div');
+    card.className='sound-card';
+    card.style.cssText=`background:${s.bg};border:3px solid ${s.col};`;
+    card.innerHTML=`<div class="sc-symbol" style="color:${s.col}">${s.sym}</div><div style="font-size:1.5rem;margin-bottom:4px">${s.em}</div><div class="sc-words" style="color:${s.col.replace('#','')}">${s.words.slice(0,3).join(' · ')}</div><div class="sc-tap">👆 tap to hear</div>`;
+    card.onclick=()=>speak(s.words[0]);
+    g.appendChild(card);
+  });
+})();
+
+(function buildWordFamilies(){
+  const c=document.getElementById('wordFamilies');
+  phonicSounds.forEach(s=>{
+    c.innerHTML+=`<div style="margin-bottom:16px;">
+      <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:${s.col};margin-bottom:8px;">${s.sym} words:</div>
+      <div class="word-tiles">${s.words.map(w=>`<div class="w-tile" style="border-color:${s.col};" onclick="speak('${w}')">${s.em} ${w}</div>`).join('')}</div>
+    </div>`;
+  });
+})();
+
+/* SPELLING GAME */
+const spellWords=[
+  {word:'chair',hint:'/ch/ — something you sit on 🪑',em:'🪑'},
+  {word:'sheep',hint:'/sh/ — a fluffy animal 🐑',em:'🐑'},
+  {word:'teeth',hint:'/th/ — inside your mouth 🦷',em:'🦷'},
+  {word:'running',hint:'run + n + ing 🏃',em:'🏃'},
+  {word:'hopping',hint:'hop + p + ing 🐸',em:'🐸'},
+  {word:'singing',hint:'/ng/ — doing this with your voice 🎵',em:'🎵'},
+  {word:'cheese',hint:'/ch/ — yellow food 🧀',em:'🧀'},
+  {word:'shell',hint:'/sh/ — from the beach 🐚',em:'🐚'},
+  {word:'think',hint:'/th/ — what your brain does 🧠',em:'🧠'},
+  {word:'swimming',hint:'swim + m + ing 🏊',em:'🏊'},
+  {word:'yelling',hint:'/y/ — talking very loudly 📢',em:'📢'},
+  {word:'church',hint:'/ch/ twice! A building ⛪',em:'⛪'},
+];
+let spellIdx=0,spellUser=[];
+function loadSpell(){
+  const w=spellWords[spellIdx];
+  document.getElementById('spellHint').textContent=w.hint;
+  document.getElementById('spellTarget').textContent=w.em;
+  spellUser=[];
+  document.getElementById('spellFb').className='q-fb';
+  document.getElementById('spellNext').style.display='none';
+  document.getElementById('spellCount').textContent=`Word ${spellIdx+1} of ${spellWords.length}`;
+  // slots
+  const slots=document.getElementById('spellSlots');
+  slots.innerHTML=w.word.split('').map((_,i)=>`<div class="s-slot" id="sl${i}" onclick="removeSpellLetter(${i})"> </div>`).join('');
+  // letters = shuffled + extra distractors
+  const extra=['x','q','z','j'].slice(0,Math.max(0,6-w.word.length));
+  const letters=shuffle([...w.word.split('').map((l,i)=>({l,i})),...extra.map((l,i)=>({l,i:w.word.length+i}))]);
+  const grid=document.getElementById('letterGrid');
+  grid.innerHTML=letters.map((obj,bi)=>`<button class="l-btn" id="lb${bi}" onclick="addSpellLetter('${obj.l}',${bi})">${obj.l}</button>`).join('');
+}
+function addSpellLetter(letter,btnIdx){
+  const w=spellWords[spellIdx];
+  if(spellUser.length>=w.word.length)return;
+  const pos=spellUser.length;
+  spellUser.push({letter,btnIdx});
+  const slot=document.getElementById('sl'+pos);
+  slot.textContent=letter;slot.classList.add('filled');
+  document.getElementById('lb'+btnIdx).classList.add('used');
+}
+function removeSpellLetter(pos){
+  if(pos>=spellUser.length)return;
+  const removed=spellUser.splice(pos,1)[0];
+  document.getElementById('lb'+removed.btnIdx).classList.remove('used');
+  // re-render slots
+  const w=spellWords[spellIdx];
+  for(let i=0;i<w.word.length;i++){
+    const slot=document.getElementById('sl'+i);
+    if(i<spellUser.length){slot.textContent=spellUser[i].letter;slot.classList.add('filled');}
+    else{slot.textContent=' ';slot.classList.remove('filled','correct','wrong');}
+  }
+}
+function checkSpell(){
+  const w=spellWords[spellIdx];
+  const typed=spellUser.map(x=>x.letter).join('');
+  const fb=document.getElementById('spellFb');
+  if(typed===w.word){
+    for(let i=0;i<w.word.length;i++)document.getElementById('sl'+i).classList.add('correct');
+    fb.textContent='⭐ Correct! '+w.word.toUpperCase()+'!';fb.className='q-fb ok';
+    addStar();document.getElementById('spellNext').style.display='inline-block';
+    if(spellIdx===spellWords.length-1)setTimeout(()=>celebrate('🔤','Spelling Star!','You spelled all the words correctly!'),600);
+  } else {
+    for(let i=0;i<w.word.length;i++){
+      const slot=document.getElementById('sl'+i);
+      slot.classList.add(i<spellUser.length&&spellUser[i].letter===w.word[i]?'correct':'wrong');
+    }
+    fb.textContent='❌ Not quite! The word is: '+w.word;fb.className='q-fb no';
+    setTimeout(()=>clearSpell(),1200);
+  }
+}
+function clearSpell(){
+  spellUser=[];
+  document.querySelectorAll('.l-btn').forEach(b=>b.classList.remove('used'));
+  const w=spellWords[spellIdx];
+  for(let i=0;i<w.word.length;i++){const s=document.getElementById('sl'+i);s.textContent=' ';s.className='s-slot';}
+  document.getElementById('spellFb').className='q-fb';
+}
+function nextSpell(){spellIdx=(spellIdx+1)%spellWords.length;loadSpell();}
+
+const ph1Qs=[
+  {q:'Which word has the /ch/ sound?',opts:['sheep','church','shoe','sing'],ans:'church'},
+  {q:'Which word has the /sh/ sound?',opts:['chair','king','shell','teeth'],ans:'shell'},
+  {q:'Which word has the /th/ sound?',opts:['yam','sing','ship','think'],ans:'think'},
+  {q:'Which word has the /ng/ sound?',opts:['chair','ring','shoe','this'],ans:'ring'},
+  {q:'Which word has the /y/ sound?',opts:['shell','ring','yolk','teeth'],ans:'yolk'},
+  {q:'"chair" — which sound does ch make?',opts:['/sh/','/ch/','/k/','/th/'],ans:'/ch/'},
+  {q:'"sheep" — which sound does sh make?',opts:['/ch/','/th/','/sh/','/y/'],ans:'/sh/'},
+  {q:'"teeth" — which sound does th make?',opts:['/ch/','/th/','/sh/','/ng/'],ans:'/th/'},
+  {q:'Which TWO words have the /ch/ sound?',opts:['chair · cheese','sheep · shell','ring · sing','yam · yolk'],ans:'chair · cheese'},
+  {q:'Running has double __ because of the short vowel rule.',opts:['double r','double n','double g','double i'],ans:'double n'},
+];
+MCQ('ph1Container','ph1Dots','ph1Done',ph1Qs,'ph1');
+
+/* ============ TOPIC 3 — WH QUESTIONS ============ */
+const wh1Qs=[
+  {q:'___ is that? (asking about a thing)',opts:['When','What','Where','Why'],ans:'What'},
+  {q:'___ is your birthday? (asking about time)',opts:['Where','What','When','Who'],ans:'When'},
+  {q:'___ is he sad? (asking for a reason)',opts:['What','How','Where','Why'],ans:'Why'},
+  {q:'___ is Jack? (asking about a place)',opts:['When','What','Where','Why'],ans:'Where'},
+  {q:'___ are you? (asking about feeling)',opts:['What','Why','When','How'],ans:'How'},
+  {q:'___ is your teacher? (asking about a person)',opts:['Where','What','Who','How'],ans:'Who'},
+  {q:'___ do you come to school? (asking how you travel)',opts:['Why','When','What','How'],ans:'How'},
+  {q:'___ do you eat breakfast? (asking about time)',opts:['Where','Who','When','Why'],ans:'When'},
+  {q:'___ is the ball? (asking about a place)',opts:['Who','What','Why','Where'],ans:'Where'},
+  {q:'___ is crying? (asking about a person)',opts:['What','Where','When','Who'],ans:'Who'},
+  {q:'___ colour is the sky? (asking about a thing)',opts:['When','Why','What','How'],ans:'What'},
+  {q:'___ are you late? (asking for a reason)',opts:['What','Who','When','Why'],ans:'Why'},
+];
+MCQ('wh1Container','wh1Dots','wh1Done',wh1Qs,'wh1');
+
+/* ============ TOPIC 4 — NOUNS ============ */
+const noun1Qs=[
+  {q:'🚗 car — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Countable'},
+  {q:'💧 water — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'📚 book — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Countable'},
+  {q:'🥛 milk — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'🍎 apple — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Countable'},
+  {q:'🍚 rice — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'🪑 chair — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Countable'},
+  {q:'🧈 butter — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'🐱 cat — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Countable'},
+  {q:'☕ coffee — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'Can you say "two waters"?',opts:['Yes!','No — water is uncountable'],ans:'No — water is uncountable'},
+  {q:'Can you say "three chairs"?',opts:['Yes — chair is countable','No'],ans:'Yes — chair is countable'},
+];
+MCQ('noun1Container','noun1Dots','noun1Done',noun1Qs,'noun1');
+
+/* ============ TOPIC 5 — SENTENCE BUILDER ============ */
+const sbItems=[
+  {chips:['The boy','is climbing','the tree','.'],answer:'The boy is climbing the tree .',em:'🌳'},
+  {chips:['The children','are flying','kites','.'],answer:'The children are flying kites .',em:'🪁'},
+  {chips:['She','is sleeping','in bed','.'],answer:'She is sleeping in bed .',em:'😴'},
+  {chips:['They','are playing','football','.'],answer:'They are playing football .',em:'⚽'},
+  {chips:['He','is crying','.',],answer:'He is crying .',em:'😭'},
+];
+let sbCur=0,sbPlaced=[];
+function renderSB(){
+  const c=document.getElementById('sbContainer');
+  if(sbCur>=sbItems.length){c.innerHTML='';document.getElementById('sbDone').classList.add('show');addStar();return;}
+  const q=sbItems[sbCur];sbPlaced=[];
+  c.innerHTML=`
+    <div class="pic-box">
+      <div class="pic-top"><span class="pic-em">${q.em}</span><div class="pic-desc">Put the words in the right order!</div></div>
+      <div style="padding:14px;background:#f9fbe7;border-top:2px solid #e0e0e0;">
+        <div class="sb-drop" id="sbDrop"><span class="drop-hint">Tap words to build your sentence 👆</span></div>
+        <div style="font-family:'Baloo 2',cursive;font-size:0.88rem;color:#aaa;margin-bottom:8px;font-weight:700;">Word bank:</div>
+        <div class="sentence-builder" id="sbBank">${shuffle(q.chips).map((w,i)=>`<div class="sb-chip" id="sbc${i}" onclick="sbPick('${esc(w)}',${i})">${w}</div>`).join('')}</div>
+        <div class="q-fb" id="sbFb"></div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkSB()">✅ Check!</button>
+          <button class="btn btn-gray" onclick="clearSB()">🔄 Clear</button>
+          <button class="btn btn-primary" id="sbNext" style="display:none" onclick="nextSB()">Next ➡️</button>
+        </div>
+      </div>
+    </div>`;
+}
+function sbPick(word,idx){
+  if(document.getElementById('sbc'+idx).classList.contains('placed'))return;
+  sbPlaced.push({word,idx});
+  document.getElementById('sbc'+idx).classList.add('placed');
+  const drop=document.getElementById('sbDrop');
+  drop.querySelector('.drop-hint')&&drop.querySelector('.drop-hint').remove();
+  const chip=document.createElement('div');
+  chip.className='sb-drop-chip';chip.textContent=word;
+  chip.dataset.pi=sbPlaced.length-1;
+  chip.onclick=()=>{
+    const pi=parseInt(chip.dataset.pi);
+    const entry=sbPlaced[pi];
+    document.getElementById('sbc'+entry.idx).classList.remove('placed');
+    sbPlaced.splice(pi,1);chip.remove();
+    sbPlaced.forEach((e,i)=>{const c=drop.querySelectorAll('.sb-drop-chip')[i];if(c)c.dataset.pi=i;});
+    if(drop.querySelectorAll('.sb-drop-chip').length===0)drop.innerHTML='<span class="drop-hint">Tap words to build your sentence 👆</span>';
+  };
+  drop.appendChild(chip);
+}
+function checkSB(){
+  const q=sbItems[sbCur];
+  const built=sbPlaced.map(e=>e.word).join(' ');
+  const fb=document.getElementById('sbFb');
+  if(built===q.answer){
+    fb.textContent='⭐ Perfect sentence!';fb.className='q-fb ok';addStar();
+    document.getElementById('sbNext').style.display='inline-block';
+    if(sbCur===sbItems.length-1)setTimeout(()=>celebrate('🖊️','Writing Star!','You built all the sentences correctly!'),600);
+  } else {
+    fb.textContent='❌ Not quite — try again! Remember: WHO + IS/ARE + VERB-ING + WHERE/WHAT';fb.className='q-fb no';
+  }
+}
+function clearSB(){
+  sbPlaced=[];
+  document.querySelectorAll('.sb-chip').forEach(c=>c.classList.remove('placed'));
+  const drop=document.getElementById('sbDrop');
+  drop.innerHTML='<span class="drop-hint">Tap words to build your sentence 👆</span>';
+  document.getElementById('sbFb').className='q-fb';
+}
+function nextSB(){sbCur++;renderSB();}
+
+const pic1Qs=[
+  {em:'🌳',q:'A boy is near a tree. Which sentence is BEST?',opts:['He tree.','The boy is climbing the tree.','Boy climb tree','He is the tree.'],ans:'The boy is climbing the tree.'},
+  {em:'🪁',q:'Children outside with kites. Which sentence is BEST?',opts:['Kites flying.','The children are flying kites.','They kite.','Flying children kites are.'],ans:'The children are flying kites.'},
+  {em:'😴',q:'A child in bed. Which sentence is BEST?',opts:['He sleeping.','She is sleep.','He is sleeping in bed.','Bed sleeping is.'],ans:'He is sleeping in bed.'},
+  {em:'⚽',q:'Children on a grass field. Which sentence is BEST?',opts:['Football they.','They play.','They are playing football.','Are they football play.'],ans:'They are playing football.'},
+  {em:'😭',q:'A child with tears on their face. Which sentence is BEST?',opts:['Crying he.','He is crying.','He cry.','Is he cry.'],ans:'He is crying.'},
+  {em:'🍎',q:'A girl eating fruit. Which sentence is BEST?',opts:['She eat apple.','The girl is eating an apple.','Eating girl apple.','She apple eating.'],ans:'The girl is eating an apple.'},
+];
+MCQ('pic1Container','pic1Dots','pic1Done',pic1Qs,'pic1');
+
+/* ============ MINI TEST ============ */
+const mtQs=[
+  {q:'1. She is ___ an ice cream. (eat)',opts:['eating','eatting','eats'],ans:'eating'},
+  {q:'2. They are ___ football. (play)',opts:['playin','playing','playying'],ans:'playing'},
+  {q:'3. The animals are ___. (run) — careful with the spelling!',opts:['runing','ran','running'],ans:'running'},
+  {q:'4. Kofi is ___ on one leg. (hop)',opts:['hoping','hopping','hops'],ans:'hopping'},
+  {q:'5. I am ___ my friends. (meet)',opts:['meetting','metting','meeting'],ans:'meeting'},
+  {q:'6. Which word has the /ch/ sound?',opts:['sheep','chair','sing','yam'],ans:'chair'},
+  {q:'7. Which word has the /sh/ sound?',opts:['king','teeth','sheep','ring'],ans:'sheep'},
+  {q:'8. Which word has the /th/ sound?',opts:['ship','cheese','yolk','think'],ans:'think'},
+  {q:'9. Which word has the /ng/ sound?',opts:['shoe','chair','sing','the'],ans:'sing'},
+  {q:'10. Which word has the /y/ sound?',opts:['shell','ring','yam','sheep'],ans:'yam'},
+  {q:'11. ___ is that? (thing)',opts:['When','Where','What','Who'],ans:'What'},
+  {q:'12. ___ is your birthday? (time)',opts:['Where','What','When','Why'],ans:'When'},
+  {q:'13. ___ is he sad? (reason)',opts:['What','How','Why','Where'],ans:'Why'},
+  {q:'14. ___ is Jack? (place)',opts:['When','What','Who','Where'],ans:'Where'},
+  {q:'15. ___ are you? (feeling)',opts:['What','Why','When','How'],ans:'How'},
+  {q:'16. 🚗 car — countable or uncountable?',opts:['Uncountable','Countable'],ans:'Countable'},
+  {q:'17. 💧 water — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'18. 🍎 apple — countable or uncountable?',opts:['Uncountable','Countable'],ans:'Countable'},
+  {q:'19. 🥛 milk — countable or uncountable?',opts:['Countable','Uncountable'],ans:'Uncountable'},
+  {q:'20. Which sentence about a picture is BEST?',opts:['He sleeping.','He is sleeping in bed.','Sleeping he bed.','Is sleeping.'],ans:'He is sleeping in bed.'},
+  {q:'21. "swim" + ing = ?',opts:['swiming','swimm','swimming','swimeing'],ans:'swimming'},
+  {q:'22. "write" + ing = ?',opts:['writeing','writting','writing','writed'],ans:'writing'},
+  {q:'23. "sit" + ing = ?',opts:['siting','siteing','sitting','siteing'],ans:'sitting'},
+  {q:'24. "yam" — which phonics sound does it start with?',opts:['/sh/','/th/','/ng/','/y/'],ans:'/y/'},
+  {q:'25. Which sentence is CORRECT?',opts:['She is eat.','She eating.','She is eating.','She are eating.'],ans:'She is eating.'},
+];
+let mtAnswers={};
+function buildMT(){
+  mtAnswers={};
+  document.getElementById('mtFb').textContent='';
+  document.getElementById('mtDone').classList.remove('show');
+  document.getElementById('mtContainer').innerHTML=mtQs.map((q,i)=>`
+    <div class="mt-q" id="mtq${i}">
+      <div class="mt-num">Question ${i+1} of ${mtQs.length}</div>
+      <div class="mt-qtext">${q.q}</div>
+      <div class="mt-opts">${shuffle(q.opts).map(o=>`<button class="mt-opt" id="mto_${i}_${esc(o)}" onclick="mtPick(${i},'${esc(o)}')">${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function mtPick(i,chosen){
+  if(mtAnswers[i]!==undefined)return;
+  mtAnswers[i]=chosen;
+  const el=document.getElementById('mto_'+i+'_'+chosen);
+  if(el)el.classList.add(chosen===mtQs[i].ans?'correct':'wrong');
+  document.getElementById('mtq'+i).querySelectorAll('.mt-opt').forEach(b=>b.disabled=true);
+}
+function checkMT(){
+  mtQs.forEach((q,i)=>{
+    if(mtAnswers[i]===undefined){const el=document.getElementById('mto_'+i+'_'+esc(q.ans));if(el)el.classList.add('correct');}
+  });
+  const correct=mtQs.filter((q,i)=>mtAnswers[i]===q.ans).length;
+  const pct=Math.round(correct/mtQs.length*100);
+  const fb=document.getElementById('mtFb');
+  const unanswered=mtQs.length-Object.keys(mtAnswers).length;
+  if(unanswered>0)fb.textContent=`⚠️ ${unanswered} question(s) not answered. `;
+  const done=document.getElementById('mtDone');
+  done.classList.add('show');
+  done.textContent=`🏆 ${correct} out of ${mtQs.length} (${pct}%) — ${correct>=20?'Outstanding! Ready for the exam! 🌟':correct>=16?'Great work! Keep practising! 📚':'Keep going — you can do it! 💪'}`;
+  if(correct>=20){addStar();setTimeout(()=>celebrate('🏆','Outstanding!',`${correct}/25! You are so ready for your English exam!`),500);}
+}
+
+/* ============ INIT ============ */
+buildIng2();
+loadSpell();
+renderSB();
+buildMT();
+</script>
+</body>
+</html>
