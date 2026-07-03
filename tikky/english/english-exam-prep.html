@@ -595,32 +595,32 @@ const ing2Qs=[
   {stmt:'He is ___ the tree.',ans:'climbing',bank:['climbing','climeing','climbbing','climb']},
   {stmt:'She is ___ in bed.',ans:'sleeping',bank:['sleeping','sleeppping','sleepin','slept']},
 ];
-let ing2State={},ing2Sel=null;
+let ing2State={},ing2SelWord=null;
 function buildIng2(){
-  ing2State={};ing2Sel=null;
+  ing2State={};ing2SelWord=null;
   const c=document.getElementById('ing2Container');
   c.innerHTML=ing2Qs.map((q,i)=>`
     <div style="background:#f8f9ff;border-radius:14px;padding:14px;margin-bottom:10px;">
       <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:10px;">
         ${q.stmt.replace('___',`<span class="blank" id="ib${i}" onclick="ing2Fill(${i})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`)}
       </div>
-      <div class="fill-bank">${q.bank.map(w=>`<span class="f-chip" id="ifc_${i}_${esc(w)}" onclick="ing2Sel('${esc(w)}',${i})">${w}</span>`).join('')}</div>
+      <div class="fill-bank">${q.bank.map(w=>`<span class="f-chip" id="ifc_${i}_${esc(w)}" onclick="ing2SelFn('${esc(w)}',${i})">${w}</span>`).join('')}</div>
     </div>`).join('');
 }
-function ing2Sel(w,qi){
-  ing2Sel=w;
+function ing2SelFn(w,qi){
+  ing2SelWord=w;
   document.querySelectorAll('.f-chip').forEach(c=>c.style.outline='none');
   const el=document.getElementById('ifc_'+qi+'_'+w);
   if(el)el.style.outline='3px solid #FF6B6B';
   ing2Fill(qi);
 }
 function ing2Fill(qi){
-  if(!ing2Sel)return;
+  if(!ing2SelWord)return;
   const slot=document.getElementById('ib'+qi);
   if(slot.classList.contains('ok'))return;
-  slot.textContent=ing2Sel;
-  ing2State[qi]=ing2Sel;
-  ing2Sel=null;
+  slot.textContent=ing2SelWord;
+  ing2State[qi]=ing2SelWord;
+  ing2SelWord=null;
   document.querySelectorAll('.f-chip').forEach(c=>c.style.outline='none');
 }
 function checkIng2(){
@@ -635,7 +635,7 @@ function checkIng2(){
   fb.style.color=ok>=5?'#2e7d32':'#c62828';
   if(ok===ing2Qs.length){document.getElementById('ing2Done').classList.add('show');addStar();}
 }
-function resetIng2(){ing2State={};ing2Sel=null;buildIng2();document.getElementById('ing2Fb').textContent='';}
+function resetIng2(){ing2State={};ing2SelWord=null;buildIng2();document.getElementById('ing2Fb').textContent='';}
 
 /* ============ TOPIC 2 — PHONICS ============ */
 const phonicSounds=[
@@ -651,7 +651,7 @@ const phonicSounds=[
     const card=document.createElement('div');
     card.className='sound-card';
     card.style.cssText=`background:${s.bg};border:3px solid ${s.col};`;
-    card.innerHTML=`<div class="sc-symbol" style="color:${s.col}">${s.sym}</div><div style="font-size:1.5rem;margin-bottom:4px">${s.em}</div><div class="sc-words" style="color:${s.col.replace('#','')}">${s.words.slice(0,3).join(' · ')}</div><div class="sc-tap">👆 tap to hear</div>`;
+    card.innerHTML=`<div class="sc-symbol" style="color:${s.col}">${s.sym}</div><div style="font-size:1.5rem;margin-bottom:4px">${s.em}</div><div class="sc-words" style="color:${s.col}">${s.words.slice(0,3).join(' · ')}</div><div class="sc-tap">👆 tap to hear</div>`;
     card.onclick=()=>speak(s.words[0]);
     g.appendChild(card);
   });

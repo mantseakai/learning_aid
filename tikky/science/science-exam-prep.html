@@ -236,7 +236,7 @@ body{
 <div class="alert">
   <div class="alert-box">
     <h3>⚠️ Fix these from your last test!</h3>
-    <div class="alert-row">Q3: <span class="wrong">two times</span> → We brush our teeth <span class="right">THREE times daily ✅</span> (morning, afternoon, night)</div>
+    <div class="alert-row">Q3: <span class="wrong">three times</span> → We brush our teeth <span class="right">twice a day ✅</span> (morning and before bed)</div>
     <div class="alert-row">Q9: <span class="wrong">theets</span> → The scrambled word "eetht" = <span class="right">teeth ✅</span> (t-e-e-t-h)</div>
     <div class="alert-row">Healthy habits: Lines were mixed up! <span class="right">Match the PICTURE to the RIGHT activity — look carefully at what the person is DOING! ✅</span></div>
   </div>
@@ -268,8 +268,8 @@ body{
     </div>
     <div class="rule r-yellow">
       <strong>⚠️ From your test — How many times do we brush teeth?</strong><br>
-      We brush our teeth <span class="pill p-red">THREE times</span> a day:<br>
-      🌅 Morning · 🌞 After lunch · 🌙 Before bed
+      We brush our teeth <span class="pill p-green">TWICE</span> a day:<br>
+      🌅 Morning · 🌙 Before bed
     </div>
     <div class="rule r-green">
       <strong>👐 We wash our hands…</strong><br>
@@ -309,7 +309,7 @@ body{
         <button class="face-part-btn" onclick="faceClick('nose','👃','The nose helps us SMELL things!')">👃 Nose</button>
         <button class="face-part-btn" onclick="faceClick('mouth','👄','The mouth helps us TASTE, EAT, TALK and SMILE!')">👄 Mouth</button>
         <button class="face-part-btn" onclick="faceClick('hair','💇','Hair grows on top of our head. We comb it with a COMB!')">💇 Hair</button>
-        <button class="face-part-btn" onclick="faceClick('teeth','🦷','Teeth help us chew food. We brush them THREE times a day!')">🦷 Teeth</button>
+        <button class="face-part-btn" onclick="faceClick('teeth','🦷','Teeth help us chew food. We brush them TWICE a day!')">🦷 Teeth</button>
       </div>
     </div>
     <div class="q-fb" id="faceFb" style="margin-top:10px;"></div>
@@ -588,7 +588,7 @@ const bathItems=[
 const hyQs=[
   {q:'I wash my ___ before and after eating.',opts:['feet','legs','hands','knees'],ans:'hands'},
   {q:'We comb our hair with a ___.',opts:['chair','bucket','brush','comb'],ans:'comb'},
-  {q:'How many times do we brush our teeth daily?',opts:['once','two times','three times','four times'],ans:'three times'},
+  {q:'How many times do we brush our teeth daily?',opts:['once','twice','three times','four times'],ans:'twice'},
   {q:'Which THREE items are used to bath?',opts:['soap, sponge, water','chair, comb, teeth','hands, feet, eyes','soap, chair, bucket'],ans:'soap, sponge, water'},
   {q:'Why do we wash our hands before eating?',opts:['To make them wet','To remove germs','Because hands are cold','For fun'],ans:'To remove germs'},
   {q:'We brush our teeth to keep them ___.',opts:['dry','clean and healthy','colourful','big'],ans:'clean and healthy'},
@@ -748,24 +748,24 @@ function checkHabits(){
 
 const habQs=[
   {q:'Which habit shows someone brushing their teeth?',opts:['Hands under water','Toothbrush near mouth','Comb near hair','Person in bathtub'],ans:'Toothbrush near mouth'},
-  {q:'We brush our teeth ___ times a day.',opts:['once','two','three','four'],ans:'three'},
+  {q:'We brush our teeth ___ a day.',opts:['once','twice','three times','four times'],ans:'twice'},
   {q:'We wash our hands before and after ___.',opts:['sleeping','eating','combing','bathing'],ans:'eating'},
   {q:'Which habit is "taking a shower"?',opts:['Toothbrush near mouth','Comb near hair','Hands rubbing','Person in bathtub/shower'],ans:'Person in bathtub/shower'},
   {q:'Combing your hair is a healthy habit because:',opts:['It removes dirt and tangles','It makes you smell nice','It cleans your teeth','It washes your hands'],ans:'It removes dirt and tangles'},
   {q:'Which of these is a healthy habit?',opts:['Eating with dirty hands','Washing hands before eating','Not bathing','Sharing toothbrushes'],ans:'Washing hands before eating'},
   {q:'"Washing my hands" picture shows:',opts:['Person in bathtub','Toothbrush near mouth','Hands rubbing together with water','Person with comb'],ans:'Hands rubbing together with water'},
-  {q:'A healthy person brushes teeth ___, washes hands, and takes regular baths.',opts:['never','twice a year','three times a day','only once a week'],ans:'three times a day'},
+  {q:'A healthy person brushes teeth ___, washes hands, and takes regular baths.',opts:['never','twice a year','twice a day','only once a week'],ans:'twice a day'},
 ];
 MCQ('habContainer','habDots','habDone',habQs,'hab');
 
 /* ===== TOPIC 5 — SCRAMBLE ===== */
 const scrambleWords=[
   {word:'head',hint:'eahd → the top part of your body 👤',em:'👤'},
-  {word:'teeth',hint:'eetht → inside your mouth, brush 3 times! 🦷',em:'🦷'},
+  {word:'teeth',hint:'eetht → inside your mouth, brush twice a day! 🦷',em:'🦷'},
   {word:'hands',hint:'andhs → you wash these before eating 🤲',em:'🤲'},
   {word:'eyes',hint:'syee → you see with these 👁️',em:'👁️'},
   {word:'nose',hint:'snoe → you smell with this 👃',em:'👃'},
-  {word:'ears',hint:'arse → you hear with these 👂',em:'👂'},
+  {word:'ears',hint:'sear → you hear with these 👂',em:'👂'},
   {word:'mouth',hint:'thoum → you taste and smile with this 👄',em:'👄'},
   {word:'skin',hint:'nkis → you feel and touch with this ✋',em:'✋'},
   {word:'hair',hint:'irah → you comb this with a comb 💇',em:'💇'},
@@ -835,7 +835,7 @@ function nextScramble(){scIdx=(scIdx+1)%scrambleWords.length;loadScramble();}
 const mtQs=[
   {q:'1. I wash my ___ before and after eating.',opts:['feet','hands','legs'],ans:'hands'},
   {q:'2. We comb our hair with a ___.',opts:['chair','bucket','comb'],ans:'comb'},
-  {q:'3. How many times do we brush our teeth daily?',opts:['once','two times','three times'],ans:'three times'},
+  {q:'3. How many times do we brush our teeth daily?',opts:['once','twice','three times'],ans:'twice'},
   {q:'4. You taste with your ___.',opts:['eyes','ears','tongue'],ans:'tongue'},
   {q:'5. Every human being has ___ fingers.',opts:['two','three','ten'],ans:'ten'},
   {q:'6. How many sense organs do we have?',opts:['three','five','seven'],ans:'five'},

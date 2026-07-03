@@ -566,7 +566,6 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 /* ===== GLOBAL ===== */
 let starCount=0;
-function addStar(){if(starCount<8){starCount++;document.getElementById('s'+(++starCount-1)&&'s'+starCount).classList&&document.getElementById('s'+starCount).classList.add('lit');}}
 function litStar(){if(starCount<8){starCount++;const el=document.getElementById('s'+starCount);if(el)el.classList.add('lit');}}
 function celebrate(em,title,msg){
   document.getElementById('celEm').textContent=em;
@@ -801,7 +800,7 @@ const vocabQs=[
   {stmt:'Bigger numbers make the sprite move ___.', ans:'faster', bank:['faster','slower','backwards','stop']},
   {stmt:'The sprite moves around on the ___.', ans:'stage', bank:['stage','keyboard','blocks palette','coding area']},
   {stmt:'We ___ blocks into the coding area to use them.', ans:'drag and drop', bank:['drag and drop','delete','print','colour']},
-  {stmt:'The ___ is where you find blocks sorted by colour.', ans:'coding area', bank:['coding area','stage','sprite','blocks palette']},
+  {stmt:'The ___ is where you find blocks sorted by colour.', ans:'blocks palette', bank:['coding area','stage','sprite','blocks palette']},
 ];
 let vocabState={},vocabSel=null;
 function buildVocab(){
