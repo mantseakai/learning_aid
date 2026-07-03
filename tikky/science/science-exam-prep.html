@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Science Exam Prep ⭐ — Tikky!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#00897b;--teal-d:#004d40;--teal-l:#e0f2f1;
+  --yellow:#ffb300;--yellow-l:#fff8e1;
+  --green:#43a047;--green-l:#e8f5e9;
+  --red:#e53935;--red-l:#ffebee;
+  --blue:#1e88e5;--blue-l:#e3f2fd;
+  --purple:#8e24aa;--purple-l:#f3e5f5;
+  --orange:#ef6c00;--orange-l:#fff3e0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:linear-gradient(160deg,#e0f7fa 0%,#e8f5e9 40%,#fff8e1 100%);
+  min-height:100vh;padding:0 0 80px;
+}
+
+.back-btn{position:fixed;top:14px;left:14px;z-index:9999;background:var(--teal);color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;padding:8px 18px;border-radius:50px;text-decoration:none;box-shadow:0 3px 12px rgba(0,137,123,0.35);transition:all 0.2s;}
+.back-btn:hover{background:var(--teal-d);transform:translateX(-2px);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--teal) 0%,#00695c 60%,var(--teal-d) 100%);text-align:center;padding:72px 20px 44px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
+.hero-icon{font-size:72px;display:block;animation:bob 2.5s ease-in-out infinite;position:relative;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2rem,7vw,3.2rem);color:white;text-shadow:0 3px 10px rgba(0,0,0,0.2);margin:10px 0 6px;position:relative;}
+.hero p{font-size:1rem;font-weight:700;color:rgba(255,255,255,0.88);position:relative;}
+
+/* STARS */
+.stars-row{display:flex;justify-content:center;gap:8px;margin:16px auto;max-width:820px;padding:0 16px;}
+.star{font-size:1.7rem;filter:grayscale(1) opacity(0.3);transition:all 0.3s;}
+.star.lit{filter:none;animation:sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes sPop{0%{transform:scale(0)}60%{transform:scale(1.5) rotate(-15deg)}100%{transform:scale(1)}}
+
+/* MISTAKE ALERT */
+.alert{max-width:820px;margin:0 auto 22px;padding:0 16px;}
+.alert-box{background:var(--yellow-l);border:3px solid var(--yellow);border-radius:20px;padding:18px 20px;}
+.alert-box h3{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--orange);margin-bottom:10px;}
+.alert-row{background:white;border:2px solid var(--yellow);border-radius:12px;padding:9px 14px;margin-bottom:8px;font-size:0.93rem;font-weight:700;color:#333;line-height:1.5;}
+.alert-row .wrong{color:var(--red);text-decoration:line-through;margin-right:5px;}
+.alert-row .right{color:var(--green);font-weight:900;}
+
+/* TOPIC NAV */
+.topic-nav{max-width:820px;margin:0 auto 22px;padding:0 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:420px){.topic-nav{grid-template-columns:repeat(2,1fr);}}
+.tnav{background:white;border-radius:16px;padding:12px 8px;text-align:center;font-family:'Fredoka One',cursive;font-size:0.82rem;color:#555;text-decoration:none;display:block;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.08);border:2px solid #e0e0e0;}
+.tnav:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.13);border-color:var(--teal);color:var(--teal);}
+.tnav .ti{font-size:1.4rem;display:block;margin-bottom:3px;}
+
+/* MAIN */
+.main{max-width:820px;margin:0 auto;padding:0 16px;}
+
+/* SECTION */
+.section{margin-bottom:28px;scroll-margin-top:60px;}
+.sec-tag{font-family:'Fredoka One',cursive;font-size:1.5rem;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+
+/* CARD */
+.card{background:white;border-radius:22px;padding:20px 18px;margin-bottom:14px;box-shadow:0 4px 18px rgba(0,0,0,0.09);}
+.card-title{font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--teal-d);margin-bottom:14px;}
+
+/* RULE BOX */
+.rule{border-radius:14px;padding:13px 16px;margin-bottom:10px;font-size:0.95rem;font-weight:700;line-height:1.8;}
+.rule strong{font-family:'Fredoka One',cursive;font-size:1rem;}
+.r-teal{background:var(--teal-l);border:3px solid var(--teal);color:var(--teal-d);}
+.r-yellow{background:var(--yellow-l);border:3px solid var(--yellow);color:#5d4037;}
+.r-green{background:var(--green-l);border:3px solid var(--green);color:#1b5e20;}
+.r-red{background:var(--red-l);border:3px solid var(--red);color:#b71c1c;}
+.r-blue{background:var(--blue-l);border:3px solid var(--blue);color:#0d47a1;}
+.r-purple{background:var(--purple-l);border:3px solid var(--purple);color:#4a148c;}
+.r-orange{background:var(--orange-l);border:3px solid var(--orange);color:#e65100;}
+
+.pill{display:inline-block;padding:3px 12px;border-radius:50px;font-family:'Fredoka One',cursive;font-size:0.92rem;margin:2px 3px;}
+.p-teal{background:var(--teal);color:white;}
+.p-yellow{background:var(--yellow);color:#333;}
+.p-green{background:var(--green);color:white;}
+.p-red{background:var(--red);color:white;}
+.p-blue{background:var(--blue);color:white;}
+.p-purple{background:var(--purple);color:white;}
+.p-orange{background:var(--orange);color:white;}
+
+/* SENSE FLIP CARDS */
+.sense-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;}
+.sense-card{perspective:600px;height:170px;cursor:pointer;}
+.sc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.6s cubic-bezier(0.34,1.3,0.64,1);}
+.sense-card.flipped .sc-inner{transform:rotateY(180deg);}
+.sc-front,.sc-back{position:absolute;inset:0;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 8px;backface-visibility:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+.sc-front{background:var(--fc,#fff9c4);border:4px solid var(--fb,#ffb300);}
+.sc-front .se{font-size:48px;margin-bottom:6px;}
+.sc-front h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--fb,#e65100);}
+.sc-back{background:var(--fb,#ffb300);transform:rotateY(180deg);}
+.sc-back .bp{font-size:34px;margin-bottom:6px;}
+.sc-back p{font-size:0.83rem;font-weight:800;color:white;text-align:center;line-height:1.4;text-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.tap-hint{font-size:0.82rem;font-weight:700;color:#888;text-align:center;margin-bottom:12px;}
+
+/* FACE DIAGRAM */
+.face-wrap{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:18px;}
+.face-svg-container{position:relative;width:240px;height:260px;}
+.face-part-btn{position:absolute;background:white;border:3px solid var(--teal);border-radius:50px;padding:5px 14px;font-family:'Fredoka One',cursive;font-size:0.85rem;color:var(--teal);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.face-part-btn:hover,.face-part-btn.active{background:var(--teal);color:white;transform:scale(1.08);}
+.face-em{font-size:120px;line-height:1;display:block;text-align:center;margin-top:10px;animation:bob 3s ease-in-out infinite;}
+
+/* HYGIENE ITEMS GRID */
+.hygiene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;}
+.h-card{background:white;border-radius:16px;padding:14px 10px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,0.08);border:3px solid var(--teal-l);transition:transform 0.18s;cursor:pointer;}
+.h-card:hover{transform:translateY(-3px);border-color:var(--teal);}
+.h-card .hc-em{font-size:2.2rem;margin-bottom:6px;}
+.h-card .hc-name{font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--teal-d);}
+.h-card .hc-use{font-size:0.72rem;font-weight:700;color:#888;margin-top:3px;}
+
+/* MATCH ACTIVITY */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:420px){.match-cols{grid-template-columns:1fr;}}
+.match-col-lbl{font-family:'Fredoka One',cursive;font-size:0.9rem;color:#888;margin-bottom:6px;text-align:center;font-weight:800;}
+.m-item{padding:13px 10px;border-radius:14px;text-align:center;font-family:'Fredoka One',cursive;font-size:0.95rem;cursor:pointer;transition:all 0.18s;border:2.5px solid transparent;user-select:none;margin-bottom:8px;background:#f5f5f5;}
+.m-item:hover{transform:translateY(-2px);}
+.m-item.selected{box-shadow:0 0 0 3px var(--yellow);transform:scale(1.04);}
+.m-item.correct{background:var(--green-l);border-color:var(--green);color:#1b5e20;}
+.m-item.wrong{background:var(--red-l);border-color:var(--red);animation:shake 0.4s;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* HEALTHY HABITS MATCH — key weakness */
+.habit-match{display:flex;flex-direction:column;gap:14px;}
+.habit-row{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;background:#f9fbe7;border-radius:16px;padding:12px 14px;border:2px dashed #c8e6c9;}
+.habit-row.correct{background:var(--green-l);border:2px solid var(--green);}
+.habit-row.wrong{background:var(--red-l);border:2px solid var(--red);animation:shake 0.4s;}
+.habit-pic{font-size:2.5rem;min-width:48px;text-align:center;}
+.habit-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.h-opt{padding:8px 14px;border-radius:50px;border:2.5px solid #c8e6c9;background:white;font-family:'Fredoka One',cursive;font-size:0.88rem;color:#333;cursor:pointer;transition:all 0.18s;}
+.h-opt:hover{border-color:var(--teal);background:var(--teal-l);}
+.h-opt.chosen{background:var(--teal);color:white;border-color:var(--teal);}
+.h-opt.correct-ans{background:var(--green-l);border-color:var(--green);color:#1b5e20;}
+.h-opt.wrong-ans{background:var(--red-l);border-color:var(--red);color:#b71c1c;}
+
+/* SCRAMBLE GAME */
+.scramble-box{background:#f8f9ff;border-radius:16px;padding:18px;}
+.scramble-q{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--teal-d);margin-bottom:10px;text-align:center;letter-spacing:4px;}
+.scramble-hint{font-size:0.88rem;font-weight:700;color:#888;text-align:center;margin-bottom:14px;}
+.scramble-slots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+.scr-slot{width:44px;height:50px;border-radius:11px;border:3px dashed #c5cae9;background:white;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.4rem;color:#3949ab;cursor:pointer;transition:all 0.2s;}
+.scr-slot.filled{border-style:solid;border-color:var(--teal);background:var(--teal-l);animation:pop 0.2s;}
+.scr-slot.ok{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.scr-slot.err{border-color:var(--red);background:var(--red-l);animation:shake 0.4s;}
+@keyframes pop{from{transform:scale(0.7)}to{transform:scale(1)}}
+.letter-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.l-btn{width:44px;height:44px;border-radius:10px;border:2.5px solid #c5cae9;background:#e8eaf6;font-family:'Fredoka One',cursive;font-size:1.2rem;color:#3949ab;cursor:pointer;transition:all 0.18s;}
+.l-btn:hover{background:#c5cae9;transform:scale(1.1);}
+.l-btn.used{opacity:0.3;pointer-events:none;}
+
+/* MCQ */
+.q-box{background:#f5f5f5;border-radius:16px;padding:18px;}
+.q-text{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#222;margin-bottom:14px;line-height:1.4;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:380px){.opts{grid-template-columns:1fr;}}
+.opt{padding:12px 10px;border-radius:13px;border:2.5px solid #ddd;background:white;font-family:'Fredoka One',cursive;font-size:0.95rem;color:#333;cursor:pointer;transition:all 0.18s;text-align:center;}
+.opt:hover{border-color:var(--teal);background:var(--teal-l);}
+.opt.correct{background:var(--green-l);border-color:var(--green);color:#1b5e20;}
+.opt.wrong{background:var(--red-l);border-color:var(--red);color:#b71c1c;animation:shake 0.4s;}
+.q-fb{text-align:center;font-family:'Fredoka One',cursive;font-size:1rem;padding:10px;border-radius:12px;display:none;margin-top:10px;}
+.q-fb.ok{display:block;background:var(--green-l);color:#1b5e20;}
+.q-fb.no{display:block;background:var(--red-l);color:#b71c1c;}
+
+/* PROGRESS */
+.pdots{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.pdot{width:13px;height:13px;border-radius:50%;background:#ddd;transition:background 0.3s;}
+.pdot.ok{background:var(--green);}.pdot.err{background:var(--red);}
+
+/* BUTTONS */
+.btn{padding:11px 24px;border-radius:50px;border:none;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:all 0.15s;box-shadow:0 4px 0 rgba(0,0,0,0.15);}
+.btn-teal{background:var(--teal);color:white;}
+.btn-green{background:var(--green);color:white;}
+.btn-gray{background:#adb5bd;color:white;}
+.btn:hover{transform:translateY(-2px);}
+.btn:active{transform:translateY(2px);}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+
+/* SCORE BOX */
+.score-box{display:none;text-align:center;padding:14px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:white;border-radius:14px;font-family:'Fredoka One',cursive;font-size:1.2rem;margin-top:14px;}
+.score-box.show{display:block;}
+
+/* MINI TEST */
+.mt-q{background:white;border-radius:16px;padding:16px;margin-bottom:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);}
+.mt-num{font-size:0.75rem;font-weight:700;color:#aaa;margin-bottom:6px;}
+.mt-qtext{font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--teal-d);margin-bottom:10px;line-height:1.4;}
+.mt-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.mt-opt{padding:8px 16px;border-radius:50px;border:2.5px solid #e0e0e0;background:#f5f5f5;font-family:'Fredoka One',cursive;font-size:0.88rem;color:#333;cursor:pointer;transition:all 0.18s;}
+.mt-opt:hover{border-color:var(--teal);background:var(--teal-l);}
+.mt-opt.correct{background:var(--green-l);border-color:var(--green);color:#1b5e20;}
+.mt-opt.wrong{background:var(--red-l);border-color:var(--red);color:#b71c1c;animation:shake 0.4s;}
+
+/* CHEER */
+.cheer-box{display:none;max-width:820px;margin:0 auto 40px;padding:0 16px;}
+.cheer-inner{background:linear-gradient(135deg,var(--teal),var(--teal-d));border-radius:24px;padding:30px 24px;text-align:center;box-shadow:0 8px 30px rgba(0,137,123,0.3);animation:popIn 0.5s ease;}
+.cheer-box.show{display:block;}
+.cheer-inner h2{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,6vw,2.8rem);color:white;margin-bottom:8px;}
+.cheer-inner p{font-size:1rem;color:rgba(255,255,255,0.9);font-weight:700;}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;justify-content:center;align-items:center;}
+.overlay.show{display:flex;}
+.cel-box{background:white;border-radius:26px;padding:32px 24px;text-align:center;max-width:300px;width:90%;animation:zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 20px 60px rgba(0,0,0,0.25);}
+@keyframes zoomIn{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+.cel-em{font-size:3rem;display:block;margin-bottom:8px;}
+.cel-box h2{font-family:'Fredoka One',cursive;font-size:1.7rem;color:var(--teal-d);margin-bottom:8px;}
+.cel-box p{color:#777;font-size:0.92rem;margin-bottom:16px;line-height:1.5;}
+
+@keyframes popIn{0%{transform:scale(0.5);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-btn">← Back</a>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-icon">🔬</span>
+  <h1>Science Exam Prep!</h1>
+  <p>You scored 92 last time — let's make it 100! ⭐</p>
+</div>
+
+<!-- STARS -->
+<div class="stars-row" id="starsRow">
+  <span class="star" id="s1">⭐</span><span class="star" id="s2">⭐</span>
+  <span class="star" id="s3">⭐</span><span class="star" id="s4">⭐</span>
+  <span class="star" id="s5">⭐</span><span class="star" id="s6">⭐</span>
+  <span class="star" id="s7">⭐</span><span class="star" id="s8">⭐</span>
+</div>
+
+<!-- MISTAKE ALERT -->
+<div class="alert">
+  <div class="alert-box">
+    <h3>⚠️ Fix these from your last test!</h3>
+    <div class="alert-row">Q3: <span class="wrong">two times</span> → We brush our teeth <span class="right">THREE times daily ✅</span> (morning, afternoon, night)</div>
+    <div class="alert-row">Q9: <span class="wrong">theets</span> → The scrambled word "eetht" = <span class="right">teeth ✅</span> (t-e-e-t-h)</div>
+    <div class="alert-row">Healthy habits: Lines were mixed up! <span class="right">Match the PICTURE to the RIGHT activity — look carefully at what the person is DOING! ✅</span></div>
+  </div>
+</div>
+
+<!-- TOPIC NAV -->
+<div class="topic-nav">
+  <a href="#t-hygiene" class="tnav"><span class="ti">🧼</span>Personal Hygiene</a>
+  <a href="#t-body" class="tnav"><span class="ti">🫁</span>Body Parts &amp; Face</a>
+  <a href="#t-senses" class="tnav"><span class="ti">👁️</span>The 5 Senses</a>
+  <a href="#t-habits" class="tnav"><span class="ti">🌟</span>Healthy Habits</a>
+  <a href="#t-scramble" class="tnav"><span class="ti">🔤</span>Word Scramble</a>
+  <a href="#t-test" class="tnav"><span class="ti">🏆</span>Mini Test</a>
+</div>
+
+<div class="main">
+
+<!-- ============================================================
+     TOPIC 1 — PERSONAL HYGIENE
+============================================================ -->
+<div id="t-hygiene" class="section">
+  <div class="sec-tag" style="color:var(--teal);">🧼 Topic 1 — Personal Hygiene</div>
+
+  <div class="card">
+    <div class="card-title">📖 What is personal hygiene?</div>
+    <div class="rule r-teal">
+      <strong>Personal hygiene</strong> means keeping your body CLEAN and HEALTHY!<br>
+      We do this every day to stay healthy and feel good.
+    </div>
+    <div class="rule r-yellow">
+      <strong>⚠️ From your test — How many times do we brush teeth?</strong><br>
+      We brush our teeth <span class="pill p-red">THREE times</span> a day:<br>
+      🌅 Morning · 🌞 After lunch · 🌙 Before bed
+    </div>
+    <div class="rule r-green">
+      <strong>👐 We wash our hands…</strong><br>
+      <span class="pill p-green">Before eating</span> <span class="pill p-green">After eating</span> <span class="pill p-green">After using the toilet</span> <span class="pill p-green">After playing</span>
+    </div>
+
+    <div class="card-title" style="margin-top:16px;">🛁 What do we use to bathe?</div>
+    <div class="hygiene-grid" id="bathGrid"></div>
+    <div class="rule r-blue" style="margin-top:12px;">
+      💡 <strong>Three things used to bath:</strong><br>
+      <span class="pill p-blue">🧼 Soap</span> <span class="pill p-blue">🧽 Sponge</span> <span class="pill p-blue">💧 Water</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Hygiene Quiz!</div>
+    <div class="pdots" id="hyDots"></div>
+    <div id="hyContainer"></div>
+    <div class="score-box" id="hyDone">🎉 Hygiene hero! You know how to stay clean! 🧼⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 2 — BODY PARTS & FACE
+============================================================ -->
+<div id="t-body" class="section">
+  <div class="sec-tag" style="color:var(--purple);">🫁 Topic 2 — Body Parts &amp; Face</div>
+
+  <div class="card">
+    <div class="card-title">👤 Tap a face part to learn it!</div>
+    <div class="face-wrap">
+      <span class="face-em">😊</span>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px;">
+        <button class="face-part-btn" onclick="faceClick('eye','👁️','The eyes help us SEE! We have two eyes.')">👁️ Eye</button>
+        <button class="face-part-btn" onclick="faceClick('ear','👂','The ears help us HEAR sounds!')">👂 Ear</button>
+        <button class="face-part-btn" onclick="faceClick('nose','👃','The nose helps us SMELL things!')">👃 Nose</button>
+        <button class="face-part-btn" onclick="faceClick('mouth','👄','The mouth helps us TASTE, EAT, TALK and SMILE!')">👄 Mouth</button>
+        <button class="face-part-btn" onclick="faceClick('hair','💇','Hair grows on top of our head. We comb it with a COMB!')">💇 Hair</button>
+        <button class="face-part-btn" onclick="faceClick('teeth','🦷','Teeth help us chew food. We brush them THREE times a day!')">🦷 Teeth</button>
+      </div>
+    </div>
+    <div class="q-fb" id="faceFb" style="margin-top:10px;"></div>
+
+    <div class="rule r-purple" style="margin-top:14px;">
+      <strong>Key body facts:</strong><br>
+      Every human has <span class="pill p-purple">10 fingers</span> and <span class="pill p-purple">10 toes</span><br>
+      We have <span class="pill p-purple">2 eyes</span>, <span class="pill p-purple">2 ears</span>, <span class="pill p-purple">1 nose</span>, <span class="pill p-purple">1 mouth</span><br>
+      The <span class="pill p-red">mouth</span> helps us SMILE! 😊<br>
+      We comb our hair with a <span class="pill p-purple">comb</span> (not a chair or bucket!)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Match face part to what it does!</div>
+    <div class="match-cols">
+      <div>
+        <div class="match-col-lbl">Body Part</div>
+        <div id="bm-fr"></div>
+      </div>
+      <div>
+        <div class="match-col-lbl">What it does</div>
+        <div id="bm-en"></div>
+      </div>
+    </div>
+    <div class="q-fb" id="bmFb"></div>
+    <div class="btn-row"><button class="btn btn-gray" onclick="initBodyMatch()">🔄 New Match</button></div>
+    <div class="score-box" id="bmDone">🎉 You know all the face parts! 👤⭐</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Body Parts Quiz!</div>
+    <div class="pdots" id="bodyDots"></div>
+    <div id="bodyContainer"></div>
+    <div class="score-box" id="bodyDone">🎉 Body parts expert! 🫁⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 3 — THE 5 SENSES
+============================================================ -->
+<div id="t-senses" class="section">
+  <div class="sec-tag" style="color:var(--orange);">👁️ Topic 3 — The 5 Senses</div>
+
+  <div class="card">
+    <div class="card-title">👆 Tap each sense card to flip it!</div>
+    <p class="tap-hint">Tap to flip and see the sense organ! 👆</p>
+    <div class="sense-grid" id="sensesGrid"></div>
+    <div class="rule r-orange" style="margin-top:14px;">
+      💡 <strong>We have FIVE sense organs:</strong><br>
+      <span class="pill p-orange">👁️ Eyes</span> see &nbsp;
+      <span class="pill p-orange">👂 Ears</span> hear &nbsp;
+      <span class="pill p-orange">👃 Nose</span> smell &nbsp;
+      <span class="pill p-orange">👅 Tongue</span> taste &nbsp;
+      <span class="pill p-orange">✋ Skin</span> touch
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Senses Quiz!</div>
+    <div class="pdots" id="senDots"></div>
+    <div id="senContainer"></div>
+    <div class="score-box" id="senDone">🎉 All 5 senses mastered! 👁️⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 4 — HEALTHY HABITS (KEY WEAKNESS)
+============================================================ -->
+<div id="t-habits" class="section">
+  <div class="sec-tag" style="color:var(--green);">🌟 Topic 4 — Healthy Habits (Match the Picture!)</div>
+
+  <div class="card">
+    <div class="card-title">⚠️ This is where marks were lost — read CAREFULLY what the person is doing!</div>
+    <div class="rule r-red">
+      🔑 <strong>How to get this right:</strong><br>
+      Look at the PICTURE — what is the person doing with their hands/mouth/hair?<br>
+      <span class="pill p-red">Holding a toothbrush near mouth</span> = Brushing teeth<br>
+      <span class="pill p-red">Hands under water/rubbing</span> = Washing hands<br>
+      <span class="pill p-red">Holding a comb near hair</span> = Combing hair<br>
+      <span class="pill p-red">Person in bathtub/shower</span> = Taking a shower/bath
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:4px;">
+      <div style="background:var(--teal-l);border:3px solid var(--teal);border-radius:16px;padding:14px;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:6px;">🪥</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--teal-d);">Brushing my teeth</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#888;margin-top:4px;">Toothbrush near mouth</div>
+      </div>
+      <div style="background:#e8f5e9;border:3px solid var(--green);border-radius:16px;padding:14px;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:6px;">🤲</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:0.95rem;color:#1b5e20;">Washing my hands</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#888;margin-top:4px;">Hands rubbing with water/soap</div>
+      </div>
+      <div style="background:var(--purple-l);border:3px solid var(--purple);border-radius:16px;padding:14px;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:6px;">💇</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:0.95rem;color:#4a148c;">Combing my hair</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#888;margin-top:4px;">Comb near head/hair</div>
+      </div>
+      <div style="background:var(--blue-l);border:3px solid var(--blue);border-radius:16px;padding:14px;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:6px;">🛁</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:0.95rem;color:#0d47a1;">Taking a shower</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#888;margin-top:4px;">Person in tub/under shower</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎮 Match the habit! Tap the right activity for each picture.</div>
+    <div class="habit-match" id="habitMatch"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkHabits()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="buildHabits()">🔄 Try Again</button>
+    </div>
+    <div id="habitFb" style="margin-top:10px;font-family:'Fredoka One',cursive;font-size:1rem;min-height:20px;color:var(--teal-d);"></div>
+    <div class="score-box" id="habitDone">🎉 Perfect matching! Healthy habits champion! 🌟⭐</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Healthy Habits Quiz!</div>
+    <div class="pdots" id="habDots"></div>
+    <div id="habContainer"></div>
+    <div class="score-box" id="habDone">🎉 Healthy habits expert! 🌟⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 5 — WORD SCRAMBLE
+============================================================ -->
+<div id="t-scramble" class="section">
+  <div class="sec-tag" style="color:var(--blue);">🔤 Topic 5 — Unscramble the Words!</div>
+
+  <div class="card">
+    <div class="card-title">💡 Remember these from the test!</div>
+    <div class="rule r-blue">
+      <strong>Rearrange the letters:</strong><br>
+      <span class="pill p-blue">e·a·h·d</span> → <strong>head</strong> 👤<br>
+      <span class="pill p-red">e·e·t·h·t</span> → <strong>teeth</strong> 🦷 (NOT "theets"!)<br>
+      <span class="pill p-teal">a·n·d·h·s</span> → <strong>hands</strong> 🤲
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎮 Spelling Game — Tap letters to spell the word!</div>
+    <div id="scHint" style="text-align:center;font-size:0.9rem;font-weight:700;color:#888;margin-bottom:8px;">Loading…</div>
+    <div id="scTarget" style="text-align:center;font-size:3rem;margin-bottom:10px;">🔤</div>
+    <div class="scramble-slots" id="scSlots"></div>
+    <div class="letter-grid" id="scLetters"></div>
+    <div class="q-fb" id="scFb"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkScramble()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="clearScramble()">🔄 Clear</button>
+      <button class="btn btn-teal" id="scNext" style="display:none" onclick="nextScramble()">Next ➡️</button>
+    </div>
+    <div style="text-align:center;margin-top:8px;font-size:0.82rem;font-weight:700;color:#aaa;" id="scCount"></div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     MINI TEST
+============================================================ -->
+<div id="t-test" class="section">
+  <div class="sec-tag" style="color:var(--yellow);">🏆 Mini Test — Like the Real Exam!</div>
+  <div class="card">
+    <div class="card-title">📝 25 questions — all topics!</div>
+    <div id="mtContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkMT()">✅ Submit &amp; Check!</button>
+      <button class="btn btn-gray" onclick="buildMT()">🔄 Reset</button>
+    </div>
+    <div id="mtFb" style="margin-top:12px;font-family:'Fredoka One',cursive;font-size:1rem;min-height:20px;color:var(--teal-d);"></div>
+    <div class="score-box" id="mtDone"></div>
+  </div>
+</div>
+
+<!-- CHEER -->
+<div class="cheer-box" id="cheerBox">
+  <div class="cheer-inner">
+    <div style="font-size:2.5rem;margin-bottom:8px;">🔬🌟🧼🌟🔬</div>
+    <h2>Amazing, Tikky! 🎉</h2>
+    <p>You know Science so well! You are going to ace your exam! 🏆</p>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="cel-em" id="celEm">🎉</span>
+    <h2 id="celTitle">Well done!</h2>
+    <p id="celMsg">Keep going!</p>
+    <button class="btn btn-teal" style="width:100%" onclick="document.getElementById('overlay').classList.remove('show')">Keep going! 🚀</button>
+  </div>
+</div>
+
+<script>
+/* ===== GLOBAL ===== */
+let starCount=0,cheerCount=0,cheerDone=false;
+function litStar(){if(starCount<8){starCount++;const el=document.getElementById('s'+starCount);if(el)el.classList.add('lit');}}
+function cheer(){
+  cheerCount++;
+  if(cheerCount>=3&&!cheerDone){cheerDone=true;const cb=document.getElementById('cheerBox');cb.classList.add('show');setTimeout(()=>cb.scrollIntoView({behavior:'smooth',block:'center'}),200);}
+}
+function celebrate(em,title,msg){
+  document.getElementById('celEm').textContent=em;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function speak(text){if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u);}}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+function esc(s){return String(s).replace(/'/g,"\\'");}
+function buildDots(id,n){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='';
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='pdot';d.id=id+'_'+i;el.appendChild(d);}
+}
+function markDot(id,i,cls){const d=document.getElementById(id+'_'+i);if(d){d.classList.remove('ok','err');d.classList.add(cls);}}
+
+/* Generic MCQ */
+function MCQ(cs,ds,done,questions,key){
+  window['mcq_'+key]={cur:0,qs:questions};
+  buildDots(ds,questions.length);
+  renderMCQ(key,cs,ds,done);
+}
+function renderMCQ(key,cs,ds,done){
+  const st=window['mcq_'+key];
+  const c=document.getElementById(cs);if(!c)return;
+  if(st.cur>=st.qs.length){c.innerHTML='';document.getElementById(done).classList.add('show');litStar();cheer();return;}
+  const q=st.qs[st.cur];const idx=st.cur;
+  const opts=shuffle(q.opts).map(o=>`<button class="opt" onclick="pickMCQ('${esc(o)}','${esc(q.ans)}',${idx},'${key}','${cs}','${ds}','${done}')">${o}</button>`).join('');
+  c.innerHTML=`<div class="q-box"><div class="q-text">Q${idx+1}. ${q.q}</div><div class="opts">${opts}</div><div class="q-fb" id="${key}fb"></div><div class="btn-row"><button class="btn btn-teal" id="${key}nxt" style="display:none" onclick="advMCQ('${key}','${cs}','${ds}','${done}')">Next ➡️</button></div></div>`;
+}
+function pickMCQ(chosen,ans,idx,key,cs,ds,done){
+  const st=window['mcq_'+key];if(!st||st.cur!==idx)return;
+  const btns=document.getElementById(cs).querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const hit=[...btns].find(b=>b.textContent.trim()===chosen.trim());
+  const fb=document.getElementById(key+'fb');
+  if(chosen===ans){
+    if(hit)hit.classList.add('correct');
+    fb.textContent='⭐ Correct! Well done!';fb.className='q-fb ok';markDot(ds,idx,'ok');
+  } else {
+    if(hit)hit.classList.add('wrong');
+    [...btns].filter(b=>b.textContent.trim()===ans.trim()).forEach(b=>b.classList.add('correct'));
+    fb.textContent='❌ Not quite! Answer: '+ans;fb.className='q-fb no';markDot(ds,idx,'err');
+  }
+  document.getElementById(key+'nxt').style.display='inline-block';
+}
+function advMCQ(key,cs,ds,done){window['mcq_'+key].cur++;renderMCQ(key,cs,ds,done);}
+
+/* ===== TOPIC 1 — BATH ITEMS ===== */
+const bathItems=[
+  {em:'🧼',name:'Soap',use:'Cleans your body and kills germs'},
+  {em:'🧽',name:'Sponge',use:'Scrubs and washes your skin'},
+  {em:'💧',name:'Water',use:'Rinses your body clean'},
+  {em:'🪥',name:'Toothbrush',use:'Brushes your teeth clean'},
+  {em:'🪥',name:'Toothpaste',use:'Goes on toothbrush to clean teeth'},
+  {em:'🧴',name:'Shampoo',use:'Washes and cleans your hair'},
+];
+(function buildBathGrid(){
+  const g=document.getElementById('bathGrid');
+  bathItems.forEach(item=>{
+    const card=document.createElement('div');
+    card.className='h-card';
+    card.innerHTML=`<div class="hc-em">${item.em}</div><div class="hc-name">${item.name}</div><div class="hc-use">${item.use}</div>`;
+    card.onclick=()=>speak(item.name+'. '+item.use);
+    g.appendChild(card);
+  });
+})();
+
+const hyQs=[
+  {q:'I wash my ___ before and after eating.',opts:['feet','legs','hands','knees'],ans:'hands'},
+  {q:'We comb our hair with a ___.',opts:['chair','bucket','brush','comb'],ans:'comb'},
+  {q:'How many times do we brush our teeth daily?',opts:['once','two times','three times','four times'],ans:'three times'},
+  {q:'Which THREE items are used to bath?',opts:['soap, sponge, water','chair, comb, teeth','hands, feet, eyes','soap, chair, bucket'],ans:'soap, sponge, water'},
+  {q:'Why do we wash our hands before eating?',opts:['To make them wet','To remove germs','Because hands are cold','For fun'],ans:'To remove germs'},
+  {q:'We brush our teeth to keep them ___.',opts:['dry','clean and healthy','colourful','big'],ans:'clean and healthy'},
+  {q:'We use ___ to wash our hair.',opts:['water only','soap and water','shampoo','comb'],ans:'shampoo'},
+  {q:'Good hygiene helps us stay ___.',opts:['dirty','sick','clean and healthy','tired'],ans:'clean and healthy'},
+];
+MCQ('hyContainer','hyDots','hyDone',hyQs,'hy');
+
+/* ===== TOPIC 2 — FACE / BODY ===== */
+function faceClick(part,em,desc){
+  const fb=document.getElementById('faceFb');
+  fb.textContent=em+' '+desc;fb.className='q-fb ok';
+  speak(desc);
+  document.querySelectorAll('.face-part-btn').forEach(b=>b.classList.remove('active'));
+}
+
+const bodyMatchPairs=[
+  {fr:'👁️ Eye',en:'Helps us SEE'},
+  {fr:'👂 Ear',en:'Helps us HEAR'},
+  {fr:'👃 Nose',en:'Helps us SMELL'},
+  {fr:'👄 Mouth',en:'Helps us TASTE, EAT & SMILE'},
+  {fr:'🦷 Teeth',en:'Helps us CHEW food'},
+];
+let bmSel=null,bmMatched=new Set(),bmDoneCount=0;
+function initBodyMatch(){
+  bmSel=null;bmMatched=new Set();bmDoneCount=0;
+  document.getElementById('bmDone').classList.remove('show');
+  const subset=shuffle(bodyMatchPairs).slice(0,4);
+  const frEl=document.getElementById('bm-fr');
+  const enEl=document.getElementById('bm-en');
+  frEl.innerHTML='';enEl.innerHTML='';
+  const shuffEn=shuffle(subset);
+  subset.forEach((p,i)=>{
+    const el=document.createElement('div');el.className='m-item';el.textContent=p.fr;el.dataset.idx=i;
+    el.onclick=()=>bmClick(el,i,'fr',subset);frEl.appendChild(el);
+  });
+  shuffEn.forEach(p=>{
+    const i=subset.indexOf(p);
+    const el=document.createElement('div');el.className='m-item';el.textContent=p.en;el.dataset.idx=i;
+    el.onclick=()=>bmClick(el,i,'en',subset);enEl.appendChild(el);
+  });
+  document.getElementById('bmFb').className='q-fb';
+}
+function bmClick(el,idx,side,subset){
+  if(bmMatched.has(idx))return;
+  const fb=document.getElementById('bmFb');
+  if(!bmSel){bmSel={el,idx,side};el.classList.add('selected');return;}
+  if(bmSel.side===side){bmSel.el.classList.remove('selected');bmSel={el,idx,side};el.classList.add('selected');return;}
+  bmSel.el.classList.remove('selected');
+  if(bmSel.idx===idx){
+    bmSel.el.classList.add('correct');el.classList.add('correct');
+    bmMatched.add(idx);bmSel=null;bmDoneCount++;
+    fb.textContent='✅ Correct!';fb.className='q-fb ok';
+    if(bmDoneCount===4){litStar();document.getElementById('bmDone').classList.add('show');cheer();}
+  } else {
+    bmSel.el.classList.add('wrong');el.classList.add('wrong');bmSel=null;
+    fb.textContent='❌ Try again!';fb.className='q-fb no';
+    setTimeout(()=>{document.querySelectorAll('.m-item.wrong').forEach(x=>x.classList.remove('wrong'));fb.className='q-fb';},900);
+  }
+}
+
+const bodyQs=[
+  {q:'Every human being has ___ fingers.',opts:['two','three','five','ten'],ans:'ten'},
+  {q:'Which body part helps us smile?',opts:['nose','knee','ear','mouth'],ans:'mouth'},
+  {q:'We comb our hair with a ___.',opts:['bucket','chair','comb','brush teeth'],ans:'comb'},
+  {q:'Parts of the face include:',opts:['knee, elbow, wrist','eye, ear, nose, mouth','hand, foot, toe','arm, leg, back'],ans:'eye, ear, nose, mouth'},
+  {q:'How many eyes does a human have?',opts:['one','two','three','four'],ans:'two'},
+  {q:'How many ears does a human have?',opts:['one','two','three','four'],ans:'two'},
+  {q:'The ___ is the part of the face you use to speak.',opts:['eye','ear','nose','mouth'],ans:'mouth'},
+  {q:'Your ___ are inside your mouth.',opts:['eyes','ears','teeth','fingers'],ans:'teeth'},
+  {q:'How many toes does a human have?',opts:['five','eight','ten','twelve'],ans:'ten'},
+  {q:'Hair grows on the ___.',opts:['hands','feet','face only','head'],ans:'head'},
+];
+MCQ('bodyContainer','bodyDots','bodyDone',bodyQs,'body');
+
+/* ===== TOPIC 3 — SENSES ===== */
+const senses=[
+  {name:'Sight',organ:'Eyes',em:'👁️',bpEm:'👁️',desc:'We SEE with our eyes.',fc:'#fff9c4',fb:'#ffb300'},
+  {name:'Hearing',organ:'Ears',em:'🎵',bpEm:'👂',desc:'We HEAR with our ears.',fc:'#fce4ec',fb:'#e91e8c'},
+  {name:'Smell',organ:'Nose',em:'🌸',bpEm:'👃',desc:'We SMELL with our nose.',fc:'#e8f5e9',fb:'#43a047'},
+  {name:'Taste',organ:'Tongue',em:'🍭',bpEm:'👅',desc:'We TASTE with our tongue.',fc:'#e3f2fd',fb:'#1e88e5'},
+  {name:'Touch',organ:'Skin',em:'✋',bpEm:'✋',desc:'We FEEL/TOUCH with our skin.',fc:'#f3e5f5',fb:'#8e24aa'},
+];
+(function buildSenses(){
+  const g=document.getElementById('sensesGrid');
+  senses.forEach(s=>{
+    const card=document.createElement('div');
+    card.className='sense-card';
+    card.style.setProperty('--fc',s.fc);card.style.setProperty('--fb',s.fb);
+    card.innerHTML=`<div class="sc-inner"><div class="sc-front"><div class="se">${s.em}</div><h3>${s.name}</h3></div><div class="sc-back"><div class="bp">${s.bpEm}</div><p>${s.organ}<br>${s.desc}</p></div></div>`;
+    card.onclick=()=>{card.classList.toggle('flipped');speak(s.desc);};
+    g.appendChild(card);
+  });
+})();
+
+const senQs=[
+  {q:'How many sense organs do we have?',opts:['three','four','five','six'],ans:'five'},
+  {q:'You taste with your ___.',opts:['eyes','ears','nose','tongue'],ans:'tongue'},
+  {q:'We see with our ___.',opts:['ears','nose','eyes','skin'],ans:'eyes'},
+  {q:'We hear with our ___.',opts:['eyes','ears','nose','tongue'],ans:'ears'},
+  {q:'We smell with our ___.',opts:['eyes','skin','tongue','nose'],ans:'nose'},
+  {q:'We feel/touch with our ___.',opts:['eyes','ears','nose','skin'],ans:'skin'},
+  {q:'The sense organ for SIGHT is the ___.',opts:['ear','nose','eye','tongue'],ans:'eye'},
+  {q:'The sense organ for TASTE is the ___.',opts:['nose','ear','skin','tongue'],ans:'tongue'},
+  {q:'The sense organ for HEARING is the ___.',opts:['eye','nose','ear','skin'],ans:'ear'},
+  {q:'Which sense helps you enjoy the smell of flowers?',opts:['sight','touch','hearing','smell'],ans:'smell'},
+];
+MCQ('senContainer','senDots','senDone',senQs,'sen');
+
+/* ===== TOPIC 4 — HEALTHY HABITS ===== */
+const habitData=[
+  {pic:'🪥',em:'Person holding toothbrush near mouth',ans:'Brushing my teeth',opts:['Brushing my teeth','Washing my hands','Combing my hair','Taking a shower']},
+  {pic:'🤲',em:'Person rubbing hands under running water',ans:'Washing my hands',opts:['Brushing my teeth','Washing my hands','Combing my hair','Taking a shower']},
+  {pic:'💇',em:'Person holding comb near their hair',ans:'Combing my hair',opts:['Brushing my teeth','Washing my hands','Combing my hair','Taking a shower']},
+  {pic:'🛁',em:'Person sitting in bathtub with bubbles',ans:'Taking a shower',opts:['Brushing my teeth','Washing my hands','Combing my hair','Taking a shower']},
+];
+let habitAnswers={};
+function buildHabits(){
+  habitAnswers={};
+  document.getElementById('habitFb').textContent='';
+  document.getElementById('habitDone').classList.remove('show');
+  const c=document.getElementById('habitMatch');
+  c.innerHTML=habitData.map((h,i)=>`
+    <div class="habit-row" id="hr${i}">
+      <div class="habit-pic">${h.pic}</div>
+      <div>
+        <div style="font-size:0.78rem;font-weight:700;color:#888;margin-bottom:6px;">${h.em}</div>
+        <div class="habit-opts">${h.opts.map(o=>`<button class="h-opt" id="ho_${i}_${esc(o)}" onclick="habitPick(${i},'${esc(o)}')">${o}</button>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+function habitPick(i,chosen){
+  habitAnswers[i]=chosen;
+  const row=document.getElementById('hr'+i);
+  row.querySelectorAll('.h-opt').forEach(b=>{b.classList.remove('chosen');});
+  const el=document.getElementById('ho_'+i+'_'+chosen);
+  if(el)el.classList.add('chosen');
+}
+function checkHabits(){
+  let ok=0;
+  habitData.forEach((h,i)=>{
+    const row=document.getElementById('hr'+i);
+    if(habitAnswers[i]===h.ans){
+      ok++;row.classList.add('correct');row.classList.remove('wrong');
+      const el=document.getElementById('ho_'+i+'_'+esc(h.ans));if(el)el.classList.add('correct-ans');
+    } else {
+      row.classList.add('wrong');row.classList.remove('correct');
+      if(habitAnswers[i]){const el=document.getElementById('ho_'+i+'_'+esc(habitAnswers[i]));if(el)el.classList.add('wrong-ans');}
+      const correct=document.getElementById('ho_'+i+'_'+esc(h.ans));if(correct)correct.classList.add('correct-ans');
+    }
+  });
+  const fb=document.getElementById('habitFb');
+  fb.textContent=`You got ${ok} out of ${habitData.length}!`;
+  fb.style.color=ok>=3?'var(--green)':'var(--red)';
+  if(ok===habitData.length){document.getElementById('habitDone').classList.add('show');litStar();cheer();setTimeout(()=>celebrate('🌟','Champion!','You matched all the healthy habits perfectly!'),600);}
+}
+
+const habQs=[
+  {q:'Which habit shows someone brushing their teeth?',opts:['Hands under water','Toothbrush near mouth','Comb near hair','Person in bathtub'],ans:'Toothbrush near mouth'},
+  {q:'We brush our teeth ___ times a day.',opts:['once','two','three','four'],ans:'three'},
+  {q:'We wash our hands before and after ___.',opts:['sleeping','eating','combing','bathing'],ans:'eating'},
+  {q:'Which habit is "taking a shower"?',opts:['Toothbrush near mouth','Comb near hair','Hands rubbing','Person in bathtub/shower'],ans:'Person in bathtub/shower'},
+  {q:'Combing your hair is a healthy habit because:',opts:['It removes dirt and tangles','It makes you smell nice','It cleans your teeth','It washes your hands'],ans:'It removes dirt and tangles'},
+  {q:'Which of these is a healthy habit?',opts:['Eating with dirty hands','Washing hands before eating','Not bathing','Sharing toothbrushes'],ans:'Washing hands before eating'},
+  {q:'"Washing my hands" picture shows:',opts:['Person in bathtub','Toothbrush near mouth','Hands rubbing together with water','Person with comb'],ans:'Hands rubbing together with water'},
+  {q:'A healthy person brushes teeth ___, washes hands, and takes regular baths.',opts:['never','twice a year','three times a day','only once a week'],ans:'three times a day'},
+];
+MCQ('habContainer','habDots','habDone',habQs,'hab');
+
+/* ===== TOPIC 5 — SCRAMBLE ===== */
+const scrambleWords=[
+  {word:'head',hint:'eahd → the top part of your body 👤',em:'👤'},
+  {word:'teeth',hint:'eetht → inside your mouth, brush 3 times! 🦷',em:'🦷'},
+  {word:'hands',hint:'andhs → you wash these before eating 🤲',em:'🤲'},
+  {word:'eyes',hint:'syee → you see with these 👁️',em:'👁️'},
+  {word:'nose',hint:'snoe → you smell with this 👃',em:'👃'},
+  {word:'ears',hint:'arse → you hear with these 👂',em:'👂'},
+  {word:'mouth',hint:'thoum → you taste and smile with this 👄',em:'👄'},
+  {word:'skin',hint:'nkis → you feel and touch with this ✋',em:'✋'},
+  {word:'hair',hint:'irah → you comb this with a comb 💇',em:'💇'},
+  {word:'soap',hint:'apso → used to wash your body 🧼',em:'🧼'},
+];
+let scIdx=0,scUser=[];
+function loadScramble(){
+  const w=scrambleWords[scIdx];
+  document.getElementById('scHint').textContent=w.hint;
+  document.getElementById('scTarget').textContent=w.em;
+  scUser=[];
+  document.getElementById('scFb').className='q-fb';
+  document.getElementById('scNext').style.display='none';
+  document.getElementById('scCount').textContent=`Word ${scIdx+1} of ${scrambleWords.length}`;
+  const slots=document.getElementById('scSlots');
+  slots.innerHTML=w.word.split('').map((_,i)=>`<div class="scr-slot" id="scsl${i}" onclick="removeScLetter(${i})"> </div>`).join('');
+  const extras=['x','q','z'].slice(0,Math.max(0,5-w.word.length));
+  const letters=shuffle([...w.word.split('').map((l,i)=>({l,i})),...extras.map((l,i)=>({l,i:w.word.length+i}))]);
+  const grid=document.getElementById('scLetters');
+  grid.innerHTML=letters.map((obj,bi)=>`<button class="l-btn" id="scl${bi}" onclick="addScLetter('${obj.l}',${bi})">${obj.l}</button>`).join('');
+}
+function addScLetter(letter,bi){
+  const w=scrambleWords[scIdx];
+  if(scUser.length>=w.word.length)return;
+  const pos=scUser.length;
+  scUser.push({letter,bi});
+  const slot=document.getElementById('scsl'+pos);
+  slot.textContent=letter;slot.classList.add('filled');
+  document.getElementById('scl'+bi).classList.add('used');
+}
+function removeScLetter(pos){
+  if(pos>=scUser.length)return;
+  const removed=scUser.splice(pos,1)[0];
+  document.getElementById('scl'+removed.bi).classList.remove('used');
+  const w=scrambleWords[scIdx];
+  for(let i=0;i<w.word.length;i++){
+    const slot=document.getElementById('scsl'+i);
+    if(i<scUser.length){slot.textContent=scUser[i].letter;slot.classList.add('filled');}
+    else{slot.textContent=' ';slot.className='scr-slot';}
+  }
+}
+function checkScramble(){
+  const w=scrambleWords[scIdx];
+  const typed=scUser.map(x=>x.letter).join('');
+  const fb=document.getElementById('scFb');
+  if(typed===w.word){
+    for(let i=0;i<w.word.length;i++)document.getElementById('scsl'+i).classList.add('ok');
+    fb.textContent='⭐ Correct! '+w.word.toUpperCase()+'!';fb.className='q-fb ok';
+    litStar();document.getElementById('scNext').style.display='inline-block';
+    if(scIdx===scrambleWords.length-1)setTimeout(()=>celebrate('🔤','Spelling Star!','You unscrambled every word!'),600);
+  } else {
+    for(let i=0;i<w.word.length;i++)document.getElementById('scsl'+i).classList.add('err');
+    fb.textContent='❌ Not quite! The word is: '+w.word;fb.className='q-fb no';
+    setTimeout(()=>clearScramble(),1200);
+  }
+}
+function clearScramble(){
+  scUser=[];
+  document.querySelectorAll('.l-btn').forEach(b=>b.classList.remove('used'));
+  const w=scrambleWords[scIdx];
+  for(let i=0;i<w.word.length;i++){const s=document.getElementById('scsl'+i);s.textContent=' ';s.className='scr-slot';}
+  document.getElementById('scFb').className='q-fb';
+}
+function nextScramble(){scIdx=(scIdx+1)%scrambleWords.length;loadScramble();}
+
+/* ===== MINI TEST ===== */
+const mtQs=[
+  {q:'1. I wash my ___ before and after eating.',opts:['feet','hands','legs'],ans:'hands'},
+  {q:'2. We comb our hair with a ___.',opts:['chair','bucket','comb'],ans:'comb'},
+  {q:'3. How many times do we brush our teeth daily?',opts:['once','two times','three times'],ans:'three times'},
+  {q:'4. You taste with your ___.',opts:['eyes','ears','tongue'],ans:'tongue'},
+  {q:'5. Every human being has ___ fingers.',opts:['two','three','ten'],ans:'ten'},
+  {q:'6. How many sense organs do we have?',opts:['three','five','seven'],ans:'five'},
+  {q:'7. Which body part helps us smile?',opts:['nose','mouth','knee'],ans:'mouth'},
+  {q:'8. "eahd" unscrambled = ___.',opts:['hand','head','hear'],ans:'head'},
+  {q:'9. "eetht" unscrambled = ___.',opts:['theets','tehet','teeth'],ans:'teeth'},
+  {q:'10. "andhs" unscrambled = ___.',opts:['hands','deans','heads'],ans:'hands'},
+  {q:'11. Name THREE items used to bath.',opts:['soap, chair, comb','soap, sponge, water','towel, bucket, chair'],ans:'soap, sponge, water'},
+  {q:'12. Parts of the face include:',opts:['knee, elbow, wrist','arm, leg, back','eye, ear, nose, mouth'],ans:'eye, ear, nose, mouth'},
+  {q:'13. We HEAR with our ___.',opts:['eyes','nose','ears'],ans:'ears'},
+  {q:'14. We SMELL with our ___.',opts:['ears','nose','tongue'],ans:'nose'},
+  {q:'15. We SEE with our ___.',opts:['ears','tongue','eyes'],ans:'eyes'},
+  {q:'16. A person holding a toothbrush near their mouth is ___.',opts:['Washing my hands','Taking a shower','Brushing my teeth'],ans:'Brushing my teeth'},
+  {q:'17. A person with hands rubbing under water is ___.',opts:['Combing my hair','Washing my hands','Brushing my teeth'],ans:'Washing my hands'},
+  {q:'18. A person holding a comb near their hair is ___.',opts:['Combing my hair','Taking a shower','Washing my hands'],ans:'Combing my hair'},
+  {q:'19. A person sitting in a bathtub is ___.',opts:['Brushing my teeth','Washing my hands','Taking a shower'],ans:'Taking a shower'},
+  {q:'20. We FEEL/TOUCH with our ___.',opts:['nose','tongue','skin'],ans:'skin'},
+  {q:'21. Good personal hygiene keeps us ___.',opts:['dirty','sick','clean and healthy'],ans:'clean and healthy'},
+  {q:'22. How many eyes does a human have?',opts:['one','two','four'],ans:'two'},
+  {q:'23. The teeth help us ___ food.',opts:['see','chew','hear'],ans:'chew'},
+  {q:'24. We use ___ to wash our hair.',opts:['water only','shampoo','comb'],ans:'shampoo'},
+  {q:'25. Personal hygiene means ___.',opts:['eating lots of food','keeping your body clean and healthy','sleeping all day'],ans:'keeping your body clean and healthy'},
+];
+let mtAnswers={};
+function buildMT(){
+  mtAnswers={};
+  document.getElementById('mtFb').textContent='';
+  document.getElementById('mtDone').classList.remove('show');
+  document.getElementById('mtContainer').innerHTML=mtQs.map((q,i)=>`
+    <div class="mt-q" id="mtq${i}">
+      <div class="mt-num">Question ${i+1} of ${mtQs.length}</div>
+      <div class="mt-qtext">${q.q}</div>
+      <div class="mt-opts">${shuffle(q.opts).map(o=>`<button class="mt-opt" id="mto_${i}_${esc(o)}" onclick="mtPick(${i},'${esc(o)}')">${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function mtPick(i,chosen){
+  if(mtAnswers[i]!==undefined)return;
+  mtAnswers[i]=chosen;
+  const el=document.getElementById('mto_'+i+'_'+chosen);
+  if(el)el.classList.add(chosen===mtQs[i].ans?'correct':'wrong');
+  document.getElementById('mtq'+i).querySelectorAll('.mt-opt').forEach(b=>b.disabled=true);
+}
+function checkMT(){
+  mtQs.forEach((q,i)=>{
+    if(mtAnswers[i]===undefined){const el=document.getElementById('mto_'+i+'_'+esc(q.ans));if(el)el.classList.add('correct');}
+  });
+  const correct=mtQs.filter((q,i)=>mtAnswers[i]===q.ans).length;
+  const pct=Math.round(correct/mtQs.length*100);
+  const unanswered=mtQs.length-Object.keys(mtAnswers).length;
+  const fb=document.getElementById('mtFb');
+  if(unanswered>0)fb.textContent=`⚠️ ${unanswered} question(s) not answered. `;
+  const done=document.getElementById('mtDone');
+  done.classList.add('show');
+  done.textContent=`🏆 ${correct} out of ${mtQs.length} (${pct}%) — ${correct>=22?'Outstanding! You are ready! 🌟':correct>=18?'Great work! Almost perfect! 📚':'Keep practising — you can do it! 💪'}`;
+  if(correct>=22){litStar();cheer();setTimeout(()=>celebrate('🏆','Science Star!',`${correct}/25! You are SO ready for your Science exam!`),500);}
+}
+
+/* ===== INIT ===== */
+initBodyMatch();
+buildHabits();
+loadScramble();
+buildMT();
+</script>
+</body>
+</html>

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 Computing Exam Prep — Tikky!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#FF8C00;--yellow:#FFAB19;--blue:#4C97FF;
+  --purple:#9966FF;--green:#59C059;--teal:#5CB1D6;
+  --red:#FF6680;--bg:#1E1E2E;--surface:#2A2A3E;
+  --surface2:#32324A;--text:#FFFFFF;--sub:#A0A0C0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;overflow-x:hidden;color:var(--text);}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(76,151,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(76,151,255,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* falling bits */
+.bits{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.bit{position:absolute;font-size:0.75rem;color:rgba(76,151,255,0.1);font-family:'Fredoka One',cursive;animation:fall linear infinite;}
+@keyframes fall{from{transform:translateY(-40px);opacity:0}10%{opacity:1}90%{opacity:1}to{transform:translateY(110vh);opacity:0}}
+
+.back-btn{position:fixed;top:14px;left:14px;z-index:9999;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.2);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;padding:7px 16px;border-radius:50px;text-decoration:none;backdrop-filter:blur(4px);transition:all 0.2s;}
+.back-btn:hover{background:var(--yellow);color:#1E1E2E;}
+
+.app{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:16px 14px 80px;}
+
+/* HEADER */
+.header{text-align:center;padding:22px 0 14px;}
+.cat-bounce{font-size:4rem;display:block;animation:catB 1.6s ease-in-out infinite;}
+@keyframes catB{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(5deg)}}
+.header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.9rem,7vw,2.8rem);background:linear-gradient(90deg,var(--yellow),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:10px 0 4px;}
+.header p{color:var(--sub);font-size:1rem;font-weight:700;}
+
+/* STARS */
+.stars-row{display:flex;justify-content:center;gap:8px;margin:12px 0 18px;}
+.star{font-size:1.7rem;filter:grayscale(1) opacity(0.25);transition:all 0.3s;}
+.star.lit{filter:none;animation:sPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes sPop{0%{transform:scale(0)}60%{transform:scale(1.5) rotate(-15deg)}100%{transform:scale(1)}}
+
+/* MISTAKE ALERT */
+.alert{background:rgba(255,102,128,0.15);border:2px solid var(--red);border-radius:18px;padding:18px 20px;margin-bottom:20px;}
+.alert h3{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--red);margin-bottom:10px;}
+.alert-row{background:rgba(255,171,25,0.12);border:1.5px solid var(--yellow);border-radius:12px;padding:10px 14px;margin-bottom:8px;font-size:0.93rem;font-weight:700;color:#ffe082;line-height:1.6;}
+.alert-row .wrong{color:var(--red);text-decoration:line-through;margin-right:5px;}
+.alert-row .right{color:var(--green);font-weight:900;}
+
+/* TOPIC NAV */
+.topic-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
+@media(max-width:420px){.topic-nav{grid-template-columns:repeat(2,1fr);}}
+.tnav{background:rgba(255,255,255,0.07);border:2px solid rgba(255,255,255,0.12);border-radius:16px;padding:12px 8px;text-align:center;font-family:'Fredoka One',cursive;font-size:0.82rem;color:var(--sub);text-decoration:none;display:block;transition:all 0.2s;}
+.tnav:hover{background:rgba(255,171,25,0.15);border-color:var(--yellow);color:var(--yellow);transform:translateY(-2px);}
+.tnav .ti{font-size:1.4rem;display:block;margin-bottom:3px;}
+
+/* SECTION */
+.section{margin-bottom:26px;scroll-margin-top:60px;}
+.sec-tag{font-family:'Fredoka One',cursive;font-size:1.4rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+/* CARD */
+.card{background:var(--surface);border-radius:20px;padding:20px 18px;margin-bottom:14px;box-shadow:0 6px 24px rgba(0,0,0,0.3);}
+.card-title{font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--yellow);margin-bottom:14px;}
+
+/* SCRATCH UI DIAGRAM */
+.scratch-ui{display:grid;grid-template-columns:1fr 2fr 1fr;gap:8px;margin:14px 0;height:160px;}
+.ui-panel{border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px;text-align:center;cursor:pointer;transition:all 0.2s;border:2px solid transparent;}
+.ui-panel:hover{transform:scale(1.03);}
+.ui-panel .p-icon{font-size:2rem;margin-bottom:6px;}
+.ui-panel .p-name{font-family:'Fredoka One',cursive;font-size:0.9rem;font-weight:800;}
+.ui-panel .p-desc{font-size:0.7rem;font-weight:700;opacity:0.75;margin-top:2px;line-height:1.3;}
+.panel-palette{background:rgba(153,102,255,0.2);border-color:var(--purple);}
+.panel-palette .p-name{color:var(--purple);}
+.panel-coding{background:rgba(76,151,255,0.2);border-color:var(--blue);}
+.panel-coding .p-name{color:var(--blue);}
+.panel-stage{background:rgba(255,140,0,0.2);border-color:var(--orange);}
+.panel-stage .p-name{color:var(--orange);}
+@media(max-width:420px){.scratch-ui{grid-template-columns:1fr;height:auto;gap:6px;}.scratch-ui .ui-panel{padding:8px;}}
+
+/* RULE BOX */
+.rule{border-radius:14px;padding:14px 16px;margin-bottom:10px;font-size:0.95rem;font-weight:700;line-height:1.8;}
+.rule strong{font-family:'Fredoka One',cursive;font-size:1rem;}
+.r-purple{background:rgba(153,102,255,0.15);border:2px solid var(--purple);color:#ce93d8;}
+.r-blue{background:rgba(76,151,255,0.15);border:2px solid var(--blue);color:#90caf9;}
+.r-orange{background:rgba(255,140,0,0.15);border:2px solid var(--orange);color:#ffcc80;}
+.r-green{background:rgba(89,192,89,0.15);border:2px solid var(--green);color:#a5d6a7;}
+.r-red{background:rgba(255,102,128,0.15);border:2px solid var(--red);color:#ef9a9a;}
+.r-yellow{background:rgba(255,171,25,0.15);border:2px solid var(--yellow);color:#ffe082;}
+
+.pill{display:inline-block;padding:3px 12px;border-radius:50px;font-family:'Fredoka One',cursive;font-size:0.9rem;margin:2px 3px;}
+.p-purple{background:var(--purple);color:white;}
+.p-blue{background:var(--blue);color:white;}
+.p-orange{background:var(--orange);color:white;}
+.p-green{background:var(--green);color:#1b5e20;}
+.p-yellow{background:var(--yellow);color:#1E1E2E;}
+.p-red{background:var(--red);color:white;}
+.p-teal{background:var(--teal);color:white;}
+
+/* SCRATCH BLOCKS */
+.block-row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;}
+.s-block{border-radius:10px;padding:10px 16px;font-family:'Fredoka One',cursive;font-size:0.95rem;color:white;display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:all 0.18s;box-shadow:0 4px 0 rgba(0,0,0,0.25);}
+.s-block:hover{transform:translateY(-2px);filter:brightness(1.15);}
+.s-block:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,0.25);}
+.bl-motion{background:#4C97FF;box-shadow:0 4px 0 #2a6fcc;}
+.bl-sound{background:#CF63CF;box-shadow:0 4px 0 #8b3e8b;}
+.bl-looks{background:#9966FF;box-shadow:0 4px 0 #6a3acc;}
+.bl-control{background:#FFAB19;color:#1E1E2E;box-shadow:0 4px 0 #c87a00;}
+.bl-event{background:#FFAB19;color:#1E1E2E;box-shadow:0 4px 0 #c87a00;}
+.bl-val{background:rgba(255,255,255,0.15);border-radius:20px;padding:2px 10px;font-size:0.85rem;color:white;}
+
+/* SPRITE vs BACKGROUND */
+.sort-arena{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:400px){.sort-arena{grid-template-columns:1fr;}}
+.sort-bin{background:var(--surface2);border-radius:16px;padding:14px;min-height:110px;border:3px dashed rgba(255,255,255,0.15);transition:all 0.2s;}
+.sort-bin.drag-over{border-color:var(--yellow);background:rgba(255,171,25,0.1);}
+.sort-bin h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:10px;}
+.sort-bin.sprite-bin h4{color:var(--blue);}
+.sort-bin.bg-bin h4{color:var(--orange);}
+.sort-items{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;}
+.sort-item{background:var(--surface);border:2px solid rgba(255,255,255,0.15);border-radius:14px;padding:10px 14px;cursor:pointer;transition:all 0.2s;text-align:center;font-size:1.3rem;user-select:none;}
+.sort-item:hover{border-color:var(--yellow);transform:translateY(-2px);}
+.sort-item.placed{opacity:0.4;pointer-events:none;}
+.sort-item span{display:block;font-family:'Fredoka One',cursive;font-size:0.75rem;color:var(--sub);margin-top:3px;}
+.bin-items{display:flex;flex-wrap:wrap;gap:6px;min-height:40px;}
+.bin-chip{padding:6px 12px;border-radius:10px;font-family:'Fredoka One',cursive;font-size:0.85rem;cursor:pointer;transition:all 0.15s;}
+.bin-chip:hover{filter:brightness(1.2);}
+.sprite-chip{background:rgba(76,151,255,0.3);border:2px solid var(--blue);color:#90caf9;}
+.bg-chip{background:rgba(255,140,0,0.3);border:2px solid var(--orange);color:#ffcc80;}
+
+/* BLOCK MATCH */
+.bmatch-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.bm-item{padding:12px 14px;border-radius:14px;font-family:'Fredoka One',cursive;font-size:0.9rem;cursor:pointer;transition:all 0.18s;border:2.5px solid transparent;user-select:none;text-align:center;}
+.bm-item:hover{transform:translateY(-2px);}
+.bm-item.selected{box-shadow:0 0 0 3px var(--yellow);transform:scale(1.04);}
+.bm-item.correct{animation:bPop 0.4s ease;}
+.bm-item.wrong{animation:bShake 0.4s ease;}
+@keyframes bPop{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes bShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.bm-fr{background:rgba(76,151,255,0.15);border-color:var(--blue);color:#90caf9;}
+.bm-en{background:rgba(89,192,89,0.15);border-color:var(--green);color:#a5d6a7;}
+.bm-item.correct{background:rgba(89,192,89,0.25);border-color:var(--green);}
+.bm-item.wrong{background:rgba(255,102,128,0.25);border-color:var(--red);}
+
+/* MCQ */
+.q-box{background:var(--surface2);border-radius:16px;padding:18px;}
+.q-text{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#ffe082;margin-bottom:14px;line-height:1.4;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:380px){.opts{grid-template-columns:1fr;}}
+.opt{padding:12px 10px;border-radius:13px;border:2.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--text);cursor:pointer;transition:all 0.18s;text-align:center;}
+.opt:hover{border-color:var(--yellow);background:rgba(255,171,25,0.1);}
+.opt.correct{background:rgba(89,192,89,0.25);border-color:var(--green);color:#a5d6a7;}
+.opt.wrong{background:rgba(255,102,128,0.2);border-color:var(--red);color:#ef9a9a;animation:bShake 0.4s;}
+.q-fb{text-align:center;font-family:'Fredoka One',cursive;font-size:1rem;padding:10px;border-radius:12px;display:none;margin-top:10px;}
+.q-fb.ok{display:block;background:rgba(89,192,89,0.2);color:#a5d6a7;}
+.q-fb.no{display:block;background:rgba(255,102,128,0.2);color:#ef9a9a;}
+
+/* FILL BLANK */
+.fill-stmt{font-family:'Fredoka One',cursive;font-size:1rem;color:#ffe082;margin-bottom:12px;line-height:1.7;}
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--blue);padding:2px 8px;font-weight:900;color:var(--blue);vertical-align:middle;cursor:pointer;background:rgba(76,151,255,0.1);border-radius:6px 6px 0 0;margin:0 4px;}
+.blank.ok{background:rgba(89,192,89,0.2);color:#a5d6a7;border-color:var(--green);}
+.blank.err{background:rgba(255,102,128,0.2);color:#ef9a9a;border-color:var(--red);}
+.fill-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.f-chip{padding:8px 16px;border-radius:50px;background:rgba(255,255,255,0.07);border:2px solid rgba(255,255,255,0.15);font-family:'Fredoka One',cursive;font-size:0.9rem;color:var(--text);cursor:pointer;transition:all 0.18s;}
+.f-chip:hover{border-color:var(--yellow);background:rgba(255,171,25,0.1);}
+.f-chip.used{opacity:0.3;pointer-events:none;}
+
+/* PROGRESS */
+.pdots{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.pdot{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,0.15);transition:background 0.3s;}
+.pdot.ok{background:var(--green);}.pdot.err{background:var(--red);}
+
+/* BUTTONS */
+.btn{padding:11px 24px;border-radius:50px;border:none;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:all 0.15s;}
+.btn-yellow{background:var(--yellow);color:#1E1E2E;box-shadow:0 4px 0 #c87a00;}
+.btn-green{background:var(--green);color:#1b5e20;box-shadow:0 4px 0 #357a38;}
+.btn-gray{background:rgba(255,255,255,0.15);color:#fff;box-shadow:0 4px 0 rgba(0,0,0,0.2);}
+.btn:hover{transform:translateY(-2px);}
+.btn:active{transform:translateY(2px);}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+
+/* SCORE */
+.score-box{display:none;text-align:center;padding:14px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#1E1E2E;border-radius:14px;font-family:'Fredoka One',cursive;font-size:1.2rem;margin-top:14px;font-weight:800;}
+.score-box.show{display:block;}
+
+/* MINI TEST */
+.mt-q{background:var(--surface);border-radius:16px;padding:16px;margin-bottom:10px;}
+.mt-num{font-size:0.75rem;font-weight:700;color:var(--sub);margin-bottom:6px;}
+.mt-qtext{font-family:'Fredoka One',cursive;font-size:0.95rem;color:#ffe082;margin-bottom:10px;line-height:1.4;}
+.mt-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.mt-opt{padding:8px 16px;border-radius:50px;border:2px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-family:'Fredoka One',cursive;font-size:0.88rem;color:var(--text);cursor:pointer;transition:all 0.18s;}
+.mt-opt:hover{border-color:var(--yellow);background:rgba(255,171,25,0.1);}
+.mt-opt.correct{background:rgba(89,192,89,0.25);border-color:var(--green);color:#a5d6a7;}
+.mt-opt.wrong{background:rgba(255,102,128,0.2);border-color:var(--red);color:#ef9a9a;animation:bShake 0.4s;}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;justify-content:center;align-items:center;}
+.overlay.show{display:flex;}
+.cel-box{background:var(--surface);border:3px solid var(--yellow);border-radius:28px;padding:34px 26px;text-align:center;max-width:320px;width:90%;animation:zoomIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes zoomIn{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+.cel-em{font-size:3.5rem;display:block;margin-bottom:10px;}
+.cel-box h2{font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--yellow);margin-bottom:8px;}
+.cel-box p{color:var(--sub);font-size:0.93rem;margin-bottom:18px;line-height:1.5;}
+
+@keyframes popIn{0%{transform:scale(0.5);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+
+<!-- floating bits -->
+<div class="bits" id="bits"></div>
+
+<a href="../index.html" class="back-btn">← Back</a>
+
+<div class="app">
+
+<!-- HEADER -->
+<div class="header">
+  <span class="cat-bounce">🐱</span>
+  <h1>Computing Exam Prep!</h1>
+  <p>You scored 95 last time — let's make it 100! 🚀</p>
+</div>
+
+<!-- STARS -->
+<div class="stars-row" id="starsRow">
+  <span class="star" id="s1">⭐</span><span class="star" id="s2">⭐</span>
+  <span class="star" id="s3">⭐</span><span class="star" id="s4">⭐</span>
+  <span class="star" id="s5">⭐</span><span class="star" id="s6">⭐</span>
+  <span class="star" id="s7">⭐</span><span class="star" id="s8">⭐</span>
+</div>
+
+<!-- MISTAKE ALERT -->
+<div class="alert">
+  <h3>⚠️ The ONE thing to fix from your last test!</h3>
+  <div class="alert-row">
+    Q4a: You ticked the <span class="wrong">hedgehog</span> as "not a sprite" — but hedgehogs, birds and cats ARE sprites! 🐾<br>
+    The <span class="right">football pitch (background/stage) is NOT a sprite ✅</span><br>
+    <strong>Sprites = characters that move. Backgrounds/Stages = the scenery behind them!</strong>
+  </div>
+</div>
+
+<!-- TOPIC NAV -->
+<div class="topic-nav">
+  <a href="#t-interface" class="tnav"><span class="ti">🖥️</span>Scratch Interface</a>
+  <a href="#t-sprites" class="tnav"><span class="ti">🐱</span>Sprites &amp; Backgrounds</a>
+  <a href="#t-blocks" class="tnav"><span class="ti">🧱</span>Scratch Blocks</a>
+  <a href="#t-programming" class="tnav"><span class="ti">💻</span>Programming Ideas</a>
+  <a href="#t-vocab" class="tnav"><span class="ti">📚</span>Key Words</a>
+  <a href="#t-test" class="tnav"><span class="ti">🏆</span>Mini Test</a>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 1 — SCRATCH INTERFACE
+============================================================ -->
+<div id="t-interface" class="section">
+  <div class="sec-tag" style="color:var(--yellow);">🖥️ The Scratch Screen — 3 Parts!</div>
+
+  <div class="card">
+    <div class="card-title">Tap each part of the Scratch screen to learn it!</div>
+    <div class="scratch-ui">
+      <div class="ui-panel panel-palette" onclick="speak('Blocks palette. This is where you find all the blocks to use.')">
+        <div class="p-icon">🟣</div>
+        <div class="p-name">Blocks Palette</div>
+        <div class="p-desc">Find blocks here to use in your program</div>
+      </div>
+      <div class="ui-panel panel-coding" onclick="speak('Coding area. This is where you drag and drop blocks to make your program.')">
+        <div class="p-icon">🔵</div>
+        <div class="p-name">Coding Area</div>
+        <div class="p-desc">Drag blocks here to build your program</div>
+      </div>
+      <div class="ui-panel panel-stage" onclick="speak('Stage. This is where the sprite moves and performs.')">
+        <div class="p-icon">🟠</div>
+        <div class="p-name">Stage</div>
+        <div class="p-desc">Watch your sprite move here!</div>
+      </div>
+    </div>
+    <div class="rule r-purple">
+      <strong>🟣 Blocks Palette</strong> — the list on the LEFT where you <em>find</em> all your blocks.<br>
+      <span class="pill p-purple">Motion</span> <span class="pill p-purple">Looks</span> <span class="pill p-purple">Sound</span> <span class="pill p-purple">Control</span> — all sorted by colour!
+    </div>
+    <div class="rule r-blue">
+      <strong>🔵 Coding Area / Programming Area</strong> — the big space in the MIDDLE.<br>
+      You <em>drag and drop</em> blocks here to write your program!
+    </div>
+    <div class="rule r-orange">
+      <strong>🟠 Stage</strong> — the box on the RIGHT where you <em>watch</em> your sprite move.<br>
+      The sprite performs here — it's like a little theatre stage! 🎭
+    </div>
+    <div class="rule r-yellow">
+      💡 <strong>Colours help you find blocks!</strong><br>
+      Blue = Motion &nbsp; Purple = Looks &nbsp; Pink = Sound &nbsp; Orange = Control
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Interface Quiz!</div>
+    <div class="pdots" id="ifDots"></div>
+    <div id="ifContainer"></div>
+    <div class="score-box" id="ifDone">🎉 You know the Scratch screen perfectly! 🖥️⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 2 — SPRITES vs BACKGROUNDS  ← KEY WEAKNESS
+============================================================ -->
+<div id="t-sprites" class="section">
+  <div class="sec-tag" style="color:var(--blue);">🐱 Sprites vs Backgrounds — The Big Difference!</div>
+
+  <div class="card">
+    <div class="card-title">⚠️ This is what cost you 5 marks — learn it perfectly!</div>
+    <div class="rule r-blue">
+      <strong>🐱 A SPRITE is a CHARACTER that MOVES!</strong><br>
+      Sprites can walk, jump, talk, and do actions.<br>
+      <span class="pill p-blue">🐱 Scratch Cat</span>
+      <span class="pill p-blue">🐦 Bird</span>
+      <span class="pill p-blue">🦔 Hedgehog</span>
+      <span class="pill p-blue">🐶 Dog</span>
+      <span class="pill p-blue">🦁 Lion</span>
+    </div>
+    <div class="rule r-orange">
+      <strong>🖼️ A BACKGROUND (Stage backdrop) is SCENERY — it does NOT move!</strong><br>
+      It is the picture <em>behind</em> the sprites.<br>
+      <span class="pill p-orange">⚽ Football pitch</span>
+      <span class="pill p-orange">🌊 Underwater scene</span>
+      <span class="pill p-orange">🌳 Forest</span>
+      <span class="pill p-orange">🌌 Space</span>
+    </div>
+    <div class="rule r-red" style="font-size:1.05rem;">
+      🔑 <strong>Quick test:</strong> Does it MOVE and DO things? → <span style="color:var(--green)">SPRITE</span><br>
+      Is it the SCENERY that stays still? → <span style="color:var(--orange)">BACKGROUND</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
+      <div style="background:rgba(76,151,255,0.1);border:2px solid var(--blue);border-radius:14px;padding:14px;text-align:center;">
+        <div style="font-family:'Fredoka One',cursive;color:var(--blue);margin-bottom:8px;">✅ SPRITES</div>
+        <div style="font-size:2rem;line-height:2;">🐱 🐦 🦔 🐶 🦁 🐟 🦋 🐸</div>
+        <div style="font-size:0.78rem;color:var(--sub);font-weight:700;margin-top:4px;">Characters that move!</div>
+      </div>
+      <div style="background:rgba(255,140,0,0.1);border:2px solid var(--orange);border-radius:14px;padding:14px;text-align:center;">
+        <div style="font-family:'Fredoka One',cursive;color:var(--orange);margin-bottom:8px;">❌ NOT Sprites (Backgrounds)</div>
+        <div style="font-size:2rem;line-height:2;">⚽ 🌊 🌌 🏙️ 🌲 🏖️ 🌈 🏔️</div>
+        <div style="font-size:0.78rem;color:var(--sub);font-weight:700;margin-top:4px;">Scenery that stays still!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎮 Sort it — Sprite or Background?</div>
+    <div class="sort-items" id="sortItems"></div>
+    <div class="sort-arena">
+      <div class="sort-bin sprite-bin" id="spriteBin">
+        <h4>🐱 SPRITE (character)</h4>
+        <div class="bin-items" id="spriteBinItems"></div>
+      </div>
+      <div class="sort-bin bg-bin" id="bgBin">
+        <h4>🖼️ BACKGROUND (scenery)</h4>
+        <div class="bin-items" id="bgBinItems"></div>
+      </div>
+    </div>
+    <div class="q-fb" id="sortFb"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkSort()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="resetSort()">🔄 Try Again</button>
+    </div>
+    <div class="score-box" id="sortDone">🎉 Perfect! You know sprites from backgrounds! 🐱⭐</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Sprite Quiz!</div>
+    <div class="pdots" id="spDots"></div>
+    <div id="spContainer"></div>
+    <div class="score-box" id="spDone">🎉 Sprite expert! You'll never mix these up again! ⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 3 — SCRATCH BLOCKS
+============================================================ -->
+<div id="t-blocks" class="section">
+  <div class="sec-tag" style="color:var(--purple);">🧱 Scratch Blocks — What does each one do?</div>
+
+  <div class="card">
+    <div class="card-title">👆 Tap a block to learn what it does!</div>
+    <div class="block-row">
+      <div class="s-block bl-motion" onclick="blockInfo('move10')">
+        move <span class="bl-val">10</span> steps
+      </div>
+      <div class="s-block bl-event" onclick="blockInfo('whenclicked')">
+        when 🚩 clicked
+      </div>
+    </div>
+    <div class="block-row">
+      <div class="s-block bl-sound" onclick="blockInfo('playsound')">
+        play sound <span class="bl-val">Meow ▼</span> until done
+      </div>
+      <div class="s-block bl-control" onclick="blockInfo('wait')">
+        wait <span class="bl-val">1</span> seconds
+      </div>
+    </div>
+    <div class="block-row">
+      <div class="s-block bl-looks" onclick="blockInfo('say')">
+        say <span class="bl-val">Hello!</span>
+      </div>
+      <div class="s-block bl-control" onclick="blockInfo('repeat')">
+        repeat <span class="bl-val">10</span>
+      </div>
+    </div>
+    <div class="q-fb" id="blockInfoFb" style="margin-top:10px;background:rgba(255,171,25,0.15);border:2px solid var(--yellow);color:#ffe082;border-radius:12px;font-size:1rem;font-weight:700;padding:12px;display:none;"></div>
+
+    <div class="rule r-blue" style="margin-top:14px;">
+      <strong>🔵 Motion blocks (blue)</strong> — make the sprite MOVE<br>
+      <span class="pill p-blue">move 10 steps</span> — moves the sprite 10 steps
+    </div>
+    <div class="rule r-purple">
+      <strong>🟣 Looks blocks (purple)</strong> — make the sprite TALK or CHANGE<br>
+      <span class="pill p-purple">say Hello!</span> — makes the sprite show a speech bubble
+    </div>
+    <div class="rule" style="background:rgba(207,99,207,0.15);border:2px solid #CF63CF;color:#ce93d8;">
+      <strong>🎵 Sound blocks (pink/purple)</strong> — make the sprite play a SOUND<br>
+      <span class="pill" style="background:#CF63CF;color:white;">play sound Meow</span> — plays a sound!
+    </div>
+    <div class="rule r-yellow">
+      <strong>🟡 Control blocks (orange/yellow)</strong> — REPEAT or WAIT<br>
+      <span class="pill p-yellow">repeat 10</span> — does something 10 times<br>
+      <span class="pill p-yellow">wait 1 seconds</span> — pauses for 1 second
+    </div>
+    <div class="rule r-green">
+      💡 <strong>Bigger numbers = faster / more movement!</strong><br>
+      <span class="pill p-green">move 5 steps</span> is slower than <span class="pill p-green">move 50 steps</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Match the block to what it does!</div>
+    <p style="font-size:0.85rem;color:var(--sub);font-weight:700;margin-bottom:12px;">Tap a block, then tap its description!</p>
+    <div class="bmatch-grid">
+      <div>
+        <div style="font-family:'Fredoka One',cursive;font-size:0.85rem;color:var(--sub);margin-bottom:6px;text-align:center;">🧱 Block</div>
+        <div id="bmFr"></div>
+      </div>
+      <div>
+        <div style="font-family:'Fredoka One',cursive;font-size:0.85rem;color:var(--sub);margin-bottom:6px;text-align:center;">💬 What it does</div>
+        <div id="bmEn"></div>
+      </div>
+    </div>
+    <div class="q-fb" id="bmFb"></div>
+    <div class="btn-row"><button class="btn btn-gray" onclick="initBlockMatch()">🔄 New Match</button></div>
+    <div class="score-box" id="bmDone">🎉 Block matching master! 🧱⭐</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Blocks Quiz!</div>
+    <div class="pdots" id="blkDots"></div>
+    <div id="blkContainer"></div>
+    <div class="score-box" id="blkDone">🎉 You know every Scratch block! 🧱⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 4 — PROGRAMMING IDEAS
+============================================================ -->
+<div id="t-programming" class="section">
+  <div class="sec-tag" style="color:var(--green);">💻 Programming Ideas</div>
+
+  <div class="card">
+    <div class="card-title">💡 Key Programming Facts</div>
+    <div class="rule r-green">
+      <strong>What is Scratch used for?</strong><br>
+      Scratch is used to make <span class="pill p-green">programs</span>, <span class="pill p-green">animations</span>, and <span class="pill p-green">games</span>!<br>
+      It is NOT for cooking food or sleeping! 😄
+    </div>
+    <div class="rule r-blue">
+      <strong>How do you add a block?</strong><br>
+      You <span class="pill p-blue">drag and drop</span> a block from the blocks palette into the coding area.
+    </div>
+    <div class="rule r-purple">
+      <strong>What makes a sprite move faster?</strong><br>
+      Changing the <span class="pill p-purple">numbers</span> in the blocks!<br>
+      Bigger number = faster/more movement &nbsp; Smaller number = slower/less
+    </div>
+    <div class="rule r-yellow">
+      <strong>What does the repeat block do?</strong><br>
+      It makes something happen <span class="pill p-yellow">again and again</span>! It does NOT stop or delete.
+    </div>
+    <div class="rule r-orange">
+      <strong>What do we use in Scratch to give instructions?</strong><br>
+      We use <span class="pill p-orange">blocks</span> — NOT paint, NOT paper!
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Programming Quiz!</div>
+    <div class="pdots" id="pgDots"></div>
+    <div id="pgContainer"></div>
+    <div class="score-box" id="pgDone">🎉 Programming pro! 💻⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOPIC 5 — KEY VOCABULARY FILL-IN
+============================================================ -->
+<div id="t-vocab" class="section">
+  <div class="sec-tag" style="color:var(--teal);">📚 Key Vocabulary — Fill in the Blanks!</div>
+
+  <div class="card">
+    <div class="card-title">✏️ Use the word bank to complete each sentence!</div>
+    <div style="background:rgba(76,151,255,0.15);border:2px solid var(--blue);border-radius:14px;padding:12px 16px;margin-bottom:16px;font-family:'Fredoka One',cursive;font-size:1rem;color:#90caf9;text-align:center;">
+      📦 Word Bank: <span class="pill p-blue">sprite</span> <span class="pill p-purple">blocks</span> <span class="pill p-orange">numbers</span> <span class="pill p-green">say</span> <span class="pill p-yellow">faster</span> <span class="pill" style="background:var(--teal);color:white;">stage</span> <span class="pill p-red">coding area</span> <span class="pill" style="background:#CF63CF;color:white;">drag and drop</span>
+    </div>
+    <div id="vocabFillContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkVocab()">✅ Check!</button>
+      <button class="btn btn-gray" onclick="resetVocab()">🔄 Try Again</button>
+    </div>
+    <div id="vocabFb" style="margin-top:10px;font-family:'Fredoka One',cursive;font-size:1rem;min-height:20px;color:#ffe082;"></div>
+    <div class="score-box" id="vocabDone">🎉 Vocabulary master! 📚⭐</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     MINI TEST
+============================================================ -->
+<div id="t-test" class="section">
+  <div class="sec-tag" style="color:var(--yellow);">🏆 Mini Test — Like the Real Exam!</div>
+  <div class="card">
+    <div class="card-title">📝 20 questions — all topics covered!</div>
+    <div id="mtContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="checkMT()">✅ Submit &amp; Check!</button>
+      <button class="btn btn-gray" onclick="buildMT()">🔄 Reset</button>
+    </div>
+    <div id="mtFb" style="margin-top:12px;font-family:'Fredoka One',cursive;font-size:1rem;min-height:20px;color:#ffe082;"></div>
+    <div class="score-box" id="mtDone"></div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="cel-box">
+    <span class="cel-em" id="celEm">🎉</span>
+    <h2 id="celTitle">Brilliant!</h2>
+    <p id="celMsg">You're a Scratch star!</p>
+    <button class="btn btn-yellow" style="width:100%" onclick="document.getElementById('overlay').classList.remove('show')">Keep going! 🚀</button>
+  </div>
+</div>
+
+<script>
+/* ===== BITS BACKGROUND ===== */
+(function(){
+  const bits=['0','1','move','say','if','🐱','🧱'];
+  const c=document.getElementById('bits');
+  for(let i=0;i<20;i++){
+    const b=document.createElement('div');b.className='bit';
+    b.textContent=bits[Math.floor(Math.random()*bits.length)];
+    b.style.left=Math.random()*100+'%';
+    b.style.animationDuration=(8+Math.random()*14)+'s';
+    b.style.animationDelay=(-Math.random()*14)+'s';
+    c.appendChild(b);
+  }
+})();
+
+/* ===== GLOBAL ===== */
+let starCount=0;
+function addStar(){if(starCount<8){starCount++;document.getElementById('s'+(++starCount-1)&&'s'+starCount).classList&&document.getElementById('s'+starCount).classList.add('lit');}}
+function litStar(){if(starCount<8){starCount++;const el=document.getElementById('s'+starCount);if(el)el.classList.add('lit');}}
+function celebrate(em,title,msg){
+  document.getElementById('celEm').textContent=em;
+  document.getElementById('celTitle').textContent=title;
+  document.getElementById('celMsg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function speak(text){
+  if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u);}
+}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+function esc(s){return String(s).replace(/'/g,"\\'");}
+function buildDots(id,n){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='';
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='pdot';d.id=id+'_'+i;el.appendChild(d);}
+}
+function markDot(id,i,cls){const d=document.getElementById(id+'_'+i);if(d){d.classList.remove('ok','err');d.classList.add(cls);}}
+
+/* ===== BLOCK INFO ===== */
+const blockInfoMap={
+  move10:'🔵 MOTION BLOCK — "move 10 steps" makes the sprite walk forward! Bigger number = moves further!',
+  whenclicked:'🟡 EVENT BLOCK — "when green flag clicked" starts your program! Nothing happens until you click the flag 🚩',
+  playsound:'🎵 SOUND BLOCK — "play sound Meow" makes the sprite play a sound! You can change which sound.',
+  wait:'🟡 CONTROL BLOCK — "wait 1 seconds" pauses the program for 1 second before the next block runs.',
+  say:'🟣 LOOKS BLOCK — "say Hello!" makes the sprite show a speech bubble with your words!',
+  repeat:'🟡 CONTROL BLOCK — "repeat 10" makes everything inside it happen 10 times — again and again!'
+};
+function blockInfo(key){
+  const fb=document.getElementById('blockInfoFb');
+  fb.textContent=blockInfoMap[key];fb.style.display='block';
+  speak(blockInfoMap[key].replace(/[🔵🟣🎵🟡]/g,''));
+}
+
+/* ===== GENERIC MCQ ===== */
+function MCQ(cs,ds,done,questions,key){
+  window['mcq_'+key]={cur:0,qs:questions};
+  buildDots(ds,questions.length);
+  renderMCQ(key,cs,ds,done);
+}
+function renderMCQ(key,cs,ds,done){
+  const st=window['mcq_'+key];
+  const c=document.getElementById(cs);if(!c)return;
+  if(st.cur>=st.qs.length){c.innerHTML='';document.getElementById(done).classList.add('show');litStar();return;}
+  const q=st.qs[st.cur];const idx=st.cur;
+  const opts=shuffle(q.opts).map(o=>`<button class="opt" onclick="pickMCQ('${esc(o)}','${esc(q.ans)}',${idx},'${key}','${cs}','${ds}','${done}')">${o}</button>`).join('');
+  c.innerHTML=`<div class="q-box"><div class="q-text">Q${idx+1}. ${q.q}</div><div class="opts">${opts}</div><div class="q-fb" id="${key}fb"></div><div class="btn-row"><button class="btn btn-yellow" id="${key}nxt" style="display:none" onclick="advMCQ('${key}','${cs}','${ds}','${done}')">Next ➡️</button></div></div>`;
+}
+function pickMCQ(chosen,ans,idx,key,cs,ds,done){
+  const st=window['mcq_'+key];if(!st||st.cur!==idx)return;
+  const btns=document.getElementById(cs).querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const hit=[...btns].find(b=>b.textContent.trim()===chosen.trim());
+  const fb=document.getElementById(key+'fb');
+  if(chosen===ans){
+    if(hit)hit.classList.add('correct');
+    fb.textContent='⭐ Correct!';fb.className='q-fb ok';markDot(ds,idx,'ok');
+  } else {
+    if(hit)hit.classList.add('wrong');
+    [...btns].filter(b=>b.textContent.trim()===ans.trim()).forEach(b=>b.classList.add('correct'));
+    fb.textContent='❌ Not quite! Answer: '+ans;fb.className='q-fb no';markDot(ds,idx,'err');
+  }
+  document.getElementById(key+'nxt').style.display='inline-block';
+}
+function advMCQ(key,cs,ds,done){window['mcq_'+key].cur++;renderMCQ(key,cs,ds,done);}
+
+/* ===== TOPIC 1 — INTERFACE ===== */
+const ifQs=[
+  {q:'Where does the sprite move around?',opts:['The coding area','The blocks palette','The stage','The keyboard'],ans:'The stage'},
+  {q:'Where do you FIND blocks to use?',opts:['The stage','The coding area','The blocks palette','The screen'],ans:'The blocks palette'},
+  {q:'Where do you PUT blocks to write your program?',opts:['The stage','The blocks palette','The keyboard','The coding area'],ans:'The coding area'},
+  {q:'What helps you find the right blocks?',opts:['Numbers','Sounds','Colours','Letters'],ans:'Colours'},
+  {q:'The blocks palette is on which side of the screen?',opts:['Right','Middle','Bottom','Left'],ans:'Left'},
+  {q:'The stage is on which side of the screen?',opts:['Left','Middle','Bottom','Right'],ans:'Right'},
+  {q:'What is the Scratch application used for?',opts:['Cooking food','Making programs and animations','Sleeping','Writing letters'],ans:'Making programs and animations'},
+  {q:'How do you add a block to the coding area?',opts:['Print it','Delete it','Drag and drop it','Colour it'],ans:'Drag and drop it'},
+];
+MCQ('ifContainer','ifDots','ifDone',ifQs,'if');
+
+/* ===== TOPIC 2 — SPRITE SORT ===== */
+const sortData=[
+  {em:'🐱',name:'Scratch Cat',type:'sprite'},
+  {em:'🦔',name:'Hedgehog',type:'sprite'},
+  {em:'🐦',name:'Bird',type:'sprite'},
+  {em:'🐶',name:'Dog',type:'sprite'},
+  {em:'⚽',name:'Football Pitch',type:'bg'},
+  {em:'🌊',name:'Underwater Scene',type:'bg'},
+  {em:'🌌',name:'Space Background',type:'bg'},
+  {em:'🐸',name:'Frog',type:'sprite'},
+];
+let sortPlaced={sprite:[],bg:[]};
+let sortSelected=null;
+function buildSort(){
+  sortPlaced={sprite:[],bg:[]};sortSelected=null;
+  document.getElementById('sortFb').className='q-fb';
+  document.getElementById('sortDone').classList.remove('show');
+  const items=document.getElementById('sortItems');
+  items.innerHTML=shuffle(sortData).map((d,i)=>`
+    <div class="sort-item" id="si_${i}" data-idx="${i}" onclick="sortPick(${i})">
+      ${d.em}<span>${d.name}</span>
+    </div>`).join('');
+  document.getElementById('spriteBinItems').innerHTML='';
+  document.getElementById('bgBinItems').innerHTML='';
+}
+function sortPick(idx){
+  const item=sortData[idx];
+  const el=document.getElementById('si_'+idx);
+  if(el.classList.contains('placed'))return;
+  el.classList.add('placed');
+  const bin=item.type;
+  sortPlaced[bin].push(idx);
+  const chip=document.createElement('div');
+  chip.className='bin-chip '+(bin==='sprite'?'sprite-chip':'bg-chip');
+  chip.textContent=item.em+' '+item.name;
+  chip.dataset.idx=idx;chip.dataset.bin=bin;
+  chip.onclick=()=>{el.classList.remove('placed');sortPlaced[bin]=sortPlaced[bin].filter(x=>x!==idx);chip.remove();};
+  document.getElementById(bin+'BinItems').appendChild(chip);
+}
+function checkSort(){
+  const allPlaced=sortData.every((_,i)=>document.getElementById('si_'+i).classList.contains('placed'));
+  const fb=document.getElementById('sortFb');
+  if(!allPlaced){fb.textContent='⚠️ Sort all the items first!';fb.className='q-fb no';return;}
+  let correct=true;
+  sortData.forEach((d,i)=>{
+    const el=document.getElementById('si_'+i);
+    if(!sortPlaced[d.type].includes(i))correct=false;
+  });
+  if(correct){
+    fb.textContent='⭐ Perfect! All sorted correctly!';fb.className='q-fb ok';litStar();
+    document.getElementById('sortDone').classList.add('show');
+    setTimeout(()=>celebrate('🐱','Brilliant!','You know sprites from backgrounds perfectly!'),600);
+  } else {
+    fb.textContent='❌ Not quite! Remember: sprites = characters that MOVE. Backgrounds = scenery!';fb.className='q-fb no';
+  }
+}
+function resetSort(){buildSort();document.getElementById('sortDone').classList.remove('show');}
+
+const spQs=[
+  {q:'Which of these is a SPRITE?',opts:['Football pitch','Scratch Cat','Underwater scene','Space background'],ans:'Scratch Cat'},
+  {q:'Which of these is NOT a sprite?',opts:['Hedgehog','Bird','Dog','Football pitch'],ans:'Football pitch'},
+  {q:'A sprite is…',opts:['Scenery that stays still','A character that moves','A sound','A colour'],ans:'A character that moves'},
+  {q:'A background/stage backdrop is…',opts:['A character that moves','Scenery behind the sprites','A block','A sound'],ans:'Scenery behind the sprites'},
+  {q:'Is a hedgehog a sprite or a background?',opts:['Background','Sprite'],ans:'Sprite'},
+  {q:'Is an underwater scene a sprite or background?',opts:['Sprite','Background'],ans:'Background'},
+  {q:'Which sprite is most commonly used in Scratch?',opts:['Dog','Lion','Scratch Cat','Bird'],ans:'Scratch Cat'},
+  {q:'The sprite moves around on…',opts:['The blocks palette','The coding area','The stage','The keyboard'],ans:'The stage'},
+  {q:'Which of these is a sprite? 🦁 Lion OR 🌳 Forest?',opts:['🌳 Forest (background)','🦁 Lion (sprite)'],ans:'🦁 Lion (sprite)'},
+  {q:'Can a background move like a sprite?',opts:['Yes it can move','No — it stays still as scenery'],ans:'No — it stays still as scenery'},
+];
+MCQ('spContainer','spDots','spDone',spQs,'sp');
+
+/* ===== TOPIC 3 — BLOCK MATCH ===== */
+const blockPairs=[
+  {fr:'move 10 steps',en:'Makes the sprite walk forward'},
+  {fr:'say Hello!',en:'Makes the sprite talk / show speech bubble'},
+  {fr:'play sound Meow',en:'Makes the sprite play a sound'},
+  {fr:'repeat 10',en:'Makes something happen again and again'},
+  {fr:'wait 1 seconds',en:'Pauses the program for 1 second'},
+  {fr:'when 🚩 clicked',en:'Starts the program'},
+];
+let bmSel=null,bmMatched=new Set(),bmDoneCount=0;
+function initBlockMatch(){
+  bmSel=null;bmMatched=new Set();bmDoneCount=0;
+  document.getElementById('bmDone').classList.remove('show');
+  const subset=shuffle(blockPairs).slice(0,4);
+  const frEl=document.getElementById('bmFr');
+  const enEl=document.getElementById('bmEn');
+  frEl.innerHTML='';enEl.innerHTML='';
+  const shuffEn=shuffle(subset);
+  subset.forEach((p,i)=>{
+    const el=document.createElement('div');el.className='bm-item bm-fr';el.textContent=p.fr;el.dataset.idx=i;
+    el.onclick=()=>bmClick(el,i,'fr',subset);frEl.appendChild(el);
+  });
+  shuffEn.forEach(p=>{
+    const i=subset.indexOf(p);
+    const el=document.createElement('div');el.className='bm-item bm-en';el.textContent=p.en;el.dataset.idx=i;
+    el.onclick=()=>bmClick(el,i,'en',subset);enEl.appendChild(el);
+  });
+  document.getElementById('bmFb').className='q-fb';
+}
+function bmClick(el,idx,side,subset){
+  if(bmMatched.has(idx))return;
+  const fb=document.getElementById('bmFb');
+  if(!bmSel){bmSel={el,idx,side};el.classList.add('selected');return;}
+  if(bmSel.side===side){bmSel.el.classList.remove('selected');bmSel={el,idx,side};el.classList.add('selected');return;}
+  bmSel.el.classList.remove('selected');
+  if(bmSel.idx===idx){
+    bmSel.el.classList.add('correct');el.classList.add('correct');
+    bmMatched.add(idx);bmSel=null;bmDoneCount++;
+    fb.textContent='✅ Correct match!';fb.className='q-fb ok';
+    if(bmDoneCount===4){litStar();document.getElementById('bmDone').classList.add('show');setTimeout(()=>celebrate('🧱','Block Master!','You matched all the blocks!'),600);}
+  } else {
+    bmSel.el.classList.add('wrong');el.classList.add('wrong');bmSel=null;
+    fb.textContent='❌ Try again!';fb.className='q-fb no';
+    setTimeout(()=>{document.querySelectorAll('.bm-item.wrong').forEach(x=>x.classList.remove('wrong'));fb.className='q-fb';},900);
+  }
+}
+
+const blkQs=[
+  {q:'Which block makes a sprite MOVE?',opts:['say Hello!','play sound Meow','move 10 steps','repeat 10'],ans:'move 10 steps'},
+  {q:'Which block makes the sprite TALK?',opts:['move 10 steps','play sound Meow','wait 1 seconds','say Hello!'],ans:'say Hello!'},
+  {q:'Which block PLAYS A SOUND?',opts:['say Hello!','move 10 steps','play sound Meow','repeat 10'],ans:'play sound Meow'},
+  {q:'What does the REPEAT block do?',opts:['Stops the program','Deletes blocks','Makes something happen again and again','Plays a sound'],ans:'Makes something happen again and again'},
+  {q:'Which block STARTS the program?',opts:['say Hello!','move 10 steps','when 🚩 clicked','repeat 10'],ans:'when 🚩 clicked'},
+  {q:'Bigger numbers in "move ___ steps" means…',opts:['Slower movement','Sprite talks more','Sprite moves faster/further','Sprite stops'],ans:'Sprite moves faster/further'},
+  {q:'Motion blocks are which colour?',opts:['Purple','Orange','Pink','Blue'],ans:'Blue'},
+  {q:'Looks blocks (like "say") are which colour?',opts:['Blue','Orange','Purple','Pink'],ans:'Purple'},
+  {q:'What does "wait 1 seconds" do?',opts:['Makes sprite move','Starts the program','Pauses for 1 second','Plays a sound'],ans:'Pauses for 1 second'},
+  {q:'Changing __ makes the sprite move faster or slower.',opts:['Colours','Sounds','Letters','Numbers'],ans:'Numbers'},
+];
+MCQ('blkContainer','blkDots','blkDone',blkQs,'blk');
+
+/* ===== TOPIC 4 — PROGRAMMING ===== */
+const pgQs=[
+  {q:'What is Scratch used for?',opts:['Cooking food','To sleep','Making programs and animations','Writing letters'],ans:'Making programs and animations'},
+  {q:'What do we use in Scratch to give instructions?',opts:['Paint','Paper','Blocks','Pencils'],ans:'Blocks'},
+  {q:'How do you add a block to the coding area?',opts:['Delete it','Print it','Colour it','Drag and drop it'],ans:'Drag and drop it'},
+  {q:'Which block plays a sound in Scratch?',opts:['move 10 steps','say Hello!','wait 1 seconds','play sound Meow'],ans:'play sound Meow'},
+  {q:'Bigger numbers make the sprite move…',opts:['Slower','Backwards','Stop','Faster'],ans:'Faster'},
+  {q:'The repeat block…',opts:['Stops the program','Deletes blocks','Makes something happen again','Changes colour'],ans:'Makes something happen again'},
+  {q:'The picture in the background behind sprites is called…',opts:['A sprite','A block','A backdrop/stage background','A coding area'],ans:'A backdrop/stage background'},
+  {q:'Scratch Cat is a…',opts:['Background','Stage','Block','Sprite'],ans:'Sprite'},
+];
+MCQ('pgContainer','pgDots','pgDone',pgQs,'pg');
+
+/* ===== TOPIC 5 — VOCAB FILL ===== */
+const vocabQs=[
+  {stmt:'Scratch Cat is a ___.', ans:'sprite', bank:['sprite','stage','block','coding area']},
+  {stmt:'We use ___ to give instructions in Scratch.', ans:'blocks', bank:['blocks','colours','sounds','numbers']},
+  {stmt:'Changing ___ makes the sprite move faster or slower.', ans:'numbers', bank:['numbers','colours','blocks','stage']},
+  {stmt:'The ___ block makes the sprite talk.', ans:'say', bank:['say','move','repeat','wait']},
+  {stmt:'Bigger numbers make the sprite move ___.', ans:'faster', bank:['faster','slower','backwards','stop']},
+  {stmt:'The sprite moves around on the ___.', ans:'stage', bank:['stage','keyboard','blocks palette','coding area']},
+  {stmt:'We ___ blocks into the coding area to use them.', ans:'drag and drop', bank:['drag and drop','delete','print','colour']},
+  {stmt:'The ___ is where you find blocks sorted by colour.', ans:'coding area', bank:['coding area','stage','sprite','blocks palette']},
+];
+let vocabState={},vocabSel=null;
+function buildVocab(){
+  vocabState={};vocabSel=null;
+  const c=document.getElementById('vocabFillContainer');
+  c.innerHTML=vocabQs.map((q,i)=>`
+    <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;margin-bottom:10px;border:1.5px solid rgba(255,255,255,0.08);">
+      <div class="fill-stmt">${q.stmt.replace('___',`<span class="blank" id="vb${i}" onclick="vocabFill(${i})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`)}</div>
+      <div class="fill-bank">${q.bank.map(w=>`<span class="f-chip" id="vfc_${i}_${esc(w)}" onclick="vocabPickChip('${esc(w)}',${i})">${w}</span>`).join('')}</div>
+    </div>`).join('');
+}
+function vocabPickChip(w,qi){
+  vocabSel=w;
+  document.querySelectorAll('.f-chip').forEach(c=>c.style.outline='none');
+  const el=document.getElementById('vfc_'+qi+'_'+w);
+  if(el)el.style.outline='3px solid var(--yellow)';
+  vocabFill(qi);
+}
+function vocabFill(qi){
+  if(!vocabSel)return;
+  const slot=document.getElementById('vb'+qi);
+  if(slot.classList.contains('ok'))return;
+  slot.textContent=vocabSel;
+  vocabState[qi]=vocabSel;
+  vocabSel=null;
+  document.querySelectorAll('.f-chip').forEach(c=>c.style.outline='none');
+}
+function checkVocab(){
+  let ok=0;
+  vocabQs.forEach((q,i)=>{
+    const slot=document.getElementById('vb'+i);
+    if(vocabState[i]===q.ans){ok++;slot.className='blank ok';}
+    else if(vocabState[i]){slot.className='blank err';setTimeout(()=>{slot.className='blank';slot.textContent='       ';delete vocabState[i];},800);}
+  });
+  const fb=document.getElementById('vocabFb');
+  fb.textContent=`You got ${ok} out of ${vocabQs.length}!`;
+  if(ok===vocabQs.length){document.getElementById('vocabDone').classList.add('show');litStar();}
+}
+function resetVocab(){vocabState={};vocabSel=null;buildVocab();document.getElementById('vocabFb').textContent='';}
+
+/* ===== MINI TEST ===== */
+const mtQs=[
+  {q:'1. Where does the sprite move around?',opts:['The programming area','The stage','The blocks palette'],ans:'The stage'},
+  {q:'2. Where do you FIND blocks to use?',opts:['The stage','The blocks palette','The coding area'],ans:'The blocks palette'},
+  {q:'3. This shows a character that moves — it is called a…',opts:['Background','Stage','Sprite'],ans:'Sprite'},
+  {q:'4. Where do you PUT your blocks?',opts:['On the stage','On the keyboard','In the coding area'],ans:'In the coding area'},
+  {q:'5. Which sprite is most commonly used in Scratch?',opts:['Dog','Scratch Cat','Lion'],ans:'Scratch Cat'},
+  {q:'6. Which block makes the sprite move?',opts:['say Hello!','play sound Meow','move 10 steps'],ans:'move 10 steps'},
+  {q:'7. What does the repeat block do?',opts:['Stops the program','Makes something happen again','Deletes blocks'],ans:'Makes something happen again'},
+  {q:'8. Scratch is used to…',opts:['Cook food','Sleep','Make programs and animations'],ans:'Make programs and animations'},
+  {q:'9. Which block plays a sound?',opts:['play sound Meow','wait 1 seconds','say Hello!'],ans:'play sound Meow'},
+  {q:'10. What do we use to give instructions in Scratch?',opts:['Blocks','Paint','Paper'],ans:'Blocks'},
+  {q:'11. How do we add a new block?',opts:['Delete it','Print it','Drag and drop it'],ans:'Drag and drop it'},
+  {q:'12. Changing numbers makes the sprite move ___.',opts:['Change colour','Faster or slower','Stop'],ans:'Faster or slower'},
+  {q:'13. Colours in the blocks palette help you…',opts:['Make the sprite talk','Find blocks','Delete blocks'],ans:'Find blocks'},
+  {q:'14. Is a HEDGEHOG a sprite or background?',opts:['Background','Sprite'],ans:'Sprite'},
+  {q:'15. Is a FOOTBALL PITCH a sprite or background?',opts:['Sprite','Background'],ans:'Background'},
+  {q:'16. Is an UNDERWATER SCENE a sprite or background?',opts:['Sprite','Background'],ans:'Background'},
+  {q:'17. Is a BIRD a sprite or background?',opts:['Background','Sprite'],ans:'Sprite'},
+  {q:'18. The "say Hello!" block makes the sprite…',opts:['Move forward','Play a sound','Talk / show speech bubble'],ans:'Talk / show speech bubble'},
+  {q:'19. Bigger numbers in "move ___ steps" makes the sprite move…',opts:['Slower','Stop','Faster'],ans:'Faster'},
+  {q:'20. What is the picture behind the sprites called?',opts:['A sprite','A block','A background/backdrop'],ans:'A background/backdrop'},
+];
+let mtAnswers={};
+function buildMT(){
+  mtAnswers={};
+  document.getElementById('mtFb').textContent='';
+  document.getElementById('mtDone').classList.remove('show');
+  document.getElementById('mtContainer').innerHTML=mtQs.map((q,i)=>`
+    <div class="mt-q" id="mtq${i}">
+      <div class="mt-num">Question ${i+1} of ${mtQs.length}</div>
+      <div class="mt-qtext">${q.q}</div>
+      <div class="mt-opts">${shuffle(q.opts).map(o=>`<button class="mt-opt" id="mto_${i}_${esc(o)}" onclick="mtPick(${i},'${esc(o)}')">${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function mtPick(i,chosen){
+  if(mtAnswers[i]!==undefined)return;
+  mtAnswers[i]=chosen;
+  const el=document.getElementById('mto_'+i+'_'+chosen);
+  if(el)el.classList.add(chosen===mtQs[i].ans?'correct':'wrong');
+  document.getElementById('mtq'+i).querySelectorAll('.mt-opt').forEach(b=>b.disabled=true);
+}
+function checkMT(){
+  mtQs.forEach((q,i)=>{
+    if(mtAnswers[i]===undefined){const el=document.getElementById('mto_'+i+'_'+esc(q.ans));if(el)el.classList.add('correct');}
+  });
+  const correct=mtQs.filter((q,i)=>mtAnswers[i]===q.ans).length;
+  const pct=Math.round(correct/mtQs.length*100);
+  const done=document.getElementById('mtDone');
+  done.classList.add('show');
+  done.textContent=`🏆 ${correct} out of ${mtQs.length} (${pct}%) — ${correct===20?'PERFECT! 100%! 🌟🌟🌟':correct>=17?'Almost perfect! Nearly there! ⭐':correct>=14?'Great work! Keep going! 📚':'Keep practising! You can do it! 💪'}`;
+  if(correct>=18){litStar();setTimeout(()=>celebrate('🏆','100% Ready!',`${correct}/20! You will ace the Computing exam!`),500);}
+}
+
+/* ===== INIT ===== */
+buildSort();
+initBlockMatch();
+buildVocab();
+buildMT();
+</script>
+</body>
+</html>
